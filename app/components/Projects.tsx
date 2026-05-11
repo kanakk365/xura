@@ -9,6 +9,7 @@ import {
   useTransform,
   type MotionValue,
 } from "motion/react";
+import Image from "next/image";
 import { useRef } from "react";
 
 type Step = {
@@ -20,7 +21,7 @@ type Step = {
   description: string;
   meta: { label: string; value: string }[];
   tag: string;
-  visual: () => React.ReactNode;
+  image: string;
 };
 
 const STEPS: Step[] = [
@@ -38,7 +39,7 @@ const STEPS: Step[] = [
       { label: "Out", value: "Site brief" },
     ],
     tag: "EVAL",
-    visual: () => <SiteEvaluationVisual />,
+    image: "/1.png",
   },
   {
     id: "grid-review",
@@ -54,7 +55,7 @@ const STEPS: Step[] = [
       { label: "Out", value: "Feasibility" },
     ],
     tag: "GRID",
-    visual: () => <GridReviewVisual />,
+    image: "/2.png",
   },
   {
     id: "system-design",
@@ -70,7 +71,7 @@ const STEPS: Step[] = [
       { label: "Out", value: "IFC set" },
     ],
     tag: "DESIGN",
-    visual: () => <SystemDesignVisual />,
+    image: "/3.png",
   },
   {
     id: "delivery-operation",
@@ -86,7 +87,7 @@ const STEPS: Step[] = [
       { label: "Uptime", value: "99.5%" },
     ],
     tag: "LIVE",
-    visual: () => <OperationVisual />,
+    image: "/4.png",
   },
 ];
 
@@ -105,6 +106,18 @@ export function Projects() {
     damping: 32,
     mass: 0.4,
   });
+
+  const { scrollYProgress: rawExitProgress } = useScroll({
+    target: stickyRef,
+    offset: ["end end", "end start"],
+  });
+  const exitProgress = useSpring(rawExitProgress, {
+    stiffness: 220,
+    damping: 32,
+    mass: 0.4,
+  });
+  const exitOpacity = useTransform(exitProgress, [0, 0.35], [1, 0]);
+  const exitY = useTransform(exitProgress, [0, 0.5], ["0%", "-22%"]);
 
   return (
     <section id="projects" ref={sectionRef} className="relative bg-ink">
@@ -173,21 +186,26 @@ export function Projects() {
           style={{ height: `${STEPS.length * 100}vh` }}
         >
           <div className="sticky top-0 flex h-screen w-full items-center justify-center overflow-hidden">
-            <ProgressRail
-              total={STEPS.length}
-              progress={smoothProgress}
-            />
-            <div className="relative mx-auto h-[min(82vh,640px)] w-full max-w-[1360px] px-4 sm:px-10 lg:h-[min(70vh,560px)] lg:px-16">
-              {STEPS.map((step, i) => (
-                <StickyCard
-                  key={step.id}
-                  step={step}
-                  index={i}
-                  total={STEPS.length}
-                  progress={smoothProgress}
-                />
-              ))}
-            </div>
+            <motion.div
+              style={{ opacity: exitOpacity, y: exitY }}
+              className="relative flex h-full w-full items-center justify-center"
+            >
+              <ProgressRail
+                total={STEPS.length}
+                progress={smoothProgress}
+              />
+              <div className="relative mx-auto h-[min(82vh,640px)] w-full max-w-[1360px] px-4 sm:px-10 lg:h-[min(70vh,560px)] lg:px-16">
+                {STEPS.map((step, i) => (
+                  <StickyCard
+                    key={step.id}
+                    step={step}
+                    index={i}
+                    total={STEPS.length}
+                    progress={smoothProgress}
+                  />
+                ))}
+              </div>
+            </motion.div>
           </div>
         </div>
       )}
@@ -282,7 +300,14 @@ function CardSurface({
         <DetailSide step={step} index={index} total={total} />
         <div className="relative min-h-[240px] overflow-hidden bg-[#070707] lg:min-h-0 lg:[direction:ltr]">
           <VisualFrame tag={step.tag} number={step.number}>
-            {step.visual()}
+            <Image
+              src={step.image}
+              alt={step.title}
+              fill
+              sizes="(min-width: 1024px) 55vw, 100vw"
+              className="object-cover"
+              priority={index === 0}
+            />
           </VisualFrame>
         </div>
       </div>
@@ -381,7 +406,11 @@ function VisualFrame({
 
       <div className="absolute inset-0">{children}</div>
 
-      <XuraStamp number={number} />
+      <div className="absolute bottom-4 left-4 z-10">
+        <span className="font-mono text-[8.5px] uppercase tracking-[0.24em] text-paper/55">
+          REC &middot; P{number} &middot; 2025
+        </span>
+      </div>
 
       <div
         aria-hidden="true"
@@ -405,22 +434,6 @@ function CornerTick({ className = "" }: { className?: string }) {
         strokeLinecap="round"
       />
     </svg>
-  );
-}
-
-function XuraStamp({ number }: { number: string }) {
-  return (
-    <div className="absolute bottom-4 left-4 z-10 flex items-end gap-2.5">
-      <div className="flex items-baseline gap-1.5">
-        <span className="font-display text-[19px] leading-none italic text-paper/85">
-          Xura
-        </span>
-        <span className="block h-[3px] w-[3px] rounded-full bg-accent" />
-      </div>
-      <span className="font-mono text-[8.5px] uppercase tracking-[0.22em] text-mute">
-        X &middot; P{number} &middot; 2025
-      </span>
-    </div>
   );
 }
 
@@ -483,639 +496,3 @@ function FallbackList() {
   );
 }
 
-/* ------------------------------------------------------------------ */
-/* Per-step visuals                                                    */
-/* ------------------------------------------------------------------ */
-
-function SiteEvaluationVisual() {
-  return (
-    <svg
-      viewBox="0 0 320 240"
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      className="absolute inset-0 h-full w-full"
-      preserveAspectRatio="xMidYMid meet"
-    >
-      <g transform="translate(38, 46)">
-        <circle r="13" fill="none" stroke="rgba(255,255,255,0.18)" />
-        <path
-          d="M 0 -9 L 2.6 0 L 0 9 L -2.6 0 Z"
-          fill="rgba(255,255,255,0.55)"
-        />
-        <text
-          x="0"
-          y="-17"
-          textAnchor="middle"
-          fontSize="7"
-          fill="rgba(255,255,255,0.55)"
-          fontFamily="ui-monospace, SFMono-Regular, monospace"
-          letterSpacing="1.5"
-        >
-          N
-        </text>
-      </g>
-
-      <path
-        d="M 84 90 L 244 78 L 268 132 L 248 196 L 112 206 L 72 156 Z"
-        fill="rgba(139,251,3,0.04)"
-        stroke="#8bfb03"
-        strokeWidth="1.4"
-        strokeDasharray="5 4"
-      />
-
-      <g transform="translate(228, 70)">
-        <rect
-          x="0"
-          y="0"
-          width="40"
-          height="14"
-          rx="2"
-          fill="rgba(255,255,255,0.04)"
-          stroke="rgba(255,255,255,0.42)"
-          strokeWidth="1"
-        />
-        <text
-          x="20"
-          y="-5"
-          textAnchor="middle"
-          fontSize="6.5"
-          fill="rgba(255,255,255,0.55)"
-          fontFamily="ui-monospace, SFMono-Regular, monospace"
-          letterSpacing="1.3"
-        >
-          SERVICE
-        </text>
-        <line
-          x1="20"
-          y1="14"
-          x2="20"
-          y2="22"
-          stroke="rgba(255,255,255,0.32)"
-          strokeWidth="1"
-          strokeDasharray="2 2"
-        />
-      </g>
-
-      {[
-        [128, 122, "P01"],
-        [184, 110, "P02"],
-        [214, 168, "P03"],
-        [142, 180, "P04"],
-      ].map(([cx, cy, label], i) => (
-        <g key={i}>
-          <circle
-            cx={cx as number}
-            cy={cy as number}
-            r="10"
-            fill="rgba(139,251,3,0.08)"
-          />
-          <circle
-            cx={cx as number}
-            cy={cy as number}
-            r="3"
-            fill="#8bfb03"
-            className="soc-pulse"
-          />
-          <line
-            x1={(cx as number) + 3}
-            y1={(cy as number) - 3}
-            x2={(cx as number) + 24}
-            y2={(cy as number) - 18}
-            stroke="rgba(139,251,3,0.55)"
-            strokeWidth="0.8"
-          />
-          <circle
-            cx={(cx as number) + 24}
-            cy={(cy as number) - 18}
-            r="1.6"
-            fill="#8bfb03"
-          />
-          <text
-            x={(cx as number) + 30}
-            y={(cy as number) - 14}
-            fontSize="6.5"
-            fill="rgba(139,251,3,0.95)"
-            fontFamily="ui-monospace, SFMono-Regular, monospace"
-            letterSpacing="1"
-          >
-            {label as string}
-          </text>
-        </g>
-      ))}
-
-      <g stroke="rgba(255,255,255,0.22)" strokeWidth="0.7">
-        <line x1="84" y1="62" x2="244" y2="62" />
-        <line x1="84" y1="56" x2="84" y2="68" />
-        <line x1="244" y1="56" x2="244" y2="68" />
-      </g>
-      <text
-        x="164"
-        y="58"
-        textAnchor="middle"
-        fontSize="6.5"
-        fill="rgba(255,255,255,0.45)"
-        fontFamily="ui-monospace, SFMono-Regular, monospace"
-        letterSpacing="1"
-      >
-        218&apos; FRONTAGE
-      </text>
-
-      <text
-        x="38"
-        y="226"
-        fontSize="6.5"
-        fill="rgba(255,255,255,0.35)"
-        fontFamily="ui-monospace, SFMono-Regular, monospace"
-        letterSpacing="1.2"
-      >
-        40.21&deg;N &middot; 74.06&deg;W &middot; ELEV 24FT
-      </text>
-    </svg>
-  );
-}
-
-function GridReviewVisual() {
-  return (
-    <svg
-      viewBox="0 0 320 240"
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      className="absolute inset-0 h-full w-full"
-      preserveAspectRatio="xMidYMid meet"
-    >
-      <g stroke="rgba(255,255,255,0.22)" strokeWidth="1" fill="none">
-        <path d="M 28 54 L 80 62 L 132 54 L 184 62 L 236 54 L 292 62" />
-        {[80, 132, 184, 236].map((x) => (
-          <g key={x}>
-            <line x1={x} y1="62" x2={x} y2="80" />
-            <path
-              d={`M ${x - 7} 80 L ${x + 7} 80 L ${x + 5} 92 L ${x - 5} 92 Z`}
-              fill="rgba(255,255,255,0.05)"
-            />
-            <line
-              x1={x - 4}
-              y1="80"
-              x2={x - 4}
-              y2="92"
-              stroke="rgba(255,255,255,0.35)"
-              strokeWidth="0.6"
-            />
-            <line
-              x1={x + 4}
-              y1="80"
-              x2={x + 4}
-              y2="92"
-              stroke="rgba(255,255,255,0.35)"
-              strokeWidth="0.6"
-            />
-          </g>
-        ))}
-      </g>
-
-      <rect
-        x="40"
-        y="116"
-        width="240"
-        height="92"
-        rx="4"
-        fill="rgba(255,255,255,0.02)"
-        stroke="rgba(255,255,255,0.22)"
-        strokeDasharray="3 3"
-      />
-      <text
-        x="52"
-        y="134"
-        fontSize="7"
-        fill="rgba(255,255,255,0.5)"
-        fontFamily="ui-monospace, SFMono-Regular, monospace"
-        letterSpacing="1.4"
-      >
-        UTILITY ASSESSMENT
-      </text>
-
-      <rect
-        x="52"
-        y="146"
-        width="216"
-        height="14"
-        rx="2"
-        fill="rgba(255,255,255,0.05)"
-        stroke="rgba(255,255,255,0.32)"
-        strokeWidth="1"
-      />
-      <rect
-        x="54"
-        y="148"
-        width="98"
-        height="10"
-        rx="1"
-        fill="#8bfb03"
-        opacity="0.85"
-      />
-      <rect
-        x="155"
-        y="148"
-        width="50"
-        height="10"
-        rx="1"
-        fill="#8bfb03"
-        opacity="0.32"
-        className="soc-pulse"
-      />
-      <line
-        x1="207"
-        y1="142"
-        x2="207"
-        y2="164"
-        stroke="rgba(139,251,3,0.5)"
-        strokeWidth="0.6"
-        strokeDasharray="2 2"
-      />
-
-      <text
-        x="52"
-        y="176"
-        fontSize="7"
-        fill="rgba(255,255,255,0.5)"
-        fontFamily="ui-monospace, SFMono-Regular, monospace"
-        letterSpacing="1"
-      >
-        EXISTING
-      </text>
-      <text
-        x="155"
-        y="176"
-        fontSize="7"
-        fill="rgba(139,251,3,0.95)"
-        fontFamily="ui-monospace, SFMono-Regular, monospace"
-        letterSpacing="1"
-      >
-        + HEADROOM
-      </text>
-      <text
-        x="268"
-        y="176"
-        textAnchor="end"
-        fontSize="7"
-        fill="rgba(255,255,255,0.35)"
-        fontFamily="ui-monospace, SFMono-Regular, monospace"
-        letterSpacing="1"
-      >
-        CEILING
-      </text>
-
-      <text
-        x="52"
-        y="200"
-        fontSize="22"
-        fill="rgba(255,255,255,0.92)"
-        fontFamily="ui-monospace, SFMono-Regular, monospace"
-        fontWeight="600"
-        letterSpacing="0"
-      >
-        2.2
-      </text>
-      <text
-        x="92"
-        y="200"
-        fontSize="8"
-        fill="rgba(255,255,255,0.42)"
-        fontFamily="ui-monospace, SFMono-Regular, monospace"
-        letterSpacing="1"
-      >
-        MW AVAILABLE
-      </text>
-      <text
-        x="216"
-        y="200"
-        fontSize="9"
-        fill="rgba(139,251,3,0.9)"
-        fontFamily="ui-monospace, SFMono-Regular, monospace"
-        letterSpacing="1.2"
-      >
-        AHJ &middot; ALIGNED
-      </text>
-    </svg>
-  );
-}
-
-function SystemDesignVisual() {
-  return (
-    <svg
-      viewBox="0 0 320 240"
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      className="absolute inset-0 h-full w-full"
-      preserveAspectRatio="xMidYMid meet"
-    >
-      <rect
-        x="38"
-        y="58"
-        width="76"
-        height="50"
-        rx="4"
-        fill="rgba(139,251,3,0.1)"
-        stroke="#8bfb03"
-        strokeWidth="1.4"
-      />
-      <text
-        x="76"
-        y="80"
-        textAnchor="middle"
-        fontSize="9"
-        fill="#8bfb03"
-        fontFamily="ui-monospace, SFMono-Regular, monospace"
-        letterSpacing="1.4"
-        fontWeight="600"
-      >
-        BESS
-      </text>
-      <text
-        x="76"
-        y="94"
-        textAnchor="middle"
-        fontSize="7"
-        fill="rgba(139,251,3,0.75)"
-        fontFamily="ui-monospace, SFMono-Regular, monospace"
-      >
-        660 kWh
-      </text>
-
-      <rect
-        x="206"
-        y="58"
-        width="76"
-        height="50"
-        rx="4"
-        fill="rgba(255,255,255,0.04)"
-        stroke="rgba(255,255,255,0.55)"
-        strokeWidth="1.4"
-      />
-      <text
-        x="244"
-        y="80"
-        textAnchor="middle"
-        fontSize="9"
-        fill="rgba(255,255,255,0.85)"
-        fontFamily="ui-monospace, SFMono-Regular, monospace"
-        letterSpacing="1.4"
-        fontWeight="600"
-      >
-        DC FAST
-      </text>
-      <text
-        x="244"
-        y="94"
-        textAnchor="middle"
-        fontSize="7"
-        fill="rgba(255,255,255,0.55)"
-        fontFamily="ui-monospace, SFMono-Regular, monospace"
-      >
-        6 &times; 200kW
-      </text>
-
-      <rect
-        x="124"
-        y="130"
-        width="72"
-        height="44"
-        rx="4"
-        fill="rgba(255,255,255,0.04)"
-        stroke="rgba(255,255,255,0.45)"
-        strokeWidth="1.2"
-        strokeDasharray="3 3"
-      />
-      <text
-        x="160"
-        y="150"
-        textAnchor="middle"
-        fontSize="8"
-        fill="rgba(255,255,255,0.7)"
-        fontFamily="ui-monospace, SFMono-Regular, monospace"
-        letterSpacing="1.3"
-        fontWeight="600"
-      >
-        CONTROLLER
-      </text>
-      <text
-        x="160"
-        y="164"
-        textAnchor="middle"
-        fontSize="7"
-        fill="rgba(255,255,255,0.5)"
-        fontFamily="ui-monospace, SFMono-Regular, monospace"
-      >
-        UL 9540A
-      </text>
-
-      <rect
-        x="38"
-        y="184"
-        width="76"
-        height="22"
-        rx="3"
-        fill="rgba(255,255,255,0.03)"
-        stroke="rgba(255,255,255,0.32)"
-        strokeWidth="1"
-      />
-      <text
-        x="76"
-        y="199"
-        textAnchor="middle"
-        fontSize="7"
-        fill="rgba(255,255,255,0.55)"
-        fontFamily="ui-monospace, SFMono-Regular, monospace"
-        letterSpacing="1.2"
-      >
-        SWITCHGEAR
-      </text>
-
-      <rect
-        x="206"
-        y="184"
-        width="76"
-        height="22"
-        rx="3"
-        fill="rgba(255,255,255,0.03)"
-        stroke="rgba(255,255,255,0.32)"
-        strokeWidth="1"
-      />
-      <text
-        x="244"
-        y="199"
-        textAnchor="middle"
-        fontSize="7"
-        fill="rgba(255,255,255,0.55)"
-        fontFamily="ui-monospace, SFMono-Regular, monospace"
-        letterSpacing="1.2"
-      >
-        UTILITY METER
-      </text>
-
-      <g
-        stroke="#8bfb03"
-        strokeDasharray="4 4"
-        strokeLinecap="round"
-        fill="none"
-        strokeWidth="1.4"
-        className="trace-flow"
-      >
-        <path d="M 114 84 L 124 84 Q 138 84 138 100 L 138 130" />
-        <path d="M 206 84 L 196 84 Q 182 84 182 100 L 182 130" />
-        <path d="M 138 174 L 138 184 L 96 184" />
-        <path d="M 182 174 L 182 184 L 224 184" />
-      </g>
-    </svg>
-  );
-}
-
-function OperationVisual() {
-  return (
-    <svg
-      viewBox="0 0 320 240"
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      className="absolute inset-0 h-full w-full"
-      preserveAspectRatio="xMidYMid meet"
-    >
-      <rect
-        x="38"
-        y="50"
-        width="244"
-        height="60"
-        rx="4"
-        fill="rgba(255,255,255,0.02)"
-        stroke="rgba(255,255,255,0.22)"
-        strokeDasharray="3 3"
-      />
-      <text
-        x="50"
-        y="66"
-        fontSize="7"
-        fill="rgba(255,255,255,0.5)"
-        fontFamily="ui-monospace, SFMono-Regular, monospace"
-        letterSpacing="1.4"
-      >
-        TELEMETRY &middot; 24H
-      </text>
-
-      <path
-        d="M 50 96 L 70 92 L 86 98 L 102 84 L 118 90 L 134 78 L 150 88 L 166 76 L 182 86 L 198 80 L 214 90 L 232 84 L 252 92 L 270 88"
-        stroke="#8bfb03"
-        strokeWidth="1.4"
-        fill="none"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M 50 96 L 70 92 L 86 98 L 102 84 L 118 90 L 134 78 L 150 88 L 166 76 L 182 86 L 198 80 L 214 90 L 232 84 L 252 92 L 270 88 L 270 104 L 50 104 Z"
-        fill="rgba(139,251,3,0.08)"
-        stroke="none"
-      />
-      <circle cx="270" cy="88" r="2.4" fill="#8bfb03" className="soc-pulse" />
-
-      <g transform="translate(38, 130)">
-        <rect
-          width="116"
-          height="76"
-          rx="4"
-          fill="rgba(255,255,255,0.02)"
-          stroke="rgba(255,255,255,0.22)"
-          strokeWidth="1"
-        />
-        <text
-          x="12"
-          y="18"
-          fontSize="7"
-          fill="rgba(255,255,255,0.5)"
-          fontFamily="ui-monospace, SFMono-Regular, monospace"
-          letterSpacing="1.3"
-        >
-          UPTIME
-        </text>
-        <text
-          x="12"
-          y="46"
-          fontSize="22"
-          fill="rgba(255,255,255,0.95)"
-          fontFamily="ui-monospace, SFMono-Regular, monospace"
-          fontWeight="600"
-        >
-          99.5
-        </text>
-        <text
-          x="58"
-          y="46"
-          fontSize="9"
-          fill="rgba(139,251,3,0.85)"
-          fontFamily="ui-monospace, SFMono-Regular, monospace"
-          letterSpacing="1.2"
-        >
-          %
-        </text>
-        <text
-          x="12"
-          y="64"
-          fontSize="7"
-          fill="rgba(255,255,255,0.4)"
-          fontFamily="ui-monospace, SFMono-Regular, monospace"
-          letterSpacing="1"
-        >
-          MONITORED 24 / 7
-        </text>
-      </g>
-
-      <g transform="translate(166, 130)">
-        <rect
-          width="116"
-          height="76"
-          rx="4"
-          fill="rgba(255,255,255,0.02)"
-          stroke="rgba(139,251,3,0.32)"
-          strokeWidth="1"
-        />
-        <text
-          x="12"
-          y="18"
-          fontSize="7"
-          fill="rgba(139,251,3,0.85)"
-          fontFamily="ui-monospace, SFMono-Regular, monospace"
-          letterSpacing="1.3"
-        >
-          DISPATCH
-        </text>
-        <g transform="translate(12, 26)">
-          {[
-            [0, 26],
-            [16, 18],
-            [32, 30],
-            [48, 14],
-            [64, 22],
-            [80, 12],
-          ].map(([x, h], i) => (
-            <rect
-              key={i}
-              x={x}
-              y={36 - (h as number)}
-              width="10"
-              height={h as number}
-              rx="1"
-              fill={
-                i === 3 || i === 5 ? "#8bfb03" : "rgba(255,255,255,0.25)"
-              }
-            />
-          ))}
-        </g>
-        <text
-          x="12"
-          y="68"
-          fontSize="7"
-          fill="rgba(255,255,255,0.4)"
-          fontFamily="ui-monospace, SFMono-Regular, monospace"
-          letterSpacing="1"
-        >
-          PEAK SHAVE &middot; LIVE
-        </text>
-      </g>
-    </svg>
-  );
-}

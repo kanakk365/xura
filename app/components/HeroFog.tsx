@@ -84,9 +84,12 @@ void main(){
   vec2 light2 = vec2( 0.36 + 0.04*sin(uTime*0.30+2.0),
                       0.05*cos(uTime*0.24+1.0)) + center;
 
-  // Neutral atmospheric fog (no green tint on the page background).
-  vec3 colLeft  = vec3(0.92, 0.94, 0.97);
-  vec3 colRight = vec3(0.96, 0.96, 0.92);
+  // Smoke palette: neutral white across the frame, gradually tinting toward
+  // the brand lime accent as we approach the left edge.
+  vec3 neutralCol = vec3(0.95, 0.96, 0.97);
+  vec3 limeCol    = vec3(0.62, 0.99, 0.42);
+  float greenMix  = smoothstep(0.50, 0.05, uv.x);
+  vec3 fogCol     = mix(neutralCol, limeCol, greenMix);
 
   float c = clouds(uv);
 
@@ -96,9 +99,8 @@ void main(){
   float cloud2 = 0.42 * (1.0 - 2.4*distance(uv, light2));
   float beam2  = 0.18 / (1.0 + 320.0*distance(uv, light2)*distance(uv, light2));
 
-  vec3 col =
-    vec3(max(cloud1,0.0)*c)*colLeft  + beam1*colLeft +
-    vec3(max(cloud2,0.0)*c)*colRight + beam2*colRight;
+  float intensity = max(cloud1, 0.0)*c + beam1 + max(cloud2, 0.0)*c + beam2;
+  vec3 col = fogCol * intensity;
 
   // Subtle gamma to deepen mid-fog and a clamp to keep highlights tasteful
   col = pow(col, vec3(0.95));
