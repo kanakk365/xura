@@ -14,12 +14,13 @@ export default function Home() {
       <Hero />
       <Problem />
       <Solutions />
-      <Strategy />
       <Projects />
+      {/* <Strategy />
+      
       <Leadership />
       <FAQ />
       <Contact />
-      <Footer />
+      <Footer /> */}
     </main>
   );
 }
