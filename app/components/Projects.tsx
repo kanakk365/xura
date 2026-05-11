@@ -107,17 +107,8 @@ export function Projects() {
     mass: 0.4,
   });
 
-  const { scrollYProgress: rawExitProgress } = useScroll({
-    target: stickyRef,
-    offset: ["end end", "end start"],
-  });
-  const exitProgress = useSpring(rawExitProgress, {
-    stiffness: 220,
-    damping: 32,
-    mass: 0.4,
-  });
-  const exitOpacity = useTransform(exitProgress, [0, 0.35], [1, 0]);
-  const exitY = useTransform(exitProgress, [0, 0.5], ["0%", "-22%"]);
+  const exitOpacity = useTransform(smoothProgress, [0.85, 1.0], [1, 0]);
+  const exitY = useTransform(smoothProgress, [0.85, 1.0], ["0%", "-18%"]);
 
   return (
     <section id="projects" ref={sectionRef} className="relative bg-ink">
@@ -194,7 +185,7 @@ export function Projects() {
                 total={STEPS.length}
                 progress={smoothProgress}
               />
-              <div className="relative mx-auto h-[min(82vh,640px)] w-full max-w-[1360px] px-4 sm:px-10 lg:h-[min(70vh,560px)] lg:px-16">
+              <div className="relative mx-auto h-[min(82vh,640px)] w-full max-w-[1360px] overflow-hidden px-4 sm:px-10 lg:h-[min(70vh,560px)] lg:px-16">
                 {STEPS.map((step, i) => (
                   <StickyCard
                     key={step.id}
@@ -226,7 +217,8 @@ function StickyCard({
   total: number;
   progress: MotionValue<number>;
 }) {
-  const segment = total > 1 ? 1 / (total - 1) : 1;
+  const ENTRY_END = 0.78;
+  const segment = total > 1 ? ENTRY_END / (total - 1) : ENTRY_END;
   const entryStart = (index - 1) * segment;
   const entryEnd = index * segment;
   const exitStart = index * segment;
