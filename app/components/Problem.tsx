@@ -3,8 +3,6 @@
 import { motion, useInView, useReducedMotion } from "motion/react";
 import { useRef } from "react";
 
-const YEARS = ["2018", "2020", "2022", "2024", "2026", "2028", "2030"];
-
 const DEMAND_POINTS = [
   { x: 60, y: 200 },
   { x: 130, y: 184 },
@@ -98,27 +96,27 @@ export function Problem() {
             </motion.p>
 
             <div className="mt-10 grid grid-cols-2 gap-x-6 gap-y-5 border-t border-paper/10 pt-7 sm:max-w-md">
-              <Metric
-                figure="+38%"
-                label="Site load required by 2030"
+              <Constraint
+                code="01"
+                label="Limited available capacity at the meter"
                 delay={0.45}
                 isInView={isInView}
               />
-              <Metric
-                figure="<5%"
-                label="Annual grid capacity growth"
+              <Constraint
+                code="02"
+                label="Costly utility upgrades"
                 delay={0.55}
                 isInView={isInView}
               />
-              <Metric
-                figure="36mo"
-                label="Average interconnect wait"
+              <Constraint
+                code="03"
+                label="Unpredictable interconnect timelines"
                 delay={0.65}
                 isInView={isInView}
               />
-              <Metric
-                figure="0"
-                label="Reasons to wait"
+              <Constraint
+                code="04"
+                label="Constraints vary site to site"
                 delay={0.75}
                 accent
                 isInView={isInView}
@@ -134,7 +132,7 @@ export function Problem() {
                   Load vs. capacity
                 </span>
                 <span className="font-mono tracking-[0.2em] text-mute">
-                  2018&ndash;2030
+                  Trend
                 </span>
               </div>
 
@@ -170,24 +168,6 @@ export function Problem() {
                 <g stroke="rgba(255,255,255,0.06)" strokeWidth="1">
                   {[40, 80, 120, 160, 200].map((y) => (
                     <line key={y} x1="40" x2="500" y1={y} y2={y} />
-                  ))}
-                </g>
-
-                <g
-                  fontFamily="ui-monospace, SFMono-Regular, monospace"
-                  fontSize="9"
-                  fill="rgba(255,255,255,0.32)"
-                  letterSpacing="1.5"
-                >
-                  {YEARS.map((year, i) => (
-                    <text
-                      key={year}
-                      x={60 + i * 70}
-                      y="240"
-                      textAnchor="middle"
-                    >
-                      {year}
-                    </text>
                   ))}
                 </g>
 
@@ -283,7 +263,7 @@ export function Problem() {
                   />
                   <text
                     x="510"
-                    y="86"
+                    y="91"
                     textAnchor="middle"
                     fontFamily="ui-monospace, SFMono-Regular, monospace"
                     fontSize="8"
@@ -292,17 +272,6 @@ export function Problem() {
                     fontWeight="700"
                   >
                     GAP
-                  </text>
-                  <text
-                    x="510"
-                    y="96"
-                    textAnchor="middle"
-                    fontFamily="ui-monospace, SFMono-Regular, monospace"
-                    fontSize="7"
-                    fill="rgba(139,251,3,0.7)"
-                    letterSpacing="0.5"
-                  >
-                    2030
                   </text>
                 </motion.g>
 
@@ -379,14 +348,14 @@ export function Problem() {
   );
 }
 
-function Metric({
-  figure,
+function Constraint({
+  code,
   label,
   delay,
   accent,
   isInView,
 }: {
-  figure: string;
+  code: string;
   label: string;
   delay: number;
   accent?: boolean;
@@ -397,16 +366,20 @@ function Metric({
       initial={{ opacity: 0, y: 12 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.7, delay, ease: [0.2, 0.7, 0.1, 1] }}
-      className="flex flex-col gap-1"
+      className="flex flex-col gap-2"
     >
       <span
-        className={`font-display tracking-normal text-[clamp(1.6rem,2.6vw,2.2rem)] font-normal leading-none tracking-[-0.01em] ${
+        className={`font-mono text-[10px] font-medium uppercase tracking-[0.2em] ${
+          accent ? "text-accent" : "text-paper/55"
+        }`}
+      >
+        {code}
+      </span>
+      <span
+        className={`font-display tracking-normal text-[clamp(0.95rem,1.15vw,1.05rem)] font-normal leading-[1.25] ${
           accent ? "text-accent" : "text-paper"
         }`}
       >
-        {figure}
-      </span>
-      <span className="text-[11px] font-medium uppercase tracking-[0.1em] text-mute">
         {label}
       </span>
     </motion.div>

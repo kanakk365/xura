@@ -107,10 +107,8 @@ export function Contact() {
                 transition={{ duration: 0.9, delay: 0.25 }}
                 className="font-display tracking-normal text-[clamp(2.1rem,4.4vw,3.75rem)] font-normal leading-[1.05] text-paper"
               >
-                Send us a meter and a parcel.{" "}
-                <span className="italic text-accent">
-                    We&rsquo;ll send back a plan
-                  </span>
+                Start with a{" "}
+                <span className="italic text-accent">site review</span>
                 .
               </motion.h2>
 
@@ -120,9 +118,10 @@ export function Contact() {
                 transition={{ duration: 0.9, delay: 0.4 }}
                 className="mt-7 max-w-md text-base leading-relaxed text-paper/65"
               >
-                Two-week feasibility memo with right-sized system options and
-                an honest read on the interconnection path&mdash;before any
-                contracts.
+                Every site presents different constraints. A site review
+                provides the clarity needed to evaluate feasibility and define
+                a realistic path forward&mdash;before design or capital
+                decisions are made.
               </motion.p>
 
               <motion.ul
@@ -132,9 +131,9 @@ export function Contact() {
                 className="mt-9 flex flex-col gap-3 text-sm text-paper/70"
               >
                 {[
-                  "Honest feasibility — yes/no, not a sales pitch",
-                  "Right-sized system options with budgets",
-                  "Capital structure if you need it",
+                  "Electrical infrastructure & capacity assessment",
+                  "Interconnection and permitting feasibility",
+                  "Right-sized system options before contracts",
                 ].map((line) => (
                   <li key={line} className="flex items-start gap-3">
                     <span className="mt-[7px] inline-flex h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
@@ -212,7 +211,7 @@ export function Contact() {
                 type="submit"
                 className="group relative mt-2 inline-flex h-12 items-center justify-center gap-3 overflow-hidden rounded-full bg-accent px-6 text-sm font-normal tracking-[0.1em] text-ink transition-transform hover:-translate-y-0.5"
               >
-                <span className="relative z-10">Request feasibility memo</span>
+                <span className="relative z-10">Request a site review</span>
                 <span
                   aria-hidden="true"
                   className="relative z-10 grid h-7 w-7 place-items-center rounded-full bg-ink text-accent transition-transform group-hover:translate-x-0.5"

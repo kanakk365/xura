@@ -15,10 +15,9 @@ export default function Home() {
       <Problem />
       <Solutions />
       <Projects />
-      {/* <Strategy />
-      
-      <Leadership />
-      <FAQ />
+      <Strategy />
+      {/* <Leadership /> */}
+      {/* <FAQ />
       <Contact />
       <Footer /> */}
     </main>

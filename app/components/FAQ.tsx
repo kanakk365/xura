@@ -17,39 +17,57 @@ type FAQItem = {
 const FAQ_DATA: FAQItem[] = [
   {
     tag: "Storage",
-    question: "Why pair charging with battery storage?",
+    question: "What is battery energy storage in a commercial setting?",
     answer:
-      "Most sites can't pull peak charging load directly from the meter. A right-sized BESS lets us shift load away from the service constraint, so chargers run on demand without a costly upgrade.",
+      "Battery energy storage systems (BESS) store electricity on-site and discharge it when needed to support operations, manage demand, or supplement limited grid capacity. In commercial and fleet environments, storage is often used to enable electrification where utility power alone is insufficient.",
   },
   {
-    tag: "Process",
-    question: "How long does a typical project take?",
+    tag: "Grid",
+    question: "Why is energy storage becoming more important for electrification?",
     answer:
-      "Six to twelve months from kickoff to live operation, including utility approvals. We sequence engineering and procurement in parallel so AHJ cycles aren't on the critical path.",
+      "As electrification demand increases, many sites face constrained grid capacity and long interconnection timelines. Battery storage helps bridge this gap by allowing sites to operate within existing electrical limits rather than relying on uncertain utility upgrades.",
   },
   {
-    tag: "Capital",
-    question: "Do you provide capital for the project?",
+    tag: "System",
+    question: "Is battery storage a standalone solution or part of a larger system?",
     answer:
-      "Yes—through Charge Capital Partners. We can structure host-site, lease, or PPA-style deals so the property owner has zero CapEx while still keeping operating leverage on the system.",
+      "At Xura, battery storage is treated as enabling infrastructure, not a standalone asset. It is deployed when it improves feasibility, reliability, or performance of site-level electrification, often alongside Level 3 EV charging and load management.",
+  },
+  {
+    tag: "Site fit",
+    question: "When does it make sense to add battery storage to a site?",
+    answer:
+      "Battery storage is typically considered when electrical capacity is limited, peak demand would trigger costly upgrades, high-power charging must occur within defined windows, or operational reliability is critical. Each site receives individual evaluation.",
+  },
+  {
+    tag: "Upgrades",
+    question: "How does battery storage help avoid utility upgrades?",
+    answer:
+      "By supplying power during peak demand or charging windows, battery storage can reduce strain on the grid connection. This allows sites to support higher loads without increasing their utility service size, avoiding costly and time-consuming upgrades in many cases.",
+  },
+  {
+    tag: "Design",
+    question: "How does Xura approach the design of battery energy storage systems?",
+    answer:
+      "Xura designs storage systems around real site conditions, including load profiles, operating schedules, and grid constraints. Systems are sized and configured to support long-term performance rather than theoretical capacity.",
   },
   {
     tag: "Safety",
-    question: "Are your battery systems safe to install on site?",
+    question: "What about safety and long-term operation?",
     answer:
-      "Every system is built around UL 9540A-tested components with explicit setback, fire-suppression, and ventilation design reviewed by the AHJ. Safety dictates siting, not the other way around.",
+      "Safety and operational reliability are core considerations. Xura designs storage systems with appropriate controls, monitoring, and operational discipline to ensure assets operate safely and perform as intended over time.",
   },
   {
-    tag: "Operate",
-    question: "Who operates the system once it's commissioned?",
+    tag: "Customers",
+    question: "Who benefits most from battery energy storage?",
     answer:
-      "We do—through the lifecycle. Continuous monitoring, software updates, preventative maintenance, and warranty service are all included in the operating agreement.",
+      "Battery energy storage benefits fleet and logistics operations, commercial properties with constrained power, sites deploying high-power EV charging, and properties seeking predictable, reliable electrification.",
   },
   {
-    tag: "Start",
-    question: "What do you need from us to start?",
+    tag: "Process",
+    question: "How does a battery storage project typically begin?",
     answer:
-      "A meter reading, a utility bill, and rough plans of the site. Within two weeks we can return a feasibility memo with right-sized system options and an honest read on the interconnection path.",
+      "Projects usually start with a site review to assess electrical infrastructure, operating requirements, and feasibility before design or capital decisions are made.",
   },
 ];
 

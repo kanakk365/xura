@@ -34,9 +34,9 @@ const STEPS: Step[] = [
     description:
       "We evaluate the physical site, existing electrical infrastructure, and how the property operates day to day—before a single drawing is produced.",
     meta: [
-      { label: "Inputs", value: "Site walk" },
-      { label: "Mapped", value: "Day-of-use" },
-      { label: "Out", value: "Site brief" },
+      { label: "Physical", value: "Site" },
+      { label: "Existing", value: "Electrical" },
+      { label: "Day-to-day", value: "Operations" },
     ],
     tag: "EVAL",
     image: "/1.png",
@@ -50,9 +50,9 @@ const STEPS: Step[] = [
     description:
       "Grid capacity, interconnection requirements, and permitting considerations are assessed early—establishing realistic boundaries, not theoretical ones.",
     meta: [
-      { label: "Pulled", value: "Capacity" },
-      { label: "Aligned", value: "Permit AHJ" },
-      { label: "Out", value: "Feasibility" },
+      { label: "Grid", value: "Capacity" },
+      { label: "Utility", value: "Interconnect" },
+      { label: "AHJ", value: "Permitting" },
     ],
     tag: "GRID",
     image: "/2.png",
@@ -66,9 +66,9 @@ const STEPS: Step[] = [
     description:
       "Charging and storage are designed around site conditions, usage patterns, and long-term performance—never around assumptions or stock configurations.",
     meta: [
-      { label: "Sized", value: "BESS" },
-      { label: "Verified", value: "UL 9540A" },
-      { label: "Out", value: "IFC set" },
+      { label: "Site", value: "Conditions" },
+      { label: "Usage", value: "Patterns" },
+      { label: "Long-term", value: "Performance" },
     ],
     tag: "DESIGN",
     image: "/3.png",
@@ -82,9 +82,9 @@ const STEPS: Step[] = [
     description:
       "Projects move forward with clear scope, coordinated approvals, and systems designed to be built, permitted, and operated reliably—long after commissioning.",
     meta: [
-      { label: "Permitting", value: "Ready" },
-      { label: "Monitored", value: "24 / 7" },
-      { label: "Uptime", value: "99.5%" },
+      { label: "Scope", value: "Defined" },
+      { label: "Approvals", value: "Coordinated" },
+      { label: "Operate", value: "Reliably" },
     ],
     tag: "LIVE",
     image: "/4.png",
@@ -400,7 +400,7 @@ function VisualFrame({
 
       <div className="absolute bottom-4 left-4 z-10">
         <span className="font-mono text-[8.5px] uppercase tracking-[0.24em] text-paper/55">
-          REC &middot; P{number} &middot; 2025
+          PHASE &middot; {number}
         </span>
       </div>
 

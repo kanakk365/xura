@@ -3,29 +3,26 @@
 import { motion, useInView } from "motion/react";
 import { useRef } from "react";
 
-type Leader = {
+type Discipline = {
   id: string;
-  name: string;
+  number: string;
+  label: string;
   title: string;
-  background: string;
-  initials: string;
-  credentials: string[];
-  portrait: (active: boolean) => React.ReactNode;
+  body: string;
+  glyph: (active: boolean) => React.ReactNode;
 };
 
-const LEADERS: Leader[] = [
+const DISCIPLINES: Discipline[] = [
   {
-    id: "founder",
-    name: "Jaime Echeverria",
-    title: "Founder & Principal",
-    background:
-      "Twenty years across commercial real estate, energy assets, and project finance. Underwrote and built across 4M+ sqft before launching Xura.",
-    initials: "JE",
-    credentials: ["CRE · 20Y", "PE · Energy", "MBA"],
-    portrait: (active) => (
+    id: "real-estate",
+    number: "01",
+    label: "Real Estate",
+    title: "Operators who have built the assets your sites sit on.",
+    body: "Underwriting, leasing, and capital structuring across commercial real estate. We read a parcel the way an owner does, not the way a vendor pitches it.",
+    glyph: (active) => (
       <g>
         <defs>
-          <radialGradient id="leader-grad-1" cx="0.5" cy="0.4">
+          <radialGradient id="lead-grad-1" cx="0.5" cy="0.4">
             <stop
               offset="0%"
               stopColor={active ? "#8bfb03" : "rgba(255,255,255,0.18)"}
@@ -34,14 +31,19 @@ const LEADERS: Leader[] = [
             <stop offset="100%" stopColor="transparent" />
           </radialGradient>
         </defs>
-        <circle cx="80" cy="64" r="46" fill="url(#leader-grad-1)" />
+        <circle cx="80" cy="64" r="46" fill="url(#lead-grad-1)" />
         <g
-          stroke={active ? "#8bfb03" : "rgba(255,255,255,0.4)"}
+          stroke={active ? "#8bfb03" : "rgba(255,255,255,0.45)"}
           strokeWidth="1.2"
           fill="none"
         >
-          <circle cx="80" cy="64" r="58" strokeDasharray="3 4" />
-          <circle cx="80" cy="64" r="38" />
+          <rect x="40" y="42" width="80" height="52" rx="2" strokeDasharray="3 4" />
+          <rect x="52" y="54" width="14" height="14" />
+          <rect x="74" y="54" width="14" height="14" />
+          <rect x="96" y="54" width="14" height="14" />
+          <rect x="52" y="74" width="14" height="14" />
+          <rect x="74" y="74" width="14" height="14" />
+          <rect x="96" y="74" width="14" height="14" />
         </g>
         <g
           stroke={active ? "#8bfb03" : "rgba(255,255,255,0.55)"}
@@ -49,26 +51,21 @@ const LEADERS: Leader[] = [
           fill="none"
           strokeLinecap="round"
         >
-          <line x1="80" y1="14" x2="80" y2="22" />
-          <line x1="80" y1="106" x2="80" y2="114" />
-          <line x1="22" y1="64" x2="30" y2="64" />
-          <line x1="130" y1="64" x2="138" y2="64" />
+          <line x1="40" y1="100" x2="120" y2="100" />
         </g>
       </g>
     ),
   },
   {
     id: "energy",
-    name: "Marisol Vargas",
-    title: "Head of Energy Engineering",
-    background:
-      "Former utility planning lead. Designed interconnection studies for the projects she now sequences for clients.",
-    initials: "MV",
-    credentials: ["PE", "Utility 12Y", "BESS"],
-    portrait: (active) => (
+    number: "02",
+    label: "Energy Engineering",
+    title: "Engineers who have planned the utility you're connecting to.",
+    body: "Interconnection studies, load modeling, BESS sizing, and controls. The same people who write the feasibility memo see the system commissioned.",
+    glyph: (active) => (
       <g>
         <defs>
-          <radialGradient id="leader-grad-2" cx="0.5" cy="0.4">
+          <radialGradient id="lead-grad-2" cx="0.5" cy="0.4">
             <stop
               offset="0%"
               stopColor={active ? "#8bfb03" : "rgba(255,255,255,0.18)"}
@@ -77,40 +74,45 @@ const LEADERS: Leader[] = [
             <stop offset="100%" stopColor="transparent" />
           </radialGradient>
         </defs>
-        <circle cx="80" cy="64" r="46" fill="url(#leader-grad-2)" />
+        <circle cx="80" cy="64" r="46" fill="url(#lead-grad-2)" />
         <g
-          stroke={active ? "#8bfb03" : "rgba(255,255,255,0.4)"}
+          stroke={active ? "#8bfb03" : "rgba(255,255,255,0.45)"}
           strokeWidth="1.2"
           fill="none"
         >
-          <rect x="22" y="22" width="116" height="84" rx="3" strokeDasharray="3 4" />
-          <rect x="42" y="42" width="76" height="44" rx="2" />
+          <circle cx="80" cy="64" r="36" strokeDasharray="3 4" />
+        </g>
+        <g
+          stroke={active ? "#8bfb03" : "rgba(255,255,255,0.7)"}
+          strokeWidth="1.6"
+          fill="none"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="M 86 42 L 70 66 L 82 66 L 74 86 L 92 60 L 80 60 Z" />
         </g>
         <g
           stroke={active ? "#8bfb03" : "rgba(255,255,255,0.55)"}
           strokeWidth="1.2"
           fill="none"
+          strokeLinecap="round"
         >
-          <line x1="22" y1="64" x2="42" y2="64" />
-          <line x1="118" y1="64" x2="138" y2="64" />
-          <line x1="80" y1="22" x2="80" y2="42" />
-          <line x1="80" y1="86" x2="80" y2="106" />
+          <line x1="22" y1="64" x2="34" y2="64" />
+          <line x1="126" y1="64" x2="138" y2="64" />
         </g>
       </g>
     ),
   },
   {
-    id: "ops",
-    name: "Daniel Park",
-    title: "Head of Construction & Ops",
-    background:
-      "Field operator who has commissioned 80+ DC fast charging sites. Knows what the install crew will and won't tolerate at 2am.",
-    initials: "DP",
-    credentials: ["Ops 15Y", "EPC", "OSHA-30"],
-    portrait: (active) => (
+    id: "construction",
+    number: "03",
+    label: "Construction & Ops",
+    title: "Field leaders who have commissioned the sites running today.",
+    body: "EPC scopes, AHJ navigation, and long-term operations. They know what the install crew will tolerate at 2am — and what the equipment needs at year five.",
+    glyph: (active) => (
       <g>
         <defs>
-          <radialGradient id="leader-grad-3" cx="0.5" cy="0.4">
+          <radialGradient id="lead-grad-3" cx="0.5" cy="0.4">
             <stop
               offset="0%"
               stopColor={active ? "#8bfb03" : "rgba(255,255,255,0.18)"}
@@ -119,26 +121,26 @@ const LEADERS: Leader[] = [
             <stop offset="100%" stopColor="transparent" />
           </radialGradient>
         </defs>
-        <circle cx="80" cy="64" r="46" fill="url(#leader-grad-3)" />
+        <circle cx="80" cy="64" r="46" fill="url(#lead-grad-3)" />
         <g
-          stroke={active ? "#8bfb03" : "rgba(255,255,255,0.4)"}
+          stroke={active ? "#8bfb03" : "rgba(255,255,255,0.45)"}
           strokeWidth="1.2"
           fill="none"
         >
           <polygon
-            points="80,18 138,52 138,108 22,108 22,52"
+            points="80,28 122,48 122,100 38,100 38,48"
             strokeDasharray="3 4"
           />
-          <polygon points="80,38 118,60 118,98 42,98 42,60" />
         </g>
         <g
-          stroke={active ? "#8bfb03" : "rgba(255,255,255,0.55)"}
+          stroke={active ? "#8bfb03" : "rgba(255,255,255,0.65)"}
           strokeWidth="1.4"
           fill="none"
           strokeLinecap="round"
         >
-          <line x1="60" y1="76" x2="100" y2="76" />
-          <line x1="60" y1="86" x2="100" y2="86" />
+          <line x1="62" y1="68" x2="98" y2="68" />
+          <line x1="62" y1="80" x2="98" y2="80" />
+          <line x1="62" y1="92" x2="98" y2="92" />
         </g>
       </g>
     ),
@@ -179,10 +181,10 @@ export function Leadership() {
               initial={{ opacity: 0, y: 16 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.9, delay: 0.1, ease: [0.2, 0.7, 0.1, 1] }}
-              className="font-display tracking-normal text-[clamp(2rem,4.4vw,3.75rem)] font-normal leading-[1.05]  text-paper"
+              className="font-display tracking-normal text-[clamp(2rem,4.4vw,3.75rem)] font-normal leading-[1.05] text-paper"
             >
-              Operator-led.{" "}
-              <span className="italic text-accent">Owner-aligned</span>
+              Built by{" "}
+              <span className="italic text-accent">operators</span>
               .
             </motion.h2>
           </div>
@@ -192,17 +194,17 @@ export function Leadership() {
             transition={{ duration: 0.9, delay: 0.2, ease: [0.2, 0.7, 0.1, 1] }}
             className="max-w-sm text-base leading-relaxed text-paper/60"
           >
-            We&rsquo;ve underwritten the deal, planned the utility, and
-            commissioned the site. The team you talk to is the team who&rsquo;s
-            done it.
+            Real estate, energy, and construction operators who have deployed
+            infrastructure in constrained, real-world environments. The team
+            you talk to is the team who&rsquo;s done it.
           </motion.p>
         </header>
 
         <ul className="grid grid-cols-1 gap-5 md:grid-cols-3 md:gap-4">
-          {LEADERS.map((leader, i) => (
-            <LeaderCard
-              key={leader.id}
-              leader={leader}
+          {DISCIPLINES.map((d, i) => (
+            <DisciplineCard
+              key={d.id}
+              discipline={d}
               index={i}
               isInView={isInView}
             />
@@ -213,12 +215,12 @@ export function Leadership() {
   );
 }
 
-function LeaderCard({
-  leader,
+function DisciplineCard({
+  discipline,
   index,
   isInView,
 }: {
-  leader: Leader;
+  discipline: Discipline;
   index: number;
   isInView: boolean;
 }) {
@@ -233,14 +235,10 @@ function LeaderCard({
     >
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0  opacity-0 transition-opacity duration-700 group-hover:opacity-100"
-      />
-      <div
-        aria-hidden="true"
         className="pointer-events-none absolute inset-0 grid-lines opacity-[0.06]"
       />
 
-      <div className="relative flex flex-col gap-7 p-7 sm:p-8">
+      <div className="relative flex h-full flex-col gap-7 p-7 sm:p-8">
         <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-[#080808]">
           <div
             aria-hidden="true"
@@ -252,15 +250,15 @@ function LeaderCard({
             xmlns="http://www.w3.org/2000/svg"
             className="absolute inset-0 h-full w-full transition-transform duration-700 group-hover:scale-105"
           >
-            {leader.portrait(false)}
+            {discipline.glyph(false)}
             <g className="opacity-0 transition-opacity duration-500 group-hover:opacity-100">
-              {leader.portrait(true)}
+              {discipline.glyph(true)}
             </g>
           </svg>
 
           <div className="absolute left-4 top-4 inline-flex items-center gap-2 rounded-full border border-paper/15 bg-ink/70 px-3 py-1 backdrop-blur-md">
             <span className="font-mono text-[10px] font-normal tracking-[0.08em] text-paper/70">
-              {leader.initials}
+              {discipline.label}
             </span>
           </div>
 
@@ -269,36 +267,19 @@ function LeaderCard({
               <span className="absolute inset-0 rounded-full bg-accent pulse-dot" />
             </span>
             <span className="font-mono text-[10px] font-normal tracking-[0.08em] text-accent">
-              0{index + 1}
+              {discipline.number}
             </span>
           </div>
         </div>
 
         <div>
-          <h3 className="font-display tracking-normal text-2xl font-normal leading-[1.04]  text-paper">
-            {leader.name}
+          <h3 className="font-display tracking-normal text-[clamp(1.3rem,1.9vw,1.55rem)] font-normal leading-[1.15] text-paper">
+            {discipline.title}
           </h3>
-          <p className="mt-1 font-mono text-[11px] uppercase tracking-[0.08em] text-accent">
-            {leader.title}
+
+          <p className="mt-4 text-sm leading-relaxed text-paper/65">
+            {discipline.body}
           </p>
-
-          <div className="grid overflow-hidden grid-rows-[0fr] opacity-0 transition-[grid-template-rows,opacity] duration-500 group-hover:grid-rows-[1fr] group-hover:opacity-100">
-            <p className="mt-4 overflow-hidden text-sm leading-relaxed text-paper/65">
-              {leader.background}
-            </p>
-          </div>
-
-          <div className="mt-5 flex flex-wrap items-center gap-1.5">
-            {leader.credentials.map((c) => (
-              <span
-                key={c}
-                className="inline-flex items-center gap-1.5 rounded-full border border-paper/[0.08] bg-paper/[0.02] px-2.5 py-1 font-mono text-[10px] font-medium uppercase tracking-[0.1em] text-paper/65"
-              >
-                <span className="h-1 w-1 rounded-full bg-accent" />
-                {c}
-              </span>
-            ))}
-          </div>
         </div>
       </div>
     </motion.li>

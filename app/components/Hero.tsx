@@ -7,9 +7,9 @@ import { ArrowUpRight } from "./icons";
 
 const HERO_STATS = [
   { figure: "200+", label: "Energy systems deployed" },
-  { figure: "6–12", label: "Months to delivery", suffix: "MO" },
-  { figure: "UL", label: "9540A safety-certified", suffix: "9540A" },
-  { figure: "100%", label: "Operator-led execution" },
+  { figure: "6–12", label: "With approvals", suffix: "MO" },
+  { figure: "UL", label: "Safety-certified", suffix: "9540A" },
+  { figure: "Zero", label: "Fire or explosion incidents" },
 ];
 
 export function Hero() {

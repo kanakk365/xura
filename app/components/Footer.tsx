@@ -75,28 +75,19 @@ export function Footer() {
 
           <div>
             <p className="mb-5 font-mono text-[10px] font-normal tracking-[0.3em] text-mute">
-              Contact
+              Get in touch
             </p>
-            <ul className="flex flex-col gap-3 text-sm text-paper/70">
-              <li>
-                <a
-                  href="mailto:hello@xura.energy"
-                  className="transition-colors hover:text-paper"
-                >
-                  hello@xura.energy
-                </a>
-              </li>
-              <li className="font-mono text-[11px] uppercase tracking-[0.2em] text-paper/55">
-                Los Angeles · New York · Austin
-              </li>
-            </ul>
+            <p className="max-w-xs text-sm leading-relaxed text-paper/65">
+              Every site presents different constraints. Start with a site
+              review to define a realistic path forward.
+            </p>
 
             <a
               href="#contact"
               className="group mt-7 inline-flex h-10 items-center gap-2 rounded-full border border-accent/40 bg-accent/10 px-4 text-[11px] font-normal tracking-[0.08em] text-accent transition-colors hover:bg-accent hover:text-ink"
             >
               <span className="h-1.5 w-1.5 rounded-full bg-accent transition-colors group-hover:bg-ink" />
-              Start a project
+              Request a site review
             </a>
           </div>
         </div>
@@ -154,8 +145,13 @@ export function Footer() {
         </div>
 
         <div className="flex flex-col items-start justify-between gap-3 border-t border-paper/[0.06] py-7 text-[11px] font-medium uppercase tracking-[0.08em] text-mute sm:flex-row sm:items-center">
-          <span>© {new Date().getFullYear()} Xura Partners</span>
-          <span className="font-mono">Built for the meter you have today.</span>
+          <span>© {new Date().getFullYear()} Xura Partners. All rights reserved.</span>
+          <a
+            href="#"
+            className="font-mono transition-colors hover:text-paper"
+          >
+            Privacy Policy
+          </a>
         </div>
       </div>
     </footer>
