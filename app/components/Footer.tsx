@@ -92,7 +92,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="relative pb-4">
+        <div className="relative overflow-hidden pb-4">
           <div
             aria-hidden="true"
             className="select-none text-center leading-none"
