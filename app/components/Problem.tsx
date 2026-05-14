@@ -92,7 +92,7 @@ export function Problem() {
               Utilities can&rsquo;t expand fast enough to meet electrification
               load. Most sites already have less capacity than the project
               spec assumes. We design around what the meter can deliver
-              today&mdash;not what it should deliver in seven years.
+              today&mdash;not what it might deliver years from now.
             </motion.p>
 
             <div className="mt-10 grid grid-cols-2 gap-x-6 gap-y-5 border-t border-paper/10 pt-7 sm:max-w-md">

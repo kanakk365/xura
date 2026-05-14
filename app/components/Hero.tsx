@@ -9,7 +9,6 @@ const HERO_STATS = [
   { figure: "200+", label: "Energy systems deployed" },
   { figure: "6–12", label: "With approvals", suffix: "MO" },
   { figure: "UL", label: "Safety-certified", suffix: "9540A" },
-  { figure: "Zero", label: "Fire or explosion incidents" },
 ];
 
 export function Hero() {
@@ -132,7 +131,7 @@ export function Hero() {
         </div>
 
         <div
-          className="rise mt-16 grid w-full max-w-3xl grid-cols-2 gap-x-6 gap-y-6 border-t border-paper/10 pt-7 sm:grid-cols-4"
+          className="rise mt-16 grid w-full max-w-3xl grid-cols-2 gap-x-6 gap-y-6 border-t border-paper/10 pt-7 sm:grid-cols-3"
           style={{ ["--rise-delay" as string]: "720ms" }}
         >
           {HERO_STATS.map((stat) => (
