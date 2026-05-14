@@ -17,9 +17,9 @@ export default function Home() {
       <Projects />
       <Strategy />
       {/* <Leadership /> */}
-      {/* <FAQ />
+      <FAQ />
       <Contact />
-      <Footer /> */}
+      <Footer />
     </main>
   );
 }

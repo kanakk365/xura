@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Instrument_Serif, Plus_Jakarta_Sans } from "next/font/google";
+import { Anton, Instrument_Serif, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 
 const instrumentSerif = Instrument_Serif({
@@ -17,6 +17,13 @@ const plusJakarta = Plus_Jakarta_Sans({
   display: "swap",
 });
 
+const anton = Anton({
+  variable: "--font-anton",
+  subsets: ["latin"],
+  weight: ["400"],
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "Xura — Site-Level Energy Infrastructure",
   description:
@@ -31,7 +38,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${instrumentSerif.variable} ${plusJakarta.variable} h-full antialiased`}
+      className={`${instrumentSerif.variable} ${plusJakarta.variable} ${anton.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-ink text-paper font-body">
         {children}

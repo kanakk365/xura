@@ -23,6 +23,7 @@
 
   --font-display: var(--font-instrument-serif), "Instrument Serif", "Cormorant Garamond", Georgia, serif;
   --font-body: var(--font-plus-jakarta), "Plus Jakarta Sans", system-ui, sans-serif;
+  --font-mark: var(--font-anton), "Anton", "Oswald", "Impact", sans-serif;
 }
 
 html,

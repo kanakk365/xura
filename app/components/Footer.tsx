@@ -92,56 +92,37 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="relative">
-          <svg
-            viewBox="0 0 1200 110"
-            preserveAspectRatio="none"
-            className="block h-[60px] w-full sm:h-[90px]"
+        <div className="relative pb-4">
+          <div
             aria-hidden="true"
+            className="select-none text-center leading-none"
+            style={{
+              fontFamily: "var(--font-mark)",
+              fontWeight: 400,
+              fontSize: "clamp(48px, 11vw, 160px)",
+              letterSpacing: "0.3em",
+              color: "rgba(255,255,255,0.05)",
+              WebkitTextStroke: "1px rgba(255,255,255,0.12)",
+              transform: "scaleX(1.35)",
+              transformOrigin: "center",
+            }}
           >
-            <defs>
-              <linearGradient id="footer-mark-grad" x1="0" y1="0" x2="1" y2="0">
-                <stop offset="0%" stopColor="rgba(139,251,3,0)" />
-                <stop offset="50%" stopColor="rgba(139,251,3,0.6)" />
-                <stop offset="100%" stopColor="rgba(139,251,3,0)" />
-              </linearGradient>
-            </defs>
-            <line
-              x1="0"
-              x2="1200"
-              y1="100"
-              y2="100"
-              stroke="rgba(255,255,255,0.08)"
-              strokeWidth="1"
-            />
-            <motion.line
-              x1="0"
-              x2="1200"
-              y1="100"
-              y2="100"
-              stroke="url(#footer-mark-grad)"
-              strokeWidth="1"
-              strokeDasharray="6 6"
-              initial={{ pathLength: reduce ? 1 : 0 }}
-              whileInView={{ pathLength: 1 }}
+            XURA
+          </div>
+          <div className="relative mt-2">
+            <div className="h-px w-full bg-paper/[0.06]" />
+            <motion.div
+              className="absolute inset-x-0 top-0 h-px"
+              style={{
+                background:
+                  "linear-gradient(to right, rgba(139,251,3,0) 0%, rgba(139,251,3,0.6) 50%, rgba(139,251,3,0) 100%)",
+              }}
+              initial={{ scaleX: reduce ? 1 : 0 }}
+              whileInView={{ scaleX: 1 }}
               viewport={{ once: true, margin: "-10%" }}
               transition={{ duration: 2.4, ease: [0.2, 0.7, 0.1, 1] }}
             />
-            <text
-              x="600"
-              y="80"
-              textAnchor="middle"
-              fontFamily="var(--font-oswald), 'Oswald', sans-serif"
-              fontSize="180"
-              fontWeight="700"
-              letterSpacing="40"
-              fill="rgba(255,255,255,0.04)"
-              stroke="rgba(255,255,255,0.08)"
-              strokeWidth="1"
-            >
-              XURA
-            </text>
-          </svg>
+          </div>
         </div>
 
         <div className="flex flex-col items-start justify-between gap-3 border-t border-paper/[0.06] py-7 text-[11px] font-medium uppercase tracking-[0.08em] text-mute sm:flex-row sm:items-center">
