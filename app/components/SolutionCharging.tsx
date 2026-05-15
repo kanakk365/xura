@@ -10,7 +10,7 @@ function SpecChip({ children }: { children: React.ReactNode }) {
 const COS30 = 0.8660254037844387;
 const SIN30 = 0.5;
 const LOT_X = 140;
-const LOT_Y = 140;
+const LOT_Y = 180;
 
 function iso(wx: number, wy: number): [number, number] {
   return [LOT_X + (wx - wy) * COS30, LOT_Y + (wx + wy) * SIN30];
@@ -35,16 +35,14 @@ function stallTransform(col: number, row: number) {
 // in screen space. Renders FRONT, RIGHT, and TOP faces with white strokes and a
 // subtle gradient fill. The pedestal stands upright (height = H in screen units).
 function ChargerTower({
-  wx,
-  wy,
+  px,
+  py,
   active = false,
 }: {
-  wx: number;
-  wy: number;
+  px: number;
+  py: number;
   active?: boolean;
 }) {
-  // anchor at the base back-left of the pedestal in iso world coords
-  const [px, py] = iso(wx, wy);
   const W = 18;
   const D = 18;
   const H = 56;
@@ -421,6 +419,16 @@ export function SolutionCharging() {
               <stop offset="0%" stopColor="#8bfb03" stopOpacity="0.1" />
               <stop offset="100%" stopColor="#5da302" stopOpacity="0" />
             </linearGradient>
+            <linearGradient id="current-flow" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stopColor="#8bfb03" stopOpacity="0.2" />
+              <stop offset="50%" stopColor="#8bfb03" stopOpacity="1" />
+              <stop offset="100%" stopColor="#8bfb03" stopOpacity="0.95" />
+            </linearGradient>
+            <radialGradient id="pulse-glow">
+              <stop offset="0%" stopColor="#8bfb03" stopOpacity="1" />
+              <stop offset="60%" stopColor="#8bfb03" stopOpacity="0.4" />
+              <stop offset="100%" stopColor="#8bfb03" stopOpacity="0" />
+            </radialGradient>
           </defs>
 
           {/* === Platform (the parking lot floor as a raised iso platform) === */}
@@ -448,10 +456,10 @@ export function SolutionCharging() {
           />
 
           {/* === Parking spaces — grid of stall outlines on the platform.
-                  Active stalls (the empty spots in front of each charger) get highlighted. === */}
+                  Stalls closest to the chargers (back row, cols 2 & 3) are highlighted. === */}
           {STALLS.map((s) => {
             const isActive =
-              (s.col === 1 && s.row === 0) || (s.col === 2 && s.row === 0);
+              (s.col === 2 && s.row === 0) || (s.col === 3 && s.row === 0);
             return (
               <rect
                 key={`stall-${s.col}-${s.row}`}
@@ -473,46 +481,129 @@ export function SolutionCharging() {
             );
           })}
 
-          {/* --- Utility (upper-left) --- */}
-          <IsoUtilityCard x={60} y={70} />
+          {/* --- Utility (top-left, grid source) --- */}
+          <IsoUtilityCard x={48} y={55} />
 
-          {/* --- BESS (upper-right) --- */}
+          {/* --- BESS box (upper-right, the "box" — source for chargers) --- */}
           <IsoContainer x={400} y={92} W={64} D={48} H={38} />
 
-          {/* --- Service feeders (static dashed lines, no animation) --- */}
-          <g fill="none">
-            {/* Utility → BESS overhead service main */}
+          {/* --- Utility → BESS service feeder (static low-emphasis) --- */}
+          <path
+            d="M 70 78 Q 240 55 388 100"
+            stroke="rgba(139,251,3,0.32)"
+            strokeWidth="0.9"
+            strokeDasharray="3 4"
+            fill="none"
+          />
+
+          {/* --- Animated current: BESS → Charging Station --- */}
+          <g>
+            {/* base trace (low-opacity rail) */}
             <path
-              d="M 88 70 Q 240 56 388 100"
-              stroke="rgba(139,251,3,0.35)"
-              strokeWidth="1"
-              strokeDasharray="4 5"
+              d="M 432 130 Q 340 195 256 222"
+              stroke="rgba(139,251,3,0.22)"
+              strokeWidth="1.3"
+              fill="none"
             />
-            {/* BESS → C1 underground feeder (to charger base ≈ (200, 168)) */}
+            {/* animated dashed overlay flows from BESS → chargers */}
             <path
-              d="M 432 130 Q 320 160 200 168"
-              stroke="rgba(139,251,3,0.35)"
-              strokeWidth="0.9"
-              strokeDasharray="3 5"
+              d="M 432 130 Q 340 195 256 222"
+              stroke="url(#current-flow)"
+              strokeWidth="1.7"
+              strokeDasharray="6 4"
+              className="trace-flow"
+              fill="none"
+              style={{ filter: "drop-shadow(0 0 4px rgba(139,251,3,0.55))" }}
             />
-            {/* BESS → C2 underground feeder (to charger base ≈ (236, 189)) */}
-            <path
-              d="M 432 130 Q 340 175 236 189"
-              stroke="rgba(139,251,3,0.32)"
-              strokeWidth="0.9"
-              strokeDasharray="3 5"
-            />
+            {/* moving pulse dots — electricity packets traveling box → station */}
+            <circle
+              r="6.5"
+              fill="url(#pulse-glow)"
+              opacity="0.85"
+            >
+              <animateMotion
+                dur="2.2s"
+                repeatCount="indefinite"
+                path="M 432 130 Q 340 195 256 222"
+              />
+            </circle>
+            <circle
+              r="3"
+              fill="#8bfb03"
+              style={{ filter: "drop-shadow(0 0 6px rgba(139,251,3,0.95))" }}
+            >
+              <animateMotion
+                dur="2.2s"
+                repeatCount="indefinite"
+                path="M 432 130 Q 340 195 256 222"
+              />
+            </circle>
+            <circle r="2.2" fill="#8bfb03" opacity="0.7">
+              <animateMotion
+                dur="2.2s"
+                repeatCount="indefinite"
+                begin="-0.73s"
+                path="M 432 130 Q 340 195 256 222"
+              />
+            </circle>
+            <circle r="2.2" fill="#8bfb03" opacity="0.55">
+              <animateMotion
+                dur="2.2s"
+                repeatCount="indefinite"
+                begin="-1.46s"
+                path="M 432 130 Q 340 195 256 222"
+              />
+            </circle>
           </g>
 
-          {/* --- Chargers (iso towers) — stand at the back of stalls (1,0) and (2,0) --- */}
-          <ChargerTower wx={STALL_W * 1 + STALL_W / 2} wy={-6} active />
-          <ChargerTower wx={STALL_W * 2 + STALL_W / 2} wy={-6} active />
+          {/* --- Service pad behind parking lot (where the chargers stand) --- */}
+          <path
+            d={`M ${iso(82, -36).join(" ")} L ${iso(180, -36).join(" ")} L ${iso(180, -12).join(" ")} L ${iso(82, -12).join(" ")} Z`}
+            fill="#0a0a0a"
+            stroke="rgba(139,251,3,0.32)"
+            strokeWidth="0.7"
+            strokeDasharray="3 3"
+          />
 
-          {/* connector dots at utility and BESS for the overhead feed line */}
-          <circle cx="88" cy="70" r="2.6" fill="#8bfb03" />
-          <circle cx="88" cy="70" r="5" fill="none" stroke="#8bfb03" strokeOpacity="0.4" strokeWidth="0.8" />
-          <circle cx="432" cy="130" r="2.6" fill="#8bfb03" />
-          <circle cx="432" cy="130" r="5" fill="none" stroke="#8bfb03" strokeOpacity="0.4" strokeWidth="0.8" />
+          {/* --- Charging Station: 2 iso towers just outside back-right of parking lot --- */}
+          <ChargerTower px={iso(108, -24)[0]} py={iso(108, -24)[1]} active />
+          <ChargerTower px={iso(160, -24)[0]} py={iso(160, -24)[1]} active />
+
+          {/* connector dots at BESS output (current source) and charger input */}
+          <circle
+            cx="432"
+            cy="130"
+            r="2.6"
+            fill="#8bfb03"
+            style={{ filter: "drop-shadow(0 0 5px rgba(139,251,3,0.75))" }}
+          />
+          <circle
+            cx="432"
+            cy="130"
+            r="5.4"
+            fill="none"
+            stroke="#8bfb03"
+            strokeOpacity="0.45"
+            strokeWidth="0.8"
+            className="pulse-dot"
+          />
+          <circle
+            cx="256"
+            cy="222"
+            r="2.6"
+            fill="#8bfb03"
+            style={{ filter: "drop-shadow(0 0 5px rgba(139,251,3,0.75))" }}
+          />
+          <circle
+            cx="256"
+            cy="222"
+            r="5.4"
+            fill="none"
+            stroke="#8bfb03"
+            strokeOpacity="0.45"
+            strokeWidth="0.8"
+            className="pulse-dot"
+          />
         </svg>
       </div>
 

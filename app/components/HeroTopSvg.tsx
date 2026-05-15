@@ -44,30 +44,6 @@ export function HeroTopSvg({
         stroke="rgba(139,251,3,0.18)"
       />
 
-      {/* === Iso card top-right (the "fynt" anchor card with the floating block) === */}
-      <path
-        transform="matrix(.86603 .5 -.86603 .5 699.789 71)"
-        fill="#121212"
-        stroke="rgba(139,251,3,0.65)"
-        d="M0 0h59.958v59.958H0z"
-      />
-      <path
-        transform="matrix(.86603 .5 0 1 647.863 100.979)"
-        fill="#1f1f1f"
-        stroke="rgba(139,251,3,0.55)"
-        d="M0 0h59.958v14.989H0z"
-      />
-      <path
-        transform="matrix(.86603 -.5 0 1 699.789 130.957)"
-        fill="#1f1f1f"
-        stroke="rgba(139,251,3,0.55)"
-        d="M0 0h59.958v14.989H0z"
-      />
-      <circle cx="1.319" cy="1.319" r="1.319" transform="matrix(.86603 .5 -.86603 .5 699.527 120.776)" fill="#d9d9d9" />
-      <circle cx="1.319" cy="1.319" r="1.319" transform="matrix(.86603 .5 -.86603 .5 699.527 77.222)" fill="#d9d9d9" />
-      <circle cx="1.319" cy="1.319" r="1.319" transform="matrix(.86603 .5 -.86603 .5 661.156 100.036)" fill="#d9d9d9" />
-      <circle cx="1.319" cy="1.319" r="1.319" transform="matrix(.86603 .5 -.86603 .5 739.969 100.036)" fill="#d9d9d9" />
-
       {/* === Iso card center — the focal element with the gradient + Fynt block === */}
       <rect
         width="60.203"
@@ -115,106 +91,11 @@ export function HeroTopSvg({
       {/* Floating Fynt block (animated) */}
       <HeroFyntBlock id={id} />
 
-      {/* === Iso card lower-left (servers) === */}
-      <rect
-        width="60.392"
-        height="60.392"
-        rx="2"
-        transform="matrix(.86603 .5 -.86603 .5 53.168 208)"
-        fill="#0e0e0e"
-        stroke="rgba(139,251,3,0.45)"
-      />
-      <path
-        transform="matrix(.86603 .5 0 1 .865 238.196)"
-        fill="#070707"
-        stroke="rgba(139,251,3,0.45)"
-        d="M0 0h60.203v26.339H0z"
-      />
-      <path
-        transform="matrix(.86603 -.5 0 1 53.543 268.175)"
-        fill="#070707"
-        stroke="rgba(139,251,3,0.45)"
-        d="M0 0h59.958v26.462H0z"
-      />
-
-      {/* === Iso card top-left (cards) === */}
-      <rect
-        width="60.392"
-        height="60.392"
-        rx="2"
-        transform="matrix(.86603 .5 -.86603 .5 222.17 85)"
-        fill="#0e0e0e"
-        stroke="rgba(139,251,3,0.45)"
-      />
-      <path
-        transform="matrix(.86603 .5 0 1 169.865 115.197)"
-        fill="#070707"
-        stroke="rgba(139,251,3,0.45)"
-        d="M0 0h60.203v26.339H0z"
-      />
-      <path
-        transform="matrix(.86603 -.5 0 1 222.545 145.175)"
-        fill="#070707"
-        stroke="rgba(139,251,3,0.45)"
-        d="M0 0h59.958v26.462H0z"
-      />
-      <circle
-        cx="2.287"
-        cy="2.287"
-        r="2.287"
-        transform="matrix(.86603 .5 -.86603 .5 262.826 113)"
-        fill="#8bfb03"
-      />
-
-      {/* === Iso card upper-mid (the highlighted one with the yellow circle) === */}
-      <rect
-        width="60.392"
-        height="60.392"
-        rx="2"
-        transform="matrix(.86603 .5 -.86603 .5 358.168 10)"
-        fill="#0e0e0e"
-        stroke="rgba(139,251,3,0.45)"
-      />
-      <path
-        transform="matrix(.86603 .5 0 1 305.865 40.196)"
-        fill="#070707"
-        stroke="rgba(139,251,3,0.45)"
-        d="M0 0h60.203v26.339H0z"
-      />
-      <path
-        transform="matrix(.86603 -.5 0 1 358.543 70.175)"
-        fill="#070707"
-        stroke="rgba(139,251,3,0.45)"
-        d="M0 0h59.958v26.462H0z"
-      />
-      <circle
-        cx="2.287"
-        cy="2.287"
-        r="2.287"
-        transform="matrix(.86603 .5 -.86603 .5 396.826 38)"
-        fill="#a8ff34"
-      />
-
       {/* Small green accent rectangles (replacing the orange ones) */}
       <rect width="9.818" height="9.818" rx="1" transform="matrix(.86603 .5 -.86603 .5 461.871 358.191)" fill="#8bfb03" />
       <rect width="9.818" height="9.818" rx="1" transform="matrix(.86603 .5 -.86603 .5 674.084 236.28)" fill="#8bfb03" />
       <rect width="9.818" height="9.818" rx="1" transform="matrix(.86603 .5 -.86603 .5 251.16 236.28)" fill="#8bfb03" />
       <rect width="9.818" height="9.818" rx="1" transform="matrix(.86603 .5 -.86603 .5 462.623 119.636)" fill="#8bfb03" />
-
-      {/* connector decorative paths */}
-      <path
-        d="M597.98 100.46h-15.238m37.152.447a.9.9 0 0 0 .378-.178c.092-.079.142-.173.142-.269 0-.095-.05-.189-.142-.269a.9.9 0 0 0-.378-.177l-26.728-6.515a1.4 1.4 0 0 0-.513-.024 1.1 1.1 0 0 0-.442.152c-.116.077-.188.172-.205.273s.021.203.109.291l5.362 5.248c.323.301.497.647.504 1.001.006.354-.155.702-.467 1.007l-5.399 5.283c-.089.088-.129.19-.112.291s.088.197.204.274.272.13.444.153.352.014.514-.025z"
-        transform="translate(100 0)"
-        stroke="rgba(139,251,3,0.4)"
-        strokeWidth="3"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-
-      <path
-        d="m254.865 314.595-39.942 24.125a14 14 0 0 1-14.25.134L86.865 273"
-        stroke="rgba(139,251,3,0.4)"
-      />
 
       <defs>
         <linearGradient id={`${id}-a`} x1="462.777" y1="173.82" x2="462.777" y2="249.073" gradientUnits="userSpaceOnUse">

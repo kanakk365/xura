@@ -63,7 +63,7 @@ export function Problem() {
               initial={{ opacity: 0, y: 12 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.7, ease: [0.2, 0.7, 0.1, 1] }}
-              className="mb-6 inline-flex items-center gap-3 self-start text-[11px] font-medium uppercase tracking-[0.2em] text-mute"
+              className="mb-4 inline-flex items-center gap-3 self-start text-[11px] font-medium uppercase tracking-[0.2em] text-mute"
             >
               <span className="relative inline-flex h-2 w-2">
                 <span className="absolute inset-0 rounded-full bg-accent pulse-dot" />
@@ -76,7 +76,7 @@ export function Problem() {
               initial={{ opacity: 0, y: 16 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.9, delay: 0.1, ease: [0.2, 0.7, 0.1, 1] }}
-              className="font-display tracking-normal text-[clamp(2rem,4.6vw,3.9rem)] font-normal leading-[1.05]  text-paper"
+              className="font-display tracking-normal text-[clamp(1.75rem,3.6vw,3rem)] font-normal leading-[1.05]  text-paper"
             >
               Demand is{" "}
               <span className="italic text-accent">accelerating</span>
@@ -87,15 +87,13 @@ export function Problem() {
               initial={{ opacity: 0, y: 16 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.9, delay: 0.25, ease: [0.2, 0.7, 0.1, 1] }}
-              className="mt-7 max-w-md text-base leading-relaxed text-paper/65"
+              className="mt-5 max-w-md text-sm leading-relaxed text-paper/65"
             >
-              Utilities can&rsquo;t expand fast enough to meet electrification
-              load. Most sites already have less capacity than the project
-              spec assumes. We design around what the meter can deliver
-              today&mdash;not what it might deliver years from now.
+              Utilities can&rsquo;t expand fast enough for electrification
+              load. We design around what the meter delivers today.
             </motion.p>
 
-            <div className="mt-10 grid grid-cols-2 gap-x-6 gap-y-5 border-t border-paper/10 pt-7 sm:max-w-md">
+            <div className="mt-7 grid grid-cols-2 gap-x-6 gap-y-4 border-t border-paper/10 pt-5 sm:max-w-md">
               <Constraint
                 code="01"
                 label="Limited available capacity at the meter"

@@ -18,21 +18,22 @@ const FINAL_Y = {
 
 const EASE_OUT: [number, number, number, number] = [0.23, 1, 0.32, 1];
 
-// X-positions for the two vertical connector guides. Both the
-// top→middle pair and the middle→bottom pair share these so all four
-// corners line up on the y-axis (no sideways drift between sections).
-const CONNECTOR_X = {
-  left: -130,
-  right: 130,
+// Per-corner connector positions, ported from design_reff.md (HeroAnimation).
+// Each entry is one dotted line — x is offset from container center, y is its
+// vertical top. Values are scaled 0.744× from the reference (which renders the
+// SVGs at natural sizes ~753 wide; we render the top SVG at 560 wide).
+const CORNERS = {
+  topToMiddle: [
+    { x: 246, y: 245 },
+    { x: -120, y: 245 },
+  ],
+  middleToBottom: [
+    { x: 247, y: 393 },
+    { x: -120, y: 393 },
+  ],
 } as const;
 
-// Y-position where each connector pair starts (top of the line).
-// `topPair` sits between the top section and the middle section;
-// `bottomPair` sits between the middle and the bottom.
-const CONNECTOR_Y = {
-  topPair: 145,
-  bottomPair: 320,
-} as const;
+const LINE_HEIGHT = 100;
 
 function ConnectingLine({
   x,
@@ -85,7 +86,7 @@ function ConnectingLine({
 }
 
 export function SolutionStorage() {
-  const lineHeight = Math.abs(FINAL_Y.top);
+  const lineHeight = LINE_HEIGHT;
 
   return (
     <div className="group relative h-full min-h-[900px] overflow-hidden bg-[#080808]">
@@ -95,7 +96,7 @@ export function SolutionStorage() {
       />
 
       <div className="absolute inset-x-0 top-0 bottom-[200px] overflow-hidden">
-        <div className="relative flex h-full flex-col items-center justify-start pt-16">
+        <div className="relative flex h-full flex-col items-center justify-start pt-32 -translate-x-10">
           {/* === Top: the diamond-lattice illustration with iso cards === */}
           <motion.div
             className="relative z-30 flex justify-center"
@@ -107,57 +108,45 @@ export function SolutionStorage() {
               delay: EXPLOSION.initialDelay,
             }}
           >
-            <HeroTopSvg className="w-[88%] max-w-[560px] h-auto" />
+            <HeroTopSvg className="w-full max-w-[560px] h-auto" />
           </motion.div>
 
-          {/* Connector lines top → middle (left + right, same X) */}
+          {/* Connector lines top → middle */}
           <div className="absolute inset-0 z-25 pointer-events-none">
-            <ConnectingLine
-              key="top-middle-left"
-              x={CONNECTOR_X.left}
-              topOffset={CONNECTOR_Y.topPair}
-              height={lineHeight}
-              delay={EXPLOSION.initialDelay}
-              direction="up"
-            />
-            <ConnectingLine
-              key="top-middle-right"
-              x={CONNECTOR_X.right}
-              topOffset={CONNECTOR_Y.topPair}
-              height={lineHeight}
-              delay={EXPLOSION.initialDelay}
-              direction="up"
-            />
+            {CORNERS.topToMiddle.map((corner, index) => (
+              <ConnectingLine
+                key={`top-middle-${index}`}
+                x={corner.x}
+                topOffset={corner.y}
+                height={lineHeight}
+                delay={EXPLOSION.initialDelay}
+                direction="up"
+              />
+            ))}
           </div>
 
           {/* === Middle: the platform with 4 iso cards === */}
-          <div className="relative z-20 flex justify-center -mt-44">
-            <HeroMiddleSvg className="w-[80%] max-w-[460px] h-auto" />
+          <div className="relative z-20 flex justify-center -mt-52 ml-32">
+            <HeroMiddleSvg className="w-full max-w-[370px] h-auto" />
           </div>
 
-          {/* Connector lines middle → bottom (left + right, same X as top pair) */}
+          {/* Connector lines middle → bottom */}
           <div className="absolute inset-0 z-15 pointer-events-none">
-            <ConnectingLine
-              key="middle-bottom-left"
-              x={CONNECTOR_X.left}
-              topOffset={CONNECTOR_Y.bottomPair}
-              height={lineHeight}
-              delay={EXPLOSION.initialDelay}
-              direction="down"
-            />
-            <ConnectingLine
-              key="middle-bottom-right"
-              x={CONNECTOR_X.right}
-              topOffset={CONNECTOR_Y.bottomPair}
-              height={lineHeight}
-              delay={EXPLOSION.initialDelay}
-              direction="down"
-            />
+            {CORNERS.middleToBottom.map((corner, index) => (
+              <ConnectingLine
+                key={`middle-bottom-${index}`}
+                x={corner.x}
+                topOffset={corner.y}
+                height={lineHeight}
+                delay={EXPLOSION.initialDelay}
+                direction="down"
+              />
+            ))}
           </div>
 
           {/* === Bottom: the stacked iso staircase === */}
           <motion.div
-            className="relative z-10 flex justify-center -mt-44"
+            className="relative z-10 flex justify-center -mt-60 ml-2"
             initial={{ y: 0 }}
             animate={{ y: FINAL_Y.bottom }}
             transition={{
@@ -166,7 +155,7 @@ export function SolutionStorage() {
               delay: EXPLOSION.initialDelay,
             }}
           >
-            <HeroBottomSvg className="w-[88%] max-w-[560px] h-auto" />
+            <HeroBottomSvg className="w-full max-w-[492px] h-auto" />
           </motion.div>
         </div>
       </div>
