@@ -25,19 +25,19 @@ export function Contact() {
     <section
       id="contact"
       ref={ref}
-      className="relative bg-ink py-24 sm:py-28 lg:py-36"
+      className="relative bg-ink py-20 sm:py-28 lg:py-36"
     >
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-paper/15 to-transparent"
       />
 
-      <div className="relative mx-auto w-full max-w-[1400px] px-6 sm:px-10 lg:px-16">
+      <div className="relative mx-auto w-full max-w-[1400px] px-5 sm:px-10 lg:px-16">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 1, ease: [0.2, 0.7, 0.1, 1] }}
-          className="relative overflow-hidden rounded-[36px] border border-paper/[0.08] bg-ink-2/60"
+          className="relative overflow-hidden rounded-3xl border border-paper/[0.08] bg-ink-2/60 sm:rounded-[36px]"
         >
           <div
             aria-hidden="true"
@@ -86,7 +86,7 @@ export function Contact() {
             />
           </svg>
 
-          <div className="relative grid grid-cols-1 gap-12 p-8 sm:p-12 lg:grid-cols-[1.05fr_1fr] lg:gap-16 lg:p-16">
+          <div className="relative grid grid-cols-1 gap-10 p-6 sm:gap-12 sm:p-12 lg:grid-cols-[1.05fr_1fr] lg:gap-16 lg:p-16">
             <div>
               <motion.p
                 initial={{ opacity: 0, y: 12 }}
@@ -105,7 +105,7 @@ export function Contact() {
                 initial={{ opacity: 0, y: 16 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.9, delay: 0.25 }}
-                className="font-display tracking-normal text-[clamp(2.1rem,4.4vw,3.75rem)] font-normal leading-[1.05] text-paper"
+                className="font-display tracking-normal text-[clamp(1.85rem,6vw,3.75rem)] font-normal leading-[1.05] text-paper"
               >
                 Start with a{" "}
                 <span className="italic text-accent">site review</span>
@@ -116,7 +116,7 @@ export function Contact() {
                 initial={{ opacity: 0, y: 16 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.9, delay: 0.4 }}
-                className="mt-7 max-w-md text-base leading-relaxed text-paper/65"
+                className="mt-6 max-w-md text-[15px] leading-relaxed text-paper/65 sm:mt-7 sm:text-base"
               >
                 Every site presents different constraints. A site review
                 provides the clarity needed to evaluate feasibility and define
@@ -147,7 +147,7 @@ export function Contact() {
               initial={{ opacity: 0, y: 24 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.9, delay: 0.45 }}
-              className="relative flex flex-col gap-5 rounded-[28px] border border-paper/[0.08] bg-ink/70 p-6 backdrop-blur-md sm:p-8"
+              className="relative flex flex-col gap-5 rounded-2xl border border-paper/[0.08] bg-ink/70 p-5 backdrop-blur-md sm:rounded-[28px] sm:p-8"
               onSubmit={(e) => e.preventDefault()}
             >
               <div className="flex items-center justify-between text-[10px] font-normal tracking-[0.3em]">
@@ -203,7 +203,7 @@ export function Contact() {
                   id="ct-notes"
                   rows={3}
                   placeholder="Service size, parking count, anything else..."
-                  className="resize-none rounded-xl border border-paper/[0.08] bg-paper/[0.02] px-4 py-3 text-sm text-paper placeholder:text-mute focus:border-accent/40 focus:outline-none focus:ring-1 focus:ring-accent/30"
+                  className="resize-none rounded-xl border border-paper/[0.08] bg-paper/[0.02] px-4 py-3 text-[16px] text-paper placeholder:text-mute focus:border-accent/40 focus:outline-none focus:ring-1 focus:ring-accent/30 sm:text-sm"
                 />
               </div>
 
@@ -254,7 +254,7 @@ function Field({
         id={id}
         type={type}
         placeholder={placeholder}
-        className="h-11 rounded-xl border border-paper/[0.08] bg-paper/[0.02] px-4 text-sm text-paper placeholder:text-mute focus:border-accent/40 focus:outline-none focus:ring-1 focus:ring-accent/30"
+        className="h-11 rounded-xl border border-paper/[0.08] bg-paper/[0.02] px-4 text-[16px] text-paper placeholder:text-mute focus:border-accent/40 focus:outline-none focus:ring-1 focus:ring-accent/30 sm:text-sm"
       />
     </div>
   );

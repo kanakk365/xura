@@ -50,10 +50,10 @@ function ConnectingLine({
 }) {
   return (
     <motion.div
-      className="absolute pointer-events-none"
+      className="absolute pointer-events-none [--connector-shift:-60px] sm:[--connector-shift:0px]"
       style={{
         left: `calc(50% + ${x}px)`,
-        top: topOffset,
+        top: `calc(${topOffset}px + var(--connector-shift, 0px))`,
         transformOrigin: direction === "up" ? "bottom center" : "top center",
       }}
       initial={{ scaleY: 0 }}
@@ -89,14 +89,14 @@ export function SolutionStorage() {
   const lineHeight = LINE_HEIGHT;
 
   return (
-    <div className="group relative h-full min-h-[900px] overflow-hidden bg-[#080808]">
+    <div className="group relative h-full min-h-[500px] overflow-hidden bg-[#080808] sm:min-h-[680px] lg:min-h-[900px]">
       <div
         aria-hidden="true"
         className="absolute inset-0 grid-lines opacity-[0.08]"
       />
 
-      <div className="absolute inset-x-0 top-0 bottom-[200px] overflow-hidden">
-        <div className="relative flex h-full flex-col items-center justify-start pt-32 -translate-x-10">
+      <div className="absolute inset-x-0 top-0 bottom-[150px] overflow-hidden sm:bottom-[200px]">
+        <div className="relative flex h-full origin-top scale-[0.5] flex-col items-center justify-start pt-16 -translate-x-4 sm:scale-90 sm:-translate-x-10 sm:pt-32 lg:scale-100">
           {/* === Top: the diamond-lattice illustration with iso cards === */}
           <motion.div
             className="relative z-30 flex justify-center"
@@ -108,7 +108,7 @@ export function SolutionStorage() {
               delay: EXPLOSION.initialDelay,
             }}
           >
-            <HeroTopSvg className="w-full max-w-[560px] h-auto" />
+            <HeroTopSvg className="h-auto w-[560px] shrink-0" />
           </motion.div>
 
           {/* Connector lines top → middle */}
@@ -127,7 +127,7 @@ export function SolutionStorage() {
 
           {/* === Middle: the platform with 4 iso cards === */}
           <div className="relative z-20 flex justify-center -mt-52 ml-32">
-            <HeroMiddleSvg className="w-full max-w-[370px] h-auto" />
+            <HeroMiddleSvg className="h-auto w-[370px] shrink-0" />
           </div>
 
           {/* Connector lines middle → bottom */}
@@ -155,21 +155,21 @@ export function SolutionStorage() {
               delay: EXPLOSION.initialDelay,
             }}
           >
-            <HeroBottomSvg className="w-full max-w-[492px] h-auto" />
+            <HeroBottomSvg className="h-auto w-[492px] shrink-0" />
           </motion.div>
         </div>
       </div>
 
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 bottom-0 z-[5] h-44 bg-gradient-to-t from-[#080808] via-[#080808]/85 to-transparent"
+        className="pointer-events-none absolute inset-x-0 bottom-0 z-[5] h-36 bg-gradient-to-t from-[#080808] via-[#080808]/85 to-transparent sm:h-44"
       />
 
-      <div className="absolute inset-x-0 bottom-0 z-10 p-6 sm:p-7">
-        <h3 className="font-display tracking-normal text-xl font-normal leading-tight text-paper sm:text-[1.65rem]">
+      <div className="absolute inset-x-0 bottom-0 z-10 p-5 sm:p-7">
+        <h3 className="font-display tracking-normal text-lg font-normal leading-tight text-paper sm:text-xl lg:text-[1.65rem]">
           Storage that survives audit.
         </h3>
-        <p className="mt-2 max-w-sm text-xs leading-relaxed text-paper/60 sm:text-sm">
+        <p className="mt-2 max-w-sm text-[12.5px] leading-relaxed text-paper/60 sm:text-sm">
           UL&nbsp;9540A-tested systems with onboard BMS, NFPA&nbsp;855 siting,
           and 24/7 telemetry.
         </p>

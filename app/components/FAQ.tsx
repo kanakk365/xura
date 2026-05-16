@@ -81,15 +81,15 @@ export function FAQ() {
     <section
       id="faq"
       ref={ref}
-      className="relative bg-ink py-24 sm:py-28 lg:py-36"
+      className="relative bg-ink py-20 sm:py-28 lg:py-36"
     >
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-paper/15 to-transparent"
       />
 
-      <div className="relative mx-auto w-full max-w-[1400px] px-6 sm:px-10 lg:px-16">
-        <div className="grid grid-cols-1 gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-20">
+      <div className="relative mx-auto w-full max-w-[1400px] px-5 sm:px-10 lg:px-16">
+        <div className="grid grid-cols-1 gap-10 sm:gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-20">
           <div className="lg:sticky lg:top-24 lg:self-start">
             <motion.p
               initial={{ opacity: 0, y: 12 }}
@@ -107,7 +107,7 @@ export function FAQ() {
               initial={{ opacity: 0, y: 16 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.9, delay: 0.1, ease: [0.2, 0.7, 0.1, 1] }}
-              className="font-display tracking-normal text-[clamp(2rem,4vw,3.5rem)] font-normal leading-[1.05]  text-paper"
+              className="font-display tracking-normal text-[clamp(1.85rem,6vw,3.5rem)] font-normal leading-[1.05]  text-paper"
             >
               Things owners ask{" "}
               <span className="italic text-accent">first</span>
@@ -187,19 +187,19 @@ export function FAQ() {
                     type="button"
                     onClick={() => setOpenIndex(isOpen ? null : i)}
                     aria-expanded={isOpen}
-                    className="flex w-full items-center gap-4 px-6 py-5 text-left sm:px-7 sm:py-6"
+                    className="flex w-full items-center gap-3 px-5 py-4 text-left sm:gap-4 sm:px-7 sm:py-6"
                   >
                     <span className="hidden shrink-0 rounded-full border border-paper/[0.08] bg-paper/[0.02] px-2.5 py-1 text-[10px] font-medium tracking-[0.08em] text-paper/65 md:inline-flex md:items-center md:gap-1.5">
                       <span className="h-1 w-1 rounded-full bg-accent" />
                       {item.tag}
                     </span>
-                    <span className="flex-1 font-display tracking-normal text-lg font-normal text-paper sm:text-xl">
+                    <span className="flex-1 font-display tracking-normal text-[16px] font-normal text-paper sm:text-xl">
                       {item.question}
                     </span>
                     <motion.span
                       animate={{ rotate: isOpen ? 45 : 0 }}
                       transition={{ duration: 0.3, ease: [0.2, 0.7, 0.1, 1] }}
-                      className={`grid h-9 w-9 shrink-0 place-items-center rounded-full border transition-colors duration-300 ${
+                      className={`grid h-8 w-8 shrink-0 place-items-center rounded-full border transition-colors duration-300 sm:h-9 sm:w-9 ${
                         isOpen
                           ? "border-accent/50 bg-accent/10 text-accent"
                           : "border-paper/15 bg-paper/[0.03] text-paper/70"
@@ -235,15 +235,15 @@ export function FAQ() {
                         }}
                         className="overflow-hidden"
                       >
-                        <div className="px-6 pb-6 pl-6 sm:px-7 sm:pb-7 sm:pl-[5.5rem]">
-                          <div className="mb-5 flex items-center gap-3">
+                        <div className="px-5 pb-5 sm:px-7 sm:pb-7 sm:pl-[5.5rem]">
+                          <div className="mb-4 flex items-center gap-3 sm:mb-5">
                             <div className="h-px flex-1 bg-paper/10" />
                             <span className="font-mono text-[10px] font-medium uppercase tracking-[0.2em] text-mute">
                               Answer
                             </span>
                             <div className="h-px flex-1 bg-paper/10" />
                           </div>
-                          <p className="max-w-2xl text-base leading-relaxed text-paper/75">
+                          <p className="max-w-2xl text-[14.5px] leading-relaxed text-paper/75 sm:text-base">
                             {item.answer}
                           </p>
                         </div>

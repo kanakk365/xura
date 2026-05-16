@@ -117,9 +117,9 @@ export function Projects() {
         className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-paper/15 to-transparent"
       />
 
-      <div className="relative pt-24 sm:pt-28 lg:pt-36">
-        <div className="mx-auto w-full max-w-[1400px] px-6 sm:px-10 lg:px-16">
-          <header className="flex flex-col gap-6 pb-10 lg:flex-row lg:items-end lg:justify-between lg:pb-14">
+      <div className="relative pt-20 sm:pt-28 lg:pt-36">
+        <div className="mx-auto w-full max-w-[1400px] px-5 sm:px-10 lg:px-16">
+          <header className="flex flex-col gap-6 pb-8 lg:flex-row lg:items-end lg:justify-between lg:pb-14">
             <div className="max-w-2xl">
               <motion.p
                 initial={{ opacity: 0, y: 12 }}
@@ -141,7 +141,7 @@ export function Projects() {
                   delay: 0.1,
                   ease: [0.2, 0.7, 0.1, 1],
                 }}
-                className="font-display tracking-normal text-[clamp(2rem,4.4vw,3.75rem)] font-normal leading-[1.05] text-paper"
+                className="font-display tracking-normal text-[clamp(1.85rem,6vw,3.75rem)] font-normal leading-[1.05] text-paper"
               >
                 Designed for{" "}
                 <span className="italic text-accent">
@@ -158,7 +158,7 @@ export function Projects() {
                 delay: 0.2,
                 ease: [0.2, 0.7, 0.1, 1],
               }}
-              className="max-w-sm text-base leading-relaxed text-paper/60"
+              className="max-w-sm text-[15px] leading-relaxed text-paper/60 sm:text-base"
             >
               Fleet electrification exposes grid, load, and scheduling
               constraints early. Every site walks the same disciplined
@@ -168,40 +168,46 @@ export function Projects() {
         </div>
       </div>
 
-      {reduce ? (
+      <div className="lg:hidden">
         <FallbackList />
-      ) : (
-        <div
-          ref={stickyRef}
-          className="relative"
-          style={{ height: `${STEPS.length * 100}vh` }}
-        >
-          <div className="sticky top-0 flex h-screen w-full items-center justify-center overflow-hidden">
-            <motion.div
-              style={{ opacity: exitOpacity, y: exitY }}
-              className="relative flex h-full w-full items-center justify-center"
-            >
-              <ProgressRail
-                total={STEPS.length}
-                progress={smoothProgress}
-              />
-              <div className="relative mx-auto h-[min(82vh,640px)] w-full max-w-[1360px] overflow-hidden px-4 sm:px-10 lg:h-[min(70vh,560px)] lg:px-16">
-                {STEPS.map((step, i) => (
-                  <StickyCard
-                    key={step.id}
-                    step={step}
-                    index={i}
-                    total={STEPS.length}
-                    progress={smoothProgress}
-                  />
-                ))}
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      )}
+      </div>
 
-      <div className="h-16 sm:h-20 lg:h-24" />
+      <div className="hidden lg:block">
+        {reduce ? (
+          <FallbackList />
+        ) : (
+          <div
+            ref={stickyRef}
+            className="relative"
+            style={{ height: `${STEPS.length * 100}vh` }}
+          >
+            <div className="sticky top-0 flex h-screen w-full items-center justify-center overflow-hidden">
+              <motion.div
+                style={{ opacity: exitOpacity, y: exitY }}
+                className="relative flex h-full w-full items-center justify-center"
+              >
+                <ProgressRail
+                  total={STEPS.length}
+                  progress={smoothProgress}
+                />
+                <div className="relative mx-auto h-[min(70vh,560px)] w-full max-w-[1360px] overflow-hidden px-4 sm:px-10 lg:px-16">
+                  {STEPS.map((step, i) => (
+                    <StickyCard
+                      key={step.id}
+                      step={step}
+                      index={i}
+                      total={STEPS.length}
+                      progress={smoothProgress}
+                    />
+                  ))}
+                </div>
+              </motion.div>
+            </div>
+          </div>
+        )}
+      </div>
+
+      <div className="h-12 sm:h-20 lg:h-24" />
     </section>
   );
 }
@@ -275,7 +281,7 @@ function CardSurface({
   const reverse = index % 2 === 1;
   return (
     <div
-      className={`group relative h-full overflow-hidden rounded-[24px] border border-paper/[0.07] bg-ink-2 shadow-[0_30px_70px_-30px_rgba(0,0,0,0.7)] sm:rounded-[28px] ${
+      className={`group relative overflow-hidden rounded-[20px] border border-paper/[0.07] bg-ink-2 shadow-[0_30px_70px_-30px_rgba(0,0,0,0.7)] sm:rounded-[24px] lg:h-full lg:rounded-[28px] ${
         reverse ? "lg:[direction:rtl]" : ""
       }`}
     >
@@ -288,9 +294,9 @@ function CardSurface({
         className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-paper/15 to-transparent"
       />
 
-      <div className="relative grid h-full grid-cols-1 lg:grid-cols-[0.92fr_1.08fr]">
+      <div className="relative grid grid-cols-1 lg:h-full lg:grid-cols-[0.92fr_1.08fr]">
         <DetailSide step={step} index={index} total={total} />
-        <div className="relative min-h-[240px] overflow-hidden bg-[#070707] lg:min-h-0 lg:[direction:ltr]">
+        <div className="relative aspect-[16/10] overflow-hidden bg-[#070707] sm:aspect-[16/9] lg:aspect-auto lg:min-h-0 lg:[direction:ltr]">
           <VisualFrame tag={step.tag} number={step.number}>
             <Image
               src={step.image}
@@ -317,7 +323,7 @@ function DetailSide({
   total: number;
 }) {
   return (
-    <div className="relative grid grid-rows-[auto_1fr_auto] gap-5 p-6 sm:gap-6 sm:p-8 lg:gap-7 lg:p-9 lg:[direction:ltr]">
+    <div className="relative grid grid-rows-[auto_1fr_auto] gap-4 p-5 sm:gap-6 sm:p-8 lg:gap-7 lg:p-9 lg:[direction:ltr]">
       <div
         aria-hidden="true"
         className="pointer-events-none absolute right-5 top-5 select-none font-display text-[clamp(6rem,11vw,10.5rem)] italic leading-[0.82] text-paper/[0.04] sm:right-6 sm:top-6 lg:right-7 lg:top-6"
@@ -476,10 +482,10 @@ function ProgressDot({
 
 function FallbackList() {
   return (
-    <div className="mx-auto w-full max-w-[1400px] px-6 sm:px-10 lg:px-16">
-      <ul className="flex flex-col gap-6 lg:gap-8">
+    <div className="mx-auto w-full max-w-[1400px] px-5 sm:px-10 lg:px-16">
+      <ul className="flex flex-col gap-5 sm:gap-6 lg:gap-8">
         {STEPS.map((step, i) => (
-          <li key={step.id} className="h-[640px]">
+          <li key={step.id} className="lg:h-[560px]">
             <CardSurface step={step} index={i} total={STEPS.length} />
           </li>
         ))}

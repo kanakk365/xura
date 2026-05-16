@@ -335,7 +335,7 @@ function IsoUtilityCard({ x, y }: { x: number; y: number }) {
 
 export function SolutionCharging() {
   return (
-    <div className="group relative h-full min-h-[540px] overflow-hidden bg-[#080808]">
+    <div className="group relative h-full min-h-[420px] overflow-hidden bg-[#080808] sm:min-h-[540px]">
       <div
         aria-hidden="true"
         className="absolute inset-0 "
@@ -345,12 +345,13 @@ export function SolutionCharging() {
         className="absolute inset-0 grid-lines opacity-[0.12]"
       />
 
-      <div className="absolute inset-0 flex items-start justify-center pt-10 pb-[170px]">
+      <div className="absolute inset-0 flex items-start justify-center pt-6 pb-[150px] sm:pt-10 sm:pb-[170px]">
         <svg
           viewBox="0 0 480 340"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className="w-[96%] max-w-[440px] transition-transform duration-700 ease-out group-hover:-translate-y-1"
+          preserveAspectRatio="xMidYMid meet"
+          className="w-[92%] max-w-[440px] transition-transform duration-700 ease-out group-hover:-translate-y-1"
         >
           <defs>
             <linearGradient id="bus-flow" x1="0" y1="0" x2="1" y2="0">
@@ -611,14 +612,14 @@ export function SolutionCharging() {
 
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 bottom-0 z-[5] h-64 bg-gradient-to-t from-[#080808] via-[#080808]/85 to-transparent"
+        className="pointer-events-none absolute inset-x-0 bottom-0 z-[5] h-52 bg-gradient-to-t from-[#080808] via-[#080808]/85 to-transparent sm:h-64"
       />
 
-      <div className="absolute inset-x-0 bottom-0 z-10 p-6 sm:p-7">
-        <h3 className="font-display tracking-normal text-xl font-normal leading-tight text-paper sm:text-[1.65rem]">
+      <div className="absolute inset-x-0 bottom-0 z-10 p-5 sm:p-7">
+        <h3 className="font-display tracking-normal text-lg font-normal leading-tight text-paper sm:text-xl lg:text-[1.65rem]">
           Sized to your service.
         </h3>
-        <p className="mt-2 max-w-sm text-xs leading-relaxed text-paper/60 sm:text-sm">
+        <p className="mt-2 max-w-sm text-[12.5px] leading-relaxed text-paper/60 sm:text-sm">
           Level&nbsp;3 DC fast charging, staged with on-site storage when your
           service can&rsquo;t carry the load alone.
         </p>

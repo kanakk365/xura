@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Anton, Instrument_Serif, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 
@@ -28,6 +28,14 @@ export const metadata: Metadata = {
   title: "Xura — Site-Level Energy Infrastructure",
   description:
     "Xura designs and delivers EV charging and battery storage for commercial and fleet facilities — built for today's grid constraints.",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: "#050505",
+  colorScheme: "dark",
 };
 
 export default function RootLayout({

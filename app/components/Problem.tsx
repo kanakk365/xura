@@ -45,7 +45,7 @@ export function Problem() {
     <section
       id="problem"
       ref={ref}
-      className="relative bg-ink py-24 sm:py-28 lg:py-36"
+      className="relative bg-ink py-20 sm:py-28 lg:py-36"
     >
       <div
         aria-hidden="true"
@@ -56,8 +56,8 @@ export function Problem() {
         className="pointer-events-none absolute inset-0 grid-lines opacity-[0.07]"
       />
 
-      <div className="relative mx-auto w-full max-w-[1400px] px-6 sm:px-10 lg:px-16">
-        <div className="grid grid-cols-1 gap-14 lg:grid-cols-[1.05fr_1fr] lg:gap-20">
+      <div className="relative mx-auto w-full max-w-[1400px] px-5 sm:px-10 lg:px-16">
+        <div className="grid grid-cols-1 gap-10 sm:gap-14 lg:grid-cols-[1.05fr_1fr] lg:gap-20">
           <div className="flex flex-col">
             <motion.p
               initial={{ opacity: 0, y: 12 }}
@@ -93,7 +93,7 @@ export function Problem() {
               load. We design around what the meter delivers today.
             </motion.p>
 
-            <div className="mt-7 grid grid-cols-2 gap-x-6 gap-y-4 border-t border-paper/10 pt-5 sm:max-w-md">
+            <div className="mt-7 grid grid-cols-2 gap-x-4 gap-y-4 border-t border-paper/10 pt-5 sm:max-w-md sm:gap-x-6">
               <Constraint
                 code="01"
                 label="Limited available capacity at the meter"
@@ -123,8 +123,8 @@ export function Problem() {
           </div>
 
           <div className="relative">
-            <div className="relative overflow-hidden rounded-[28px] border border-paper/10 bg-ink-2/60 p-6 sm:p-8">
-              <div className="mb-6 flex items-center justify-between text-[10px] font-normal tracking-[0.3em]">
+            <div className="relative overflow-hidden rounded-2xl border border-paper/10 bg-ink-2/60 p-4 sm:rounded-[28px] sm:p-8">
+              <div className="mb-5 flex items-center justify-between gap-3 text-[10px] font-normal tracking-[0.3em] sm:mb-6">
                 <span className="flex items-center gap-2 text-paper/70">
                   <span className="h-1.5 w-1.5 rounded-full bg-accent" />
                   Load vs. capacity
@@ -138,7 +138,8 @@ export function Problem() {
                 viewBox="0 0 540 260"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
-                className="w-full"
+                preserveAspectRatio="xMidYMid meet"
+                className="block w-full"
               >
                 <defs>
                   <linearGradient

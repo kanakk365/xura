@@ -27,8 +27,8 @@ export function Footer() {
         className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-paper/15 to-transparent"
       />
 
-      <div className="relative mx-auto w-full max-w-[1400px] px-6 sm:px-10 lg:px-16">
-        <div className="grid grid-cols-1 gap-14 pb-14 lg:grid-cols-[1.4fr_0.6fr_0.6fr_0.7fr] lg:gap-10 lg:pb-20">
+      <div className="relative mx-auto w-full max-w-[1400px] px-5 sm:px-10 lg:px-16">
+        <div className="grid grid-cols-1 gap-10 pb-12 sm:gap-14 sm:pb-14 lg:grid-cols-[1.4fr_0.6fr_0.6fr_0.7fr] lg:gap-10 lg:pb-20">
           <div>
             <a href="#" className="flex items-center gap-2">
               <Mark />
@@ -52,26 +52,28 @@ export function Footer() {
             </div>
           </div>
 
-          {FOOTER_LINKS.map((col, i) => (
-            <div key={i}>
-              <p className="mb-5 font-mono text-[10px] font-normal tracking-[0.3em] text-mute">
-                {i === 0 ? "Explore" : "Engage"}
-              </p>
-              <ul className="flex flex-col gap-3">
-                {col.map((link) => (
-                  <li key={link.label}>
-                    <a
-                      href={link.href}
-                      className="group inline-flex items-center gap-2 text-sm text-paper/70 transition-colors hover:text-paper"
-                    >
-                      <span className="h-1.5 w-1.5 rounded-full bg-accent/0 transition-colors group-hover:bg-accent" />
-                      {link.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+          <div className="grid grid-cols-2 gap-8 sm:grid-cols-2 lg:contents">
+            {FOOTER_LINKS.map((col, i) => (
+              <div key={i}>
+                <p className="mb-5 font-mono text-[10px] font-normal tracking-[0.3em] text-mute">
+                  {i === 0 ? "Explore" : "Engage"}
+                </p>
+                <ul className="flex flex-col gap-3">
+                  {col.map((link) => (
+                    <li key={link.label}>
+                      <a
+                        href={link.href}
+                        className="group inline-flex items-center gap-2 text-sm text-paper/70 transition-colors hover:text-paper"
+                      >
+                        <span className="h-1.5 w-1.5 rounded-full bg-accent/0 transition-colors group-hover:bg-accent" />
+                        {link.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
 
           <div>
             <p className="mb-5 font-mono text-[10px] font-normal tracking-[0.3em] text-mute">
@@ -99,11 +101,11 @@ export function Footer() {
             style={{
               fontFamily: "var(--font-mark)",
               fontWeight: 400,
-              fontSize: "clamp(48px, 11vw, 160px)",
-              letterSpacing: "0.3em",
+              fontSize: "clamp(40px, 11vw, 160px)",
+              letterSpacing: "0.22em",
               color: "rgba(255,255,255,0.05)",
               WebkitTextStroke: "1px rgba(255,255,255,0.12)",
-              transform: "scaleX(1.35)",
+              transform: "scaleX(1.2)",
               transformOrigin: "center",
             }}
           >
@@ -125,7 +127,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="flex flex-col items-start justify-between gap-3 border-t border-paper/[0.06] py-7 text-[11px] font-medium uppercase tracking-[0.08em] text-mute sm:flex-row sm:items-center">
+        <div className="flex flex-col items-start justify-between gap-3 border-t border-paper/[0.06] py-6 text-[10.5px] font-medium uppercase tracking-[0.08em] text-mute sm:flex-row sm:items-center sm:py-7 sm:text-[11px]">
           <span>© {new Date().getFullYear()} Xura Partners. All rights reserved.</span>
           <a
             href="#"

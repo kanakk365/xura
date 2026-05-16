@@ -30,6 +30,11 @@ html,
 body {
   background: var(--ink);
   color: var(--paper);
+  overflow-x: clip;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
 }
 
 body {

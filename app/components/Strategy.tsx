@@ -45,7 +45,7 @@ export function Strategy() {
     <section
       id="strategy"
       ref={ref}
-      className="relative bg-ink py-24 sm:py-28 lg:py-36"
+      className="relative bg-ink py-20 sm:py-28 lg:py-36"
     >
       <div
         aria-hidden="true"
@@ -56,8 +56,8 @@ export function Strategy() {
         className="pointer-events-none absolute inset-0 grid-lines opacity-[0.05]"
       />
 
-      <div className="relative mx-auto w-full max-w-[1400px] px-6 sm:px-10 lg:px-16">
-        <header className="mb-14 flex flex-col gap-6 lg:mb-20 lg:flex-row lg:items-end lg:justify-between">
+      <div className="relative mx-auto w-full max-w-[1400px] px-5 sm:px-10 lg:px-16">
+        <header className="mb-10 flex flex-col gap-6 sm:mb-14 lg:mb-20 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-2xl">
             <motion.p
               initial={{ opacity: 0, y: 12 }}
@@ -75,7 +75,7 @@ export function Strategy() {
               initial={{ opacity: 0, y: 16 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.9, delay: 0.1, ease: [0.2, 0.7, 0.1, 1] }}
-              className="font-display tracking-normal text-[clamp(2rem,4.4vw,3.75rem)] font-normal leading-[1.05] text-paper"
+              className="font-display tracking-normal text-[clamp(1.85rem,6vw,3.75rem)] font-normal leading-[1.05] text-paper"
             >
               An{" "}
               <span className="italic text-accent">execution-first</span>{" "}
@@ -86,7 +86,7 @@ export function Strategy() {
             initial={{ opacity: 0, y: 16 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.9, delay: 0.2, ease: [0.2, 0.7, 0.1, 1] }}
-            className="max-w-sm text-base leading-relaxed text-paper/60"
+            className="max-w-sm text-[15px] leading-relaxed text-paper/60 sm:text-base"
           >
             Built around a simple constraint&mdash;the grid can&rsquo;t expand
             fast enough to meet near-term electrification demand. Four
@@ -94,7 +94,7 @@ export function Strategy() {
           </motion.p>
         </header>
 
-        <ol className="grid grid-cols-1 gap-px overflow-hidden rounded-[28px] border border-paper/[0.08] bg-paper/[0.06] md:grid-cols-2">
+        <ol className="grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-paper/[0.08] bg-paper/[0.06] sm:rounded-[28px] md:grid-cols-2">
           {PRINCIPLES.map((p, i) => (
             <PrincipleCard
               key={p.id}
@@ -142,7 +142,7 @@ function PrincipleCard({
         {principle.number}
       </div>
 
-      <div className="relative flex h-full flex-col gap-6 p-8 sm:p-10 lg:p-12">
+      <div className="relative flex h-full flex-col gap-5 p-6 sm:gap-6 sm:p-10 lg:p-12">
         <div className="flex items-center gap-3 text-[10px] font-medium uppercase tracking-[0.3em] text-accent">
           <span className="relative inline-flex h-1.5 w-1.5">
             <span className="absolute inset-0 rounded-full bg-accent pulse-dot" />
@@ -153,11 +153,11 @@ function PrincipleCard({
           </span>
         </div>
 
-        <h3 className="max-w-md font-display tracking-normal text-[clamp(1.5rem,2.3vw,2rem)] font-normal leading-[1.1] text-paper">
+        <h3 className="max-w-md font-display tracking-normal text-[clamp(1.35rem,4.2vw,2rem)] font-normal leading-[1.1] text-paper">
           {principle.title}
         </h3>
 
-        <p className="max-w-md text-[14.5px] leading-[1.6] text-paper/65">
+        <p className="max-w-md text-[14px] leading-[1.6] text-paper/65 sm:text-[14.5px]">
           {principle.body}
         </p>
 
