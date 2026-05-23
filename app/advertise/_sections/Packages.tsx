@@ -193,7 +193,7 @@ function BillingToggle({
     <div
       role="tablist"
       aria-label="Billing cadence"
-      className="relative inline-flex items-center gap-1 rounded-full border border-paper/[0.08] bg-paper/[0.02] p-1"
+      className="relative inline-flex items-center rounded-full border border-paper/[0.08] bg-paper/[0.04] p-1"
     >
       {(["monthly", "quarterly"] as Billing[]).map((b) => {
         const active = value === b;
@@ -204,24 +204,25 @@ function BillingToggle({
             aria-selected={active}
             type="button"
             onClick={() => onChange(b)}
-            className={`relative inline-flex items-center gap-2 rounded-full px-4 py-2 font-mono text-[10.5px] font-medium uppercase tracking-[0.14em] transition-colors duration-300 ${
+            className={`relative isolate inline-flex h-9 items-center gap-2 rounded-full px-5 font-mono text-[11px] font-medium uppercase tracking-[0.14em] transition-colors duration-300 ${
               active ? "text-ink" : "text-paper/65 hover:text-paper"
             }`}
           >
             {active && (
               <motion.span
                 layoutId="billing-bg"
+                aria-hidden="true"
                 transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                className="absolute inset-0 -z-10 rounded-full bg-accent"
+                className="absolute inset-0 -z-10 rounded-full bg-accent shadow-[0_6px_18px_-6px_rgba(139,251,3,0.55)]"
               />
             )}
-            <span className="relative z-10">
-              {b === "monthly" ? "Monthly" : "Quarterly"}
-            </span>
+            <span>{b === "monthly" ? "Monthly" : "Quarterly"}</span>
             {b === "quarterly" && (
               <span
-                className={`relative z-10 rounded-full px-1.5 py-px text-[8.5px] tracking-[0.14em] ${
-                  active ? "bg-ink/15 text-ink" : "bg-accent/20 text-accent"
+                className={`rounded-full px-1.5 py-px font-mono text-[9px] font-semibold tracking-[0.14em] transition-colors duration-300 ${
+                  active
+                    ? "bg-ink/20 text-ink"
+                    : "bg-accent/15 text-accent"
                 }`}
               >
                 -12%
