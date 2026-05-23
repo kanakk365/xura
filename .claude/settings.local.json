@@ -3,7 +3,9 @@
     "allow": [
       "WebFetch(domain:api.github.com)",
       "WebFetch(domain:raw.githubusercontent.com)",
-      "WebFetch(domain:jaime91015.wixsite.com)"
+      "WebFetch(domain:jaime91015.wixsite.com)",
+      "Bash(node -e \"const sharp = require\\('sharp'\\); sharp\\('public/xura_logo.png'\\).metadata\\(\\).then\\(m => console.log\\(m.width + 'x' + m.height\\)\\);\")",
+      "Bash(powershell -Command 'Add-Type -AssemblyName System.Drawing; $img = [System.Drawing.Image]::FromFile\\('\\\\''D:\\\\HubTech\\\\designs\\\\xura\\\\public\\\\xura_logo.png'\\\\''\\); Write-Output \\($img.Width.ToString\\(\\) + '\\\\''x'\\\\'' + $img.Height.ToString\\(\\)\\)')"
     ]
   }
 }

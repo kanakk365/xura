@@ -1,19 +1,19 @@
 "use client";
 
 import { motion, useReducedMotion } from "motion/react";
-
-import { Mark } from "./icons";
+import Image from "next/image";
+import Link from "next/link";
 
 const FOOTER_LINKS: { label: string; href: string }[][] = [
   [
-    { label: "Solutions", href: "#solutions" },
-    { label: "Strategy", href: "#strategy" },
-    { label: "Projects", href: "#projects" },
+    { label: "Solutions", href: "/#solutions" },
+    { label: "Strategy", href: "/#strategy" },
+    { label: "Projects", href: "/#projects" },
   ],
   [
-    { label: "Leadership", href: "#leadership" },
-    { label: "FAQ", href: "#faq" },
-    { label: "Contact", href: "#contact" },
+    { label: "Advertise", href: "/advertise" },
+    { label: "FAQ", href: "/#faq" },
+    { label: "Contact", href: "/#contact" },
   ],
 ];
 
@@ -30,12 +30,15 @@ export function Footer() {
       <div className="relative mx-auto w-full max-w-[1400px] px-5 sm:px-10 lg:px-16">
         <div className="grid grid-cols-1 gap-10 pb-12 sm:gap-14 sm:pb-14 lg:grid-cols-[1.4fr_0.6fr_0.6fr_0.7fr] lg:gap-10 lg:pb-20">
           <div>
-            <a href="#" className="flex items-center gap-2">
-              <Mark />
-              <span className="font-display tracking-normal text-2xl font-normal tracking-[0.1em] text-paper">
-                xura
-              </span>
-            </a>
+            <Link href="/" className="flex items-center" aria-label="Xura home">
+              <Image
+                src="/xura_logo.png"
+                alt="Xura"
+                width={875}
+                height={200}
+                className="h-9 w-auto"
+              />
+            </Link>
             <p className="mt-7 max-w-md text-sm leading-relaxed text-paper/60">
               Site-level energy infrastructure for commercial and fleet
               facilities. EV charging, battery storage, and microgrid
@@ -61,13 +64,13 @@ export function Footer() {
                 <ul className="flex flex-col gap-3">
                   {col.map((link) => (
                     <li key={link.label}>
-                      <a
+                      <Link
                         href={link.href}
                         className="group inline-flex items-center gap-2 text-sm text-paper/70 transition-colors hover:text-paper"
                       >
                         <span className="h-1.5 w-1.5 rounded-full bg-accent/0 transition-colors group-hover:bg-accent" />
                         {link.label}
-                      </a>
+                      </Link>
                     </li>
                   ))}
                 </ul>
@@ -84,13 +87,13 @@ export function Footer() {
               review to define a realistic path forward.
             </p>
 
-            <a
-              href="#contact"
+            <Link
+              href="/#contact"
               className="group mt-7 inline-flex h-10 items-center gap-2 rounded-full border border-accent/40 bg-accent/10 px-4 text-[11px] font-normal tracking-[0.08em] text-accent transition-colors hover:bg-accent hover:text-ink"
             >
               <span className="h-1.5 w-1.5 rounded-full bg-accent transition-colors group-hover:bg-ink" />
               Request a site review
-            </a>
+            </Link>
           </div>
         </div>
 

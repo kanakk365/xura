@@ -1,20 +1,25 @@
 "use client";
 
 import { AnimatePresence, motion } from "motion/react";
+import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
-import { Mark } from "./icons";
-
 const NAV_LINKS = [
-  { label: "Solutions", href: "#solutions" },
-  { label: "Strategy", href: "#strategy" },
-  { label: "Projects", href: "#projects" },
-  { label: "Leadership", href: "#leadership" },
-  { label: "Contact", href: "#contact" },
+  { label: "Solutions", href: "/#solutions" },
+  { label: "Strategy", href: "/#strategy" },
+  { label: "Projects", href: "/#projects" },
+  { label: "Advertise", href: "/advertise" },
+  { label: "Contact", href: "/#contact" },
 ];
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+  const loginHref = pathname?.startsWith("/advertise")
+    ? "/login?tab=advertisers"
+    : "/login";
 
   useEffect(() => {
     if (!open) return;
@@ -36,34 +41,38 @@ export function Navbar() {
   return (
     <header className="relative z-30">
       <nav className="mx-auto flex w-full max-w-[1400px] items-center justify-between px-5 pt-5 sm:px-10 sm:pt-6 lg:px-16">
-        <a href="#" className="flex items-center gap-2">
-          <Mark />
-          <span className="font-display text-2xl font-normal tracking-[0.1em] text-paper">
-            xura
-          </span>
-        </a>
+        <Link href="/" className="flex items-center" aria-label="Xura home">
+          <Image
+            src="/xura_logo.png"
+            alt="Xura"
+            width={875}
+            height={200}
+            priority
+            className="h-8 w-auto"
+          />
+        </Link>
 
         <ul className="hidden items-center gap-9 text-[12px] font-medium uppercase tracking-[0.08em] text-paper/70 md:flex">
           {NAV_LINKS.map((item) => (
             <li key={item.label}>
-              <a
+              <Link
                 href={item.href}
                 className="group relative transition-colors hover:text-paper"
               >
                 <span>{item.label}</span>
                 <span className="absolute -bottom-1 left-0 h-px w-0 bg-accent transition-all duration-300 group-hover:w-full" />
-              </a>
+              </Link>
             </li>
           ))}
         </ul>
 
-        <a
-          href="#contact"
+        <Link
+          href={loginHref}
           className="hidden h-10 items-center gap-2 rounded-full border border-accent/40 bg-accent/10 px-4 text-[11px] font-normal tracking-[0.08em] text-accent transition-colors hover:bg-accent hover:text-ink md:inline-flex"
         >
           <span className="h-1.5 w-1.5 rounded-full bg-accent" />
-          Contact Us
-        </a>
+          Login
+        </Link>
 
         <button
           type="button"
@@ -121,25 +130,25 @@ export function Navbar() {
               <ul className="flex flex-col gap-1">
                 {NAV_LINKS.map((item) => (
                   <li key={item.label}>
-                    <a
+                    <Link
                       href={item.href}
                       onClick={() => setOpen(false)}
                       className="group flex items-center justify-between rounded-2xl border border-transparent px-4 py-3.5 text-[13px] font-medium uppercase tracking-[0.1em] text-paper/80 transition-colors hover:border-paper/10 hover:bg-paper/[0.04] hover:text-paper"
                     >
                       <span>{item.label}</span>
                       <span className="h-1.5 w-1.5 rounded-full bg-accent/0 transition-colors group-hover:bg-accent" />
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
-              <a
-                href="#contact"
+              <Link
+                href={loginHref}
                 onClick={() => setOpen(false)}
                 className="mt-4 flex h-12 items-center justify-center gap-2 rounded-full bg-accent text-[12px] font-medium uppercase tracking-[0.12em] text-ink transition-transform active:scale-[0.98]"
               >
                 <span className="h-1.5 w-1.5 rounded-full bg-ink" />
-                Contact Us
-              </a>
+                Login
+              </Link>
             </motion.div>
           </>
         )}
