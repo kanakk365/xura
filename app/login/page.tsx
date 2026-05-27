@@ -122,7 +122,7 @@ function LoginCard() {
         >
           <div className="relative overflow-hidden rounded-3xl border border-paper/[0.08] bg-ink-2/60 backdrop-blur-md sm:rounded-[32px]">
             <div className="relative p-5 sm:p-7">
-              {/* Top row — status (left) + mode toggle (right) */}
+              {/* Top row — status */}
               <div className="mb-5 flex items-center justify-between gap-3">
                 <span className="flex items-center gap-2 font-mono text-[10px] font-medium uppercase tracking-[0.2em] text-accent">
                   <span className="relative inline-flex h-1.5 w-1.5">
@@ -130,43 +130,9 @@ function LoginCard() {
                   </span>
                   Secure node
                 </span>
-
-                <div
-                  role="tablist"
-                  aria-label="Authentication mode"
-                  className="relative flex items-center rounded-full border border-paper/[0.08] bg-paper/[0.02] p-1"
-                >
-                  {(["signin", "signup"] as Mode[]).map((m) => {
-                    const active = mode === m;
-                    return (
-                      <button
-                        key={m}
-                        role="tab"
-                        aria-selected={active}
-                        type="button"
-                        onClick={() => setMode(m)}
-                        className={`relative rounded-full px-3 py-1.5 font-mono text-[10px] font-medium uppercase tracking-[0.14em] transition-colors duration-300 ${
-                          active ? "text-ink" : "text-paper/65 hover:text-paper"
-                        }`}
-                      >
-                        {active && (
-                          <motion.span
-                            layoutId="login-mode-bg"
-                            transition={{
-                              type: "spring",
-                              stiffness: 380,
-                              damping: 30,
-                            }}
-                            className="absolute inset-0 -z-10 rounded-full bg-accent"
-                          />
-                        )}
-                        <span className="relative z-10">
-                          {m === "signin" ? "Sign in" : "Sign up"}
-                        </span>
-                      </button>
-                    );
-                  })}
-                </div>
+                <span className="font-mono text-[10px] font-medium uppercase tracking-[0.16em] text-mute">
+                  {mode === "signin" ? "Sign in" : "Sign up"}
+                </span>
               </div>
 
               {/* Channel tabs */}
@@ -251,6 +217,32 @@ function LoginCard() {
                   />
                 </motion.form>
               </AnimatePresence>
+
+              <div className="mt-5 border-t border-paper/[0.06] pt-4 text-center text-[12.5px] text-paper/65">
+                {mode === "signin" ? (
+                  <>
+                    Don&apos;t have an account?{" "}
+                    <button
+                      type="button"
+                      onClick={() => setMode("signup")}
+                      className="cursor-pointer font-medium text-accent transition-colors hover:text-paper"
+                    >
+                      Sign up
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    Already have an account?{" "}
+                    <button
+                      type="button"
+                      onClick={() => setMode("signin")}
+                      className="cursor-pointer font-medium text-accent transition-colors hover:text-paper"
+                    >
+                      Sign in
+                    </button>
+                  </>
+                )}
+              </div>
             </div>
           </div>
         </div>

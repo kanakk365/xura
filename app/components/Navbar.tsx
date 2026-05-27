@@ -21,6 +21,21 @@ export function Navbar() {
     ? "/login?tab=advertisers"
     : "/login";
 
+  const handleNavClick = (href: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (!href.includes("#")) return;
+    const [path, hash] = href.split("#");
+    const onSamePage = (path === "" || path === "/") && (pathname === "/" || pathname === "");
+    if (!onSamePage || !hash) return;
+    const el = document.getElementById(hash);
+    if (!el) return;
+    e.preventDefault();
+    setOpen(false);
+    el.scrollIntoView({ behavior: "smooth", block: "start" });
+    if (window.history.replaceState) {
+      window.history.replaceState(null, "", `#${hash}`);
+    }
+  };
+
   useEffect(() => {
     if (!open) return;
     const prev = document.body.style.overflow;
@@ -57,6 +72,7 @@ export function Navbar() {
             <li key={item.label}>
               <Link
                 href={item.href}
+                onClick={handleNavClick(item.href)}
                 className="group relative transition-colors hover:text-paper"
               >
                 <span>{item.label}</span>
@@ -132,7 +148,10 @@ export function Navbar() {
                   <li key={item.label}>
                     <Link
                       href={item.href}
-                      onClick={() => setOpen(false)}
+                      onClick={(e) => {
+                        handleNavClick(item.href)(e);
+                        setOpen(false);
+                      }}
                       className="group flex items-center justify-between rounded-2xl border border-transparent px-4 py-3.5 text-[13px] font-medium uppercase tracking-[0.1em] text-paper/80 transition-colors hover:border-paper/10 hover:bg-paper/[0.04] hover:text-paper"
                     >
                       <span>{item.label}</span>
