@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Suspense, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 
 import { ArrowUpRight } from "../components/icons";
@@ -114,6 +114,16 @@ function LoginCard() {
   const initialTab: TabKey = isTabKey(tabParam) ? tabParam : "people";
   const initialMode: Mode = modeParam === "signup" ? "signup" : "signin";
 
+  const isVerified = searchParams.get("verified") === "1";
+  const [showVerifiedBanner, setShowVerifiedBanner] = useState(isVerified);
+
+  useEffect(() => {
+    if (!isVerified) return;
+    const p = new URLSearchParams(searchParams.toString());
+    p.delete("verified");
+    router.replace(`?${p.toString()}`, { scroll: false });
+  }, []);
+
   const [activeTab, setActiveTab] = useState<TabKey>(initialTab);
   const [mode, setMode] = useState<Mode>(initialMode);
   const [email, setEmail] = useState("");
@@ -124,7 +134,6 @@ function LoginCard() {
   });
   const [loading, setLoading] = useState(false);
   const [authError, setAuthError] = useState<string | null>(null);
-  const [signupSuccess, setSignupSuccess] = useState(false);
 
   const tab = TABS.find((t) => t.key === activeTab) as TabDef;
 
@@ -208,9 +217,8 @@ function LoginCard() {
           });
           const data = await res.json();
           if (!data.status) throw new Error(data.message || "Registration failed");
-          setSignupSuccess(true);
-          setEmail(signup.email);
-          setTimeout(() => { setSignupSuccess(false); switchMode("signin"); }, 2500);
+          sessionStorage.setItem("otp_email", signup.email);
+          router.push(`/verify-otp?tab=advertisers&email=${encodeURIComponent(signup.email)}`);
         } catch (err: unknown) {
           setAuthError(err instanceof Error ? err.message : "Registration failed. Try again.");
         } finally {
@@ -229,9 +237,9 @@ function LoginCard() {
             }),
           });
           const data = await res.json();
-          if (!data.status || !data.data?.tokens?.access_token) throw new Error(data.message || "Registration failed");
-          const encoded = encodeURIComponent(btoa(JSON.stringify({ user: data.data.user, tokens: data.data.tokens })));
-          window.location.href = `${evPartnerUrl}/auth-callback?data=${encoded}`;
+          if (!data.status) throw new Error(data.message || "Registration failed");
+          sessionStorage.setItem("otp_email", signup.email);
+          router.push(`/verify-otp?tab=partners&email=${encodeURIComponent(signup.email)}`);
         } catch (err: unknown) {
           setAuthError(err instanceof Error ? err.message : "Registration failed. Try again.");
         } finally {
@@ -250,6 +258,38 @@ function LoginCard() {
         >
           <div className="relative overflow-hidden rounded-3xl border border-paper/[0.08] bg-ink-2/60 backdrop-blur-md sm:rounded-[32px]">
             <div className="relative p-5 sm:p-7">
+              {/* Post-verification banner */}
+              <AnimatePresence>
+                {showVerifiedBanner && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -8 }}
+                    transition={{ duration: 0.3 }}
+                    className="mb-4 flex items-center gap-3 rounded-xl border border-accent/25 bg-accent/[0.07] px-4 py-3"
+                  >
+                    <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-accent">
+                      <svg viewBox="0 0 12 12" className="h-3 w-3 text-ink" fill="none">
+                        <path d="M2 6.2l2.6 2.6L10 3.6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </span>
+                    <p className="flex-1 text-[12.5px] leading-snug text-paper/90">
+                      Your account is verified — sign in below to get started.
+                    </p>
+                    <button
+                      type="button"
+                      onClick={() => setShowVerifiedBanner(false)}
+                      aria-label="Dismiss"
+                      className="text-paper/40 transition-colors hover:text-paper"
+                    >
+                      <svg viewBox="0 0 12 12" className="h-3 w-3" fill="none">
+                        <path d="M1 1l10 10M11 1L1 11" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+                      </svg>
+                    </button>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
               {/* Top row — status */}
               <div className="mb-5 flex items-center justify-between gap-3">
                 <span className="flex items-center gap-2 font-mono text-[10px] font-medium uppercase tracking-[0.2em] text-accent">
@@ -349,12 +389,6 @@ function LoginCard() {
                     </div>
                   )}
 
-                  {signupSuccess && (
-                    <p className="text-center text-[12px] text-accent">
-                      Account created! Redirecting to sign in…
-                    </p>
-                  )}
-
                   {authError && (
                     <p className="text-center text-[12px] text-red-400">{authError}</p>
                   )}
@@ -365,7 +399,7 @@ function LoginCard() {
                         ? mode === "signin" ? "Signing in…" : "Creating account…"
                         : mode === "signin" ? tab.signinCta : tab.signupCta
                     }
-                    disabled={loading || signupSuccess}
+                    disabled={loading}
                   />
                 </motion.form>
               </AnimatePresence>
