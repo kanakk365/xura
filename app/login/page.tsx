@@ -8,10 +8,10 @@ import { AnimatePresence, motion } from "motion/react";
 
 import { ArrowUpRight } from "../components/icons";
 
-type TabKey = "people" | "partners" | "advertisers";
+type TabKey = "xura" | "advertisers";
 type Mode = "signin" | "signup";
 
-const TAB_KEYS: TabKey[] = ["people", "partners", "advertisers"];
+const TAB_KEYS: TabKey[] = ["xura", "advertisers"];
 
 function isTabKey(value: string | null): value is TabKey {
   return value !== null && (TAB_KEYS as string[]).includes(value);
@@ -27,16 +27,8 @@ type TabDef = {
 
 const TABS: TabDef[] = [
   {
-    key: "people",
-    short: "People",
-    description:
-      "Operational access for the Xura team — engineering, deployment, ops, and leadership.",
-    signupCta: "Request team access",
-    signinCta: "Sign in to terminal",
-  },
-  {
-    key: "partners",
-    short: "Partners",
+    key: "xura",
+    short: "Xura",
     description:
       "For EPC partners, electrical contractors, integrators, and installation crews.",
     signupCta: "Apply as a partner",
@@ -111,7 +103,7 @@ function LoginCard() {
 
   const tabParam = searchParams.get("tab");
   const modeParam = searchParams.get("mode");
-  const initialTab: TabKey = isTabKey(tabParam) ? tabParam : "people";
+  const initialTab: TabKey = isTabKey(tabParam) ? tabParam : "xura";
   const initialMode: Mode = modeParam === "signup" ? "signup" : "signin";
 
   const isVerified = searchParams.get("verified") === "1";
@@ -183,7 +175,7 @@ function LoginCard() {
         } finally {
           setLoading(false);
         }
-      } else if (activeTab === "partners") {
+      } else if (activeTab === "xura") {
         setLoading(true);
         try {
           const res = await fetch("/api/partner-login", {
@@ -224,7 +216,7 @@ function LoginCard() {
         } finally {
           setLoading(false);
         }
-      } else if (activeTab === "partners") {
+      } else if (activeTab === "xura") {
         setLoading(true);
         try {
           const res = await fetch("/api/partner-register", {
@@ -477,7 +469,7 @@ function FormFields({
           label="Work email"
           id={`email-${tab.key}`}
           type="email"
-          placeholder={tab.key === "people" ? "you@xura.com" : "you@company.com"}
+          placeholder="you@company.com"
           autoComplete="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -491,24 +483,7 @@ function FormFields({
     );
   }
 
-  if (tab.key === "people") {
-    return (
-      <>
-        <Field label="Full name" id="su-people-name" placeholder="Alex Reyes" autoComplete="name" />
-        <Field
-          label="Work email" id="su-people-email" type="email"
-          placeholder="alex@xura.com" autoComplete="email"
-          hint="Must be a verified @xura.com address."
-        />
-        <ChoiceField
-          label="Department" id="su-people-dept"
-          options={["Engineering", "Field ops", "Commercial", "Finance", "Other"]}
-        />
-      </>
-    );
-  }
-
-  if (tab.key === "partners") {
+  if (tab.key === "xura") {
     return (
       <>
         <div className="grid grid-cols-2 gap-3">
@@ -622,55 +597,6 @@ function PasswordField({
         >
           {show ? "Hide" : "Show"}
         </button>
-      </div>
-    </div>
-  );
-}
-
-function ChoiceField({
-  label, id, options,
-}: {
-  label: string;
-  id: string;
-  options: string[];
-}) {
-  const [value, setValue] = useState(options[0]);
-  return (
-    <div className="flex flex-col gap-2">
-      <span
-        id={`${id}-label`}
-        className="font-mono text-[10px] font-medium uppercase tracking-[0.16em] text-mute"
-      >
-        {label}
-      </span>
-      <div
-        role="radiogroup"
-        aria-labelledby={`${id}-label`}
-        className="flex flex-wrap gap-1.5"
-      >
-        {options.map((option) => {
-          const active = option === value;
-          return (
-            <button
-              key={option}
-              role="radio"
-              aria-checked={active}
-              type="button"
-              onClick={() => setValue(option)}
-              className={`relative inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 font-mono text-[10px] font-medium uppercase tracking-[0.1em] transition-colors duration-200 ${
-                active
-                  ? "border-accent/50 bg-accent/10 text-accent"
-                  : "border-paper/[0.08] bg-paper/[0.02] text-paper/65 hover:border-paper/20 hover:text-paper"
-              }`}
-            >
-              <span
-                aria-hidden="true"
-                className={`h-1 w-1 rounded-full ${active ? "bg-accent" : "bg-paper/35"}`}
-              />
-              {option}
-            </button>
-          );
-        })}
       </div>
     </div>
   );
