@@ -2,16 +2,16 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useSearchParams } from "next/navigation";
-import { Suspense, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Suspense, useEffect, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 
 import { ArrowUpRight } from "../components/icons";
 
-type TabKey = "people" | "partners" | "advertisers";
+type TabKey = "xura" | "advertisers";
 type Mode = "signin" | "signup";
 
-const TAB_KEYS: TabKey[] = ["people", "partners", "advertisers"];
+const TAB_KEYS: TabKey[] = ["xura", "advertisers"];
 
 function isTabKey(value: string | null): value is TabKey {
   return value !== null && (TAB_KEYS as string[]).includes(value);
@@ -27,16 +27,8 @@ type TabDef = {
 
 const TABS: TabDef[] = [
   {
-    key: "people",
-    short: "People",
-    description:
-      "Operational access for the Xura team — engineering, deployment, ops, and leadership.",
-    signupCta: "Request team access",
-    signinCta: "Sign in to terminal",
-  },
-  {
-    key: "partners",
-    short: "Partners",
+    key: "xura",
+    short: "Xura",
     description:
       "For EPC partners, electrical contractors, integrators, and installation crews.",
     signupCta: "Apply as a partner",
@@ -106,12 +98,148 @@ export default function LoginPage() {
 }
 
 function LoginCard() {
+  const router = useRouter();
   const searchParams = useSearchParams();
+
   const tabParam = searchParams.get("tab");
-  const initialTab: TabKey = isTabKey(tabParam) ? tabParam : "people";
+  const modeParam = searchParams.get("mode");
+  const initialTab: TabKey = isTabKey(tabParam) ? tabParam : "xura";
+  const initialMode: Mode = modeParam === "signup" ? "signup" : "signin";
+
+  const isVerified = searchParams.get("verified") === "1";
+  const [showVerifiedBanner, setShowVerifiedBanner] = useState(isVerified);
+
+  useEffect(() => {
+    if (!isVerified) return;
+    const p = new URLSearchParams(searchParams.toString());
+    p.delete("verified");
+    router.replace(`?${p.toString()}`, { scroll: false });
+  }, []);
+
   const [activeTab, setActiveTab] = useState<TabKey>(initialTab);
-  const [mode, setMode] = useState<Mode>("signin");
+  const [mode, setMode] = useState<Mode>(initialMode);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [signup, setSignup] = useState({
+    firstname: "", lastname: "", email: "", mobile_no: "",
+    password: "", c_password: "", username: "",
+  });
+  const [loading, setLoading] = useState(false);
+  const [authError, setAuthError] = useState<string | null>(null);
+
   const tab = TABS.find((t) => t.key === activeTab) as TabDef;
+
+  const updateSignup = (field: keyof typeof signup) =>
+    (e: React.ChangeEvent<HTMLInputElement>) =>
+      setSignup((prev) => ({ ...prev, [field]: e.target.value }));
+
+  function switchTab(t: TabKey) {
+    setActiveTab(t);
+    setAuthError(null);
+    const p = new URLSearchParams(searchParams.toString());
+    p.set("tab", t);
+    router.replace(`?${p.toString()}`, { scroll: false });
+  }
+
+  function switchMode(m: Mode) {
+    setMode(m);
+    setAuthError(null);
+    const p = new URLSearchParams(searchParams.toString());
+    p.set("mode", m);
+    router.replace(`?${p.toString()}`, { scroll: false });
+  }
+
+  const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setAuthError(null);
+
+    const evPartnerUrl = process.env.NEXT_PUBLIC_EV_PARTNER_URL ?? "https://app.xura.co";
+    const adEngineUrl = process.env.NEXT_PUBLIC_AD_ENGINE_URL ?? "https://ads.xura.co/";
+
+    if (mode === "signin") {
+      if (activeTab === "advertisers") {
+        setLoading(true);
+        try {
+          const res = await fetch("/api/advertiser-login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, password }),
+          });
+          const data = await res.json();
+          if (!data.status || !data.data?.token) throw new Error(data.message || "Login failed");
+          const user = data.data;
+          const encoded = encodeURIComponent(btoa(JSON.stringify({ user, token: user.token })));
+          window.location.href = `${adEngineUrl}/auth-callback?data=${encoded}`;
+        } catch (err: unknown) {
+          setAuthError(err instanceof Error ? err.message : "Login failed. Try again.");
+        } finally {
+          setLoading(false);
+        }
+      } else if (activeTab === "xura") {
+        setLoading(true);
+        try {
+          const res = await fetch("/api/partner-login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, password }),
+          });
+          const data = await res.json();
+          if (!data.status || !data.data?.tokens?.access_token) throw new Error(data.message || "Login failed");
+          const encoded = encodeURIComponent(btoa(JSON.stringify({ user: data.data.user, tokens: data.data.tokens })));
+          window.location.href = `${evPartnerUrl}/auth-callback?data=${encoded}`;
+        } catch (err: unknown) {
+          setAuthError(err instanceof Error ? err.message : "Login failed. Try again.");
+        } finally {
+          setLoading(false);
+        }
+      }
+    } else {
+      if (activeTab === "advertisers") {
+        setLoading(true);
+        try {
+          const res = await fetch("/api/advertiser-register", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              firstname: signup.firstname, lastname: signup.lastname,
+              email: signup.email, mobile_no: signup.mobile_no,
+              password: signup.password, c_password: signup.c_password,
+              user_type: 1,
+            }),
+          });
+          const data = await res.json();
+          if (!data.status) throw new Error(data.message || "Registration failed");
+          sessionStorage.setItem("otp_email", signup.email);
+          router.push(`/verify-otp?tab=advertisers&email=${encodeURIComponent(signup.email)}`);
+        } catch (err: unknown) {
+          setAuthError(err instanceof Error ? err.message : "Registration failed. Try again.");
+        } finally {
+          setLoading(false);
+        }
+      } else if (activeTab === "xura") {
+        setLoading(true);
+        try {
+          const res = await fetch("/api/partner-register", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              first_name: signup.firstname, last_name: signup.lastname,
+              email: signup.email, username: signup.username,
+              password: signup.password, user_type: 2,
+            }),
+          });
+          const data = await res.json();
+          if (!data.status) throw new Error(data.message || "Registration failed");
+          sessionStorage.setItem("otp_email", signup.email);
+          router.push(`/verify-otp?tab=partners&email=${encodeURIComponent(signup.email)}`);
+        } catch (err: unknown) {
+          setAuthError(err instanceof Error ? err.message : "Registration failed. Try again.");
+        } finally {
+          setLoading(false);
+        }
+      }
+    }
+  };
 
   return (
     <>
@@ -122,6 +250,38 @@ function LoginCard() {
         >
           <div className="relative overflow-hidden rounded-3xl border border-paper/[0.08] bg-ink-2/60 backdrop-blur-md sm:rounded-[32px]">
             <div className="relative p-5 sm:p-7">
+              {/* Post-verification banner */}
+              <AnimatePresence>
+                {showVerifiedBanner && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -8 }}
+                    transition={{ duration: 0.3 }}
+                    className="mb-4 flex items-center gap-3 rounded-xl border border-accent/25 bg-accent/[0.07] px-4 py-3"
+                  >
+                    <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-accent">
+                      <svg viewBox="0 0 12 12" className="h-3 w-3 text-ink" fill="none">
+                        <path d="M2 6.2l2.6 2.6L10 3.6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </span>
+                    <p className="flex-1 text-[12.5px] leading-snug text-paper/90">
+                      Your account is verified — sign in below to get started.
+                    </p>
+                    <button
+                      type="button"
+                      onClick={() => setShowVerifiedBanner(false)}
+                      aria-label="Dismiss"
+                      className="text-paper/40 transition-colors hover:text-paper"
+                    >
+                      <svg viewBox="0 0 12 12" className="h-3 w-3" fill="none">
+                        <path d="M1 1l10 10M11 1L1 11" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+                      </svg>
+                    </button>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
               {/* Top row — status */}
               <div className="mb-5 flex items-center justify-between gap-3">
                 <span className="flex items-center gap-2 font-mono text-[10px] font-medium uppercase tracking-[0.2em] text-accent">
@@ -149,7 +309,7 @@ function LoginCard() {
                       role="tab"
                       aria-selected={active}
                       type="button"
-                      onClick={() => setActiveTab(t.key)}
+                      onClick={() => switchTab(t.key)}
                       className={`relative flex-1 rounded-full px-2 py-2 text-[10.5px] font-medium uppercase tracking-[0.12em] transition-colors duration-300 sm:text-[11px] ${
                         active ? "text-ink" : "text-paper/65 hover:text-paper"
                       }`}
@@ -196,9 +356,18 @@ function LoginCard() {
                   exit={{ opacity: 0, y: -6 }}
                   transition={{ duration: 0.25 }}
                   className="mt-4 flex flex-col gap-3.5"
-                  onSubmit={(e) => e.preventDefault()}
+                  onSubmit={handleSubmit}
                 >
-                  <FormFields tab={tab} mode={mode} />
+                  <FormFields
+                    tab={tab}
+                    mode={mode}
+                    email={email}
+                    setEmail={setEmail}
+                    password={password}
+                    setPassword={setPassword}
+                    signup={signup}
+                    updateSignup={updateSignup}
+                  />
 
                   {mode === "signin" && (
                     <div className="flex items-center justify-between gap-3">
@@ -212,8 +381,17 @@ function LoginCard() {
                     </div>
                   )}
 
+                  {authError && (
+                    <p className="text-center text-[12px] text-red-400">{authError}</p>
+                  )}
+
                   <SubmitButton
-                    label={mode === "signin" ? tab.signinCta : tab.signupCta}
+                    label={
+                      loading
+                        ? mode === "signin" ? "Signing in…" : "Creating account…"
+                        : mode === "signin" ? tab.signinCta : tab.signupCta
+                    }
+                    disabled={loading}
                   />
                 </motion.form>
               </AnimatePresence>
@@ -224,7 +402,7 @@ function LoginCard() {
                     Don&apos;t have an account?{" "}
                     <button
                       type="button"
-                      onClick={() => setMode("signup")}
+                      onClick={() => switchMode("signup")}
                       className="cursor-pointer font-medium text-accent transition-colors hover:text-paper"
                     >
                       Sign up
@@ -235,7 +413,7 @@ function LoginCard() {
                     Already have an account?{" "}
                     <button
                       type="button"
-                      onClick={() => setMode("signin")}
+                      onClick={() => switchMode("signin")}
                       className="cursor-pointer font-medium text-accent transition-colors hover:text-paper"
                     >
                       Sign in
@@ -265,7 +443,25 @@ function LoginCardSkeleton() {
 
 /* ───── building blocks ───── */
 
-function FormFields({ tab, mode }: { tab: TabDef; mode: Mode }) {
+type SignupData = {
+  firstname: string; lastname: string; email: string;
+  mobile_no: string; password: string; c_password: string; username: string;
+};
+
+function FormFields({
+  tab, mode,
+  email, setEmail, password, setPassword,
+  signup, updateSignup,
+}: {
+  tab: TabDef;
+  mode: Mode;
+  email: string;
+  setEmail: (v: string) => void;
+  password: string;
+  setPassword: (v: string) => void;
+  signup: SignupData;
+  updateSignup: (field: keyof SignupData) => (e: React.ChangeEvent<HTMLInputElement>) => void;
+}) {
   if (mode === "signin") {
     return (
       <>
@@ -273,117 +469,62 @@ function FormFields({ tab, mode }: { tab: TabDef; mode: Mode }) {
           label="Work email"
           id={`email-${tab.key}`}
           type="email"
-          placeholder={
-            tab.key === "people" ? "you@xura.com" : "you@company.com"
-          }
+          placeholder="you@company.com"
           autoComplete="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
-        <PasswordField id={`pw-${tab.key}`} />
+        <PasswordField
+          id={`pw-${tab.key}`}
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
       </>
     );
   }
 
-  if (tab.key === "people") {
+  if (tab.key === "xura") {
     return (
       <>
-        <Field
-          label="Full name"
-          id="su-people-name"
-          placeholder="Alex Reyes"
-          autoComplete="name"
-        />
-        <Field
-          label="Work email"
-          id="su-people-email"
-          type="email"
-          placeholder="alex@xura.com"
-          autoComplete="email"
-          hint="Must be a verified @xura.com address."
-        />
-        <ChoiceField
-          label="Department"
-          id="su-people-dept"
-          options={[
-            "Engineering",
-            "Field ops",
-            "Commercial",
-            "Finance",
-            "Other",
-          ]}
-        />
+        <div className="grid grid-cols-2 gap-3">
+          <Field label="First name" id="su-p-firstname" placeholder="Alex" autoComplete="given-name"
+            value={signup.firstname} onChange={updateSignup("firstname")} />
+          <Field label="Last name" id="su-p-lastname" placeholder="Reyes" autoComplete="family-name"
+            value={signup.lastname} onChange={updateSignup("lastname")} />
+        </div>
+        <Field label="Work email" id="su-p-email" type="email" placeholder="alex@company.com"
+          autoComplete="email" value={signup.email} onChange={updateSignup("email")} />
+        <Field label="Username" id="su-p-username" placeholder="alex_reyes"
+          autoComplete="username" value={signup.username} onChange={updateSignup("username")} />
+        <PasswordField id="su-p-pw" label="Password"
+          value={signup.password} onChange={updateSignup("password")} />
       </>
     );
   }
 
-  if (tab.key === "partners") {
-    return (
-      <>
-        <Field
-          label="Company"
-          id="su-p-company"
-          placeholder="Acme Electric"
-          autoComplete="organization"
-        />
-        <Field
-          label="Contact name"
-          id="su-p-name"
-          placeholder="Alex Reyes"
-          autoComplete="name"
-        />
-        <Field
-          label="Work email"
-          id="su-p-email"
-          type="email"
-          placeholder="alex@acme.com"
-          autoComplete="email"
-        />
-        <ChoiceField
-          label="Service region"
-          id="su-p-region"
-          options={["West", "Central", "East", "Multi-region"]}
-        />
-      </>
-    );
-  }
-
-  // advertisers
+  // advertisers signup
   return (
     <>
-      <Field
-        label="Brand / Agency"
-        id="su-a-brand"
-        placeholder="North Star Media"
-        autoComplete="organization"
-      />
-      <Field
-        label="Contact name"
-        id="su-a-name"
-        placeholder="Alex Reyes"
-        autoComplete="name"
-      />
-      <Field
-        label="Work email"
-        id="su-a-email"
-        type="email"
-        placeholder="alex@northstar.co"
-        autoComplete="email"
-      />
-      <ChoiceField
-        label="Monthly spend"
-        id="su-a-spend"
-        options={["< $10k", "$10–50k", "$50–250k", "$250k+"]}
-      />
+      <div className="grid grid-cols-2 gap-3">
+        <Field label="First name" id="su-a-firstname" placeholder="Alex" autoComplete="given-name"
+          value={signup.firstname} onChange={updateSignup("firstname")} />
+        <Field label="Last name" id="su-a-lastname" placeholder="Reyes" autoComplete="family-name"
+          value={signup.lastname} onChange={updateSignup("lastname")} />
+      </div>
+      <Field label="Work email" id="su-a-email" type="email" placeholder="alex@company.com"
+        autoComplete="email" value={signup.email} onChange={updateSignup("email")} />
+      <Field label="Mobile number" id="su-a-mobile" type="tel" placeholder="9876543210"
+        autoComplete="tel" value={signup.mobile_no} onChange={updateSignup("mobile_no")} />
+      <PasswordField id="su-a-pw" label="Password"
+        value={signup.password} onChange={updateSignup("password")} />
+      <PasswordField id="su-a-cpw" label="Confirm password"
+        value={signup.c_password} onChange={updateSignup("c_password")} />
     </>
   );
 }
 
 function Field({
-  label,
-  id,
-  type = "text",
-  placeholder,
-  autoComplete,
-  hint,
+  label, id, type = "text", placeholder, autoComplete, hint, value, onChange,
 }: {
   label: string;
   id: string;
@@ -391,6 +532,8 @@ function Field({
   placeholder?: string;
   autoComplete?: string;
   hint?: string;
+  value?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }) {
   return (
     <div className="flex flex-col gap-2">
@@ -405,6 +548,8 @@ function Field({
         type={type}
         placeholder={placeholder}
         autoComplete={autoComplete}
+        value={value}
+        onChange={onChange}
         className="h-11 rounded-xl border border-paper/[0.08] bg-paper/[0.02] px-4 text-[16px] text-paper transition-colors placeholder:text-mute focus:border-accent/40 focus:outline-none focus:ring-1 focus:ring-accent/30 sm:text-sm"
       />
       {hint && (
@@ -414,7 +559,17 @@ function Field({
   );
 }
 
-function PasswordField({ id }: { id: string }) {
+function PasswordField({
+  id,
+  label = "Password",
+  value,
+  onChange,
+}: {
+  id: string;
+  label?: string;
+  value?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}) {
   const [show, setShow] = useState(false);
   return (
     <div className="flex flex-col gap-2">
@@ -422,7 +577,7 @@ function PasswordField({ id }: { id: string }) {
         htmlFor={id}
         className="font-mono text-[10px] font-medium uppercase tracking-[0.16em] text-mute"
       >
-        Password
+        {label}
       </label>
       <div className="relative">
         <input
@@ -430,6 +585,8 @@ function PasswordField({ id }: { id: string }) {
           type={show ? "text" : "password"}
           placeholder="••••••••••"
           autoComplete="current-password"
+          value={value}
+          onChange={onChange}
           className="h-11 w-full rounded-xl border border-paper/[0.08] bg-paper/[0.02] pl-4 pr-16 text-[16px] text-paper transition-colors placeholder:text-mute focus:border-accent/40 focus:outline-none focus:ring-1 focus:ring-accent/30 sm:text-sm"
         />
         <button
@@ -440,59 +597,6 @@ function PasswordField({ id }: { id: string }) {
         >
           {show ? "Hide" : "Show"}
         </button>
-      </div>
-    </div>
-  );
-}
-
-function ChoiceField({
-  label,
-  id,
-  options,
-}: {
-  label: string;
-  id: string;
-  options: string[];
-}) {
-  const [value, setValue] = useState(options[0]);
-  return (
-    <div className="flex flex-col gap-2">
-      <span
-        id={`${id}-label`}
-        className="font-mono text-[10px] font-medium uppercase tracking-[0.16em] text-mute"
-      >
-        {label}
-      </span>
-      <div
-        role="radiogroup"
-        aria-labelledby={`${id}-label`}
-        className="flex flex-wrap gap-1.5"
-      >
-        {options.map((option) => {
-          const active = option === value;
-          return (
-            <button
-              key={option}
-              role="radio"
-              aria-checked={active}
-              type="button"
-              onClick={() => setValue(option)}
-              className={`relative inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 font-mono text-[10px] font-medium uppercase tracking-[0.1em] transition-colors duration-200 ${
-                active
-                  ? "border-accent/50 bg-accent/10 text-accent"
-                  : "border-paper/[0.08] bg-paper/[0.02] text-paper/65 hover:border-paper/20 hover:text-paper"
-              }`}
-            >
-              <span
-                aria-hidden="true"
-                className={`h-1 w-1 rounded-full ${
-                  active ? "bg-accent" : "bg-paper/35"
-                }`}
-              />
-              {option}
-            </button>
-          );
-        })}
       </div>
     </div>
   );
@@ -516,11 +620,7 @@ function RememberToggle() {
         }`}
       >
         {on && (
-          <svg
-            viewBox="0 0 12 12"
-            className="h-2.5 w-2.5 text-accent"
-            fill="none"
-          >
+          <svg viewBox="0 0 12 12" className="h-2.5 w-2.5 text-accent" fill="none">
             <path
               d="M2 6.2l2.6 2.6L10 3.6"
               stroke="currentColor"
@@ -536,11 +636,12 @@ function RememberToggle() {
   );
 }
 
-function SubmitButton({ label }: { label: string }) {
+function SubmitButton({ label, disabled }: { label: string; disabled?: boolean }) {
   return (
     <button
       type="submit"
-      className="group relative mt-2 inline-flex h-12 items-center justify-center gap-3 overflow-hidden rounded-full bg-accent px-6 text-sm font-normal tracking-[0.1em] text-ink transition-transform hover:-translate-y-0.5"
+      disabled={disabled}
+      className="group relative mt-2 inline-flex h-12 items-center justify-center gap-3 overflow-hidden rounded-full bg-accent px-6 text-sm font-normal tracking-[0.1em] text-ink transition-transform hover:-translate-y-0.5 disabled:opacity-60 disabled:cursor-not-allowed"
     >
       <span className="relative z-10">{label}</span>
       <span
@@ -556,4 +657,3 @@ function SubmitButton({ label }: { label: string }) {
     </button>
   );
 }
-
