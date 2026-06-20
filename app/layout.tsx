@@ -1,19 +1,19 @@
 import type { Metadata, Viewport } from "next";
-import { Anton, Instrument_Serif, Plus_Jakarta_Sans } from "next/font/google";
+import { Anton, Archivo, Inter } from "next/font/google";
 import "./globals.css";
 
-const instrumentSerif = Instrument_Serif({
-  variable: "--font-instrument-serif",
+// Display type — headings, hero, stat figures (font-display).
+const displayFont = Archivo({
+  variable: "--font-display-src",
   subsets: ["latin"],
-  weight: ["400"],
   style: ["normal", "italic"],
   display: "swap",
 });
 
-const plusJakarta = Plus_Jakarta_Sans({
-  variable: "--font-plus-jakarta",
+// Body type — paragraphs, UI, labels (font-body).
+const bodyFont = Inter({
+  variable: "--font-body-src",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
   display: "swap",
 });
 
@@ -46,7 +46,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${instrumentSerif.variable} ${plusJakarta.variable} ${anton.variable} h-full antialiased`}
+      className={`${displayFont.variable} ${bodyFont.variable} ${anton.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-ink text-paper font-body">
         {children}

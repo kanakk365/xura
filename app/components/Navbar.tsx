@@ -8,8 +8,9 @@ import { useEffect, useState } from "react";
 
 const NAV_LINKS = [
   { label: "Solutions", href: "/#solutions" },
-  { label: "Strategy", href: "/#strategy" },
-  { label: "Projects", href: "/#projects" },
+  { label: "Strategy", href: "/strategy" },
+  { label: "Leadership", href: "/leadership" },
+  { label: "Projects", href: "/projects" },
   { label: "Advertise", href: "/advertise" },
   { label: "Contact", href: "/#contact" },
 ];

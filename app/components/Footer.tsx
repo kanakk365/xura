@@ -7,8 +7,9 @@ import Link from "next/link";
 const FOOTER_LINKS: { label: string; href: string }[][] = [
   [
     { label: "Solutions", href: "/#solutions" },
-    { label: "Strategy", href: "/#strategy" },
-    { label: "Projects", href: "/#projects" },
+    { label: "Strategy", href: "/strategy" },
+    { label: "Leadership", href: "/leadership" },
+    { label: "Projects", href: "/projects" },
   ],
   [
     { label: "Advertise", href: "/advertise" },

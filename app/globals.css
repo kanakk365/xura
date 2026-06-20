@@ -21,8 +21,9 @@
   --color-accent: var(--accent);
   --color-accent-dim: var(--accent-dim);
 
-  --font-display: var(--font-instrument-serif), "Instrument Serif", "Cormorant Garamond", Georgia, serif;
-  --font-body: var(--font-plus-jakarta), "Plus Jakarta Sans", system-ui, sans-serif;
+  /* Fonts are fed by next/font in layout.tsx via these source vars. */
+  --font-display: var(--font-display-src), "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --font-body: var(--font-body-src), "Inter", system-ui, sans-serif;
   --font-mark: var(--font-anton), "Anton", "Oswald", "Impact", sans-serif;
 }
 
