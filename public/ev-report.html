@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>U.S. Energy &amp; Grid Infrastructure — The Investment Landscape | Xura Briefing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Anton&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#050505; --ink-2:#0c0c0c; --ink-3:#151515;
+    --card:#101010; --card-2:#161616;
+    --accent:#d6a93d; --accent-dim:#a8842c; --accent-deep:#6e5616;
+    --paper:#ffffff; --text:#e9e9ea; --muted:#9a9a9e; --faint:#6a6a6e;
+    --border:rgba(255,255,255,.10); --border-strong:rgba(255,255,255,.18);
+    --glow:rgba(214,169,61,.12);
+    --maxw:1180px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Inter',system-ui,sans-serif;
+    background:var(--ink); color:var(--text);
+    line-height:1.6; overflow-x:hidden; -webkit-font-smoothing:antialiased;
+  }
+
+  /* ---------- nav ---------- */
+  nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);
+    background:rgba(5,5,5,.78);border-bottom:1px solid var(--border)}
+  .nav-in{max-width:var(--maxw);margin:0 auto;display:flex;align-items:center;gap:14px;padding:14px 24px}
+  .brand{display:flex;align-items:center;gap:11px;font-family:'Archivo';font-weight:800;font-size:1.12rem;letter-spacing:.4px;text-transform:uppercase}
+  .brand .dot{width:30px;height:30px;border-radius:8px;background:var(--accent);display:grid;place-items:center}
+  .brand .dot::before{content:"";width:13px;height:13px;background:var(--ink);clip-path:polygon(50% 0,100% 100%,0 100%)}
+  .nav-links{margin-left:auto;display:flex;gap:4px;flex-wrap:wrap}
+  .nav-links a{color:var(--muted);text-decoration:none;font-size:.78rem;font-weight:500;padding:7px 12px;border-radius:999px;transition:.2s;white-space:nowrap}
+  .nav-links a:hover{color:var(--ink);background:var(--accent)}
+  @media(max-width:980px){.nav-links{display:none}}
+
+  /* ---------- layout ---------- */
+  section{max-width:var(--maxw);margin:0 auto;padding:90px 24px}
+  .kicker{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.32em;text-transform:uppercase;color:var(--accent);margin-bottom:16px;display:flex;align-items:center;gap:10px}
+  .kicker::before{content:"";width:30px;height:1px;background:var(--accent)}
+  h2{font-family:'Archivo';font-weight:800;font-size:clamp(1.9rem,4.2vw,3rem);line-height:1.06;letter-spacing:-.6px;margin-bottom:14px}
+  .lead{color:var(--muted);font-size:1.05rem;max-width:700px;margin-bottom:42px}
+  .grad-text{color:var(--accent)}
+
+  /* ---------- hero ---------- */
+  .hero{min-height:94vh;display:flex;flex-direction:column;justify-content:center;padding-top:40px;padding-bottom:40px;position:relative;overflow:hidden}
+  .badge{display:inline-flex;align-items:center;gap:9px;padding:6px 14px;border:1px solid var(--border);font-size:.72rem;color:var(--muted);width:fit-content;margin-bottom:28px;text-transform:uppercase;letter-spacing:.1em;font-weight:500}
+  .badge .pulse{width:7px;height:7px;border-radius:50%;background:var(--accent)}
+  .hero h1{font-family:'Archivo';font-weight:900;font-size:clamp(2.7rem,7vw,5.3rem);line-height:1.0;letter-spacing:-1.8px;margin-bottom:24px;max-width:15ch}
+  .hero p.sub{font-size:1.2rem;color:var(--muted);max-width:640px;margin-bottom:46px}
+  .hero-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:10px}
+  @media(max-width:820px){.hero-stats{grid-template-columns:repeat(2,1fr)}}
+  .hstat{padding:24px 22px;border:1px solid var(--border);border-radius:8px;background:var(--card);position:relative;overflow:hidden}
+  .hstat::after{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:var(--accent);opacity:.9}
+  .hstat .n{font-family:'Archivo';font-weight:800;font-size:2.3rem;line-height:1;color:var(--paper)}
+  .hstat .l{color:var(--muted);font-size:.82rem;margin-top:8px}
+
+  /* ---------- cards / grids ---------- */
+  .cards{display:grid;gap:18px}
+  .g2{grid-template-columns:repeat(2,1fr)} .g3{grid-template-columns:repeat(3,1fr)} .g4{grid-template-columns:repeat(4,1fr)}
+  @media(max-width:900px){.g3,.g4{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:620px){.g2,.g3,.g4{grid-template-columns:1fr}}
+  .card{position:relative;border:1px solid var(--border);border-radius:8px;padding:24px;background:var(--card)}
+  .deal{display:flex;flex-direction:column}
+  .deal .amt{font-family:'Archivo';font-weight:800;font-size:2.4rem;line-height:1;color:var(--paper)}
+  .deal .amt small{font-size:1rem;color:var(--accent);font-weight:600}
+  .deal .co{font-weight:600;font-size:1.12rem;margin:14px 0 4px;color:var(--paper)}
+  .deal .desc{color:var(--muted);font-size:.9rem;flex:1}
+  .deal .meta{margin-top:16px;padding-top:14px;border-top:1px solid var(--border);display:flex;flex-wrap:wrap;gap:8px}
+  .tag{font-family:'JetBrains Mono',monospace;font-size:.66rem;padding:4px 9px;border-radius:6px;background:rgba(214,169,61,.10);color:var(--accent);border:1px solid var(--border)}
+  .tag.b{background:rgba(255,255,255,.06);color:var(--muted)}
+
+  .feat{display:flex;flex-direction:column;gap:8px}
+  .feat .ico{width:46px;height:46px;border-radius:8px;background:var(--glow);border:1px solid var(--border-strong);display:grid;place-items:center;font-size:1.3rem;margin-bottom:6px}
+  .feat h4{font-size:1.08rem;font-weight:600;color:var(--paper)}
+  .feat p{color:var(--muted);font-size:.9rem}
+  .feat .big{font-family:'Archivo';font-weight:800;font-size:1.6rem;color:var(--accent)}
+
+  /* ---------- charts ---------- */
+  .chart-wrap{border:1px solid var(--border);border-radius:8px;padding:30px;background:var(--card)}
+  .chart-title{font-weight:600;font-size:1.05rem;margin-bottom:4px;color:var(--paper)}
+  .chart-sub{color:var(--faint);font-size:.8rem;margin-bottom:24px;font-family:'JetBrains Mono',monospace}
+  .barrow{display:flex;align-items:center;gap:14px;margin-bottom:13px}
+  .barrow .lab{flex:0 0 158px;font-size:.85rem;color:var(--muted);text-align:right}
+  @media(max-width:560px){.barrow .lab{flex:0 0 100px;font-size:.76rem}}
+  .bartrack{flex:1;height:26px;background:rgba(255,255,255,.05);border-radius:7px;overflow:hidden;position:relative}
+  .barfill{height:100%;border-radius:7px;width:0;background:var(--accent)}
+  .barfill.dim{background:var(--accent-deep)}
+  .barrow .val{flex:0 0 86px;font-family:'JetBrains Mono',monospace;font-size:.82rem;color:var(--paper);font-weight:700}
+
+  /* market projection svg */
+  .proj-grid line{stroke:rgba(255,255,255,.07)}
+  .proj-line{fill:none;stroke:var(--accent);stroke-width:3;stroke-linecap:round}
+
+  /* ---------- tables ---------- */
+  .tbl{width:100%;border-collapse:collapse;font-size:.9rem}
+  .tbl th{text-align:left;font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);padding:12px 14px;border-bottom:1px solid var(--border-strong)}
+  .tbl td{padding:13px 14px;border-bottom:1px solid var(--border);color:var(--muted)}
+  .tbl tr:hover td{background:rgba(214,169,61,.04);color:var(--text)}
+  .tbl td.co{color:var(--paper);font-weight:600}
+  .tbl td .num{font-family:'JetBrains Mono',monospace;color:var(--accent);font-weight:700}
+  .tbl-scroll{overflow-x:auto;border:1px solid var(--border);border-radius:8px}
+
+  /* ---------- regions ---------- */
+  .region{border:1px solid var(--border);border-radius:8px;padding:24px;background:var(--card)}
+  .region h4{font-family:'Archivo';font-weight:700;font-size:1.2rem;margin-bottom:4px;display:flex;align-items:center;gap:9px;color:var(--paper)}
+  .region .rtag{font-family:'JetBrains Mono',monospace;font-size:.64rem;padding:3px 8px;border-radius:6px;background:var(--glow);color:var(--accent)}
+  .region ul{list-style:none;margin-top:14px;display:flex;flex-direction:column;gap:9px}
+  .region li{font-size:.86rem;color:var(--muted);padding-left:18px;position:relative}
+  .region li::before{content:"";position:absolute;left:0;top:9px;width:7px;height:7px;border-radius:2px;background:var(--accent)}
+  .region li b{color:var(--paper);font-weight:600}
+
+  /* ---------- closing / opportunity ---------- */
+  .spotlight{border:1px solid var(--border);border-radius:8px;padding:40px;background:var(--card)}
+  .opp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:30px}
+  @media(max-width:760px){.opp-grid{grid-template-columns:1fr}}
+  .opp{background:rgba(5,5,5,.55);border:1px solid var(--border);border-radius:8px;padding:22px}
+  .opp .nm{font-weight:600;margin-bottom:6px;display:flex;align-items:center;gap:9px;color:var(--paper)}
+  .opp p{font-size:.88rem;color:var(--muted)}
+
+  /* pills */
+  .pills{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+  .pill{padding:9px 16px;border:1px solid var(--border);border-radius:11px;font-size:.86rem;background:rgba(255,255,255,.03);display:flex;align-items:center;gap:9px}
+  .pill .v{font-family:'JetBrains Mono',monospace;color:var(--accent);font-weight:700}
+
+  /* footer */
+  footer{border-top:1px solid var(--border);margin-top:40px}
+  .foot-in{max-width:var(--maxw);margin:0 auto;padding:50px 24px;color:var(--faint);font-size:.8rem}
+  .foot-in a{color:var(--muted);text-decoration:none}
+  .src{columns:2;column-gap:30px;margin-top:18px;font-size:.74rem;line-height:1.9}
+  @media(max-width:620px){.src{columns:1}}
+
+  .note{font-size:.74rem;color:var(--faint);font-family:'JetBrains Mono',monospace;margin-top:24px}
+  .r{opacity:1;transform:none}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-in">
+    <div class="brand"><span class="dot"></span> XURA <span style="color:var(--faint);font-weight:500;font-size:.74rem;letter-spacing:.05em">· Market Briefing</span></div>
+    <div class="nav-links">
+      <a href="#market">Market</a>
+      <a href="#capital">Capital</a>
+      <a href="#flows">Where It Goes</a>
+      <a href="#drivers">Drivers</a>
+      <a href="#players">Players</a>
+      <a href="#states">States</a>
+      <a href="#themes">Themes</a>
+      <a href="#risks">Risks</a>
+      <a href="#xura">Opportunity</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero" id="top">
+  <section style="padding-top:0;padding-bottom:0">
+    <div class="badge"><span class="pulse"></span> U.S. Energy &amp; Grid Infrastructure · Investment Landscape 2026</div>
+    <h1>The grid is the new <span class="grad-text">gold rush.</span></h1>
+    <p class="sub">A field guide to the capital, companies, and megawatts rebuilding America's electric infrastructure — where the money is flowing, what's driving it, and where battery storage sits at the center of it all. Prepared as a market briefing.</p>
+    <div class="hero-stats">
+      <div class="hstat"><div class="n">$208B</div><div class="l">U.S. investor-owned utility capex in 2025 — an all-time record (EEI)</div></div>
+      <div class="hstat"><div class="n">18.9 GW</div><div class="l">U.S. battery storage deployed in 2025 — up 52% YoY, another record</div></div>
+      <div class="hstat"><div class="n">2,290 GW</div><div class="l">Stuck in the interconnection queue — ~2× today's total U.S. capacity</div></div>
+      <div class="hstat"><div class="n">$2.3T</div><div class="l">Global energy-transition investment in 2025 — record, up 8% YoY (BNEF)</div></div>
+    </div>
+    <p class="note">Scroll to explore · all figures sourced &amp; dated · EEI · BloombergNEF · Wood Mackenzie / ACP · LBNL · EIA</p>
+  </section>
+</header>
+
+<!-- MARKET -->
+<section id="market">
+  <div class="kicker">01 — The Macro Picture</div>
+  <h2>A once-in-a-generation <span class="grad-text">capex supercycle is underway.</span></h2>
+  <p class="lead">After two decades of flat electricity demand, AI, electrification, and reshored manufacturing have flipped the curve. Utilities now plan to spend <b style="color:var(--paper)">$1.3 trillion over 2026–2030</b> — and battery storage is the fastest-scaling asset class inside that wave.</p>
+
+  <div class="cards g2" style="align-items:stretch">
+    <div class="chart-wrap">
+      <div class="chart-title">U.S. battery storage market — size &amp; trajectory</div>
+      <div class="chart-sub">$ billions · ~$0.88B (2024) → ~$4.59B by 2030 · CAGR ~32.7% (Grand View Research)</div>
+      <svg viewBox="0 0 460 240" width="100%" aria-label="BESS market growth projection">
+        <g class="proj-grid">
+          <line x1="40" y1="30" x2="450" y2="30"/><line x1="40" y1="80" x2="450" y2="80"/>
+          <line x1="40" y1="130" x2="450" y2="130"/><line x1="40" y1="180" x2="450" y2="180"/>
+        </g>
+        <path fill="rgba(214,169,61,.12)" d="M40,188 L142,168 L244,130 L346,82 L450,38 L450,200 L40,200 Z"/>
+        <path class="proj-line" d="M40,188 L142,168 L244,130 L346,82 L450,38"/>
+        <g fill="var(--accent)">
+          <circle cx="40" cy="188" r="4"/><circle cx="244" cy="130" r="4"/><circle cx="450" cy="38" r="4.5"/>
+        </g>
+        <g font-family="JetBrains Mono" font-size="10" fill="#6f6f68">
+          <text x="40" y="214" text-anchor="middle">'24</text><text x="142" y="214" text-anchor="middle">'25</text>
+          <text x="244" y="214" text-anchor="middle">'26</text><text x="346" y="214" text-anchor="middle">'28</text><text x="448" y="214" text-anchor="middle">'30</text>
+          <text x="36" y="192" text-anchor="end" fill="#a6a6a0">$0.9B</text><text x="444" y="34" text-anchor="end" fill="#d6a93d">$4.6B</text>
+        </g>
+      </svg>
+    </div>
+    <div class="cards" style="gap:18px">
+      <div class="card feat"><div class="big">$1.3T</div><h4>5-year U.S. utility capex</h4><p>S&amp;P Global's 2026–2030 forecast — up from a $1.1T five-year outlook just a year earlier. Surging load is rewriting every utility plan.</p></div>
+      <div class="card feat"><div class="big">$50.8B</div><h4>Global BESS market (2025)</h4><p>Full-system basis (MarketsandMarkets). Heading to $100B+ by 2030 as storage becomes core grid infrastructure, not an add-on.</p></div>
+      <div class="card feat"><div class="big">&gt;50 GW</div><h4>U.S. storage installed (cumulative, end-2025)</h4><p>~144 GWh on the grid. Wood Mac projects another 146 GW / 499 GWh added across 2026–2031 — a 250% jump over the prior five years.</p></div>
+    </div>
+  </div>
+  <div class="cards g4" style="margin-top:22px">
+    <div class="hstat" style="border-radius:8px"><div class="n" style="font-size:2rem">$208B</div><div class="l">U.S. utility capex 2025 — record; up from $173B in 2024</div></div>
+    <div class="hstat" style="border-radius:8px"><div class="n" style="font-size:2rem">$470B</div><div class="l">Global grid investment in 2025 — first time over $470B, +16% YoY (BNEF)</div></div>
+    <div class="hstat" style="border-radius:8px"><div class="n" style="font-size:2rem">$378B</div><div class="l">U.S. energy-transition investment 2025 — #2 globally behind China</div></div>
+    <div class="hstat" style="border-radius:8px"><div class="n" style="font-size:2rem">$100B</div><div class="l">Storage investment pledged by ACP members by 2030 (Apr 2025)</div></div>
+  </div>
+  <p class="note">EEI also reports <b style="color:var(--accent)">91 GW</b> of generating capacity under construction and <b style="color:var(--accent)">488 GW</b> more planned or proposed over the next five years — and total IOU capex is up ~50% since 2020 ($139.8B). Sources: EEI (Oct 2025); S&amp;P Global Market Intelligence (Apr 2026); BloombergNEF (2026); Grand View Research; MarketsandMarkets; Wood Mackenzie / ACP. Dollar market-size figures vary by scope (hardware vs. full systems+services) — treat as directional.</p>
+</section>
+
+<!-- CAPITAL -->
+<section id="capital">
+  <div class="kicker">02 — The Capital Wave</div>
+  <h2>Storage and grid software just became <span class="grad-text">venture &amp; infra capital's hottest theme.</span></h2>
+  <p class="lead">2025 saw <b style="color:var(--paper)">$4.8B of VC across 75 deals (+30% YoY)</b> and $16.2B in total corporate funding into storage. Battery M&amp;A jumped 60%+. The money is consolidating around batteries-as-infrastructure, AI grid software, and second-life supply.</p>
+
+  <div class="cards g3">
+    <div class="card deal"><div class="amt">$1.0<small>B</small></div><div class="co">Base Power</div><div class="desc">Vertically integrated residential battery-as-a-service in Texas. Series C at a $4B valuation; ~$1.3B raised to date — and in talks at a $12B valuation by mid-2026.</div><div class="meta"><span class="tag">Addition · a16z</span><span class="tag b">Oct 2025</span></div></div>
+    <div class="card deal"><div class="amt">$463<small>M</small></div><div class="co">Group14 Technologies</div><div class="desc">Silicon-carbon anode material for next-gen EV &amp; grid cells. U.S. manufacturing in Washington; $1B+ raised to date.</div><div class="meta"><span class="tag">SK Inc.</span><span class="tag b">Aug 2025</span></div></div>
+    <div class="card deal"><div class="amt">$350<small>M</small></div><div class="co">Redwood Materials</div><div class="desc">Battery recycling + critical materials, now expanding into grid storage. ~$6B valuation; NVIDIA's VC arm enters.</div><div class="meta"><span class="tag">Eclipse · NVentures</span><span class="tag b">Oct 2025</span></div></div>
+    <div class="card deal"><div class="amt">$300<small>M</small></div><div class="co">EnerVenue</div><div class="desc">NASA-derived nickel-hydrogen battery — 30,000+ cycle life for high-frequency grid duty. Series B extension.</div><div class="meta"><span class="tag">Full Vision Capital</span><span class="tag b">Apr 2026</span></div></div>
+    <div class="card deal"><div class="amt">$232<small>M</small></div><div class="co">Lunar Energy</div><div class="desc">Home batteries + Gridshare AI-driven VPP software aggregating distributed storage. $532M raised total.</div><div class="meta"><span class="tag">B Capital · SK · Sunrun</span><span class="tag b">Feb 2026</span></div></div>
+    <div class="card deal"><div class="amt">$64<small>M</small></div><div class="co">Gridcare</div><div class="desc">AI grid-intelligence mapping spare capacity so data centers find power in months, not years. Oversubscribed Series A.</div><div class="meta"><span class="tag">Sutter Hill · Nat'l Grid</span><span class="tag b">May 2026</span></div></div>
+  </div>
+
+  <div class="cards g2" style="margin-top:36px;align-items:stretch">
+    <div class="chart-wrap">
+      <div class="chart-title">Quarterly corporate storage funding is accelerating</div>
+      <div class="chart-sub">$ billions, all corporate funding · Mercom Capital Group</div>
+      <div class="barrow"><div class="lab">2025 (full yr)</div><div class="bartrack"><div class="barfill dim" data-w="100"></div></div><div class="val">$16.2B</div></div>
+      <div class="barrow"><div class="lab">Q1 2026</div><div class="bartrack"><div class="barfill" data-w="57"></div></div><div class="val">$2.3B</div></div>
+      <div class="barrow"><div class="lab">2025 VC only</div><div class="bartrack"><div class="barfill dim" data-w="30"></div></div><div class="val">$4.8B</div></div>
+      <p class="note" style="margin-top:18px">Q1 2026 funding +5% YoY across 38 deals. Top Q1 rounds: EnerVenue $300M · terralayr $223M · Liminal $200M · Waaree $111M · Lunar $102M.</p>
+    </div>
+    <div class="region">
+      <h4>What capital is buying <span class="rtag">2025–26</span></h4>
+      <ul>
+        <li><b>Batteries-as-infrastructure</b> — subscription/owned residential fleets (Base Power, Lunar) enrolled as grid assets.</li>
+        <li><b>AI grid software</b> — finding &amp; unlocking spare capacity (Gridcare, Splight) for data-center interconnection.</li>
+        <li><b>Supply security</b> — anodes, recycling, second-life cells (Group14, Redwood, Moment Energy).</li>
+        <li><b>Long-cycle chemistry</b> — high-throughput grid duty beyond lithium (EnerVenue Ni-H₂).</li>
+      </ul>
+    </div>
+  </div>
+  <p class="note">Sources: BusinessWire, PR Newswire, Axios, PV Magazine, Latitude Media, Mercom Capital Group (2025–2026).</p>
+</section>
+
+<!-- WHERE IT GOES -->
+<section id="flows">
+  <div class="kicker">03 — Where the Money Goes</div>
+  <h2>$208B, sliced — <span class="grad-text">and where the megawatts land.</span></h2>
+  <p class="lead">Distribution and generation dominate U.S. utility capex, but generation's share has nearly doubled since 2020 (24%→30%) on the back of AI load. On the deployment side, utility-scale batteries are the overwhelming majority — but residential is the fastest grower.</p>
+
+  <div class="cards g2" style="align-items:stretch">
+    <div class="chart-wrap">
+      <div class="chart-title">U.S. utility capex by category — 2025</div>
+      <div class="chart-sub">$ billions · total $207.9B · EEI Industry Capital Expenditures</div>
+      <div class="barrow"><div class="lab">Distribution</div><div class="bartrack"><div class="barfill" data-w="100"></div></div><div class="val">$66.5B</div></div>
+      <div class="barrow"><div class="lab">Generation</div><div class="bartrack"><div class="barfill" data-w="94"></div></div><div class="val">$62.4B</div></div>
+      <div class="barrow"><div class="lab">Transmission</div><div class="bartrack"><div class="barfill" data-w="56"></div></div><div class="val">$37.0B</div></div>
+      <div class="barrow"><div class="lab">Gas infrastructure</div><div class="bartrack"><div class="barfill" data-w="44"></div></div><div class="val">$29.0B</div></div>
+      <div class="barrow"><div class="lab">Other</div><div class="bartrack"><div class="barfill" data-w="18"></div></div><div class="val">$12.0B</div></div>
+    </div>
+    <div class="chart-wrap">
+      <div class="chart-title">U.S. battery storage deployed by segment — 2025</div>
+      <div class="chart-sub">GW installed · total 18.9 GW / 51 GWh · Wood Mackenzie / ACP</div>
+      <div class="barrow"><div class="lab">Utility-scale</div><div class="bartrack"><div class="barfill" data-w="100"></div></div><div class="val">~16 GW</div></div>
+      <div class="barrow"><div class="lab">Residential</div><div class="bartrack"><div class="barfill" data-w="17"></div></div><div class="val">2.7 GW</div></div>
+      <div class="barrow"><div class="lab">C&amp;I</div><div class="bartrack"><div class="barfill" data-w="0.6"></div></div><div class="val">0.10 GW</div></div>
+      <p class="note" style="margin-top:18px">YoY: utility-scale +31% · residential <b style="color:var(--accent)">+92%</b> (fastest segment) · C&amp;I +16%. Q4 2025 was the first quarter residential BESS crossed 1 GWh.</p>
+    </div>
+  </div>
+
+  <div class="cards g4" style="margin-top:22px">
+    <div class="card feat"><div class="big">216 GW</div><h4>Solar in 5-yr pipeline</h4><p>Largest single block of EEI's 579 GW interconnection pipeline (2025–2029).</p></div>
+    <div class="card feat"><div class="big">152 GW</div><h4>Storage in pipeline</h4><p>Second only to solar — storage is now a primary, not supporting, asset class.</p></div>
+    <div class="card feat"><div class="big">$73B</div><h4>Federal grid modernization</h4><p>IIJA allocation for grid upgrades, 2021–2026 (DOE).</p></div>
+    <div class="card feat"><div class="big">$7.5B</div><h4>EV charging (NEVI + CFI)</h4><p>Federal funding for a national charging network; 18,000+ new ports added in 2025.</p></div>
+  </div>
+  <p class="note">Sources: EEI Industry Capital Expenditures (Oct 2025); Wood Mackenzie / ACP U.S. Energy Storage Monitor Q4 2025; DOE; FHWA.</p>
+</section>
+
+<!-- DRIVERS -->
+<section id="drivers">
+  <div class="kicker">04 — The Demand Engine</div>
+  <h2>AI data centers are the <span class="grad-text">demand shock of the decade.</span></h2>
+  <p class="lead">U.S. data-center power demand is set to more than double by 2027. Layer on electrification and reshoring, and a grid built for flat demand suddenly needs to grow ~25% by 2030 — while a 2,290 GW interconnection queue keeps new supply waiting nearly five years.</p>
+
+  <div class="cards g2" style="align-items:stretch">
+    <div class="chart-wrap">
+      <div class="chart-title">U.S. data-center power capacity</div>
+      <div class="chart-sub">GW · Goldman Sachs Research</div>
+      <div class="barrow"><div class="lab">2025</div><div class="bartrack"><div class="barfill dim" data-w="47"></div></div><div class="val">31 GW</div></div>
+      <div class="barrow"><div class="lab">2026</div><div class="bartrack"><div class="barfill dim" data-w="62"></div></div><div class="val">41 GW</div></div>
+      <div class="barrow"><div class="lab">2027</div><div class="bartrack"><div class="barfill" data-w="100"></div></div><div class="val">66 GW</div></div>
+      <p class="note" style="margin-top:18px">Data centers' share of U.S. summer peak power doubles from <b style="color:var(--accent)">4.1% (2025) to 8.5% (2027)</b>. By 2027, PJM, ERCOT and MISO will <i>each</i> add more data-center load annually than the entire nation did in 2025. Big Tech committed $320B to AI/data-center buildout in 2025 — and BNEF pegs total data-center investment near $0.5T for the year.</p>
+    </div>
+    <div class="region">
+      <h4>The interconnection bottleneck <span class="rtag">LBNL 2025</span></h4>
+      <ul>
+        <li><b>2,290 GW</b> of generation + storage waiting in queue — roughly 2× total installed U.S. capacity.</li>
+        <li><b>890 GW</b> of that is battery storage alone.</li>
+        <li><b>55 months</b> median wait from request to commercial operation — up from 22 months in 2008.</li>
+        <li>Only <b>19%</b> of 2000–2019 queue entrants ever reached operation — the queue is real, the bottleneck severe.</li>
+        <li>FERC Order 2023 is shifting to cluster-based "first-ready, first-served" processing.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="cards g4" style="margin-top:22px">
+    <div class="hstat" style="border-radius:8px"><div class="n" style="font-size:2rem">183 TWh</div><div class="l">U.S. data-center electricity use in 2024 — over 4% of national total (Pew)</div></div>
+    <div class="hstat" style="border-radius:8px"><div class="n" style="font-size:2rem">+16%</div><div class="l">Data-center electricity demand growth in 2025; set to double by 2030 (Gartner)</div></div>
+    <div class="hstat" style="border-radius:8px"><div class="n" style="font-size:2rem">+25%</div><div class="l">Projected U.S. electricity demand growth by 2030 (+78% by 2050, WRI)</div></div>
+    <div class="hstat" style="border-radius:8px"><div class="n" style="font-size:2rem">4,283 TWh</div><div class="l">U.S. electricity consumption forecast for 2026 — successive record highs (EIA)</div></div>
+  </div>
+  <p class="note">Sources: Goldman Sachs Research; Pew Research (Oct 2025); Gartner (Nov 2025); IEA Energy &amp; AI 2025; WRI; EIA; LBNL Queued Up 2025 (Dec 2025).</p>
+</section>
+
+<!-- PLAYERS -->
+<section id="players">
+  <div class="kicker">05 — Who's Deploying Capital</div>
+  <h2>The biggest funds and utilities are <span class="grad-text">writing record-size checks.</span></h2>
+  <p class="lead">Infrastructure megafunds, utilities, and corporates are racing to lock up power and storage. M&amp;A velocity is surging — Q1 2026 saw 7.2 GW acquired, a 227% jump over Q1 2025.</p>
+
+  <div class="tbl-scroll">
+    <table class="tbl">
+      <thead><tr><th>Investor / Acquirer</th><th>Move</th><th>Size</th><th>Date</th></tr></thead>
+      <tbody>
+        <tr><td class="co">Brookfield</td><td>Closed Global Transition Fund II — largest-ever private clean-energy fund (~$23.5B incl. co-investment; BESS, renewables, grid)</td><td><span class="num">$20B</span></td><td>Oct 2025</td></tr>
+        <tr><td class="co">KKR + Energy Capital Partners</td><td>Strategic partnership for data-center power generation, storage &amp; grid</td><td><span class="num">$50B</span></td><td>Oct 2024</td></tr>
+        <tr><td class="co">Constellation / Calpine</td><td>Acquisition creating the largest U.S. power generator (~60 GW; $26.6B enterprise value) — built for AI load</td><td><span class="num">$16.4B</span></td><td>Closed Jan 2026</td></tr>
+        <tr><td class="co">Blackstone Infrastructure</td><td>AUM in transmission, contracted generation &amp; storage</td><td><span class="num">&gt;$25B</span></td><td>Ongoing</td></tr>
+        <tr><td class="co">LS Power</td><td>Acquired ~3,000 MW renewables+storage from Algonquin; commissioned 200 MW/400 MWh Big Rock BESS</td><td><span class="num">~$2.5B</span></td><td>2025</td></tr>
+        <tr><td class="co">ENGIE + CBRE IM</td><td>Partnership over a 2.4 GW portfolio of U.S. battery storage assets</td><td><span class="num">2.4 GW</span></td><td>May 2025</td></tr>
+        <tr><td class="co">Partners Group</td><td>Equity into "green flexibility" German BESS platform (&gt;€1B project capacity)</td><td><span class="num">~$411M</span></td><td>Jan 2025</td></tr>
+        <tr><td class="co">GridStor</td><td>Serial BESS project acquirer — Balanced Rock (TX), Strata (AZ), Accelergen (CO)</td><td><span class="num">Multiple</span></td><td>2025–26</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note">Sources: Carbon Credits; ESG Today; Bloomberg / Utility Dive; FTI Consulting M&amp;A Review; Mercom Capital Group; company releases.</p>
+</section>
+
+<!-- STATES -->
+<section id="states">
+  <div class="kicker">06 — The Map</div>
+  <h2>Two states hold <span class="grad-text">the lion's share of the megawatts.</span></h2>
+  <p class="lead">California and Texas combined accounted for 82% of utility-scale storage added in Q3 2025 alone. Texas's 2026 pipeline now outpaces California's — and is more than half the national plan.</p>
+
+  <div class="cards g3">
+    <div class="region">
+      <h4>California <span class="rtag">~16.9 GW</span></h4>
+      <ul>
+        <li>Long the U.S. leader (~44% of capacity through mid-2025) — now neck-and-neck with Texas.</li>
+        <li>13.9 GW utility-scale + 2.2 GW residential (200,000+ homes) + 849 MW commercial.</li>
+        <li><b>3.4 GW</b> of new additions planned for 2026 (~14% of national).</li>
+      </ul>
+    </div>
+    <div class="region">
+      <h4>Texas <span class="rtag">~13.9 GW</span></h4>
+      <ul>
+        <li>ERCOT entered 2026 with <b>~13.9 GW</b> operational — <b>surpassing California for the first time</b>. Up from 3.6 GW in 2023.</li>
+        <li><b>12.9 GW</b> planned for 2026 — <b>53%</b> of the national total.</li>
+        <li>Single projects topping 600 MW: Lunis Creek, Clear Fork Creek, Tehuacana Creek.</li>
+      </ul>
+    </div>
+    <div class="region">
+      <h4>Arizona <span class="rtag">3.2 GW</span></h4>
+      <ul>
+        <li>3rd-largest 2026 planned additions (~13% of national).</li>
+        <li>A fast-rising Sun Belt market for utility-scale solar+storage.</li>
+        <li>Active project flow from GridStor, Strata Clean Energy and others.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="cards g4" style="margin-top:22px">
+    <div class="hstat" style="border-radius:8px"><div class="n" style="font-size:2rem">86 GW</div><div class="l">Record new U.S. generating capacity expected in 2026 — solar + storage lead (EIA)</div></div>
+    <div class="hstat" style="border-radius:8px"><div class="n" style="font-size:2rem">24.3 GW</div><div class="l">New U.S. battery storage forecast to come online in 2026 (EIA)</div></div>
+    <div class="hstat" style="border-radius:8px"><div class="n" style="font-size:2rem">~80%</div><div class="l">Of 2026 planned battery additions sit in just TX, CA &amp; AZ (EIA)</div></div>
+    <div class="hstat" style="border-radius:8px"><div class="n" style="font-size:2rem">52 GW</div><div class="l">Battery storage California projects it will need by 2045 (CEC)</div></div>
+  </div>
+  <p class="note">Sources: California Energy Commission (Nov 2025); EIA — record 2026 capacity additions; Wood Mackenzie / ACP.</p>
+</section>
+
+<!-- THEMES -->
+<section id="themes">
+  <div class="kicker">07 — Emerging Themes</div>
+  <h2>Four shifts <span class="grad-text">redrawing the investment map.</span></h2>
+  <p class="lead">Where the smart money is positioning for the next five years.</p>
+
+  <div class="cards g2">
+    <div class="card feat"><h4>AI load as a demand supercycle</h4><p>Data-center capacity 31→66 GW by 2027; Big Tech spent $320B in 2025. Co-located BESS for peak-shaving and on-site resilience — plus a new class of "power broker" software — is the direct play.</p><div class="big" style="font-size:1.25rem;margin-top:8px">2× by 2027</div></div>
+    <div class="card feat"><h4>VPPs &amp; distributed storage</h4><p>Residential BESS grew +92% in 2025. Base Power's $4B valuation on a subscription model proves "batteries as grid infrastructure" is bankable; Lunar Gridshare aggregates fleets into dispatchable capacity.</p><div class="big" style="font-size:1.25rem;margin-top:8px">+92% resi growth</div></div>
+    <div class="card feat"><h4>Interconnection as moat</h4><p>2,290 GW backlog, 55-month waits. Whoever solves interconnection — software (Gridcare, Splight) or owning queued positions — holds structurally defensible value.</p><div class="big" style="font-size:1.25rem;margin-top:8px">890 GW storage queued</div></div>
+    <div class="card feat"><h4>Domestic manufacturing as hedge</h4><p>The 45X credit survived the 2025 rollback. LG ($1.4B Michigan LFP), Panasonic ($4B Kansas), Samsung SDI are scaling; U.S. cell output may cover domestic BESS demand by end-2026.</p><div class="big" style="font-size:1.25rem;margin-top:8px">146 GWh U.S. by '26</div></div>
+  </div>
+  <p class="note">Sources: Goldman Sachs; Wood Mackenzie / ACP; LBNL; Energy-Storage.News; IEA.</p>
+</section>
+
+<!-- RISKS -->
+<section id="risks">
+  <div class="kicker">08 — The Counter-Currents</div>
+  <h2>Real headwinds <span class="grad-text">temper the boom.</span></h2>
+  <p class="lead">The thesis is strong, but not unqualified. Five forces could slow deployment — and each one rewards domestic, vertically integrated, interconnection-savvy operators.</p>
+
+  <div class="cards g2">
+    <div class="region">
+      <h4>Tariffs stack on imported cells</h4>
+      <ul>
+        <li>Non-EV lithium-ion batteries → <b>25%</b> Section 301 duty by 2026.</li>
+        <li>Utility-scale systems with Chinese cell content now face <b>54%–100%+</b> combined import duties.</li>
+        <li>A cost headwind for 2026 deployment — but a tailwind for U.S. manufacturing.</li>
+      </ul>
+    </div>
+    <div class="region">
+      <h4>Interconnection delays</h4>
+      <ul>
+        <li>60%+ historical withdrawal rate — most queued projects never get built.</li>
+        <li>CAISO and PJM both suspended new applications in 2024 to clear backlog.</li>
+        <li>Much of the 890 GW storage queue is at risk of withdrawal.</li>
+      </ul>
+    </div>
+    <div class="region">
+      <h4>IRA rollback (OBBBA, Jul 2025)</h4>
+      <ul>
+        <li>Consumer credits (25D rooftop, 30D EV, 25C efficiency) <b>terminated</b>.</li>
+        <li>Utility-scale 48E/45Y survive but must <b>begin construction by Jul 4, 2026</b> (or be in service by end-2027).</li>
+        <li>New <b>foreign-entity-of-concern</b> rules bar 45X/45Y/48E credits for projects with Chinese-linked content.</li>
+        <li>Clean-investment pace fell 3 straight quarters post-enactment; $5B in manufacturing cancellations in Q2 2025.</li>
+      </ul>
+    </div>
+    <div class="region">
+      <h4>Supply chain &amp; resi contraction</h4>
+      <ul>
+        <li>China still dominates cathodes &amp; anodes; U.S. factories cost <b>33% more</b> to build, start at ~50% yields.</li>
+        <li>Residential storage projected to <b>contract ~2% in 2026</b> after losing the 25D credit.</li>
+        <li>Cathode/anode supply remains China-sourced through 2030 even as assembly reshores.</li>
+      </ul>
+    </div>
+  </div>
+  <p class="note">Sources: Anza Renewables; TWAICE; LBNL; Holland &amp; Knight; SEIA; Clean Investment Monitor Q2 2025; Wood Mackenzie Q1 2026 Monitor.</p>
+</section>
+
+<!-- XURA OPPORTUNITY -->
+<section id="xura">
+  <div class="kicker">09 — The Opportunity</div>
+  <div class="spotlight">
+    <h2 style="max-width:18ch">Where <span class="grad-text">Xura</span> sits in the $208B build-out.</h2>
+    <p class="lead" style="margin-bottom:0">Every headwind in this briefing — tariffs, interconnection delay, policy narrowing to utility-scale, AI load outrunning the grid — points to the same answer: <b style="color:var(--paper)">site-level, safety-certified energy infrastructure, deployed fast.</b> That is precisely Xura's lane.</p>
+    <div class="opp-grid">
+      <div class="opp"><div class="nm"><span style="color:var(--accent)">◆</span> Speed past the queue</div><p>With 55-month interconnection waits, behind-the-meter and site-level storage that sidesteps the backlog is the fastest path to power. Xura's 6–12 month approval cycle is the differentiator.</p></div>
+      <div class="opp"><div class="nm"><span style="color:var(--accent)">◆</span> Built for AI load</div><p>Data centers doubling to 66 GW by 2027 need on-site resilience and peak-shaving now. Co-located BESS is the bridge while the grid catches up.</p></div>
+      <div class="opp"><div class="nm"><span style="color:var(--accent)">◆</span> Safety as moat</div><p>UL 9540A certification and 200+ systems deployed answer the underwriting and permitting questions that stall competitors — exactly where capital is concentrating.</p></div>
+    </div>
+    <div class="pills" style="margin-top:26px">
+      <div class="pill">U.S. utility capex <span class="v">$208B/yr</span></div>
+      <div class="pill">Storage deployed 2025 <span class="v">18.9 GW</span></div>
+      <div class="pill">Interconnection queue <span class="v">2,290 GW</span></div>
+      <div class="pill">Data-center demand <span class="v">2× by '27</span></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-in">
+    <b style="color:var(--text);font-family:'Archivo'">XURA · U.S. Energy &amp; Grid Infrastructure Investment Landscape</b><br>
+    Market briefing compiled June 2026; headline figures independently re-verified July 2026 against primary sources (EEI, BNEF, Wood Mackenzie / ACP, LBNL, Goldman Sachs, EIA, IRS). All figures sourced &amp; dated. Market-size projections from research firms are directional, not precise forecasts; cross-referenced against BloombergNEF and Wood Mackenzie where precision matters.
+    <div class="src">
+      EEI — Industry Capital Expenditures (Oct 2025) · S&amp;P Global Market Intelligence (Apr 2026) · BloombergNEF — Energy Transition &amp; Grid Investment (2026) · Wood Mackenzie / ACP — U.S. Energy Storage Monitor (Q4 2025, Q1 2026) · Grand View Research; MarketsandMarkets; Nova One Advisor — BESS market sizing · LBNL — Queued Up 2025 Edition (Dec 2025) · Goldman Sachs Research — data-center power demand · Pew Research (Oct 2025) · Gartner (Nov 2025) · IEA — Energy &amp; AI 2025 · EIA · WRI · Mercom Capital Group — corporate funding · FTI Consulting — M&amp;A Review · California Energy Commission (Nov 2025) · Clean Investment Monitor (Q2 2025) · Anza Renewables; TWAICE — tariffs · Holland &amp; Knight; SEIA; IRS — OBBBA · BusinessWire, PR Newswire, Axios, PV Magazine, Latitude Media — funding rounds.
+    </div>
+  </div>
+</footer>
+
+<script>
+  // animate bars into view
+  const bars = document.querySelectorAll('.barfill');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        const w = e.target.getAttribute('data-w');
+        e.target.style.width = w + '%';
+        io.unobserve(e.target);
+      }
+    });
+  },{threshold:.3});
+  bars.forEach(b=>io.observe(b));
+</script>
+</body>
+</html>

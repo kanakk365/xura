@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>U.S. Youth Sports — The Investment Landscape | DKP Briefing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Poppins:wght@300;400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0b0b14; --bg-2:#0e0e1c;
+    --card:#16162a; --card-2:#1b1b30;
+    --primary:#b49dff; --primary-deep:#9333ea; --blue:#2563eb;
+    --cyan:#22d3ee; --pink:#f472b6; --teal:#4db8a8; --green:#4ade80; --amber:#fbbf24;
+    --text:#edecfb; --muted:#c6c8e4; --faint:#9698bd;
+    --border:rgba(150,140,230,.20); --border-strong:rgba(165,155,238,.34);
+    --grad:linear-gradient(100deg,#9333ea,#2563eb);
+    --grad-soft:rgba(147,51,234,.14);
+    --shimmer:linear-gradient(90deg,#a78bfa 0%,#22d3ee 50%,#f472b6 100%);
+    --maxw:1180px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Poppins',system-ui,sans-serif;
+    background:var(--bg); color:var(--text);
+    line-height:1.6; overflow-x:hidden; -webkit-font-smoothing:antialiased;
+  }
+  /* ---------- clean solid background (gradients removed for readability) ---------- */
+
+  /* ---------- nav ---------- */
+  nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);
+    background:rgba(11,11,20,.72);border-bottom:1px solid var(--border)}
+  .nav-in{max-width:var(--maxw);margin:0 auto;display:flex;align-items:center;gap:14px;padding:14px 24px}
+  .brand{display:flex;align-items:center;gap:10px;font-family:'Baloo 2';font-weight:800;font-size:1.15rem;letter-spacing:.3px}
+  .brand .dot{width:30px;height:30px;border-radius:9px;background:var(--primary-deep);display:grid;place-items:center;font-size:.85rem}
+  .nav-links{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap}
+  .nav-links a{color:var(--muted);text-decoration:none;font-size:.82rem;font-weight:500;padding:7px 13px;border-radius:999px;transition:.2s;white-space:nowrap}
+  .nav-links a:hover{color:var(--text);background:var(--grad-soft)}
+  @media(max-width:880px){.nav-links{display:none}}
+
+  /* ---------- layout ---------- */
+  section{max-width:var(--maxw);margin:0 auto;padding:90px 24px}
+  .kicker{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.32em;text-transform:uppercase;color:var(--primary);margin-bottom:16px;display:flex;align-items:center;gap:10px}
+  .kicker::before{content:"";width:30px;height:1px;background:var(--primary)}
+  h2{font-family:'Baloo 2';font-weight:800;font-size:clamp(1.9rem,4.2vw,3rem);line-height:1.08;letter-spacing:-.5px;margin-bottom:14px}
+  .lead{color:var(--muted);font-size:1.05rem;max-width:680px;margin-bottom:42px}
+  .grad-text{color:#c4b1ff}
+  .shimmer{color:#c4b1ff}
+
+  /* ---------- hero ---------- */
+  .hero{min-height:94vh;display:flex;flex-direction:column;justify-content:center;padding-top:40px;padding-bottom:40px}
+  .badge{display:inline-flex;align-items:center;gap:9px;padding:7px 16px;border:1px solid var(--border-strong);border-radius:999px;font-size:.78rem;color:var(--muted);background:rgba(180,157,255,.06);width:fit-content;margin-bottom:30px}
+  .badge .pulse{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 0 rgba(74,222,128,.6);animation:pulse 2.4s infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(74,222,128,.55)}70%{box-shadow:0 0 0 12px rgba(74,222,128,0)}100%{box-shadow:0 0 0 0 rgba(74,222,128,0)}}
+  .hero h1{font-family:'Baloo 2';font-weight:800;font-size:clamp(2.7rem,7vw,5.2rem);line-height:1.02;letter-spacing:-1.5px;margin-bottom:24px;max-width:14ch}
+  .hero p.sub{font-size:1.2rem;color:var(--muted);max-width:620px;margin-bottom:46px}
+  .hero-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:10px}
+  @media(max-width:820px){.hero-stats{grid-template-columns:repeat(2,1fr)}}
+  .hstat{padding:24px 22px;border:1px solid var(--border);border-radius:18px;background:var(--card);position:relative;overflow:hidden}
+  .hstat::after{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:var(--primary);opacity:.85}
+  .hstat .n{font-family:'Baloo 2';font-weight:800;font-size:2.3rem;line-height:1;color:#c4b1ff}
+  .hstat .l{color:var(--muted);font-size:.82rem;margin-top:8px}
+
+  /* ---------- cards / grids ---------- */
+  .cards{display:grid;gap:18px}
+  .g2{grid-template-columns:repeat(2,1fr)} .g3{grid-template-columns:repeat(3,1fr)} .g4{grid-template-columns:repeat(4,1fr)}
+  @media(max-width:900px){.g3,.g4{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:620px){.g2,.g3,.g4{grid-template-columns:1fr}}
+  .card{position:relative;border:1px solid var(--border);border-radius:18px;padding:26px;background:var(--card);transition:transform .35s cubic-bezier(.2,.8,.2,1),border-color .35s}
+  .card::before{content:"";position:absolute;inset:-1px;border-radius:18px;padding:1px;background:var(--primary);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:opacity .35s}
+  .card:hover{transform:translateY(-6px)}
+  .card:hover::before{opacity:1}
+  .deal{display:flex;flex-direction:column}
+  .deal .amt{font-family:'Baloo 2';font-weight:800;font-size:2.4rem;line-height:1;color:#fff}
+  .deal .amt small{font-size:1rem;color:var(--primary);font-weight:600}
+  .deal .co{font-weight:600;font-size:1.12rem;margin:14px 0 4px}
+  .deal .desc{color:var(--muted);font-size:.9rem;flex:1}
+  .deal .meta{margin-top:16px;padding-top:14px;border-top:1px solid var(--border);display:flex;flex-wrap:wrap;gap:8px}
+  .tag{font-family:'JetBrains Mono',monospace;font-size:.68rem;padding:4px 9px;border-radius:7px;background:rgba(180,157,255,.1);color:var(--primary);border:1px solid var(--border)}
+  .tag.b{background:rgba(34,211,238,.1);color:var(--cyan)} .tag.p{background:rgba(244,114,182,.1);color:var(--pink)} .tag.g{background:rgba(74,222,128,.1);color:var(--green)} .tag.a{background:rgba(251,191,36,.1);color:var(--amber)}
+
+  .feat{display:flex;flex-direction:column;gap:8px}
+  .feat .ico{width:46px;height:46px;border-radius:13px;background:var(--grad-soft);border:1px solid var(--border);display:grid;place-items:center;font-size:1.3rem;margin-bottom:6px}
+  .feat h4{font-size:1.08rem;font-weight:600}
+  .feat p{color:var(--muted);font-size:.9rem}
+  .feat .big{font-family:'Baloo 2';font-weight:800;font-size:1.6rem;color:var(--primary)}
+
+  /* ---------- charts ---------- */
+  .chart-wrap{border:1px solid var(--border);border-radius:20px;padding:30px;background:var(--card)}
+  .chart-title{font-weight:600;font-size:1.05rem;margin-bottom:4px}
+  .chart-sub{color:var(--faint);font-size:.8rem;margin-bottom:24px;font-family:'JetBrains Mono',monospace}
+  .barrow{display:flex;align-items:center;gap:14px;margin-bottom:13px}
+  .barrow .lab{flex:0 0 150px;font-size:.85rem;color:var(--muted);text-align:right}
+  @media(max-width:560px){.barrow .lab{flex:0 0 96px;font-size:.76rem}}
+  .bartrack{flex:1;height:26px;background:rgba(255,255,255,.04);border-radius:8px;overflow:hidden;position:relative}
+  .barfill{height:100%;border-radius:8px;width:0;background:#8b5cf6!important}
+  .barrow .val{flex:0 0 78px;font-family:'JetBrains Mono',monospace;font-size:.82rem;color:#fff;font-weight:700}
+
+  /* market projection svg */
+  .proj-grid line{stroke:rgba(140,130,220,.12)}
+  .proj-area{opacity:1}
+  .proj-line{fill:none;stroke:#8b5cf6;stroke-width:3;stroke-linecap:round}
+  .proj-dot{opacity:1}
+
+  /* ---------- tables ---------- */
+  .tbl{width:100%;border-collapse:collapse;font-size:.9rem}
+  .tbl th{text-align:left;font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);padding:12px 14px;border-bottom:1px solid var(--border-strong)}
+  .tbl td{padding:13px 14px;border-bottom:1px solid var(--border);color:var(--muted)}
+  .tbl tr:hover td{background:rgba(180,157,255,.04);color:var(--text)}
+  .tbl td.co{color:var(--text);font-weight:600}
+  .tbl td .num{font-family:'JetBrains Mono',monospace;color:var(--primary);font-weight:700}
+  .tbl-scroll{overflow-x:auto;border:1px solid var(--border);border-radius:18px}
+
+  /* ---------- regions ---------- */
+  .region{border:1px solid var(--border);border-radius:18px;padding:24px;background:var(--card)}
+  .region h4{font-family:'Baloo 2';font-weight:700;font-size:1.2rem;margin-bottom:4px;display:flex;align-items:center;gap:9px}
+  .region .rtag{font-family:'JetBrains Mono',monospace;font-size:.66rem;padding:3px 8px;border-radius:6px;background:var(--grad-soft);color:var(--primary)}
+  .region ul{list-style:none;margin-top:14px;display:flex;flex-direction:column;gap:9px}
+  .region li{font-size:.86rem;color:var(--muted);padding-left:18px;position:relative}
+  .region li::before{content:"";position:absolute;left:0;top:9px;width:7px;height:7px;border-radius:2px;background:var(--primary)}
+  .region li b{color:var(--text);font-weight:600}
+
+  /* ---------- DKP opportunity ---------- */
+  .spotlight{border:1px solid var(--border-strong);border-radius:26px;padding:48px;background:var(--card);position:relative;overflow:hidden}
+  .opp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:30px}
+  @media(max-width:760px){.opp-grid{grid-template-columns:1fr}}
+  .opp{background:rgba(11,11,20,.5);border:1px solid var(--border);border-radius:16px;padding:22px}
+  .opp .nm{font-weight:600;margin-bottom:6px;display:flex;align-items:center;gap:9px}
+  .opp p{font-size:.88rem;color:var(--muted)}
+
+  /* pills */
+  .pills{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+  .pill{padding:9px 16px;border:1px solid var(--border);border-radius:12px;font-size:.86rem;background:rgba(255,255,255,.025);display:flex;align-items:center;gap:9px}
+  .pill .v{font-family:'JetBrains Mono',monospace;color:var(--primary);font-weight:700}
+
+  /* footer */
+  footer{border-top:1px solid var(--border);margin-top:40px}
+  .foot-in{max-width:var(--maxw);margin:0 auto;padding:50px 24px;color:var(--faint);font-size:.8rem}
+  .foot-in a{color:var(--muted);text-decoration:none}
+  .src{columns:2;column-gap:30px;margin-top:18px;font-size:.74rem;line-height:1.9}
+  @media(max-width:620px){.src{columns:1}}
+
+  /* reveal */
+  .r{opacity:1;transform:none}
+  .r.reveal{opacity:1;transform:none}
+  .r.d1{transition-delay:.08s}.r.d2{transition-delay:.16s}.r.d3{transition-delay:.24s}.r.d4{transition-delay:.32s}.r.d5{transition-delay:.4s}
+
+  .note{font-size:.74rem;color:var(--faint);font-family:'JetBrains Mono',monospace;margin-top:24px}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-in">
+    <div class="brand"><span class="dot">▲</span> DKP <span style="color:var(--faint);font-weight:500;font-size:.8rem">· Market Briefing</span></div>
+    <div class="nav-links">
+      <a href="#market">Market</a>
+      <a href="#capital">Capital</a>
+      <a href="#bodies">Governing Bodies</a>
+      <a href="#companies">Companies</a>
+      <a href="#states">States</a>
+      <a href="#policy">Policy</a>
+      <a href="#invest">Investment</a>
+      <a href="#dkp">Opportunity</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero" id="top">
+  <section style="padding-top:0;padding-bottom:0">
+    <div class="badge r reveal"><span class="pulse"></span> U.S. Youth Sports · Investment Landscape 2026</div>
+    <h1 class="r d1 reveal">The <span class="shimmer">$40&nbsp;billion</span> game nobody was watching.</h1>
+    <p class="sub r d2 reveal">A field guide to the companies, capital, and complexes reshaping youth sports across America — federal and state by state. Prepared as a market briefing.</p>
+    <div class="hero-stats">
+      <div class="hstat r d2 reveal"><div class="n" data-count="40" data-suffix="B" data-prefix="$">$40B</div><div class="l">Annual market size (est.), growing 8–10%/yr</div></div>
+      <div class="hstat r d3 reveal"><div class="n" data-count="2.11" data-suffix="B" data-prefix="$" data-dec="2">$2.11B</div><div class="l">PE into amateur sports, 2026 YTD — &gt;4× all of 2025</div></div>
+      <div class="hstat r d4 reveal"><div class="n" data-count="30" data-suffix="M+">30M+</div><div class="l">Kids in U.S. youth sports; ~34M parents paying</div></div>
+      <div class="hstat r d5 reveal"><div class="n" data-count="4.75" data-suffix="B" data-prefix="$" data-dec="2">$4.75B</div><div class="l">Largest single deal — KKR / Varsity Brands (2024)</div></div>
+    </div>
+    <p class="note r d5 reveal">Scroll to explore · all figures sourced &amp; dated · IRS Form 990 + press/transaction data</p>
+  </section>
+</header>
+
+<!-- MARKET -->
+<section id="market">
+  <div class="kicker r">01 — The Macro Picture</div>
+  <h2 class="r d1">A recession-resistant market <span class="grad-text">roughly the size of the NFL — twice over.</span></h2>
+  <p class="lead r d2">Estimates vary by what's counted (registrations vs. travel, training, facilities, gear, tourism). The defensible range: <b style="color:var(--text)">$30–50B, growing high single digits</b>, powered by year-round specialization and rising per-child household spend.</p>
+
+  <div class="cards g2" style="align-items:stretch">
+    <div class="chart-wrap r d1">
+      <div class="chart-title">U.S. youth sports market — size &amp; trajectory</div>
+      <div class="chart-sub">$ billions · ~$43B US (2023) → ~$69.4B by 2030 · CAGR ~9%</div>
+      <svg viewBox="0 0 460 240" width="100%" id="projChart" aria-label="Market growth projection">
+        <defs>
+          <linearGradient id="lg" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#9333ea"/><stop offset="1" stop-color="#22d3ee"/></linearGradient>
+          <linearGradient id="ag" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9333ea" stop-opacity=".4"/><stop offset="1" stop-color="#2563eb" stop-opacity="0"/></linearGradient>
+        </defs>
+        <g class="proj-grid">
+          <line x1="40" y1="30" x2="450" y2="30"/><line x1="40" y1="80" x2="450" y2="80"/>
+          <line x1="40" y1="130" x2="450" y2="130"/><line x1="40" y1="180" x2="450" y2="180"/>
+        </g>
+        <path class="proj-area" fill="rgba(139,92,246,.13)" d="M40,178 L142,150 L244,116 L346,74 L450,40 L450,200 L40,200 Z"/>
+        <path class="proj-line" d="M40,178 L142,150 L244,116 L346,74 L450,40"/>
+        <g class="proj-dot" fill="#fff">
+          <circle cx="40" cy="178" r="4"/><circle cx="244" cy="116" r="4"/><circle cx="450" cy="40" r="4.5" fill="#22d3ee"/>
+        </g>
+        <g font-family="JetBrains Mono" font-size="10" fill="#6e6f95">
+          <text x="34" y="214" text-anchor="middle">'22</text><text x="142" y="214" text-anchor="middle">'24</text>
+          <text x="244" y="214" text-anchor="middle">'26</text><text x="346" y="214" text-anchor="middle">'28</text><text x="448" y="214" text-anchor="middle">'30</text>
+          <text x="36" y="182" text-anchor="end" fill="#a2a5c8">$43B</text><text x="444" y="32" text-anchor="end" fill="#22d3ee">$69B</text>
+        </g>
+      </svg>
+    </div>
+    <div class="cards" style="gap:18px">
+      <div class="card feat r d2"><div class="big">~$54B</div><h4>Broader-ecosystem ceiling</h4><p>Some estimates put the full ecosystem near $54B/yr — roughly 2× the NFL's annual revenue.</p></div>
+      <div class="card feat r d3"><div class="big">+46%</div><h4>Household spend per child</h4><p>Average family spend on a child's primary sport is up sharply since 2019 (Aspen Institute) — the engine behind the boom.</p></div>
+      <div class="card feat r d4"><div class="big">8–10%</div><h4>Annual growth</h4><p>Recurring registration revenue + a fragmented, roll-up-ready market = a magnet for institutional capital.</p></div>
+    </div>
+  </div>
+  <div class="cards g4" style="margin-top:22px">
+    <div class="hstat r d1" style="border-radius:16px"><div class="n" style="font-size:2rem">$1,016</div><div class="l">Avg. annual spend per child on their primary sport (2024) — up 46% since 2019</div></div>
+    <div class="hstat r d2" style="border-radius:16px"><div class="n" style="font-size:2rem">58%</div><div class="l">Of kids 6–17 played organized sports in 2024 — highest in nearly a decade</div></div>
+    <div class="hstat r d3" style="border-radius:16px"><div class="n" style="font-size:2rem">20.2 pts</div><div class="l">Rich–poor participation gap (up from 13.6 in 2012) — the access opportunity</div></div>
+    <div class="hstat r d4" style="border-radius:16px"><div class="n" style="font-size:2rem">70%</div><div class="l">Of kids quit organized sports by age 13 — the retention problem</div></div>
+  </div>
+  <p class="note r">Sources: Stout; Empower; White &amp; Case; Aspen Institute Project Play (1,848-parent survey + CDC/NHIS data); Markets N Research. Forward projection is a market-research estimate, not a hard figure.</p>
+</section>
+
+<!-- CAPITAL -->
+<section id="capital">
+  <div class="kicker r">02 — The Capital Wave</div>
+  <h2 class="r d1">Since 2023, youth sports became one of <span class="grad-text">private capital's hottest themes.</span></h2>
+  <p class="lead r d2">2025 was the "breakout year" for youth-sports M&amp;A; 2026 has accelerated further. The money is consolidating at the platform level — academies, club/tournament operators, facilities, and program franchises.</p>
+
+  <div class="cards g4">
+    <div class="card deal r d1"><div class="amt">$1.25<small>B</small></div><div class="co">IMG Academy</div><div class="desc">Flagship multi-sport boarding academy. Sold by Endeavor to BPEA EQT + Nord Anglia.</div><div class="meta"><span class="tag">BPEA EQT</span><span class="tag b">2023</span></div></div>
+    <div class="card deal r d2"><div class="amt">$4.75<small>B</small></div><div class="co">Varsity Brands</div><div class="desc">Cheer / Varsity Spirit + BSN Sports. KKR acquired from Bain Capital + Charlesbank.</div><div class="meta"><span class="tag">KKR</span><span class="tag b">Aug 2024</span></div></div>
+    <div class="card deal r d3"><div class="amt">$650<small>M+</small></div><div class="co">Unrivaled Sports</div><div class="desc">Harris/Blitzer + Chernin facility roll-up. $120M round led by Dick's (DSG Ventures).</div><div class="meta"><span class="tag">Dick's / DSG</span><span class="tag b">2025</span></div></div>
+    <div class="card deal r d4"><div class="amt">$500<small>M+</small></div><div class="co">Overtime Elite</div><div class="desc">Teen basketball league + academy. $100M Series D led by Liberty Media (val.).</div><div class="meta"><span class="tag">Liberty Media</span><span class="tag b">2022</span></div></div>
+  </div>
+
+  <div class="cards g2" style="margin-top:36px;align-items:stretch">
+    <div class="chart-wrap r d1" id="peChart">
+      <div class="chart-title">PE capital into amateur sports — the inflection</div>
+      <div class="chart-sub">$ deployed · 2026 figure is first 5 months only</div>
+      <div class="barrow"><div class="lab">2024</div><div class="bartrack"><div class="barfill" data-w="14" style="background:linear-gradient(90deg,#4b4b7a,#5b5b8f)"></div></div><div class="val">~$0.3B</div></div>
+      <div class="barrow"><div class="lab">2025 (full yr)</div><div class="bartrack"><div class="barfill" data-w="26" style="background:linear-gradient(90deg,#7c3aed,#9333ea)"></div></div><div class="val">~$550M</div></div>
+      <div class="barrow"><div class="lab">2026 (5 mo)</div><div class="bartrack"><div class="barfill" data-w="100" style="background:var(--grad)"></div></div><div class="val">~$2.11B</div></div>
+      <p class="note" style="margin-top:18px">&gt;4× all of 2025 in barely 5 months — $2.59B across 17 transactions (Jan 2025–May 2026), 9 of the top 10 U.S.-based. Sources: Sportico; S&amp;P Global Market Intelligence; L.E.K.</p>
+    </div>
+    <div class="region r d2">
+      <h4>🏦 The roll-up holding companies</h4>
+      <p style="color:var(--muted);font-size:.9rem;margin-top:6px">Four PE-backed platforms now own most national program brands:</p>
+      <ul>
+        <li><b>Roark Capital</b> → Youth Enrichment Brands (i9 Sports, US Sports Camps, SafeSplash)</li>
+        <li><b>Seidler Equity</b> → Unleashed Brands (The Little Gym, Urban Air)</li>
+        <li><b>Susquehanna Private Capital</b> → Stronger Youth Brands (Soccer Shots)</li>
+        <li><b>Princeton Equity</b> → D1 Training, KidStrong</li>
+        <li><b>Juggernaut Capital</b> → 3STEP Sports (2M+ athletes, exploring sale 2026)</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3 style="font-family:'Baloo 2';font-weight:700;font-size:1.3rem;margin:42px 0 18px" class="r">Newer deals (2024–2026)</h3>
+  <div class="cards g3">
+    <div class="card r d1"><div class="co" style="font-weight:600">RCX Sports</div><div class="desc" style="font-size:.86rem;color:var(--muted)">License operator for NFL Flag, MLS GO, Jr. NBA/WNBA. Acquired by Brand Velocity Group.</div><div class="meta"><span class="tag p">Brand Velocity</span><span class="tag b">Jun 2026</span></div></div>
+    <div class="card r d2"><div class="co" style="font-weight:600">Players Health</div><div class="desc" style="font-size:.86rem;color:var(--muted)">Insurance / risk-management for youth orgs; 5.5M athletes. $60M Series C.</div><div class="meta"><span class="tag p">Bluestone Equity</span><span class="tag b">Dec 2024</span></div></div>
+    <div class="card r d3"><div class="co" style="font-weight:600">LiveBarn</div><div class="desc" style="font-size:.86rem;color:var(--muted)">Amateur-sports livestreaming, 4,000+ venues. ~$400M valuation.</div><div class="meta"><span class="tag p">GTCR</span><span class="tag b">Jan 2026</span></div></div>
+  </div>
+  <h3 style="font-family:'Baloo 2';font-weight:700;font-size:1.3rem;margin:42px 0 6px" class="r">Who's writing the checks</h3>
+  <p style="color:var(--muted);font-size:.92rem;margin-bottom:18px" class="r">Four deal archetypes dominate: <b style="color:var(--text)">buy-and-build roll-ups</b> · <b style="color:var(--text)">destination/facility platforms</b> · <b style="color:var(--text)">B2B infrastructure</b> · and an emerging <b style="color:var(--text)">content/media</b> layer.</p>
+  <div class="cards g4">
+    <div class="card r d1"><div class="co" style="font-weight:600">DSG Ventures</div><div class="desc" style="font-size:.84rem;color:var(--muted)">Dick's $50M corporate VC. Led Unrivaled's $120M — deepens its youth data/commerce loop (GameChanger).</div></div>
+    <div class="card r d1"><div class="co" style="font-weight:600">Roark Capital</div><div class="desc" style="font-size:.84rem;color:var(--muted)">Franchise roll-up master — Youth Enrichment Brands (i9, Nike Camps, SafeSplash). 1M+ kids.</div></div>
+    <div class="card r d2"><div class="co" style="font-weight:600">Juggernaut Capital</div><div class="desc" style="font-size:.84rem;color:var(--muted)">3STEP since 2019; launched a &gt;$500M "Diversified Sports" fund (2026) with Gareth Bale.</div></div>
+    <div class="card r d2"><div class="co" style="font-weight:600">KKR</div><div class="desc" style="font-size:.84rem;color:var(--muted)">Biggest check — $4.75B Varsity Brands. Also bought Arctos (~$1B, 2026).</div></div>
+    <div class="card r d3"><div class="co" style="font-weight:600">BPEA EQT</div><div class="desc" style="font-size:.84rem;color:var(--muted)">IMG Academy ($1.25B). Thesis: premium sports-education as scarce institutional real estate.</div></div>
+    <div class="card r d3"><div class="co" style="font-weight:600">Elysian Park</div><div class="desc" style="font-size:.84rem;color:var(--muted)">LA Dodgers-backed "Sports+" fund. Bought Student Sports (Elite 11, Area Code Baseball).</div></div>
+    <div class="card r d4"><div class="co" style="font-weight:600">Bluestone Equity</div><div class="desc" style="font-size:.84rem;color:var(--muted)">$300M growth fund. Led Players Health ($60M) — the B2B safety/insurance tollbooth.</div></div>
+    <div class="card r d4"><div class="co" style="font-weight:600">HBSE / Harris-Blitzer</div><div class="desc" style="font-size:.84rem;color:var(--muted)">76ers/Devils owners. Built Unrivaled into a youth-to-pro destination pipeline.</div></div>
+  </div>
+  <p class="note r" style="margin-top:22px">Counter-current worth flagging: the proposed federal <b style="color:var(--muted)">"Let Kids Play Act"</b> would specifically target PE ownership of youth-sports teams, leagues, and facilities.</p>
+</section>
+
+<!-- GOVERNING BODIES -->
+<section id="bodies">
+  <div class="kicker r">03 — Governing &amp; Sanctioning Bodies</div>
+  <h2 class="r d1">The nonprofits that <span class="grad-text">run the games</span> — and the dollars behind them.</h2>
+  <p class="lead r d2">These membership/sanctioning bodies organize participation and drive the lucrative travel/tournament economy. All figures verified to the dollar against IRS Form 990 filings.</p>
+
+  <div class="chart-wrap r d1">
+    <div class="chart-title">National governing bodies — annual revenue (latest FY, IRS 990)</div>
+    <div class="chart-sub">$ millions · *USTA shown at scale; tennis dwarfs all others</div>
+    <div class="barrow"><div class="lab">USTA (tennis)</div><div class="bartrack"><div class="barfill" data-w="100" style="background:var(--grad)"></div></div><div class="val">$468.6M</div></div>
+    <div class="barrow"><div class="lab">USA Hockey</div><div class="bartrack"><div class="barfill" data-w="13" style="background:linear-gradient(90deg,#9333ea,#b49dff)"></div></div><div class="val">$58.9M</div></div>
+    <div class="barrow"><div class="lab">USA Basketball</div><div class="bartrack"><div class="barfill" data-w="10.5" style="background:linear-gradient(90deg,#7c3aed,#a78bfa)"></div></div><div class="val">$48.1M</div></div>
+    <div class="barrow"><div class="lab">USA Swimming</div><div class="bartrack"><div class="barfill" data-w="10.3" style="background:linear-gradient(90deg,#2563eb,#22d3ee)"></div></div><div class="val">$47.6M</div></div>
+    <div class="barrow"><div class="lab">USA Volleyball</div><div class="bartrack"><div class="barfill" data-w="10.1" style="background:linear-gradient(90deg,#2563eb,#4db8a8)"></div></div><div class="val">$46.5M</div></div>
+    <div class="barrow"><div class="lab">AAU</div><div class="bartrack"><div class="barfill" data-w="9.6" style="background:linear-gradient(90deg,#9333ea,#2563eb)"></div></div><div class="val">$43.8M</div></div>
+    <div class="barrow"><div class="lab">Little League</div><div class="bartrack"><div class="barfill" data-w="9.2" style="background:linear-gradient(90deg,#7c3aed,#9333ea)"></div></div><div class="val">$42.2M</div></div>
+    <div class="barrow"><div class="lab">USSSA</div><div class="bartrack"><div class="barfill" data-w="5.2" style="background:linear-gradient(90deg,#4b4b8f,#7c3aed)"></div></div><div class="val">$23.6M</div></div>
+    <div class="barrow"><div class="lab">USA Lacrosse</div><div class="bartrack"><div class="barfill" data-w="4.8" style="background:linear-gradient(90deg,#4b4b8f,#6b5bb0)"></div></div><div class="val">$21.8M</div></div>
+  </div>
+
+  <div class="cards g3" style="margin-top:24px">
+    <div class="card feat r d1"><div class="ico">🏐</div><h4>The clearest money engine</h4><p><b style="color:var(--text)">AAU's Orlando Junior Volleyball</b> — "World's Largest Volleyball Tournament": 5,800+ teams, <b style="color:var(--primary)">$760M+</b> local economic impact (2024).</p></div>
+    <div class="card feat r d2"><div class="ico">🏒</div><h4>Mass participation</h4><p><b style="color:var(--text)">USA Hockey</b> hit an all-time high of <b style="color:var(--primary)">396,525</b> registered youth players in 2024–25.</p></div>
+    <div class="card feat r d3"><div class="ico">⚾</div><h4>Media muscle</h4><p><b style="color:var(--text)">Little League</b>'s ESPN deal pays <b style="color:var(--primary)">$17.4M/yr through 2030</b>; the 2024 LLWS final drew 3.5M viewers.</p></div>
+  </div>
+  <p class="note r">Also tracked: USA T&amp;F ($42.3M), USA Gymnastics ($40.2M), US Figure Skating ($33.5M), USA Softball ($28.2M), USA Wrestling ($24.3M), ECNL ($9.0M), Babe Ruth, Pop Warner, US Youth Soccer (~2.5M players). Source: ProPublica Nonprofit Explorer (IRS 990).</p>
+</section>
+
+<!-- COMPANIES -->
+<section id="companies">
+  <div class="kicker r">04 — Academies, Clubs &amp; Facilities</div>
+  <h2 class="r d1">The operating companies — <span class="grad-text">from elite academies to mega-complexes.</span></h2>
+  <p class="lead r d2">The "SUSA-type" businesses: residential academies, large club networks, training-brand franchises, and the tournament-destination facilities that anchor the travel-sports economy.</p>
+
+  <div class="cards g3">
+    <div class="card r d1"><div class="co" style="font-weight:700;font-size:1.15rem">🎓 Elite academies</div><ul class="region" style="border:0;padding:14px 0 0;background:none">
+      <li><b>IMG Academy</b> — Bradenton FL · 600+ ac · up to $95.9K/yr · BPEA EQT</li>
+      <li><b>Montverde</b> — FL · basketball/soccer powerhouse</li>
+      <li><b>Overtime Elite</b> — Atlanta · $100K player salaries</li>
+      <li><b>Barça Residency</b> — Casa Grande AZ</li>
+      <li><b>Prolific Prep</b> · <b>Driveline Baseball</b> (WA)</li>
+    </ul></div>
+    <div class="card r d2"><div class="co" style="font-weight:700;font-size:1.15rem">🏟️ Mega-complexes</div><ul class="region" style="border:0;padding:14px 0 0;background:none">
+      <li><b>Grand Park</b> — Westfield IN · #1 by visitors (37.5M '17–'23)</li>
+      <li><b>Spooky Nook</b> — PA + OH · largest indoor in N. America</li>
+      <li><b>LakePoint</b> — GA · 1,300 ac · Rimrock Capital</li>
+      <li><b>Cooperstown</b> — NY · Unrivaled / HBSE</li>
+      <li><b>ESPN WWoS</b> — Disney, FL</li>
+    </ul></div>
+    <div class="card r d3"><div class="co" style="font-weight:700;font-size:1.15rem">🔁 Club networks</div><ul class="region" style="border:0;padding:14px 0 0;background:none">
+      <li><b>Canes Baseball</b> — 39 PG titles, 55 MLB alumni</li>
+      <li><b>East Cobb Baseball</b> — GA · 712 MLB draft picks</li>
+      <li><b>Surf Nation</b> — soccer · multi-state network</li>
+      <li><b>A5 Volleyball</b> · <b>Team Takeover</b> (EYBL hoops)</li>
+      <li><b>5 Star / USA Prime</b> — franchise travel-ball</li>
+    </ul></div>
+  </div>
+
+  <h3 style="font-family:'Baloo 2';font-weight:700;font-size:1.3rem;margin:42px 0 18px" class="r">"Youth sports as real estate" — the megaprojects (2024–2026)</h3>
+  <div class="cards g4">
+    <div class="card deal r d1"><div class="amt">$3<small>B</small></div><div class="co">Motown Sports Village</div><div class="desc">452 acres near Detroit Metro — arena, rinks, indoor surf park, 2,000 hotel rooms.</div><div class="meta"><span class="tag a">Romulus, MI</span></div></div>
+    <div class="card deal r d2"><div class="amt">$1<small>B+</small></div><div class="co">The Dynasty</div><div class="desc">159 acres near Orlando — 17 fields, 150K-sqft indoor, 1,100 hotel rooms.</div><div class="meta"><span class="tag a">Ocoee, FL</span></div></div>
+    <div class="card deal r d3"><div class="amt">$175<small>M+</small></div><div class="co">Breck Athletic Complex</div><div class="desc">150 acres — Wisconsin's largest sports complex.</div><div class="meta"><span class="tag a">Big Bend, WI</span></div></div>
+    <div class="card deal r d4"><div class="amt">$140<small>M</small></div><div class="co">Odessa Sports Complex</div><div class="desc">Slated as Texas' largest youth complex — operated by SFC.</div><div class="meta"><span class="tag a">Odessa, TX</span></div></div>
+  </div>
+  <p class="note r"><b style="color:var(--muted)">The Sports Facilities Companies (SFC)</b> — Clearwater FL — manages 100+ venues, ~30M guest visits/yr, ~$1B annual economic impact; 11 new facilities in 2026. Backed by <b style="color:var(--muted)">Everside Capital</b> (2023).</p>
+</section>
+
+<!-- STATES -->
+<section id="states">
+  <div class="kicker r">05 — The Map</div>
+  <h2 class="r d1">Where it's concentrated, <span class="grad-text">state by state.</span></h2>
+  <p class="lead r d2">Florida, Georgia, Texas, and California are the heavyweight markets; the Northeast and Midwest are dense; the Mountain/Plains states are thin outside Colorado.</p>
+  <div class="cards g3">
+    <div class="region r d1"><h4>🌴 Southeast <span class="rtag">heavyweight</span></h4><ul>
+      <li><b>FL</b> — IMG Academy, ESPN WWoS, USSSA Space Coast, SFC HQ</li>
+      <li><b>GA</b> — LakePoint, Overtime Elite, Atlanta United ($85M+)</li>
+      <li><b>NC</b> — NCFC Youth (17K players), USA Baseball NTC</li>
+      <li><b>VA/MD</b> — The St. James, Maryland SoccerPlex, Ripken</li>
+    </ul></div>
+    <div class="region r d2"><h4>🤠 South-Central <span class="rtag">rising</span></h4><ul>
+      <li><b>TX</b> — FC Dallas, Solar SC; $2.8B youth-sports economy</li>
+      <li><b>TN</b> — Predators/Titans 233-acre Franklin complex</li>
+      <li><b>CO</b> — TeamSnap, Triple Crown, Dick's Sporting Goods Park</li>
+      <li><b>AZ/UT</b> — Barça Residency; Western Sports Park ($70M)</li>
+    </ul></div>
+    <div class="region r d3"><h4>🌊 West / Pacific <span class="rtag">largest single mkt</span></h4><ul>
+      <li><b>CA</b> — 15,700+ soccer teams; Surf, Nomads, Albion, LAFC</li>
+      <li><b>CA</b> — Silverlakes, Great Park, Surf Cup, US Sports Camps</li>
+      <li><b>WA</b> — Driveline Baseball, Starfire Sports</li>
+      <li><b>OR</b> — Nike's home (Community Impact Fund)</li>
+    </ul></div>
+    <div class="region r d1"><h4>🍁 Northeast <span class="rtag">dense</span></h4><ul>
+      <li><b>NY</b> — SUSA FC (LI's largest), Cooperstown venues</li>
+      <li><b>MA</b> — 3STEP Sports HQ (2M+ athletes)</li>
+      <li><b>NJ</b> — EDP Soccer (90+ clubs, 8 states)</li>
+      <li><b>PA</b> — Spooky Nook Sports</li>
+    </ul></div>
+    <div class="region r d2"><h4>🌾 Midwest <span class="rtag">dense</span></h4><ul>
+      <li><b>IN</b> — Grand Park (America's #1 complex)</li>
+      <li><b>MN</b> — National Sports Center (Blaine); SportsEngine</li>
+      <li><b>OH</b> — Spooky Nook Champion Mill; Sports Force Parks</li>
+      <li><b>IL/IA</b> — JVA HQ; Perfect Game (Cedar Rapids)</li>
+    </ul></div>
+    <div class="region r d3"><h4>⛰️ Mountain / Plains <span class="rtag">thin</span></h4><ul>
+      <li><b>WY</b> — WYO Sports Ranch ($52M, Casper)</li>
+      <li><b>MT</b> — Amend Recreation Center ($20M, Billings)</li>
+      <li>Mostly club- &amp; municipal-driven; few HQ'd operators</li>
+    </ul></div>
+  </div>
+</section>
+
+<!-- POLICY -->
+<section id="policy">
+  <div class="kicker r">06 — Public Money &amp; Policy</div>
+  <h2 class="r d1">The funding stack — <span class="grad-text">federal channels to foundation grants.</span></h2>
+  <div class="cards g2">
+    <div class="region r d1"><h4>🏛️ Federal &amp; policy</h4><ul>
+      <li><b>LWCF &amp; CDBG</b> — main federal channels for rec/sports facility development</li>
+      <li><b>CDC grant program</b> + President's Council / National Youth Sports Strategy</li>
+      <li><b>PLAY Act</b> (proposed) — up to $2,000 youth-sports tax credit + federal grant program</li>
+      <li><b>Let Kids Play Act</b> (proposed) — targets PE ownership of youth sports</li>
+    </ul></div>
+    <div class="region r d2"><h4>🤝 Foundation / corporate grants</h4><ul>
+      <li><b>DICK'S "Sports Matter"</b> — $100M+ committed since 2014</li>
+      <li><b>NFL Foundation + LISC Grassroots</b> — $65M+, 450+ fields</li>
+      <li><b>U.S. Soccer Foundation</b> — 1,000 mini-pitches by 2026 goal</li>
+      <li><b>Nike "Made to Play"</b>, NRPA (ESPN/Nike), Good Sports ($137M+ gear)</li>
+    </ul></div>
+  </div>
+</section>
+
+<!-- INVESTMENT DEEP-DIVE -->
+<section id="invest">
+  <div class="kicker r">07 — Investment Deep-Dive</div>
+  <h2 class="r d1">Inside the money — <span class="grad-text">valuations, funds & deal flow.</span></h2>
+  <p class="lead r d2">By 2025 youth sports became a recognized PE asset class: fragmented-market roll-ups, facility platforms, SaaS "operating systems," and a wave of new sports-dedicated funds with billions in dry powder.</p>
+
+  <div class="cards g2" style="align-items:stretch">
+    <div class="chart-wrap r d1">
+      <div class="chart-title">The Varsity Brands value arc — 4 owners, 14 years</div>
+      <div class="chart-sub">$ billions · ~12× EBITDA at the 2024 sale</div>
+      <div class="barrow"><div class="lab">2010 · OnCap</div><div class="bartrack"><div class="barfill" data-w="3.9" style="background:linear-gradient(90deg,#4b4b7a,#5b5b8f)"></div></div><div class="val">$184M</div></div>
+      <div class="barrow"><div class="lab">2014 · Charlesbank</div><div class="bartrack"><div class="barfill" data-w="31.6" style="background:linear-gradient(90deg,#6b5bb0,#7c3aed)"></div></div><div class="val">$1.5B</div></div>
+      <div class="barrow"><div class="lab">2018 · Bain</div><div class="bartrack"><div class="barfill" data-w="52.6" style="background:linear-gradient(90deg,#7c3aed,#9333ea)"></div></div><div class="val">$2.5B</div></div>
+      <div class="barrow"><div class="lab">2024 · KKR</div><div class="bartrack"><div class="barfill" data-w="100" style="background:var(--grad)"></div></div><div class="val">$4.75B</div></div>
+      <p class="note" style="margin-top:16px">Multiples seen: scaled platforms <b style="color:var(--muted)">10–12× EBITDA</b> · media/streaming <b style="color:var(--muted)">~5× revenue</b> · SaaS <b style="color:var(--muted)">20–54× revenue</b>.</p>
+    </div>
+    <div class="region r d2">
+      <h4>💼 New funds & dry powder</h4>
+      <p style="color:var(--muted);font-size:.9rem;margin-top:6px">~<b style="color:var(--text)">$3–4B</b> of capital is targeting youth sports — on top of ~$2.5B in 2024–26 facility construction.</p>
+      <ul>
+        <li><b>Otro Capital</b> — $1.2B debut fund (2026); <b>explicitly names youth sports</b> as a target</li>
+        <li><b>KKR</b> — bought <b>Arctos</b> ($1.4B) to build its sports platform</li>
+        <li><b>Juggernaut Diversified Sports</b> — sub-$1B, with Gareth Bale</li>
+        <li><b>Bruin Capital IV</b> $1B · <b>Arctos II</b> $4.1B · <b>Bluestone</b> $300M</li>
+        <li><b>DSG Ventures</b> (Dick's) $50M · <b>Velocity / Elevate</b> $500M</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3 style="font-family:'Baloo 2';font-weight:700;font-size:1.3rem;margin:42px 0 18px" class="r">Biggest deals (2023–2026)</h3>
+  <div class="tbl-scroll r d1">
+    <table class="tbl">
+      <thead><tr><th>Deal</th><th>Investor</th><th>Type</th><th>Amount</th><th>Date</th></tr></thead>
+      <tbody>
+        <tr><td class="co">Varsity Brands</td><td>KKR</td><td>Buyout</td><td><span class="num">$4.75B</span></td><td>2024</td></tr>
+        <tr><td class="co">Learfield (college media)</td><td>TPG</td><td>Buyout</td><td><span class="num">~$2B</span></td><td>2026</td></tr>
+        <tr><td class="co">Arctos Partners</td><td>KKR</td><td>M&A</td><td><span class="num">$1.4B</span></td><td>2026</td></tr>
+        <tr><td class="co">IMG Academy</td><td>BPEA EQT</td><td>Buyout</td><td><span class="num">$1.25B</span></td><td>2023</td></tr>
+        <tr><td class="co">LiveBarn</td><td>GTCR</td><td>Buyout</td><td><span class="num">$400M+</span></td><td>2026</td></tr>
+        <tr><td class="co">SportsEngine</td><td>Genstar / PlayMetrics</td><td>M&A</td><td><span class="num">~$400–500M</span></td><td>2026</td></tr>
+        <tr><td class="co">Teamworks</td><td>Dragoneer</td><td>Series F</td><td><span class="num">$235M</span></td><td>2025</td></tr>
+        <tr><td class="co">Unrivaled Sports</td><td>Dick's / DSG</td><td>Growth</td><td><span class="num">$120M</span></td><td>2025</td></tr>
+        <tr><td class="co">Overtime</td><td>Liberty Media</td><td>Series D</td><td><span class="num">$100M</span></td><td>2022</td></tr>
+        <tr><td class="co">LOVB (volleyball)</td><td>Atwater / Ares</td><td>Series C</td><td><span class="num">$100M</span></td><td>2024</td></tr>
+        <tr><td class="co">Players Health</td><td>Bluestone</td><td>Series C</td><td><span class="num">$60M</span></td><td>2024</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note r">~60% of sector deals have undisclosed terms. Full 47-deal ledger + 23 VC rounds in the written report (§9).</p>
+
+  <h3 style="font-family:'Baloo 2';font-weight:700;font-size:1.3rem;margin:42px 0 18px" class="r">Notable venture rounds</h3>
+  <div class="cards g4">
+    <div class="card deal r d1"><div class="amt">$235<small>M</small></div><div class="co">Teamworks</div><div class="desc">Athlete-ops SaaS — $1.3B valuation.</div><div class="meta"><span class="tag">Dragoneer</span><span class="tag b">Jun 2025</span></div></div>
+    <div class="card deal r d2"><div class="amt">$161<small>M</small></div><div class="co">Pixellot</div><div class="desc">AI video capture for youth/HS sports.</div><div class="meta"><span class="tag">PSG Equity</span><span class="tag b">2022/26</span></div></div>
+    <div class="card deal r d3"><div class="amt">$100<small>M</small></div><div class="co">LOVB</div><div class="desc">Youth-to-pro volleyball; Durant/Tatum/Vonn backed.</div><div class="meta"><span class="tag">Atwater / Ares</span><span class="tag b">2024</span></div></div>
+    <div class="card deal r d4"><div class="amt">$80<small>M</small></div><div class="co">Veo</div><div class="desc">AI sports camera — dominant in youth soccer.</div><div class="meta"><span class="tag">ATP</span><span class="tag b">2022</span></div></div>
+  </div>
+
+  <h3 style="font-family:'Baloo 2';font-weight:700;font-size:1.3rem;margin:42px 0 18px" class="r">The $40B, sliced — and what a season costs</h3>
+  <div class="cards g2" style="align-items:stretch">
+    <div class="chart-wrap r d1">
+      <div class="chart-title">Where the ~$40B is spent (by category)</div>
+      <div class="chart-sub">$ billions · derived from Aspen Institute family-spend shares</div>
+      <div class="barrow"><div class="lab">Travel & lodging</div><div class="bartrack"><div class="barfill" data-w="100"></div></div><div class="val">~$11.0B</div></div>
+      <div class="barrow"><div class="lab">Club registration</div><div class="bartrack"><div class="barfill" data-w="71"></div></div><div class="val">~$7.8B</div></div>
+      <div class="barrow"><div class="lab">Lessons & training</div><div class="bartrack"><div class="barfill" data-w="65"></div></div><div class="val">~$7.2B</div></div>
+      <div class="barrow"><div class="lab">Equipment & uniforms</div><div class="bartrack"><div class="barfill" data-w="59"></div></div><div class="val">~$6.5B</div></div>
+      <div class="barrow"><div class="lab">Camps & academies</div><div class="bartrack"><div class="barfill" data-w="53"></div></div><div class="val">~$5.8B</div></div>
+      <p class="note" style="margin-top:14px">BCG separately sizes leagues/club/tournament operators at <b style="color:var(--muted)">$15–19B</b> within the $40B.</p>
+    </div>
+    <div class="chart-wrap r d2">
+      <div class="chart-title">Average annual cost per child, by sport</div>
+      <div class="chart-sub">$ per year · primary sport · Aspen Institute 2024</div>
+      <div class="barrow"><div class="lab">Ice hockey</div><div class="bartrack"><div class="barfill" data-w="100"></div></div><div class="val">$2,583</div></div>
+      <div class="barrow"><div class="lab">Dance</div><div class="bartrack"><div class="barfill" data-w="79"></div></div><div class="val">$2,048</div></div>
+      <div class="barrow"><div class="lab">Baseball</div><div class="bartrack"><div class="barfill" data-w="43"></div></div><div class="val">$1,113</div></div>
+      <div class="barrow"><div class="lab">Soccer</div><div class="bartrack"><div class="barfill" data-w="35"></div></div><div class="val">$910</div></div>
+      <div class="barrow"><div class="lab">Basketball</div><div class="bartrack"><div class="barfill" data-w="34"></div></div><div class="val">$876</div></div>
+      <div class="barrow"><div class="lab">Flag football</div><div class="bartrack"><div class="barfill" data-w="17"></div></div><div class="val">$444</div></div>
+      <p class="note" style="margin-top:14px">All-in per child ≈ <b style="color:var(--muted)">$1,500/yr</b>, up 46% since 2019. By income: $604 → $961 → $1,591.</p>
+    </div>
+  </div>
+
+  <h3 style="font-family:'Baloo 2';font-weight:700;font-size:1.3rem;margin:42px 0 18px" class="r">Most active acquirers</h3>
+  <div class="tbl-scroll r d1">
+    <table class="tbl">
+      <thead><tr><th>Firm / platform</th><th>Deals</th><th>Notable</th></tr></thead>
+      <tbody>
+        <tr><td class="co">Rocket Youth (Maverick Carter / ZBS)</td><td><span class="num">20+</span></td><td>20+ businesses, 10 states since 2024</td></tr>
+        <tr><td class="co">Hudl (Bain Capital)</td><td><span class="num">10+</span></td><td>SportContract, Titan, Balltime</td></tr>
+        <tr><td class="co">3STEP Sports (Juggernaut)</td><td><span class="num">~9</span></td><td>EDP Soccer, Hoop Group, US Officials</td></tr>
+        <tr><td class="co">Roark / Youth Enrichment Brands</td><td><span class="num">5–6</span></td><td>i9, US Sports Camps, Streamline swim</td></tr>
+        <tr><td class="co">Capacity Sports Group</td><td><span class="num">5</span></td><td>PBR + Bullpen + 4 bolt-ons in '26</td></tr>
+        <tr><td class="co">Accel-KKR</td><td><span class="num">4+</span></td><td>LeagueApps, Arbiter, RecTimes</td></tr>
+        <tr><td class="co">KKR</td><td><span class="num">4</span></td><td>Varsity $4.75B, PlayOn, Arctos</td></tr>
+        <tr><td class="co">Unrivaled Sports (HBSE)</td><td><span class="num">~4</span></td><td>Cooperstown, Ripken, Diamond Nation</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note r">Counts are estimates from public reporting (Tracxn / CBInsights / YSBR). Banks running processes: <b style="color:var(--muted)">Goldman Sachs</b> (3STEP), <b style="color:var(--muted)">Harris Williams</b> (D1), <b style="color:var(--muted)">Lazard/LionTree</b> (SportsEngine); William Blair acquired specialist Inner Circle Sports (2026). PE share of sports deals rose <b style="color:var(--muted)">27.3% → 36.9%</b> YoY.</p>
+
+  <h3 style="font-family:'Baloo 2';font-weight:700;font-size:1.3rem;margin:42px 0 18px" class="r">Emerging investment themes</h3>
+  <div class="cards g4">
+    <div class="card feat r d1"><div class="ico">🎖️</div><h4>NIL reaches youth</h4><p><b style="color:var(--text)">45 states + DC</b> now allow HS NIL; college NIL market <b style="color:var(--primary)">$1.67B → $2.5B+</b>.</p></div>
+    <div class="card feat r d2"><div class="ico">♀️</div><h4>Women's & girls'</h4><p>LOVB <b style="color:var(--primary)">$160M</b>; Unrivaled women's hoops $340M val; Kang's $55M. Girls' flag football <b style="color:var(--text)">+283%</b>.</p></div>
+    <div class="card feat r d3"><div class="ico">🤖</div><h4>AI sports-tech</h4><p>Pixellot $233M, Veo $115M, Hudl <b style="color:var(--primary)">$730M ARR</b> — "pro analysis for every team."</p></div>
+    <div class="card feat r d4"><div class="ico">📺</div><h4>Streaming</h4><p>GTCR/LiveBarn <b style="color:var(--primary)">$400M</b>; KKR/PlayOn — the "every game streamed" thesis.</p></div>
+  </div>
+
+  <div class="cards g2" style="margin-top:36px">
+    <div class="region r d1">
+      <h4>📊 Where the capital flows</h4>
+      <ul>
+        <li><b>Tech / SaaS</b> — highest capital concentration (the "operating system" race)</li>
+        <li><b>Events / tournaments</b> — "most credible deal flow" (Stout 2026)</li>
+        <li><b>Facilities</b> — >$2.5B (2024–26) but flagged <b>over-capitalized</b></li>
+        <li><b>Academies · media · insurance/safety</b> — emerging tiers</li>
+      </ul>
+    </div>
+    <div class="region r d2">
+      <h4>⚠️ The counter-currents</h4>
+      <ul>
+        <li><b>"Let Kids Play Act"</b> (May 2026) — would brand PE "vulture investors," ban roll-ups & 150-mi tournament bans, force divestiture (treble damages)</li>
+        <li><b>Pay-to-play</b> — ~33% of families take on debt; income gap widened 13.6→20.2 pts</li>
+        <li><b>Demographics</b> — births down ~15% → ~30% cohort shrink/decade; baseball −19% (2019–24)</li>
+        <li><b>Execution</b> — "lack of scaled assets is the real constraint, not conviction"</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- DKP OPPORTUNITY -->
+<section id="dkp">
+  <div class="kicker r">08 — Where DKP Fits</div>
+  <div class="spotlight r d1">
+    <h2 style="margin-bottom:10px">A fragmented market is an <span class="shimmer">aggregator's opportunity.</span></h2>
+    <p style="color:var(--muted);max-width:720px;font-size:1.05rem">Capital is consolidating operators and facilities — but the <b style="color:var(--text)">family-facing layer</b> (discovery, access, the connective tissue between kids and programs) remains wide open. That's the seam a destination platform plays in.</p>
+    <div class="opp-grid">
+      <div class="opp"><div class="nm">🧩 <span>Fragmentation = opening</span></div><p>U.S. youth soccer alone is a maze of overlapping leagues (ECNL, MLS NEXT, USYS, AYSO). No single family-facing front door exists.</p></div>
+      <div class="opp"><div class="nm">💸 <span>Spend is flowing</span></div><p>34M parents pay into a $40B market growing 8–10%/yr, with per-child spend up 46% since 2019. Demand is structural, not cyclical.</p></div>
+      <div class="opp"><div class="nm">🏟️ <span>Tailwinds everywhere</span></div><p>$1B+ complexes, flag football at LA28, and record PE inflows all expand the top of the funnel for a discovery/marketplace layer.</p></div>
+    </div>
+    <div class="pills" style="margin-top:26px">
+      <div class="pill">Market <span class="v">$40B</span></div>
+      <div class="pill">Growth <span class="v">8–10%/yr</span></div>
+      <div class="pill">PE 2026 YTD <span class="v">$2.11B</span></div>
+      <div class="pill">Kids <span class="v">30M+</span></div>
+      <div class="pill">Paying parents <span class="v">34M</span></div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // No scroll animations — fill chart bars to their final widths immediately.
+  document.querySelectorAll('.barfill').forEach(b=>{ b.style.width=b.dataset.w+'%'; });
+
+  // Active-nav highlight (navigation state, not an animation).
+  const secs=document.querySelectorAll('section[id]');
+  const nav=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){const id=e.target.id;
+    document.querySelectorAll('.nav-links a').forEach(a=>a.style.color=a.getAttribute('href')==='#'+id?'var(--text)':'');
+  }});},{rootMargin:'-40% 0px -55% 0px'});
+  secs.forEach(s=>nav.observe(s));
+</script>
+</body>
+</html>
