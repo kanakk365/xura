@@ -95,6 +95,32 @@ export function Footer() {
               <span className="h-1.5 w-1.5 rounded-full bg-accent transition-colors group-hover:bg-ink" />
               Request a site review
             </Link>
+
+            <div className="mt-9 border-t border-paper/[0.06] pt-7">
+              <p className="mb-4 font-mono text-[10px] font-normal tracking-[0.3em] text-mute">
+                Reports
+              </p>
+              <ul className="flex flex-col gap-3">
+                <li>
+                  <a
+                    href="/ev-report"
+                    className="group inline-flex items-center gap-2 text-sm text-paper/70 transition-colors hover:text-paper"
+                  >
+                    <span className="h-1.5 w-1.5 rounded-full bg-accent/0 transition-colors group-hover:bg-accent" />
+                    Energy &amp; Grid Investment Report
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="/youth-sports-report"
+                    className="group inline-flex items-center gap-2 text-sm text-paper/70 transition-colors hover:text-paper"
+                  >
+                    <span className="h-1.5 w-1.5 rounded-full bg-accent/0 transition-colors group-hover:bg-accent" />
+                    Youth Sports Investment Report
+                  </a>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
 
