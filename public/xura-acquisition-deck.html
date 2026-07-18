@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>XURA Acquisition Deck</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Anton&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#050505; --ink-2:#0c0c0c; --ink-3:#151515;
+    --card:#101010; --card-2:#161616;
+    --accent:#8bfb03; --accent-dim:#6dc702; --accent-deep:#4f8f02;
+    --paper:#ffffff; --text:#e9e9ea; --muted:#9a9a9e; --faint:#7d7d81; /* faint bumped to clear 4.5:1 on ink */
+    --border:rgba(255,255,255,.10); --border-strong:rgba(255,255,255,.18);
+    --glow:rgba(139,251,3,.12);
+    --maxw:1120px;
+    /* 4pt spacing scale — was 28 distinct hand-tuned px values */
+    --space-1:4px; --space-2:8px; --space-3:12px; --space-4:16px; --space-5:20px;
+    --space-6:24px; --space-7:32px; --space-8:48px; --space-9:56px; --space-10:88px;
+    /* semantic z-index scale */
+    --z-slide:5; --z-nav:50; --z-chrome:70;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Inter',system-ui,sans-serif;background:var(--ink);color:var(--text);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+  /* nav */
+  nav{position:fixed;top:0;left:0;right:0;z-index:var(--z-nav);backdrop-filter:blur(14px);background:rgba(5,5,5,.78);border-bottom:1px solid var(--border)}
+  .nav-in{max-width:var(--maxw);margin:0 auto;display:flex;align-items:center;gap:14px;padding:13px 24px}
+  .brand{display:flex;align-items:center;gap:11px;font-family:'Archivo';font-weight:800;font-size:1.1rem;letter-spacing:.4px;text-transform:uppercase;white-space:nowrap;flex:none}
+  .brand .dot{width:28px;height:28px;border-radius:8px;background:var(--accent);display:grid;place-items:center}
+  .brand .dot::before{content:"";width:12px;height:12px;background:var(--ink);clip-path:polygon(50% 0,100% 100%,0 100%)}
+  .nav-links{margin-left:auto;display:flex;gap:1px;flex-wrap:nowrap;min-width:0}
+  .nav-links a{color:var(--muted);text-decoration:none;font-size:.72rem;font-weight:500;padding:6px 8px;border-radius:999px;transition:color .18s ease,background-color .18s ease;white-space:nowrap}
+  .nav-links a:hover{color:var(--ink);background:var(--accent)}
+  .nav-links a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;color:var(--paper)}
+  @media(max-width:1240px){.nav-links{display:none}}
+
+  /* Section header. A deck IS an ordered sequence, so the numeral carries real information
+     (where am I) rather than being decorative scaffolding. Rendered as a large outlined
+     compositional numeral + a plain-case label — not a tracked all-caps eyebrow. */
+  .shead{display:flex;align-items:baseline;gap:var(--space-4);margin-bottom:var(--space-5)}
+  .snum{font-family:'Anton',sans-serif;font-size:clamp(2.2rem,4vw,3.1rem);line-height:.78;color:transparent;-webkit-text-stroke:1px rgba(139,251,3,.5);letter-spacing:.01em;flex:none;font-variant-numeric:tabular-nums}
+  .slabel{font-family:'Archivo';font-weight:600;font-size:1rem;color:var(--accent);letter-spacing:0}
+  h2{font-family:'Archivo';font-weight:800;font-size:clamp(1.85rem,3.9vw,2.8rem);line-height:1.1;letter-spacing:-.028em;margin-bottom:14px;text-wrap:balance;max-width:24ch}
+  .lead{color:var(--muted);font-size:1.02rem;line-height:1.68;max-width:64ch;margin-bottom:var(--space-7);text-wrap:pretty}
+  .grad-text{color:var(--accent)} /* solid — gradient text is a ban */
+
+  /* hero */
+  .hero{display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden}
+  .badge{display:inline-flex;align-items:center;gap:9px;padding:6px 14px;border:1px solid var(--border);font-size:.7rem;color:var(--muted);width:fit-content;margin-bottom:26px;text-transform:uppercase;letter-spacing:.12em;font-weight:500}
+  .badge .pulse{width:7px;height:7px;border-radius:50%;background:var(--accent)}
+  .hero .mark{font-family:'Anton';font-size:clamp(2rem,4vw,2.6rem);letter-spacing:.12em;color:var(--paper);line-height:1}
+  .hero .mark span{display:block;font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.42em;color:var(--accent);margin-top:8px;font-weight:700}
+  .hero h1{font-family:'Archivo';font-weight:900;font-size:clamp(2.1rem,5.2vw,4rem);line-height:1.03;letter-spacing:-1.4px;margin:26px 0 20px;max-width:18ch}
+  .hero p.sub{font-size:1.05rem;color:var(--muted);max-width:620px;margin-bottom:26px}
+  .hero .prep{display:inline-flex;align-items:center;gap:10px;border:1px solid var(--border-strong);border-radius:999px;padding:8px 16px;font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--text);letter-spacing:.06em}
+  .hero .prep b{color:var(--accent);font-weight:700}
+
+  /* cards */
+  .cards{display:grid;gap:var(--space-4)}
+  .g2{grid-template-columns:repeat(2,1fr);gap:var(--space-6)} .g3{grid-template-columns:repeat(3,1fr)} .g4{grid-template-columns:repeat(4,1fr)}
+  @media(max-width:900px){.g3,.g4{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:640px){.g2,.g3,.g4{grid-template-columns:1fr}}
+  .card{position:relative;border:1px solid var(--border);border-radius:10px;padding:var(--space-5);background:var(--card)}
+  .card h4{font-size:1rem;font-weight:600;color:var(--paper);margin-bottom:6px}
+  .card p{color:var(--muted);font-size:.88rem}
+  .card .num{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--accent);font-weight:700;margin-bottom:8px;display:block}
+
+  /* simple bullet list card */
+  .region{border:1px solid var(--border);border-radius:10px;padding:var(--space-6);background:var(--card)}
+  .region h4{font-family:'Archivo';font-weight:700;font-size:1.05rem;margin-bottom:12px;display:flex;align-items:center;gap:9px;color:var(--paper)}
+  .region .rtag{font-family:'JetBrains Mono',monospace;font-size:.62rem;padding:3px 8px;border-radius:6px;background:var(--glow);color:var(--accent);letter-spacing:.08em}
+  .region ul{list-style:none;display:flex;flex-direction:column;gap:9px}
+  .region li{font-size:.9rem;color:var(--muted);padding-left:18px;position:relative}
+  .region li::before{content:"";position:absolute;left:0;top:9px;width:6px;height:6px;border-radius:2px;background:var(--accent)}
+  .region li b{color:var(--paper);font-weight:600}
+  .region.neg li::before{background:var(--faint)}
+  .region.neg .rtag{background:rgba(255,255,255,.06);color:var(--muted)}
+
+  /* Ruled index — where items are bare labels, a card is packaging around nothing.
+     Typography + a hairline carries them instead. */
+  .index{list-style:none;counter-reset:ix;display:grid;grid-template-columns:repeat(2,1fr);gap:0 48px}
+  @media(max-width:760px){.index{grid-template-columns:1fr}}
+  .index li{counter-increment:ix;display:flex;align-items:baseline;gap:16px;padding:17px 2px;border-top:1px solid var(--border);font-family:'Archivo';font-weight:600;font-size:1.06rem;color:var(--paper);letter-spacing:-.012em}
+  .index li::before{content:counter(ix,decimal-leading-zero);font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:700;color:var(--accent);flex:none;letter-spacing:.04em}
+
+  /* Large typographic list — the categories themselves are the visual */
+  .tlist{list-style:none;display:grid;grid-template-columns:repeat(2,1fr);gap:0 48px}
+  @media(max-width:760px){.tlist{grid-template-columns:1fr}}
+  .tlist li{display:flex;align-items:center;gap:14px;padding:15px 2px;border-top:1px solid var(--border);font-family:'Archivo';font-weight:700;font-size:clamp(1.05rem,1.7vw,1.35rem);color:var(--paper);letter-spacing:-.02em}
+  .tlist li::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--accent);flex:none}
+
+  /* pills */
+  .pills{display:flex;flex-wrap:wrap;gap:10px}
+  .pill{padding:10px 16px;border:1px solid var(--border);border-radius:11px;font-size:.9rem;background:rgba(255,255,255,.03);display:flex;align-items:center;gap:9px;color:var(--text)}
+  .pill .dotp{width:7px;height:7px;border-radius:50%;background:var(--accent)}
+
+  /* flow chain */
+  .flow{display:flex;flex-direction:column;gap:0;align-items:center}
+  .flow .node{width:100%;max-width:520px;border:1px solid var(--border-strong);border-radius:10px;background:var(--card);padding:16px 20px;text-align:center;font-family:'Archivo';font-weight:700;font-size:1.05rem;color:var(--paper);position:relative}
+  .flow .node.hi{border-color:var(--accent);background:linear-gradient(180deg,rgba(139,251,3,.10),var(--card))}
+  .flow .arw{width:1px;height:30px;position:relative;flex:none}
+  .flow .arw::before{content:"";position:absolute;left:50%;top:0;width:1px;height:22px;background:var(--accent);opacity:.5;transform:translateX(-50%);transform-origin:top center}
+  .flow .arw::after{content:"";position:absolute;left:50%;top:21px;width:0;height:0;border-left:4px solid transparent;border-right:4px solid transparent;border-top:7px solid var(--accent);transform:translateX(-50%)}
+
+  /* stack (platform) */
+  .stack{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  @media(max-width:820px){.stack{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:560px){.stack{grid-template-columns:1fr}}
+  .st-item{border:1px solid var(--border);border-radius:10px;background:var(--card);padding:var(--space-6);display:flex;flex-direction:column;justify-content:flex-end;min-height:104px}
+  .st-item h4{font-size:1.05rem;font-weight:600;color:var(--paper);letter-spacing:-.01em}
+  .st-item.full{grid-column:1/-1;border-color:var(--accent);background:linear-gradient(180deg,rgba(139,251,3,.09),var(--card));align-items:center;text-align:center}
+
+  /* combination */
+  .combo{display:grid;grid-template-columns:1fr auto 1fr;gap:16px;align-items:stretch}
+  @media(max-width:860px){.combo{grid-template-columns:1fr;}.combo .plus{justify-self:center}}
+  .plus{display:grid;place-items:center;font-family:'Archivo';font-weight:900;font-size:1.8rem;color:var(--accent)}
+  .together{margin-top:var(--space-4);border:1px solid var(--accent);border-radius:10px;background:linear-gradient(180deg,rgba(139,251,3,.10),var(--card));padding:var(--space-6)}
+  .together .lbl{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
+
+  /* full border + tint (no side-stripe accent) */
+  .callout{border:1px solid rgba(139,251,3,.26);border-radius:10px;padding:var(--space-5) var(--space-6);background:rgba(139,251,3,.055);margin-top:var(--space-6);font-size:.95rem;line-height:1.6;color:var(--text);max-width:78ch}
+  .callout b{color:var(--accent);font-weight:700}
+  .disc{font-size:.76rem;line-height:1.8;color:var(--faint);margin-top:18px;border-top:1px solid var(--border);padding-top:16px}
+
+  /* confidential marker */
+  .conf{position:fixed;right:18px;bottom:16px;z-index:var(--z-chrome);font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);pointer-events:none}
+  @media(max-width:900px){.conf{display:none}}
+
+
+  /* ===== Intrepid section components ===== */
+  /* team grid */
+  .team{display:grid;grid-template-columns:repeat(5,1fr);gap:20px 16px}
+  @media(max-width:900px){.team{grid-template-columns:repeat(3,1fr)}}
+  @media(max-width:560px){.team{grid-template-columns:repeat(2,1fr)}}
+  .member{display:flex;flex-direction:column;align-items:center;text-align:center;gap:9px}
+  .member img{width:82px;height:82px;border-radius:50%;object-fit:cover;object-position:center top;border:1px solid var(--border-strong);background:var(--card)}
+  .member .nm{font-family:'Archivo';font-weight:700;font-size:.9rem;color:var(--paper);letter-spacing:-.01em}
+  .member .rl{font-size:.74rem;color:var(--muted);line-height:1.45}
+  .tgroups{display:grid;grid-template-columns:2fr 1fr 2fr;gap:var(--space-6);margin-top:var(--space-6);padding-top:var(--space-6);border-top:1px solid var(--border)}
+  @media(max-width:900px){.tgroups{grid-template-columns:1fr}}
+  .glabel{font-family:'Archivo';font-weight:600;font-size:.82rem;color:var(--accent);margin-bottom:14px}
+  .tgroup .team{grid-template-columns:repeat(2,1fr)}
+  .tgroup.one .team{grid-template-columns:1fr;max-width:120px;margin:0 auto}
+
+  /* credential stats — restrained: rule + figure, not tiles */
+  .stats{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
+  @media(max-width:860px){.stats{grid-template-columns:repeat(3,1fr)}}
+  @media(max-width:520px){.stats{grid-template-columns:repeat(2,1fr)}}
+  .stat{border-top:1px solid var(--border-strong);padding-top:13px}
+  .stat .v{font-family:'Archivo';font-weight:800;font-size:clamp(1.15rem,1.9vw,1.6rem);color:var(--accent);letter-spacing:-.02em;line-height:1.1}
+  .stat .k{font-size:.76rem;color:var(--muted);margin-top:var(--space-2);line-height:1.4}
+
+  /* bio */
+  .bio{display:grid;grid-template-columns:260px 1fr;gap:var(--space-7);align-items:center}
+  @media(max-width:820px){.bio{grid-template-columns:1fr;gap:20px}.bio .portrait{max-width:220px}}
+  .bio .portrait{width:100%;border-radius:12px;overflow:hidden;border:1px solid var(--border-strong);background:var(--card)}
+  .bio .portrait img{width:100%;display:block;aspect-ratio:4/4.4;object-fit:cover;object-position:center top}
+  .bio .who{margin-top:14px}
+  .bio .who .nm{font-family:'Archivo';font-weight:800;font-size:1.15rem;color:var(--paper)}
+  .bio .who .rl{font-size:.82rem;color:var(--accent);margin-top:2px}
+  .bio .body p{color:var(--muted);font-size:.92rem;line-height:1.66;margin-bottom:var(--space-3);max-width:66ch}
+  .bio .body p:last-child{margin-bottom:0}
+  .bio .body .cnote{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--faint);margin-top:16px;padding-top:12px;border-top:1px solid var(--border)}
+
+  /* taxonomy */
+  .tax{display:grid;grid-template-columns:repeat(5,1fr);gap:var(--space-5)}
+  @media(max-width:1100px){.tax{grid-template-columns:repeat(3,1fr)}}
+  @media(max-width:700px){.tax{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:560px){.tax{grid-template-columns:1fr}}
+  .taxcol{border-top:1px solid var(--border);padding-top:12px}
+  .taxcol h5{font-family:'Archivo';font-weight:700;font-size:.92rem;color:var(--paper);margin-bottom:var(--space-2);letter-spacing:-.01em}
+  .taxcol ul{list-style:none;display:flex;flex-direction:column;gap:5px}
+  .taxcol li{font-size:.82rem;color:var(--muted);line-height:1.5;padding-left:var(--space-3);position:relative}
+  .taxcol li::before{content:"";position:absolute;left:0;top:7px;width:3px;height:3px;border-radius:50%;background:var(--accent-deep)}
+  .drivers{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+  .driver{font-family:'Archivo';font-weight:700;font-size:.8rem;color:var(--accent);border:1px solid rgba(139,251,3,.3);background:rgba(139,251,3,.06);border-radius:8px;padding:6px 12px}
+
+  /* footprint map (source art is dark-on-white; inverted for the dark deck) */
+  .mapwrap{border:1px solid var(--border);border-radius:12px;background:var(--card);padding:14px;overflow:hidden}
+  .mapwrap img{width:100%;display:block;aspect-ratio:780/456;object-fit:contain;filter:invert(1) hue-rotate(180deg) saturate(1.1);opacity:.92}
+  .mapkey{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:.74rem;color:var(--muted)}
+  .mapkey span{display:inline-flex;align-items:center;gap:var(--space-2)}
+  .mapkey span:not(:first-child)::before{content:'';width:4px;height:4px;border-radius:50%;background:var(--accent-deep)}
+  .mapkey span:first-child{color:var(--accent);font-weight:700}
+
+
+  /* ---- per-slide balance (heights were pooling dead air inside stretched boxes) ---- */
+  /* footprint: give the map the wider track; let both columns take their natural height */
+  #footprint .cards.g2{grid-template-columns:1.25fr .75fr;align-items:start}
+  /* experience: shorter card becomes a deliberate highlight rather than an underfilled list */
+  #experience .cards.g2{align-items:start}
+  #experience .cards.g2>.region:last-child{border-color:var(--accent);background:linear-gradient(180deg,rgba(139,251,3,.08),var(--card))}
+  /* value: let "without" read genuinely shorter — the asymmetry IS the argument */
+  #value .cards.g2{align-items:start}
+  /* mufg: the league-table proof point earns accent weight, and breaks the twin-card run */
+  #mufg .cards.g2>.region:last-child{border-color:var(--accent);background:linear-gradient(180deg,rgba(139,251,3,.08),var(--card))}
+  .mapcap{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--faint);margin-top:var(--space-2)}
+
+
+  /* merged "who" slide carries two blocks — 3-up index keeps it to two rows */
+  #who .index{grid-template-columns:repeat(3,1fr);gap:0 var(--space-7)}
+  @media(max-width:900px){#who .index{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:600px){#who .index{grid-template-columns:1fr}}
+  #who .index li{padding:var(--space-3) 2px}
+  /* footprint: cap the map so the figure can't push the slide past the viewport */
+  #footprint .mapwrap img{max-height:196px;object-fit:contain}
+  #footprint .lead{margin-bottom:var(--space-5)}
+  #footprint .mapwrap{padding:var(--space-3)}
+
+  /* ============ DECK — fullpage (pages rise from the bottom) ============ */
+  html{scroll-behavior:auto}
+  body.deck-on{overflow:hidden;height:100vh}
+  .hero,body>section{
+    position:fixed;inset:0;height:100vh;width:100%;max-width:none;margin:0;
+    background:var(--ink);z-index:var(--z-slide);
+    transform:translateY(100%);
+    /* on-screen movement easing (Emil): cubic-bezier(.77,0,.175,1) — 560ms, within the 200–500ms drawer band for a full-viewport move */
+    transition:transform 560ms cubic-bezier(.77,0,.175,1);
+    overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;
+    padding:var(--space-10) max(40px,calc((100% - var(--maxw))/2)) var(--space-9);
+    display:flex;flex-direction:column;justify-content:safe center;
+    scrollbar-width:none;-ms-overflow-style:none;
+  }
+  .hero{transform:translateY(0)}
+  .is-moving{will-change:transform}
+  body>section>*{width:100%;max-width:100%;margin-left:0;margin-right:0;flex:0 0 auto}
+  .hero::-webkit-scrollbar,body>section::-webkit-scrollbar{width:0;height:0;display:none}
+  .deck-inner{width:100%;transform-origin:top center}
+  @media(max-width:640px){
+    .hero,body>section{position:relative;inset:auto;transform:none!important;transition:none;height:auto;min-height:100vh;overflow:visible;z-index:auto;display:block;padding:76px 18px 40px}
+    body.deck-on{overflow:auto;height:auto}
+  }
+
+  /* entrance choreography — ease-out cubic-bezier(.23,1,.32,1) @ 240ms (Emil: entering elements 150–250ms) */
+  .js-anim>section .deck-inner>*:not(.cards):not(.stack):not(.pills):not(.index):not(.tlist):not(.team):not(.stats):not(.tax),
+  .js-anim>.hero>section>*{opacity:0;transform:translateY(12px);filter:blur(4px);transition:opacity 240ms cubic-bezier(.23,1,.32,1),transform 240ms cubic-bezier(.23,1,.32,1),filter 240ms cubic-bezier(.23,1,.32,1)}
+  .js-anim>section.in .deck-inner>*:not(.cards):not(.stack):not(.pills):not(.index):not(.tlist):not(.team):not(.stats):not(.tax),
+  .js-anim>.hero.in>section>*{opacity:1;transform:none;filter:blur(0)}
+  /* stagger: 60ms steps (Emil: 30–80ms) */
+  .js-anim>section.in .deck-inner>*:nth-child(1),.js-anim>.hero.in>section>*:nth-child(1){transition-delay:0ms}
+  .js-anim>section.in .deck-inner>*:nth-child(2),.js-anim>.hero.in>section>*:nth-child(2){transition-delay:60ms}
+  .js-anim>section.in .deck-inner>*:nth-child(3),.js-anim>.hero.in>section>*:nth-child(3){transition-delay:120ms}
+  .js-anim>section.in .deck-inner>*:nth-child(4),.js-anim>.hero.in>section>*:nth-child(4){transition-delay:180ms}
+  .js-anim>section.in .deck-inner>*:nth-child(5),.js-anim>.hero.in>section>*:nth-child(5){transition-delay:240ms}
+  .js-anim>section.in .deck-inner>*:nth-child(6){transition-delay:300ms}
+
+  /* cascades — scale(.95) start (never scale(0)), 220ms ease-out, 60ms stagger */
+  .js-anim .cards>*,.js-anim .stack>*,.js-anim .pills>*,.js-anim .flow>*,.js-anim .index>*,.js-anim .tlist>*,.js-anim .team>*,.js-anim .stats>*,.js-anim .tax>*{opacity:0;transform:translateY(10px) scale(.95);filter:blur(3px);transition:opacity 220ms cubic-bezier(.23,1,.32,1),transform 220ms cubic-bezier(.23,1,.32,1),filter 220ms cubic-bezier(.23,1,.32,1)}
+  .js-anim .in .cards>*,.js-anim .in .stack>*,.js-anim .in .pills>*,.js-anim .in .flow>*,.js-anim .in .index>*,.js-anim .in .tlist>*,.js-anim .in .team>*,.js-anim .in .stats>*,.js-anim .in .tax>*{opacity:1;transform:none;filter:blur(0)}
+  .in .team>*:nth-child(1),.in .stats>*:nth-child(1),.in .tax>*:nth-child(1),.in .index>*:nth-child(1),.in .tlist>*:nth-child(1),.in .cards>*:nth-child(1),.in .stack>*:nth-child(1),.in .pills>*:nth-child(1),.in .flow>*:nth-child(1){transition-delay:80ms}
+  .in .team>*:nth-child(2),.in .stats>*:nth-child(2),.in .tax>*:nth-child(2),.in .index>*:nth-child(2),.in .tlist>*:nth-child(2),.in .cards>*:nth-child(2),.in .stack>*:nth-child(2),.in .pills>*:nth-child(2),.in .flow>*:nth-child(2){transition-delay:140ms}
+  .in .team>*:nth-child(3),.in .stats>*:nth-child(3),.in .tax>*:nth-child(3),.in .index>*:nth-child(3),.in .tlist>*:nth-child(3),.in .cards>*:nth-child(3),.in .stack>*:nth-child(3),.in .pills>*:nth-child(3),.in .flow>*:nth-child(3){transition-delay:200ms}
+  .in .team>*:nth-child(4),.in .stats>*:nth-child(4),.in .tax>*:nth-child(4),.in .index>*:nth-child(4),.in .tlist>*:nth-child(4),.in .cards>*:nth-child(4),.in .stack>*:nth-child(4),.in .pills>*:nth-child(4),.in .flow>*:nth-child(4){transition-delay:260ms}
+  .in .team>*:nth-child(5),.in .stats>*:nth-child(5),.in .tax>*:nth-child(5),.in .index>*:nth-child(5),.in .tlist>*:nth-child(5),.in .cards>*:nth-child(5),.in .stack>*:nth-child(5),.in .pills>*:nth-child(5),.in .flow>*:nth-child(5){transition-delay:320ms}
+  .in .team>*:nth-child(6),.in .stats>*:nth-child(6),.in .tax>*:nth-child(6),.in .index>*:nth-child(6),.in .tlist>*:nth-child(6),.in .cards>*:nth-child(6),.in .stack>*:nth-child(6),.in .pills>*:nth-child(6),.in .flow>*:nth-child(6){transition-delay:380ms}
+  .in .team>*:nth-child(7),.in .stats>*:nth-child(7),.in .tax>*:nth-child(7),.in .index>*:nth-child(7),.in .tlist>*:nth-child(7),.in .cards>*:nth-child(7),.in .pills>*:nth-child(7),.in .flow>*:nth-child(7){transition-delay:440ms}
+  .in .team>*:nth-child(8),.in .stats>*:nth-child(8),.in .tax>*:nth-child(8),.in .index>*:nth-child(8),.in .tlist>*:nth-child(8),.in .cards>*:nth-child(8),.in .pills>*:nth-child(8),.in .flow>*:nth-child(8){transition-delay:500ms}
+  .in .flow>*:nth-child(9){transition-delay:560ms}
+
+  /* section numeral draws its stroke in as the slide lands */
+  .js-anim .shead>.snum{opacity:0;transform:translateY(8px);transition:opacity 300ms cubic-bezier(.23,1,.32,1),transform 300ms cubic-bezier(.23,1,.32,1)}
+  .js-anim .in .shead>.snum{opacity:1;transform:none}
+
+  /* (accent emphasis is carried by the solid --accent color + weight, not gradient text) */
+
+  /* hover — 180ms ease-out, gated to real pointers only */
+  .card,.region,.st-item,.pill{transition:transform 180ms cubic-bezier(.23,1,.32,1),border-color 180ms ease,box-shadow 180ms ease}
+  @media (hover:hover) and (pointer:fine){
+    .card:hover,.region:hover,.st-item:hover,.pill:hover{transform:translateY(-4px);border-color:var(--border-strong);box-shadow:0 16px 40px -18px rgba(0,0,0,.8),0 0 0 1px var(--glow)}
+  }
+
+  /* hero glow */
+  .hero::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:0;background:radial-gradient(58% 46% at 50% 34%,var(--glow),transparent 70%);opacity:.4;animation:heroGlow 9s ease-in-out infinite}
+  .hero>section{position:relative;z-index:1;max-width:var(--maxw);margin:0 auto;width:100%}
+  @keyframes heroGlow{0%,100%{opacity:.26;transform:scale(1) translateY(0)}50%{opacity:.5;transform:scale(1.08) translateY(-1.5%)}}
+
+  /* deck chrome */
+  .deck-dots{position:fixed;right:16px;top:50%;transform:translateY(-50%);z-index:var(--z-chrome);display:flex;flex-direction:column;gap:9px}
+  @media(max-width:900px){.deck-dots{display:none}}
+  .deck-dot{width:8px;height:8px;border-radius:50%;border:1px solid var(--border-strong);background:transparent;cursor:pointer;padding:0;transition:.22s}
+  .deck-dot:hover{border-color:var(--accent);transform:scale(1.3)}
+  .deck-dot.active{background:var(--accent);border-color:var(--accent);box-shadow:0 0 0 3px var(--glow)}
+  .deck-progress{position:fixed;top:0;left:0;right:0;height:3px;background:rgba(255,255,255,.05);z-index:var(--z-chrome)}
+  .deck-progress>div{height:100%;width:100%;transform:scaleX(0);transform-origin:left center;background:var(--accent);box-shadow:0 0 10px var(--accent);transition:transform 300ms cubic-bezier(.23,1,.32,1)}
+  .deck-counter{position:fixed;left:18px;bottom:16px;z-index:var(--z-chrome);font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.14em;color:var(--muted)}
+  .deck-counter b{color:var(--accent);font-weight:700}
+  .scroll-hint{position:absolute;left:0;right:0;margin:0 auto;bottom:24px;width:fit-content;font-family:'JetBrains Mono',monospace;font-size:.64rem;letter-spacing:.28em;text-transform:uppercase;color:var(--faint);animation:bob 1.9s ease-in-out infinite}
+  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(7px)}}
+
+  /* ============ PRESENTATION CHOREOGRAPHY ============
+     Deck slides are "rare / explanation" moments — builds are allowed to be expressive.
+     Still transform/opacity/clip-path only (no layout-triggering props). */
+
+  /* Cover: wordmark + headline wipe open left→right (clip-path reveal) */
+  .js-anim>.hero>section>.mark,
+  .js-anim>.hero>section>h1{opacity:1;transform:none;filter:none;clip-path:inset(0 100% 0 0);transition:clip-path 640ms cubic-bezier(.77,0,.175,1)}
+  .js-anim>.hero>section>h1{transition-delay:160ms}
+  .js-anim>.hero.in>section>.mark,
+  .js-anim>.hero.in>section>h1{clip-path:inset(0 0 0 0)}
+
+  /* 04 Our Approach: connectors render statically and fade in with the chain's own stagger
+     (the .flow>* cascade). Animating the pseudo-elements left them stuck hidden. */
+  .js-anim .flow>.arw{filter:none}
+
+  /* 07 Strategic Combination: the two companies converge — Ferrandino from the left, XURA from the right, then "+" lands */
+  .js-anim .combo>.region{opacity:0;filter:blur(3px);transition:opacity 280ms cubic-bezier(.23,1,.32,1),transform 280ms cubic-bezier(.23,1,.32,1),filter 280ms cubic-bezier(.23,1,.32,1)}
+  .js-anim .combo>.region:first-child{transform:translateX(-26px)}
+  .js-anim .combo>.region:last-child{transform:translateX(26px)}
+  .js-anim .combo>.plus{opacity:0;transform:scale(.6);transition:opacity 220ms cubic-bezier(.23,1,.32,1) 200ms,transform 220ms cubic-bezier(.23,1,.32,1) 200ms}
+  .js-anim .in .combo>.region,
+  .js-anim .in .combo>.plus{opacity:1;transform:none;filter:blur(0)}
+  .js-anim .in .combo>.region:first-child{transition-delay:60ms}
+  .js-anim .in .combo>.region:last-child{transition-delay:120ms}
+
+  /* Two-column comparisons (02 Today, 08 Value): columns enter from opposite sides */
+  .js-anim .cards.g2>.region:first-child{transform:translateX(-18px) scale(.97)}
+  .js-anim .cards.g2>.region:last-child{transform:translateX(18px) scale(.97)}
+  .js-anim .in .cards.g2>.region{transform:none}
+
+  /* Callouts: the tinted panel settles in as the point lands (no side-stripe accent) */
+  .js-anim .deck-inner>.callout{transform:translateY(10px) scale(.99)}
+  .js-anim .in .deck-inner>.callout{transform:none}
+
+  /* reduced motion — strip movement & blur, keep the opacity fade (Emil: keep opacity/color transitions) */
+  @media(prefers-reduced-motion:reduce){
+    .js-anim>section .deck-inner>*,.js-anim>.hero>section>*,.js-anim .cards>*,.js-anim .stack>*,.js-anim .pills>*,.js-anim .flow>*,.js-anim .index>*,.js-anim .tlist>*,.js-anim .team>*,.js-anim .stats>*,.js-anim .tax>*,.js-anim .combo>*{transform:none!important;filter:none!important;transition:opacity 200ms ease!important}
+    .hero,body>section{transition:none!important}
+    .js-anim>.hero>section>.mark,.js-anim>.hero>section>h1{clip-path:none!important}
+    .js-anim .shead>.snum{transform:none!important}
+    .deck-progress>div{transition:none!important}
+    .hero::after,.scroll-hint,.grad-text{animation:none}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-in">
+    <div class="brand"><span class="dot"></span> XURA <span style="color:var(--faint);font-weight:500;font-size:.72rem;letter-spacing:.05em">· Acquisition Deck</span></div>
+    <div class="nav-links">
+      <a href="#who">XURA</a>
+      <a href="#market">Market</a>
+      <a href="#combination">Combination</a>
+      <a href="#partner">Intrepid</a>
+      <a href="#team">Team</a>
+      <a href="#firm">The Firm</a>
+      <a href="#coverage">Coverage</a>
+      <a href="#disclaimer">Disclaimer</a>
+    </div>
+  </div>
+</nav>
+
+<!-- 01 COVER -->
+<header class="hero" id="top">
+  <section>
+    <div class="badge"><span class="pulse"></span> Confidential Strategic Overview</div>
+    <div class="mark">XURA<span>Energy Partners</span></div>
+    <h1>Building the Leading <span class="grad-text">Distributed Energy Infrastructure Platform.</span></h1>
+    <p class="sub">A confidential strategic overview of XURA Energy Partners — our platform, the market forces behind it, and the case for a combination.</p>
+    <div class="prep">Prepared for <b>Ferrandino &amp; Son</b></div>
+  </section>
+</header>
+
+<!-- 01 WHO WE ARE + XURA TODAY (merged: "today" filled only 45% of the viewport) -->
+<section id="who">
+  <header class="shead"><span class="snum">01</span><span class="slabel">Who We Are</span></header>
+  <h2>A distributed energy <span class="grad-text">infrastructure company.</span></h2>
+  <p class="lead">XURA partners with commercial property owners to turn real estate into active energy infrastructure. A national platform already operating, with the relationships and capabilities to scale.</p>
+  <ol class="index">
+    <li>Commercial real estate partnerships</li>
+    <li>Battery Energy Storage Systems (BESS)</li>
+    <li>EV charging infrastructure</li>
+    <li>Distributed generation</li>
+    <li>Energy software integration</li>
+    <li>Long-term infrastructure ownership</li>
+  </ol>
+  <div class="cards g2" style="margin-top:var(--space-6)">
+    <div class="region">
+      <h4>Platform &amp; capability <span class="rtag">Operating</span></h4>
+      <ul>
+        <li>National distributed energy infrastructure platform</li>
+        <li>Battery storage, EV charging, and distributed generation capabilities</li>
+        <li>Experienced leadership team</li>
+      </ul>
+    </div>
+    <div class="region">
+      <h4>Relationships &amp; focus <span class="rtag">In place</span></h4>
+      <ul>
+        <li>Active commercial real estate relationships</li>
+        <li>Institutional capital relationships</li>
+        <li>Focused exclusively on commercial and institutional customers</li>
+      </ul>
+    </div>
+  </div>
+  <div class="callout"><b>Mission.</b> Help commercial property owners reduce energy costs while increasing resiliency and property value.</div>
+</section>
+
+<!-- 03 MARKET CONTEXT -->
+<section id="market">
+  <header class="shead"><span class="snum">02</span><span class="slabel">Market Context</span></header>
+  <h2>Why the market is <span class="grad-text">changing.</span></h2>
+  <p class="lead">Structural shifts in electricity demand and grid capacity are creating durable tailwinds.</p>
+  <div class="cards g3">
+    <div class="card"><h4>AI driving electricity demand</h4><p>Data centers and compute growth are accelerating load faster than the grid can respond.</p></div>
+    <div class="card"><h4>Grid congestion</h4><p>Interconnection queues and constrained transmission are slowing new capacity.</p></div>
+    <div class="card"><h4>Utility constraints</h4><p>Utilities increasingly rely on distributed and flexible resources to meet demand.</p></div>
+    <div class="card"><h4>Corporate sustainability</h4><p>Commercial owners and tenants want lower-carbon, resilient energy solutions.</p></div>
+    <div class="card"><h4>Energy resilience</h4><p>Businesses want backup power and protection from outages.</p></div>
+    <div class="card"><h4>Aging electric infrastructure</h4><p>Much of the grid was built decades ago and needs modernization.</p></div>
+  </div>
+</section>
+
+<!-- 04 OUR APPROACH -->
+<section id="approach">
+  <header class="shead"><span class="snum">03</span><span class="slabel">Our Approach</span></header>
+  <h2>What makes XURA <span class="grad-text">different.</span></h2>
+  <p class="lead">One integrated model — from the real estate itself to long-term ownership.</p>
+  <div class="flow">
+    <div class="node hi">Commercial Real Estate</div>
+    <div class="arw"></div>
+    <div class="node">Energy Infrastructure</div>
+    <div class="arw"></div>
+    <div class="node">Technology</div>
+    <div class="arw"></div>
+    <div class="node">Long-Term Ownership</div>
+    <div class="arw"></div>
+    <div class="node hi">Institutional Capital</div>
+  </div>
+</section>
+
+<!-- 05 OUR PLATFORM -->
+<section id="platform">
+  <header class="shead"><span class="snum">04</span><span class="slabel">Our Platform</span></header>
+  <h2>An enterprise platform built <span class="grad-text">end to end.</span></h2>
+  <p class="lead">XURA operates across the full energy infrastructure stack, on the customer's property.</p>
+  <div class="stack">
+    <div class="st-item"><h4>Battery Storage</h4></div>
+    <div class="st-item"><h4>EV Charging</h4></div>
+    <div class="st-item"><h4>Distributed Generation</h4></div>
+    <div class="st-item"><h4>Software</h4></div>
+    <div class="st-item"><h4>Operations</h4></div>
+    <div class="st-item full"><h4>Long-Term Infrastructure Ownership</h4></div>
+  </div>
+</section>
+
+<!-- 06 WHY FERRANDINO -->
+<section id="ferrandino">
+  <header class="shead"><span class="snum">05</span><span class="slabel">Why Ferrandino</span></header>
+  <h2>Why <span class="grad-text">Ferrandino.</span></h2>
+  <p class="lead">Ferrandino brings the national relationships and field capability XURA needs to scale distributed energy fastest.</p>
+  <div class="pills">
+    <span class="pill"><span class="dotp"></span> Existing customer relationships</span>
+    <span class="pill"><span class="dotp"></span> National footprint</span>
+    <span class="pill"><span class="dotp"></span> Service organization</span>
+    <span class="pill"><span class="dotp"></span> Facility management expertise</span>
+    <span class="pill"><span class="dotp"></span> Recurring customer interaction</span>
+    <span class="pill"><span class="dotp"></span> Trusted Fortune 1000 relationships</span>
+    <span class="pill"><span class="dotp"></span> Ability to deploy distributed energy nationally</span>
+  </div>
+  <div class="callout">Ferrandino provides the trusted customer relationships and nationwide operating capabilities that can <b>dramatically accelerate XURA's growth.</b></div>
+</section>
+
+<!-- 07 STRATEGIC COMBINATION -->
+<section id="combination">
+  <header class="shead"><span class="snum">06</span><span class="slabel">Strategic Combination</span></header>
+  <h2>Two complementary <span class="grad-text">platforms.</span></h2>
+  <div class="combo">
+    <div class="region">
+      <h4>Ferrandino <span class="rtag">Field &amp; customers</span></h4>
+      <ul>
+        <li>National facilities platform</li>
+        <li>Customer relationships</li>
+        <li>Operations</li>
+        <li>Maintenance</li>
+        <li>Field personnel</li>
+      </ul>
+    </div>
+    <div class="plus">+</div>
+    <div class="region">
+      <h4>XURA <span class="rtag">Energy &amp; capital</span></h4>
+      <ul>
+        <li>Energy infrastructure</li>
+        <li>Capital</li>
+        <li>Technology</li>
+        <li>Development</li>
+        <li>Energy expertise</li>
+      </ul>
+    </div>
+  </div>
+  <div class="together">
+    <div class="lbl">= Together we create</div>
+    <div class="cards g3">
+      <div class="card"><h4>National distributed energy platform</h4></div>
+      <div class="card"><h4>Fortune 1000 customer access</h4></div>
+      <div class="card"><h4>Complete energy infrastructure lifecycle</h4></div>
+    </div>
+    <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:10px">
+      <span class="pill"><span class="dotp"></span> Nationwide deployment capability</span>
+      <span class="pill"><span class="dotp"></span> Long-term recurring service revenue</span>
+      <span class="pill"><span class="dotp"></span> National energy infrastructure platform built for long-term growth</span>
+    </div>
+  </div>
+</section>
+
+<!-- 08 THE VALUE OF COMBINATION -->
+<section id="value">
+  <header class="shead"><span class="snum">07</span><span class="slabel">The Value of Combination</span></header>
+  <h2>Why this combination creates <span class="grad-text">more value.</span></h2>
+  <div class="cards g2">
+    <div class="region neg">
+      <h4>Without Ferrandino <span class="rtag">Slower path</span></h4>
+      <ul>
+        <li>Build customers individually</li>
+        <li>Build national service organization</li>
+        <li>Slower rollout</li>
+        <li>Limited field presence</li>
+      </ul>
+    </div>
+    <div class="region">
+      <h4>With Ferrandino <span class="rtag">Accelerated</span></h4>
+      <ul>
+        <li><b>Immediate Fortune 1000 access</b></li>
+        <li>National operating platform</li>
+        <li>Thousands of service interactions</li>
+        <li>Existing customer trust</li>
+        <li>Faster deployment</li>
+        <li>Stronger competitive position</li>
+      </ul>
+    </div>
+  </div>
+  <div class="callout"><b>Bottom line:</b> Together we can build one of the nation's leading distributed energy infrastructure platforms significantly faster than either company could independently.</div>
+</section>
+
+<!-- 09 GROWTH OPPORTUNITIES -->
+<section id="growth">
+  <header class="shead"><span class="snum">08</span><span class="slabel">Growth Opportunities</span></header>
+  <h2>Potential growth <span class="grad-text">opportunities.</span></h2>
+  <p class="lead">A combined platform opens distributed energy deployment across many property types.</p>
+  <ul class="tlist">
+    <li>Commercial Real Estate</li>
+    <li>Retail</li>
+    <li>Industrial</li>
+    <li>Healthcare</li>
+    <li>Hospitality</li>
+    <li>Education</li>
+    <li>Municipal</li>
+  </ul>
+</section>
+
+<!-- 10 WHY NOW -->
+<section id="whynow">
+  <header class="shead"><span class="snum">09</span><span class="slabel">Why Now</span></header>
+  <h2>Why <span class="grad-text">now.</span></h2>
+  <p class="lead">Several forces are converging at once, creating a limited window to establish national scale.</p>
+  <div class="cards g3">
+    <div class="card"><h4>AI power demand</h4><p>Data center and compute growth is driving electricity demand faster than new capacity can be built.</p></div>
+    <div class="card"><h4>Grid modernization</h4><p>Utilities are investing heavily in distributed and flexible resources to modernize aging infrastructure.</p></div>
+    <div class="card"><h4>Corporate electrification</h4><p>Commercial owners and tenants are accelerating investment in on-site energy and EV infrastructure.</p></div>
+    <div class="card"><h4>Energy resiliency</h4><p>Businesses increasingly need reliable backup power and protection from grid outages.</p></div>
+    <div class="card"><h4>Institutional investment into infrastructure</h4><p>Capital is flowing into distributed energy at a pace that rewards platforms that can scale quickly.</p></div>
+  </div>
+
+  <h3 style="font-family:'Archivo';font-weight:700;font-size:1.05rem;color:var(--paper);margin:var(--space-7) 0 var(--space-4)">Next steps</h3>
+  <div class="pills">
+    <span class="pill"><span class="dotp"></span> Strategic partnership</span>
+    <span class="pill"><span class="dotp"></span> Potential acquisition</span>
+    <span class="pill"><span class="dotp"></span> Joint growth</span>
+    <span class="pill"><span class="dotp"></span> Confidential discussions</span>
+    <span class="pill"><span class="dotp"></span> Due diligence</span>
+  </div>
+  <div class="disc">
+    This document is confidential and prepared solely for discussion purposes between XURA Energy Partners and Ferrandino &amp; Son. It does not constitute an offer, and does not include XURA&rsquo;s investment, capital formation, or valuation materials. Any transaction would be subject to definitive agreements and mutual due diligence.
+  </div>
+</section>
+
+<!-- 11 ACQUISITION PARTNER (bridge) -->
+<section id="partner">
+  <header class="shead"><span class="snum">10</span><span class="slabel">Acquisition Partner</span></header>
+  <h2>XURA has chosen Intrepid as its <span class="grad-text">acquisition partner.</span></h2>
+  <p class="lead">XURA is actively in the market acquiring synergistic companies. Intrepid Investment Bankers leads that mandate: a leading middle market M&amp;A and capital advisory firm, and a member of MUFG, one of the largest financial groups in the world.</p>
+  <div class="cards g3">
+    <div class="card"><h4>Mergers &amp; Acquisitions</h4><p>Sell-side and buy-side advisory, with deep sector knowledge across the energy transition value chain.</p></div>
+    <div class="card"><h4>Special Situations</h4><p>Stressed, distressed and complex M&amp;A and financing transactions.</p></div>
+    <div class="card"><h4>Capital Advisory</h4><p>Institutional debt and equity, strategic investments and bespoke private capital solutions.</p></div>
+  </div>
+  <div class="callout"><b>Intrepid Investment Bankers LLC</b>, member FINRA/SIPC, and a member of MUFG, a global financial group. Offices in Los Angeles, Charlotte, Chicago, Nashville, New York and San Francisco. intrepidib.com · 310.478.9000</div>
+</section>
+
+<!-- 12 TRANSACTION TEAM (pdf p2) -->
+<section id="team">
+  <header class="shead"><span class="snum">11</span><span class="slabel">Transaction Team</span></header>
+  <h2>Intrepid team committed to <span class="grad-text">success.</span></h2>
+  <p class="lead">Cross-functional team of senior professionals providing a boutique investment bank approach on a global scale, supported by a deep bench of experienced junior talent.</p>
+  <div class="team"><div class="member"><img src="img/intrepid/ken-garnett.jpeg" alt="Ken Garnett, Managing Director" loading="lazy"><div><div class="nm">Ken Garnett</div><div class="rl">Managing Director<br>Head of Special Situations</div></div></div><div class="member"><img src="img/intrepid/asher-safvi.jpeg" alt="Asher Safvi, Managing Director" loading="lazy"><div><div class="nm">Asher Safvi</div><div class="rl">Managing Director<br>Industrials &amp; Business Services</div></div></div><div class="member"><img src="img/intrepid/ana-alvarenga.jpeg" alt="Ana Alvarenga, Vice President" loading="lazy"><div><div class="nm">Ana Alvarenga</div><div class="rl">Vice President<br>Special Situations</div></div></div><div class="member"><img src="img/intrepid/andrew-gough.jpeg" alt="Andrew Gough, Analyst" loading="lazy"><div><div class="nm">Andrew Gough</div><div class="rl">Analyst<br>Industrials &amp; Business Services</div></div></div><div class="member"><img src="img/intrepid/charles-laniak.jpeg" alt="Charles Laniak, Analyst" loading="lazy"><div><div class="nm">Charles Laniak</div><div class="rl">Analyst<br>Special Situations</div></div></div></div>
+  <div class="tgroups">
+    <div class="tgroup">
+      <div class="glabel">Capital Advisory</div>
+      <div class="team"><div class="member"><img src="img/intrepid/jonathan-zucker.jpeg" alt="Jonathan Zucker, Managing Director" loading="lazy"><div><div class="nm">Jonathan Zucker</div><div class="rl">Managing Director<br>Head of Capital Advisory</div></div></div><div class="member"><img src="img/intrepid/boris-zikratov.jpeg" alt="Boris Zikratov, Director" loading="lazy"><div><div class="nm">Boris Zikratov</div><div class="rl">Director<br>Capital Advisory</div></div></div></div>
+    </div>
+    <div class="tgroup one">
+      <div class="glabel">MUFG Power &amp; Utilities Coverage</div>
+      <div class="team"><div class="member"><img src="img/intrepid/chris-hudnut.jpeg" alt="Chris Hudnut, Director" loading="lazy"><div><div class="nm">Chris Hudnut</div><div class="rl">Director<br>Power &amp; Utilities Banking</div></div></div></div>
+    </div>
+    <div class="tgroup">
+      <div class="glabel">Financial Sponsor Coverage</div>
+      <div class="team"><div class="member"><img src="img/intrepid/steve-nelson.jpeg" alt="Steve Nelson, Managing Director" loading="lazy"><div><div class="nm">Steve Nelson</div><div class="rl">Managing Director<br>Head of Sponsor Coverage</div></div></div><div class="member"><img src="img/intrepid/dan-kraft.jpeg" alt="Dan Kraft, Managing Director" loading="lazy"><div><div class="nm">Dan Kraft</div><div class="rl">Managing Director<br>Sponsor Coverage</div></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 13 THE FIRM (pdf p3) -->
+<section id="firm">
+  <header class="shead"><span class="snum">12</span><span class="slabel">The Firm</span></header>
+  <h2>Leading M&amp;A and capital <span class="grad-text">advisory firm.</span></h2>
+  <p class="lead">Intrepid is one of the leading middle market advisors in the United States. Founded in 2010 with partnership roots dating back to 1982, we specialize in providing capital advisory and M&amp;A services to middle market companies.</p>
+  <div class="stats">
+    <div class="stat"><div class="v">$100+ Billion</div><div class="k">Aggregate advisory transaction value</div></div>
+    <div class="stat"><div class="v">$50M&ndash;$1B+</div><div class="k">Typical deal size</div></div>
+    <div class="stat"><div class="v">125+</div><div class="k">Investment bankers</div></div>
+    <div class="stat"><div class="v">11+</div><div class="k">Dedicated industry groups</div></div>
+    <div class="stat"><div class="v">6</div><div class="k">Offices across the U.S.</div></div>
+  </div>
+  <div class="cards g2" style="margin-top:26px">
+    <div class="region">
+      <h4>Mergers &amp; Acquisitions</h4>
+      <ul>
+        <li>Expertise across various M&amp;A transaction types</li>
+        <li>Highly skilled at strategic positioning vs. simply executing transactions</li>
+        <li>Broad transaction experience and proven results</li>
+        <li>Significant M&amp;A experience and deep knowledge in various sectors</li>
+        <li>Global relationships and execution capabilities</li>
+      </ul>
+    </div>
+    <div class="region">
+      <h4>Capital Advisory</h4>
+      <ul>
+        <li>Senior level relationships with key investors / lenders</li>
+        <li>Real-time market insight and active investor dialogue</li>
+        <li>Track record of highly successful transactions</li>
+        <li>Bespoke private capital solutions</li>
+        <li>Strategic investments</li>
+        <li>Special situations</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 14 GLOBAL FOOTPRINT (pdf p4) -->
+<section id="footprint">
+  <header class="shead"><span class="snum">13</span><span class="slabel">Global Footprint</span></header>
+  <h2>Global footprint and <span class="grad-text">relationships.</span></h2>
+  <p class="lead">Intrepid is headquartered in Los Angeles, with offices in San Francisco, Chicago, Charlotte, Nashville, and New York. As a member of MUFG, our bankers have access to the extensive global footprint of one of the largest financial institutions in the world.</p>
+  <div class="cards g2">
+    <div class="mapwrap">
+      <img src="img/intrepid/footprint-map.jpeg" width="780" height="456" alt="World map showing Intrepid's six U.S. offices alongside MUFG branch, office and regional headquarter locations across the Americas, Europe and Asia-Pacific">
+      <div class="mapkey">
+        <span>Map key</span>
+        <span>Intrepid locations</span>
+        <span>MUFG branch / offices</span>
+        <span>MUFG regional HQ</span>
+      </div>
+    </div>
+    <div class="region">
+      <h4>Intrepid offices</h4>
+      <div class="pills">
+        <span class="pill"><span class="dotp"></span> Los Angeles <b style="color:var(--accent);font-weight:700">HQ</b></span>
+        <span class="pill"><span class="dotp"></span> San Francisco</span>
+        <span class="pill"><span class="dotp"></span> Chicago</span>
+        <span class="pill"><span class="dotp"></span> Charlotte</span>
+        <span class="pill"><span class="dotp"></span> Nashville</span>
+        <span class="pill"><span class="dotp"></span> New York</span>
+      </div>
+    </div>
+  </div>
+  <div class="region" style="margin-top:var(--space-4)">
+    <h4>MUFG global capabilities</h4>
+    <div class="pills">
+      <span class="pill"><span class="dotp"></span> Wholesale &amp; Corporate Banking</span>
+      <span class="pill"><span class="dotp"></span> Loan, Bond &amp; Equity Capital Markets</span>
+      <span class="pill"><span class="dotp"></span> Corporate &amp; Institutional Sales</span>
+      <span class="pill"><span class="dotp"></span> Flow Products Trading</span>
+      <span class="pill"><span class="dotp"></span> FX &amp; Local Markets Trading</span>
+      <span class="pill"><span class="dotp"></span> Equities &amp; Derivatives Trading</span>
+      <span class="pill"><span class="dotp"></span> Structured Solutions</span>
+      <span class="pill"><span class="dotp"></span> M&amp;A: Sell-Side Advisory</span>
+      <span class="pill"><span class="dotp"></span> M&amp;A: Buy-Side Advisory</span>
+      <span class="pill"><span class="dotp"></span> Capital Advisory: Debt &amp; Equity Financing</span>
+      <span class="pill"><span class="dotp"></span> Capital Advisory: Special Situations</span>
+    </div>
+  </div>
+</section>
+
+<!-- 15 BUILDING TECHNOLOGY COVERAGE — part 1 (pdf p5, split for legibility) -->
+<section id="coverage">
+  <header class="shead"><span class="snum">14</span><span class="slabel">Building Technology Coverage</span></header>
+  <h2>Front-of-the-meter and <span class="grad-text">grid edge.</span></h2>
+  <p class="lead">Building Technology industry coverage spans services, technology, products, and infrastructure assets across the energy transition value chain. Key thematic drivers: digitization, decarbonization, decentralization.</p>
+  <div class="pills" style="margin-bottom:var(--space-5)">
+    <span class="pill"><span class="dotp"></span> Front-of-the-Meter &middot; Utility Scale Infrastructure</span>
+    <span class="pill"><span class="dotp"></span> Grid Edge &middot; Distributed Energy Resources</span>
+  </div>
+  <div class="tax"><div class="taxcol"><h5>Renewables / Utility / Telecom Services</h5><ul><li>Sighting/ROW/engineering services</li><li>Planning/analysis/consulting/compliance</li><li>Engineering/interconnection services</li><li>Project management and programs (PMO)</li><li>Renewables focused EPC services</li><li>Scada/monitoring/control solutions</li><li>Maintenance/repair/operations (MRO)</li><li>Asset integrity programs</li></ul></div><div class="taxcol"><h5>Power and Renewables Infrastructure</h5><ul><li>Infrastructure asset ownership</li><li>Utility privatization (UP)</li><li>Wind/solar/geothermal/hydrogen</li><li>Battery storage (BESS)</li></ul></div><div class="taxcol"><h5>Power Quality &amp; Reliability</h5><ul><li>PQ&amp;R services/technology</li><li>Energy uptime services (5-9)</li><li>Testing/inspection/cert./compl. (TICC)</li><li>Protection and controls services</li><li>NETA certified electrical testing</li><li>Microgrids/backup power</li><li>Energy storage</li><li>NERC and compliance services</li></ul></div><div class="taxcol"><h5>Smart Mobility</h5><ul><li>Electric vehicle (EV) charging</li><li>EV infrastructure services</li><li>EV consulting/software</li><li>Fleet management services</li><li>Smart parking solutions</li><li>Intelligent traffic systems (ITS)</li><li>Smart city services</li></ul></div><div class="taxcol"><h5>Grid and Energy Software / Intelligent Buildings</h5><ul><li>Demand response/load shifting</li><li>Building systems integration</li><li>Smart controls/meters</li><li>Energy management systems</li><li>Internet of things/AI</li><li>Energy software</li><li>Connected lighting</li></ul></div></div>
+</section>
+
+<!-- 16 BUILDING TECHNOLOGY COVERAGE — part 2 (pdf p5 cont.) -->
+<section id="coverage-btm">
+  <header class="shead"><span class="snum">15</span><span class="slabel">Building Technology Coverage</span></header>
+  <h2>Behind-the-<span class="grad-text">meter.</span></h2>
+  <p class="lead">Coverage continues across the customer side of the meter: consulting, distributed generation, efficiency, products and technical facility operations.</p>
+  <div class="pills" style="margin-bottom:var(--space-5)">
+    <span class="pill"><span class="dotp"></span> Behind-the-Meter</span>
+  </div>
+  <div class="tax"><div class="taxcol"><h5>Energy and Specialty Consulting</h5><ul><li>Facility assessments</li><li>Bill analysis/payment</li><li>Energy analysis/management</li><li>Incentives/tax management</li><li>Energy procurement/consulting</li><li>Sustainability/ESG services</li><li>Carbon consulting/measurement</li><li>Energy forecasting/risk management</li><li>Commodity sales</li><li>Infrastructure master planning</li></ul></div><div class="taxcol"><h5>Distributed Generation</h5><ul><li>Solar PV</li><li>Traditional DG/CHP</li><li>Geothermal heat-pumps</li><li>Microgrids</li><li>District heating/cooling</li></ul></div><div class="taxcol"><h5>ESCOs / Energy Efficiency</h5><ul><li>Performance contracts</li><li>Energy retrofits</li><li>Codes and standards</li><li>Energy/MEPT engineering</li><li>Cx/RCx/CCx/MBCx</li><li>Efficient technologies</li><li>Utility programs (Utility DSM)</li></ul></div><div class="taxcol"><h5>Specialty Products / Distribution</h5><ul><li>Energy efficiency products</li><li>Building controls</li><li>Solar BOS components</li><li>EV products/distribution</li></ul></div><div class="taxcol"><h5>Technical Facility O&amp;M</h5><ul><li>Facility master planning</li><li>Internet of things (IoT)</li><li>Outsourced O&amp;M</li><li>Third party M&amp;V/CCx</li><li>Testing/inspection/cert./compl. (TICC)</li><li>Facility management</li><li>Specialty facility services</li><li>Third party asset ownership</li><li>Energy-as-a-service (EaaS)</li></ul></div></div>
+</section>
+
+<!-- 17 BUILDING TECHNOLOGY EXPERIENCE (pdf p6 — deal logos omitted) -->
+<section id="experience">
+  <header class="shead"><span class="snum">16</span><span class="slabel">Building Technology Experience</span></header>
+  <h2>Relevant building technology experience and <span class="grad-text">relationships.</span></h2>
+  <p class="lead">Entrenched relationships across the building technology ecosystem, with selected building technology transactions spanning sell-side, buy-side, corporate advisory and acquisition financing.</p>
+  <div class="cards g2">
+    <div class="region">
+      <h4>Selected transaction types</h4>
+      <ul>
+        <li><b>Sell-Side Advisory</b></li>
+        <li><b>Buy-Side Advisory</b></li>
+        <li><b>Corporate Advisory</b></li>
+        <li><b>Acquisition Financing</b></li>
+        <li>Market preparation mandates</li>
+        <li>Sales of substantially all the assets of a subsidiary</li>
+        <li>Acquisitions by portfolio companies of financial sponsors</li>
+      </ul>
+    </div>
+    <div class="region">
+      <h4>Project Anacapa <span class="rtag">Market preparation</span></h4>
+      <ul>
+        <li>Value-added distributor of critical back-up power solutions</li>
+        <li>Market preparation engagement</li>
+        <li>F&amp;S unit acquired by a portfolio company of a financial sponsor</li>
+      </ul>
+    </div>
+  </div>
+  <div class="callout">Transactions include deals completed by principals of Intrepid at prior firms and MUFG-related financings.</div>
+</section>
+
+<!-- 18 MUFG POWER & UTILITIES (pdf p7 — client logos omitted) -->
+<section id="mufg">
+  <header class="shead"><span class="snum">17</span><span class="slabel">MUFG Power &amp; Utilities</span></header>
+  <h2>MUFG power &amp; utilities <span class="grad-text">franchise overview.</span></h2>
+  <div class="cards g2">
+    <div class="region">
+      <h4>Overview</h4>
+      <ul>
+        <li>MUFG has a long-standing commitment to the sector and has provided consistent support to its clients throughout market cycles</li>
+        <li>Base of approximately <b>100 clients</b> in North America</li>
+        <li>Over <b>$23 billion</b> in current credit commitments to North American P&amp;U clients</li>
+        <li>Strong industry and customer knowledge</li>
+        <li>Our client universe covers the vast majority of regulated utilities, IPPs, YieldCos and Sponsors</li>
+      </ul>
+    </div>
+    <div class="region">
+      <h4>Dominance in power league tables</h4>
+      <ul>
+        <li><b>#1</b> Lead Arranger of project finance transactions in North America for sixteen consecutive years</li>
+        <li><b>#1</b> in Project Bonds in 2024 &amp; 2023</li>
+        <li>Top three position in the Project Finance &amp; Power Institutional Loan League Tables for three of the past four years</li>
+        <li>Top five position in the Power and Utilities Debt Capital Markets League Tables (#1 in 2023 and 2021) for the past ten years</li>
+      </ul>
+    </div>
+  </div>
+  <div style="margin-top:18px">
+    <div class="glabel">Sample client coverage</div>
+    <div class="pills">
+      <span class="pill"><span class="dotp"></span> Regulated Utilities</span>
+      <span class="pill"><span class="dotp"></span> Merchant IPP&rsquo;s</span>
+      <span class="pill"><span class="dotp"></span> YieldCo / Renewable IPP&rsquo;s / Energy Transition Companies</span>
+      <span class="pill"><span class="dotp"></span> Sponsor</span>
+    </div>
+  </div>
+</section>
+
+<!-- 18 Ken Garnett -->
+<section id="bio-ken-garnett">
+  <header class="shead"><span class="snum">18</span><span class="slabel">Ken Garnett</span></header>
+  <div class="bio">
+    <div>
+      <div class="portrait"><img src="img/intrepid/bio-ken-garnett.jpeg" alt="Portrait of Ken Garnett, Managing Director, Head of Special Situations at Intrepid" loading="lazy"></div>
+      <div class="who"><div class="nm">Ken Garnett</div><div class="rl">Managing Director, Head of Special Situations</div></div>
+    </div>
+    <div class="body"><p>Ken is the Head of Intrepid&rsquo;s Special Situations practice. He has nearly 30 years of experience involving stressed, distressed, and complex M&amp;A and financing transactions. He has led transactions in a variety of industries including retail, branded and non-branded consumer products, manufacturing, metals and mining, oil &amp; gas, specialty finance, transportation, technology and software.</p><p>Before joining Intrepid, Ken was a Managing Director in Cowen &amp; Company&rsquo;s Special Situations Group and served as Managing Director in Conway MacKenzie&rsquo;s distressed private funds practice. Prior to that, Ken founded and was partner at Renewal Capital, a private equity fund that focused on special situation investments across the capital structure of middle market companies. Additionally, Ken was a Partner at Gordian Group, a restructuring boutique investment bank in New York, and worked at Deloitte Consulting in its strategic operations/turnaround consulting practice.</p><p>Ken is a Certified Public Accountant (inactive) and an Expert Witness in U.S. Bankruptcy Courts and other venues.</p><p>He received his MBA from New York University, where he was named a Stern Scholar, and a BA in Economics from Davidson College. He also studied at the London School of Economics.</p><p class="cnote">Select clients include transactions completed while at prior firms.</p></div>
+  </div>
+</section>
+<!-- 19 Asher Safvi -->
+<section id="bio-asher-safvi">
+  <header class="shead"><span class="snum">19</span><span class="slabel">Asher Safvi</span></header>
+  <div class="bio">
+    <div>
+      <div class="portrait"><img src="img/intrepid/bio-asher-safvi.jpeg" alt="Portrait of Asher Safvi, Managing Director, Industrials &amp; Business Services at Intrepid" loading="lazy"></div>
+      <div class="who"><div class="nm">Asher Safvi</div><div class="rl">Managing Director, Industrials &amp; Business Services</div></div>
+    </div>
+    <div class="body"><p>Asher Safvi is a Managing Director in Intrepid&rsquo;s Industrials and Business Services Group and is based in Charlotte, NC. Asher has over a decade of experience leading M&amp;A, equity and debt transactions and other strategic advisory assignments on behalf of private equity-owned, family-owned and publicly traded companies with over 20 successfully completed transactions.</p><p>Asher is responsible for coverage of the industrial technology sector, including industrial and building automation, IoT, test and measurement, electrical products, engineered products and tech-enabled services.</p><p>Prior to joining Intrepid, Asher was a Director in the Industrial Technology &amp; Software Group at Lazard, and he began his career in investment banking in Wells Fargo&rsquo;s Industrials M&amp;A group. Prior to his time in investment banking, Asher worked for a leading management consulting firm focused on operations strategy and implementation for manufacturing companies.</p><p>When not in the office, Asher enjoys spending time with his family and friends and passionately supporting the Buffalo Bills in their quest to (finally!) bring home a Super Bowl, and is an aspiring barbecue grill master.</p><p class="cnote">Select clients include transactions completed while at prior firms.</p></div>
+  </div>
+</section>
+<!-- 20 Jonathan Zucker -->
+<section id="bio-jonathan-zucker">
+  <header class="shead"><span class="snum">20</span><span class="slabel">Jonathan Zucker</span></header>
+  <div class="bio">
+    <div>
+      <div class="portrait"><img src="img/intrepid/bio-jonathan-zucker.jpeg" alt="Portrait of Jonathan Zucker, Managing Director, Head of Capital Advisory at Intrepid" loading="lazy"></div>
+      <div class="who"><div class="nm">Jonathan Zucker</div><div class="rl">Managing Director, Head of Capital Advisory</div></div>
+    </div>
+    <div class="body"><p>Jonathan is the Head of the Capital Advisory Group at Intrepid. He is responsible for advising entrepreneurs and private equity investors on raising institutional debt and equity capital for a variety of uses such as funding growth, acquisitions, recapitalizations or working capital.</p><p>During his more than 20-year career in finance, Jonathan has been involved in a wide range of capital transactions, from IPOs to early-stage venture financings. He has executed capital raises for companies across a diverse set of industry sectors, including consumer, digital media, technology, business services and industrials.</p><p>Prior to joining Intrepid, he served as Vice President and Head of the Los Angeles office of U.S. Capital Partners, a direct lender and provider of capital-raising advisory services to middle-market companies. Previously, he worked at Credit Suisse and FBR &amp; Co., in addition to co-founding NotTV Network, a digital media company focused on live entertainment.</p><p>An accomplished songwriter and musician, Jonathan is a former voting member of the Recording Academy and a board member of In the Band, a nonprofit organization dedicated to bringing mobile music education programs to community centers and schools throughout Los Angeles. He is also a board member of the Los Angeles chapter of the Association for Corporate Growth, a global network of middle-market dealmaking professionals.</p><p>He is a graduate of the Wharton School of the University of Pennsylvania.</p><p class="cnote">Select clients include transactions completed while at prior firms.</p></div>
+  </div>
+</section>
+<!-- 21 Boris Zikratov -->
+<section id="bio-boris-zikratov">
+  <header class="shead"><span class="snum">21</span><span class="slabel">Boris Zikratov</span></header>
+  <div class="bio">
+    <div>
+      <div class="portrait"><img src="img/intrepid/bio-boris-zikratov.jpeg" alt="Portrait of Boris Zikratov, Director, Capital Advisory at Intrepid" loading="lazy"></div>
+      <div class="who"><div class="nm">Boris Zikratov</div><div class="rl">Director, Capital Advisory</div></div>
+    </div>
+    <div class="body"><p>Boris is a Director in the Capital Advisory Group at Intrepid where he primarily advises business owners on raising institutional financing throughout the entire capital structure. He is also active in special situations and M&amp;A transactions across select industry verticals.</p><p>Over the past decade, Boris worked on a broad range of strategic transactions, including initial public offerings, mergers, acquisitions, divestures, recapitalizations, and bankruptcy proceedings. His industry expertise includes agriculture, food, consumer goods, retail, media/entertainment, and industrials.</p><p>Prior to joining Intrepid, Boris was a Senior Director at Sierra Constellation Partners, a middle-market advisory firm focused on operational and financial restructuring. Previously, Boris worked for five years in Morgan Stanley&rsquo;s investment banking division in Los Angeles and London. He started his career at a Russia-focused investment bank in Moscow.</p><p>In his free time, Boris is an avid forager (an expert in wild mushrooms and berries). He also dabbles in a variety of adventure sports such as snowboarding, surfing, paddleboarding, and mountain biking. Golf is on his wish list.</p><p>He received a Bachelor of Science in Foreign Service degree from Georgetown University.</p><p class="cnote">Select clients include transactions completed while at prior firms.</p></div>
+  </div>
+</section>
+<!-- 22 Ana Alvarenga -->
+<section id="bio-ana-alvarenga">
+  <header class="shead"><span class="snum">22</span><span class="slabel">Ana Alvarenga</span></header>
+  <div class="bio">
+    <div>
+      <div class="portrait"><img src="img/intrepid/bio-ana-alvarenga.jpeg" alt="Portrait of Ana Alvarenga, Vice President, Special Situations at Intrepid" loading="lazy"></div>
+      <div class="who"><div class="nm">Ana Alvarenga</div><div class="rl">Vice President, Special Situations</div></div>
+    </div>
+    <div class="body"><p>Ana joined Intrepid in 2019 and focused on the Food, Beverage, &amp; Agriculture industry prior to joining the Special Situations practice, where she provides advisory services to companies, creditors, investors, and other stakeholders facing liquidity and capital structure challenges.</p><p>Prior to joining the firm, Ana held positions at Centre Partners Management in New York City and at Sun Orchard Juicery in Miami.</p><p>At Williams College, Ana was a member of the Varsity Soccer and Lacrosse teams. She won three NCAA DIII Championships with her soccer team. She also worked on campus as a tour guide and as a teaching assistant for physics, economics, and math.</p><p>Born and raised in Brazil, Ana loves playing and watching soccer. She also loves football, and on the weekends, you can find her avidly supporting the Buffalo Bills at her local Bills Backers chapter.</p><p class="cnote">Select clients include transactions completed while at prior firms.</p></div>
+  </div>
+</section>
+<!-- 23 DISCLAIMER (pdf p13) -->
+<section id="disclaimer">
+  <header class="shead"><span class="slabel">Disclaimer</span></header>
+  <h2>Important <span class="grad-text">disclosures.</span></h2>
+  <p class="lead">Investment banking services offered by Intrepid Investment Bankers LLC (Intrepid), member FINRA/SIPC, and member of MUFG.</p>
+  <div class="disc" style="border-top:none;margin-top:0">
+    <p style="margin-bottom:12px">This document and any other materials accompanying this document (collectively, the &ldquo;Materials&rdquo;) are provided for general information purposes. By accepting the Materials, the recipient(s) thereof acknowledges and agrees to the matters set forth below in this notice. Intrepid makes no representations or warranties, express or implied, as to the accuracy, fairness or completeness of the information in the Materials. Information in the Materials is preliminary and is not intended to be complete, and such information is qualified in its entirety. Any opinions or estimates contained in the Materials represent the judgment of Intrepid at this time and are subject to change without notice. The Materials are not an offer to sell, or a solicitation of an offer to buy, the securities or instruments named or described herein.</p>
+    <p>The Materials are not intended to provide, and must not be relied on for, accounting, legal, regulatory, tax, business, financial or related advice or investment recommendations. No person providing any Materials is acting as fiduciary or advisor with respect to the Materials. You must consult with your own advisors as to the legal, regulatory, tax, business, financial, investment and other aspects of the Materials.</p>
+  </div>
+</section>
+
+<div class="conf">Confidential — Prepared for Ferrandino &amp; Son</div>
+
+<script>
+(function(){
+  document.body.classList.add('js-anim');
+  var slides = [].slice.call(document.querySelectorAll('body > .hero, body > section'));
+  if(!slides.length) return;
+  var N = slides.length, idx = 0, animating = false, DUR = 560;
+  var mobile = window.matchMedia('(max-width:640px)').matches;
+
+  // wrap each non-hero slide's content so it can be zoom-fitted to one screen
+  slides.forEach(function(s){
+    if(s.classList.contains('hero')) return;
+    var inner = document.createElement('div'); inner.className = 'deck-inner';
+    while(s.firstChild){ inner.appendChild(s.firstChild); }
+    s.appendChild(inner);
+  });
+  function innerOf(s){ return s.classList.contains('hero') ? s.querySelector('section') : s.querySelector('.deck-inner'); }
+  function fit(s){
+    var inner = innerOf(s); if(!inner) return;
+    inner.style.zoom = '1';
+    var cs = getComputedStyle(s);
+    var avail = s.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
+    var h = inner.scrollHeight;
+    if(h > avail + 1){ inner.style.zoom = Math.max(0.6, avail / h); }
+  }
+  function fitAll(){ if(mobile) return; slides.forEach(fit); }
+
+  function labelFor(s,i){
+    if(s.classList.contains('hero')) return 'Cover';
+    var k = s.querySelector('.slabel'); if(k) return k.textContent.trim();
+    return 'Slide ' + (i+1);
+  }
+
+  var wrap = document.createElement('div'); wrap.className = 'deck-dots';
+  slides.forEach(function(s,i){
+    var b = document.createElement('button'); b.className = 'deck-dot'; b.type = 'button';
+    var lab = labelFor(s,i); b.title = lab; b.setAttribute('aria-label', lab);
+    b.addEventListener('click', function(){ go(i); });
+    wrap.appendChild(b);
+  });
+  document.body.appendChild(wrap);
+  var dots = wrap.children;
+
+  var pb = document.createElement('div'); pb.className = 'deck-progress';
+  var pin = document.createElement('div'); pb.appendChild(pin); document.body.appendChild(pb);
+  var counter = document.createElement('div'); counter.className = 'deck-counter'; document.body.appendChild(counter);
+
+  function pad(n){ return ('0'+n).slice(-2); }
+  function layout(){ slides.forEach(function(s,i){ s.style.zIndex = 5+i; s.style.transform = (i<=idx ? 'translateY(0)' : 'translateY(100%)'); }); }
+  function chrome(){
+    for(var k=0;k<dots.length;k++) dots[k].classList.toggle('active', k===idx);
+    pin.style.transform = 'scaleX(' + (N>1 ? idx/(N-1) : 1) + ')';
+    counter.innerHTML = '<b>'+pad(idx+1)+'</b> / '+pad(N);
+  }
+  function go(n){
+    if(n<0 || n>N-1 || animating) return;
+    var prev = idx;
+    idx = n; animating = true;
+    // promote only the two panels actually moving (never page-wide will-change)
+    slides[prev].classList.add('is-moving'); slides[idx].classList.add('is-moving');
+    layout(); chrome();
+    var cur = slides[idx];
+    setTimeout(function(){ cur.classList.add('in'); cur.scrollTop = 0; }, 170); // reveal once the page has largely arrived
+    setTimeout(function(){
+      animating = false;
+      slides[prev].classList.remove('is-moving'); slides[idx].classList.remove('is-moving');
+    }, DUR);
+  }
+
+  if(mobile){ slides.forEach(function(s){ s.classList.add('in'); }); return; }
+  document.body.classList.add('deck-on');
+  fitAll();
+  layout(); slides[0].classList.add('in'); chrome();
+  if(document.fonts && document.fonts.ready){ document.fonts.ready.then(fitAll); }
+  window.addEventListener('load', fitAll); // images change measured height
+  var _rt; window.addEventListener('resize', function(){ clearTimeout(_rt); _rt = setTimeout(fitAll, 150); });
+
+  function canScroll(el,dir){
+    if(!el || el.scrollHeight <= el.clientHeight+1) return false;
+    return dir>0 ? (el.scrollTop + el.clientHeight < el.scrollHeight-1) : (el.scrollTop > 1);
+  }
+  function onWheel(e){
+    if(animating){ e.preventDefault(); return; }
+    var dir = e.deltaY>0 ? 1 : -1; var s = slides[idx];
+    if(canScroll(s,dir)){ e.preventDefault(); s.scrollTop += e.deltaY; return; }
+    e.preventDefault();
+    if(dir>0){ if(idx<N-1) go(idx+1); } else { if(idx>0) go(idx-1); }
+  }
+  window.addEventListener('wheel', onWheel, {passive:false});
+
+  window.addEventListener('keydown', function(e){
+    if(e.key==='Home'){ e.preventDefault(); go(0); return; }
+    if(e.key==='End'){ e.preventDefault(); go(N-1); return; }
+    var down = (e.key==='ArrowDown' || e.key==='PageDown');
+    var up = (e.key==='ArrowUp' || e.key==='PageUp');
+    if(!down && !up) return;
+    var s = slides[idx];
+    if(canScroll(s, down?1:-1)){ e.preventDefault(); s.scrollTop += (down?90:-90); return; }
+    e.preventDefault();
+    if(down){ if(idx<N-1) go(idx+1); } else { if(idx>0) go(idx-1); }
+  });
+
+  var ty = null;
+  window.addEventListener('touchstart', function(e){ ty = e.touches[0].clientY; }, {passive:true});
+  window.addEventListener('touchend', function(e){
+    if(ty==null) return; var dy = ty - e.changedTouches[0].clientY; ty = null;
+    if(Math.abs(dy) < 40) return;
+    var dir = dy>0 ? 1 : -1; var s = slides[idx];
+    if(canScroll(s,dir)){ s.scrollTop += dy; return; }
+    if(dir>0){ if(idx<N-1) go(idx+1); } else { if(idx>0) go(idx-1); }
+  }, {passive:true});
+
+  [].slice.call(document.querySelectorAll('nav a[href^="#"]')).forEach(function(a){
+    a.addEventListener('click', function(e){
+      var id = a.getAttribute('href').slice(1);
+      var i = slides.indexOf(document.getElementById(id));
+      if(i >= 0){ e.preventDefault(); go(i); }
+    });
+  });
+
+  var heroInner = document.querySelector('.hero > section');
+  if(heroInner){ var hint = document.createElement('div'); hint.className = 'scroll-hint'; hint.textContent = 'Scroll ↓'; heroInner.appendChild(hint); }
+})();
+</script>
+</body>
+</html>

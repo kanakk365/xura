@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>XURA — Corporate Deck</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Anton&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#050505; --ink-2:#0c0c0c; --ink-3:#151515;
+    --card:#101010; --card-2:#161616;
+    --accent:#8bfb03; --accent-dim:#6dc702; --accent-deep:#4f8f02;
+    --paper:#ffffff; --text:#e9e9ea; --muted:#9a9a9e; --faint:#6a6a6e;
+    --border:rgba(255,255,255,.10); --border-strong:rgba(255,255,255,.18);
+    --glow:rgba(139,251,3,.12);
+    --maxw:1180px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:'Inter',system-ui,sans-serif;background:var(--ink);color:var(--text);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+  /* nav */
+  nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);background:rgba(5,5,5,.78);border-bottom:1px solid var(--border)}
+  .nav-in{max-width:var(--maxw);margin:0 auto;display:flex;align-items:center;gap:14px;padding:14px 24px}
+  .brand{display:flex;align-items:center;gap:11px;font-family:'Archivo';font-weight:800;font-size:1.12rem;letter-spacing:.4px;text-transform:uppercase}
+  .brand .dot{width:30px;height:30px;border-radius:8px;background:var(--accent);display:grid;place-items:center}
+  .brand .dot::before{content:"";width:13px;height:13px;background:var(--ink);clip-path:polygon(50% 0,100% 100%,0 100%)}
+  .nav-links{margin-left:auto;display:flex;gap:2px;flex-wrap:wrap}
+  .nav-links a{color:var(--muted);text-decoration:none;font-size:.76rem;font-weight:500;padding:7px 11px;border-radius:999px;transition:.2s;white-space:nowrap}
+  .nav-links a:hover{color:var(--ink);background:var(--accent)}
+  @media(max-width:1080px){.nav-links{display:none}}
+
+  /* layout */
+  section{max-width:var(--maxw);margin:0 auto;padding:80px 24px}
+  .kicker{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;color:var(--accent);margin-bottom:16px;display:flex;align-items:center;gap:10px}
+  .kicker::before{content:"";width:30px;height:1px;background:var(--accent)}
+  h2{font-family:'Archivo';font-weight:800;font-size:clamp(1.8rem,4vw,2.8rem);line-height:1.06;letter-spacing:-.6px;margin-bottom:14px}
+  .lead{color:var(--muted);font-size:1.05rem;max-width:760px;margin-bottom:40px}
+  .grad-text{color:var(--accent)}
+  h3.sub-h{font-family:'Archivo';font-weight:700;font-size:1.1rem;margin:30px 0 14px;color:var(--paper)}
+
+  /* hero */
+  .hero{min-height:92vh;display:flex;flex-direction:column;justify-content:center;padding-top:40px;padding-bottom:40px}
+  .badge{display:inline-flex;align-items:center;gap:9px;padding:6px 14px;border:1px solid var(--border);font-size:.72rem;color:var(--muted);width:fit-content;margin-bottom:28px;text-transform:uppercase;letter-spacing:.16em;font-weight:500}
+  .badge .pulse{width:7px;height:7px;border-radius:50%;background:var(--accent)}
+  .hero h1{font-family:'Archivo';font-weight:900;font-size:clamp(2.5rem,6.5vw,5rem);line-height:1.0;letter-spacing:-1.6px;margin-bottom:24px;max-width:16ch}
+  .hero p.sub{font-size:1.18rem;color:var(--muted);max-width:720px;margin-bottom:44px}
+  .hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:10px}
+  @media(max-width:760px){.hero-stats{grid-template-columns:1fr}}
+  .hstat{padding:24px 22px;border:1px solid var(--border);border-radius:8px;background:var(--card);position:relative;overflow:hidden}
+  .hstat::after{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:var(--accent);opacity:.9}
+  .hstat .n{font-family:'Archivo';font-weight:800;font-size:2.2rem;line-height:1;color:var(--paper)}
+  .hstat .l{color:var(--muted);font-size:.82rem;margin-top:8px}
+
+  /* cards / grids */
+  .cards{display:grid;gap:18px}
+  .g2{grid-template-columns:repeat(2,1fr)} .g3{grid-template-columns:repeat(3,1fr)} .g4{grid-template-columns:repeat(4,1fr)} .g6{grid-template-columns:repeat(3,1fr)}
+  @media(max-width:900px){.g3,.g4,.g6{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:620px){.g2,.g3,.g4,.g6{grid-template-columns:1fr}}
+  .card{position:relative;border:1px solid var(--border);border-radius:8px;padding:24px;background:var(--card)}
+  .card .idx{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--accent);letter-spacing:.1em}
+  .card h4{font-size:1.05rem;font-weight:600;color:var(--paper);margin:8px 0 6px}
+  .card p{color:var(--muted);font-size:.9rem}
+  .feat{display:flex;flex-direction:column;gap:6px}
+  .feat .big{font-family:'Archivo';font-weight:800;font-size:1.7rem;color:var(--accent)}
+  .card ul{list-style:none;margin-top:10px;display:flex;flex-direction:column;gap:7px}
+  .card li{font-size:.86rem;color:var(--muted);padding-left:16px;position:relative}
+  .card li::before{content:"";position:absolute;left:0;top:9px;width:6px;height:6px;border-radius:2px;background:var(--accent)}
+  .card li b{color:var(--paper);font-weight:600}
+
+  /* stat strip small */
+  .strip{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+  @media(max-width:820px){.strip{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:480px){.strip{grid-template-columns:1fr}}
+
+  /* region / lists */
+  .region{border:1px solid var(--border);border-radius:8px;padding:24px;background:var(--card)}
+  .region h4{font-family:'Archivo';font-weight:700;font-size:1.15rem;margin-bottom:4px;display:flex;align-items:center;gap:9px;color:var(--paper)}
+  .region .rtag{font-family:'JetBrains Mono',monospace;font-size:.62rem;padding:3px 8px;border-radius:6px;background:var(--glow);color:var(--accent);text-transform:uppercase;letter-spacing:.08em}
+  .region ul{list-style:none;margin-top:14px;display:flex;flex-direction:column;gap:9px}
+  .region li{font-size:.88rem;color:var(--muted);padding-left:18px;position:relative}
+  .region li::before{content:"";position:absolute;left:0;top:9px;width:7px;height:7px;border-radius:2px;background:var(--accent)}
+  .region li b{color:var(--paper);font-weight:600}
+  .region p{color:var(--muted);font-size:.9rem;margin-top:12px}
+
+  /* tables */
+  .tbl-scroll{overflow-x:auto;border:1px solid var(--border);border-radius:8px}
+  .tbl{width:100%;border-collapse:collapse;font-size:.88rem;min-width:640px}
+  .tbl th{text-align:left;font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);padding:12px 14px;border-bottom:1px solid var(--border-strong)}
+  .tbl td{padding:12px 14px;border-bottom:1px solid var(--border);color:var(--muted);vertical-align:top}
+  .tbl tr:hover td{background:rgba(139,251,3,.04)}
+  .tbl td.co,.tbl th.co{color:var(--paper);font-weight:600}
+  .tbl td.hi{color:var(--accent);font-weight:600}
+  .tbl .xcol{background:rgba(139,251,3,.06);color:var(--paper);font-weight:600}
+  .tbl th.xcol{color:var(--accent)}
+  .sub{color:var(--faint);font-weight:400;font-size:.72rem;display:block;margin-top:2px;font-family:'JetBrains Mono',monospace}
+
+  /* value stack bars */
+  .stack{display:flex;flex-direction:column;gap:10px}
+  .layer{display:flex;align-items:center;gap:14px;border:1px solid var(--border);border-radius:8px;padding:16px 18px;background:var(--card)}
+  .layer .ln{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--accent);flex:0 0 32px}
+  .layer .lt{color:var(--paper);font-weight:600;flex:0 0 210px}
+  .layer .ld{color:var(--muted);font-size:.88rem;flex:1}
+  @media(max-width:640px){.layer{flex-wrap:wrap}.layer .lt{flex:1 1 100%}}
+
+  /* returns */
+  .returns{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  @media(max-width:760px){.returns{grid-template-columns:1fr}}
+  .ret{border:1px solid var(--border-strong);border-radius:8px;padding:28px 24px;background:var(--card);text-align:center}
+  .ret .n{font-family:'Archivo';font-weight:900;font-size:2.6rem;color:var(--accent);line-height:1}
+  .ret .l{color:var(--muted);font-size:.82rem;margin-top:10px;text-transform:uppercase;letter-spacing:.08em}
+
+  /* flywheel steps */
+  .flow{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
+  @media(max-width:900px){.flow{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:520px){.flow{grid-template-columns:1fr}}
+  .step{border:1px solid var(--border);border-radius:8px;padding:18px;background:var(--card)}
+  .step .sn{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--accent)}
+  .step h5{font-size:.95rem;color:var(--paper);margin:6px 0 8px;font-weight:600}
+  .step ul{list-style:none;display:flex;flex-direction:column;gap:5px}
+  .step li{font-size:.8rem;color:var(--muted);padding-left:12px;position:relative}
+  .step li::before{content:"";position:absolute;left:0;top:8px;width:5px;height:5px;border-radius:50%;background:var(--accent)}
+
+  .note{font-size:.74rem;color:var(--faint);font-family:'JetBrains Mono',monospace;margin-top:22px;line-height:1.7}
+  .callout{border:1px solid var(--border-strong);border-radius:8px;padding:22px 24px;background:var(--card);margin-top:24px}
+  .callout b{color:var(--accent)}
+
+  /* closing */
+  .spotlight{border:1px solid var(--border-strong);border-radius:8px;padding:44px;background:var(--card)}
+  footer{border-top:1px solid var(--border);margin-top:40px}
+  .foot-in{max-width:var(--maxw);margin:0 auto;padding:44px 24px;color:var(--faint);font-size:.8rem}
+  .disc{font-size:.74rem;line-height:1.8;margin-top:14px;color:var(--faint)}
+
+  /* ============ CORPORATE DECK — fullpage (Webflow-style pages rising from the bottom) ============ */
+  html{scroll-behavior:auto}
+  nav{position:fixed;top:0;left:0;right:0;z-index:50}
+  body.deck-on{overflow:hidden;height:100vh}
+
+  /* every top-level block is a fixed full-screen slide; JS drives translateY (higher index stacks on top) */
+  .hero,body>section,body>footer{
+    position:fixed;inset:0;height:100vh;width:100%;max-width:none;margin:0;
+    background:var(--ink);z-index:5;
+    transform:translateY(100%);
+    transition:transform .9s cubic-bezier(.76,0,.24,1);will-change:transform;
+    overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;
+    padding:86px 40px 56px;
+    display:flex;flex-direction:column;justify-content:safe center;
+    scrollbar-width:none;-ms-overflow-style:none;
+  }
+  .hero{transform:translateY(0)}
+  /* centered max-width column; content flows left-aligned inside it (not each child individually centered) */
+  body>section,body>footer{padding-left:max(40px,calc((100% - var(--maxw))/2));padding-right:max(40px,calc((100% - var(--maxw))/2))}
+  body>section>*,body>footer>*{width:100%;max-width:100%;margin-left:0;margin-right:0;flex:0 0 auto}
+  .hero::-webkit-scrollbar,body>section::-webkit-scrollbar,body>footer::-webkit-scrollbar{width:0;height:0;display:none}
+
+  /* tables wrap instead of scrolling horizontally */
+  .tbl-scroll{overflow-x:hidden}
+  .tbl{table-layout:fixed;width:100%}
+  .tbl th,.tbl td{white-space:normal;overflow-wrap:anywhere}
+
+  @media(max-width:640px){
+    .hero,body>section,body>footer{position:relative;inset:auto;transform:none!important;transition:none;height:auto;min-height:100vh;overflow:visible;z-index:auto;display:block;padding:78px 18px 40px}
+    body.deck-on{overflow:auto;height:auto}
+  }
+
+  /* content wrapper — JS zoom-fits this so each slide fits one screen (no partial scroll) */
+  .deck-inner{width:100%;transform-origin:top center}
+
+  /* entrance choreography — soft focus-in (rise + de-blur + fade); grids cascade */
+  .js-anim>section .deck-inner>*:not(.cards):not(.hero-stats),
+  .js-anim>footer .deck-inner>*,
+  .js-anim>.hero>section>*:not(.hero-stats){opacity:0;transform:translateY(32px);filter:blur(8px);transition:opacity .8s cubic-bezier(.22,.61,.36,1),transform .8s cubic-bezier(.22,.61,.36,1),filter .8s ease}
+  .js-anim>section.in .deck-inner>*:not(.cards):not(.hero-stats),
+  .js-anim>footer.in .deck-inner>*,
+  .js-anim>.hero.in>section>*:not(.hero-stats){opacity:1;transform:none;filter:blur(0)}
+  .js-anim>section.in .deck-inner>*:nth-child(1),.js-anim>.hero.in>section>*:nth-child(1),.js-anim>footer.in .deck-inner>*:nth-child(1){transition-delay:.04s}
+  .js-anim>section.in .deck-inner>*:nth-child(2),.js-anim>.hero.in>section>*:nth-child(2){transition-delay:.14s}
+  .js-anim>section.in .deck-inner>*:nth-child(3),.js-anim>.hero.in>section>*:nth-child(3){transition-delay:.24s}
+  .js-anim>section.in .deck-inner>*:nth-child(4),.js-anim>.hero.in>section>*:nth-child(4){transition-delay:.34s}
+  .js-anim>section.in .deck-inner>*:nth-child(5){transition-delay:.44s}
+  .js-anim>section.in .deck-inner>*:nth-child(6){transition-delay:.54s}
+  .js-anim>section.in .deck-inner>*:nth-child(7){transition-delay:.64s}
+
+  /* grid / stat cascade — items lift, scale up and sharpen in sequence */
+  .js-anim .cards>*,.js-anim .hero-stats>*{opacity:0;transform:translateY(30px) scale(.93);filter:blur(6px);transition:opacity .7s cubic-bezier(.22,.61,.36,1),transform .7s cubic-bezier(.22,.61,.36,1),filter .7s ease}
+  .js-anim .in .cards>*,.js-anim .hero.in .hero-stats>*{opacity:1;transform:none;filter:blur(0)}
+  .in .cards>*:nth-child(1),.in .hero-stats>*:nth-child(1){transition-delay:.16s}
+  .in .cards>*:nth-child(2),.in .hero-stats>*:nth-child(2){transition-delay:.27s}
+  .in .cards>*:nth-child(3),.in .hero-stats>*:nth-child(3){transition-delay:.38s}
+  .in .cards>*:nth-child(4),.in .hero-stats>*:nth-child(4){transition-delay:.49s}
+  .in .cards>*:nth-child(5){transition-delay:.60s}
+  .in .cards>*:nth-child(6){transition-delay:.71s}
+  .in .cards>*:nth-child(7){transition-delay:.82s}
+  .in .cards>*:nth-child(8){transition-delay:.93s}
+
+  /* kicker accent line draws in */
+  .js-anim>section .deck-inner>.kicker::before{width:0;transition:width .8s cubic-bezier(.22,.61,.36,1) .18s}
+  .js-anim>section.in .deck-inner>.kicker::before{width:30px}
+
+  /* slow animated sheen across the accent headline words */
+  .grad-text{background:linear-gradient(100deg,var(--accent) 0%,var(--accent-dim) 34%,#e8ffd2 50%,var(--accent-dim) 66%,var(--accent) 100%);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;animation:sheen 8s linear infinite}
+  @keyframes sheen{to{background-position:-250% 0}}
+
+  /* hover lift on cards / regions / steps / stats */
+  .card,.region,.step,.hstat{transition:transform .4s cubic-bezier(.2,.7,.1,1),border-color .3s ease,box-shadow .3s ease}
+  .card:hover,.region:hover,.step:hover,.hstat:hover{transform:translateY(-5px);border-color:var(--border-strong);box-shadow:0 16px 40px -18px rgba(0,0,0,.8),0 0 0 1px var(--glow)}
+
+  /* soft breathing glow + slow drift behind the hero */
+  .hero::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:0;background:radial-gradient(58% 46% at 50% 34%,var(--glow),transparent 70%);opacity:.4;animation:heroGlow 9s ease-in-out infinite}
+  .hero>section{position:relative;z-index:1}
+  @keyframes heroGlow{0%,100%{opacity:.26;transform:scale(1) translateY(0)}50%{opacity:.5;transform:scale(1.08) translateY(-1.5%)}}
+
+  @media(prefers-reduced-motion:reduce){
+    .js-anim>section>*,.js-anim>footer>*,.js-anim>.hero>section>*,.js-anim .cards>*,.js-anim .hero-stats>*{opacity:1!important;transform:none!important;filter:none!important;transition:none!important}
+    .js-anim>section>.kicker::before{width:30px}
+    .hero::after,.scroll-hint,.grad-text{animation:none}
+  }
+
+  /* deck chrome */
+  .deck-dots{position:fixed;right:16px;top:50%;transform:translateY(-50%);z-index:70;display:flex;flex-direction:column;gap:8px;max-height:82vh}
+  @media(max-width:900px){.deck-dots{display:none}}
+  .deck-dot{width:8px;height:8px;border-radius:50%;border:1px solid var(--border-strong);background:transparent;cursor:pointer;padding:0;transition:.22s}
+  .deck-dot:hover{border-color:var(--accent);transform:scale(1.3)}
+  .deck-dot.active{background:var(--accent);border-color:var(--accent);box-shadow:0 0 0 3px var(--glow)}
+  .deck-progress{position:fixed;top:0;left:0;right:0;height:3px;background:rgba(255,255,255,.05);z-index:70}
+  .deck-progress>div{height:100%;width:0;background:var(--accent);box-shadow:0 0 10px var(--accent);transition:width .35s cubic-bezier(.76,0,.24,1)}
+  .deck-counter{position:fixed;left:18px;bottom:16px;z-index:70;font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.14em;color:var(--muted)}
+  .deck-counter b{color:var(--accent);font-weight:700}
+  .scroll-hint{position:absolute;left:0;right:0;margin:0 auto;bottom:24px;width:fit-content;font-family:'JetBrains Mono',monospace;font-size:.64rem;letter-spacing:.28em;text-transform:uppercase;color:var(--faint);animation:bob 1.9s ease-in-out infinite}
+  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(7px)}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-in">
+    <div class="brand"><span class="dot"></span> XURA <span style="color:var(--faint);font-weight:500;font-size:.72rem;letter-spacing:.05em">· Corporate Deck</span></div>
+    <div class="nav-links">
+      <a href="#market">Market</a>
+      <a href="#thesis">Thesis</a>
+      <a href="#moat">Moat</a>
+      <a href="#flywheel">Flywheel</a>
+      <a href="#architecture">Architecture</a>
+      <a href="#value">Value Stack</a>
+      <a href="#returns">Returns</a>
+      <a href="#pipeline">Pipeline</a>
+      <a href="#programs">Programs</a>
+      <a href="#competitive">vs. Peers</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero" id="top">
+  <section style="padding-top:0;padding-bottom:0">
+    <div class="badge"><span class="pulse"></span> XURA Energy Partners · Platform Investment Overview</div>
+    <h1>A distributed energy platform <span class="grad-text">ready for capital.</span></h1>
+    <p class="sub">Built to deploy capital across secured sites, active programs, and repeatable enterprise channels. XURA aggregates corporate real estate, batteries, EV charging, and software into utility-scale capacity — a repeatable, capital-absorbing platform positioned for significant returns, not a one-off project developer.</p>
+    <div class="hero-stats">
+      <div class="hstat"><div class="n">350+</div><div class="l">Secured sites ready to deploy capital</div></div>
+      <div class="hstat"><div class="n">4 Programs</div><div class="l">Active XURA programs deploying today</div></div>
+      <div class="hstat"><div class="n">Ready</div><div class="l">For scale, capital, and significant returns</div></div>
+    </div>
+  </section>
+</header>
+
+<!-- 01 MARKET CONTEXT -->
+<section id="market">
+  <div class="kicker">01 — Market Context</div>
+  <h2>The grid needs fast, flexible capacity at the edge — <span class="grad-text">and XURA delivers it.</span></h2>
+  <p class="lead">Rising demand, data-center load growth, interconnection queues, and constrained transmission define the opportunity. Distributed energy and VPPs are the fast unlock, and XURA is built to deploy them at scale.</p>
+  <div class="cards g3">
+    <div class="card feat"><div class="idx">01</div><h4>Demand is outrunning supply</h4><p>Data centers, electrification, and reshoring are driving load growth that central plants and new transmission cannot meet in time.</p></div>
+    <div class="card feat"><div class="idx">02</div><h4>Central capacity is slow to build</h4><p>Interconnection queues, permitting, and supply chains push new central capacity into the 2030s — the grid needs flexible capacity now.</p></div>
+    <div class="card feat"><div class="idx">03</div><h4>Distributed energy is the unlock</h4><p>Distributed batteries, chargers, and flexible load — coordinated by software — deploy in months and add capacity exactly where the grid is constrained.</p></div>
+  </div>
+  <div class="callout"><b>VPP</b> — A virtual power plant is a network of distributed batteries, chargers, and flexible load coordinated by software to operate together like one power plant.</div>
+</section>
+
+<!-- 02 THESIS -->
+<section id="thesis">
+  <div class="kicker">02 — Platform Investment Thesis</div>
+  <h2>Six pillars prove an <span class="grad-text">institutional platform, not a project developer.</span></h2>
+  <p class="lead">Secured scale, programmatic capital deployment, layered site economics, visible pipeline confidence, a compounding moat, and a platform-scale outcome together position XURA for significant returns as distributed assets aggregate into utility-scale capacity.</p>
+  <div class="cards g3">
+    <div class="card"><div class="idx">01</div><h4>Ready for scale</h4><p>350+ secured pipeline sites and four active programs are deploying today — scale is already in place, not aspirational.</p></div>
+    <div class="card"><div class="idx">02</div><h4>Programmatic capital deployment</h4><p>Capital deploys programmatically across site cohorts and programs in repeatable tranches, not one project at a time.</p></div>
+    <div class="card"><div class="idx">03</div><h4>Layered site economics</h4><p>Each site stacks lease, energy savings, charging, grid revenue, and incentives — multiple channels drive returns.</p></div>
+    <div class="card"><div class="idx">04</div><h4>Visible pipeline confidence</h4><p>Secured and contracted is clearly separated from potential and candidate, so investors see what is real today.</p></div>
+    <div class="card"><div class="idx">05</div><h4>Compounding moat</h4><p>Site access, utility relationships, capital-stack expertise, aggregation, and network effects strengthen with every deployment.</p></div>
+    <div class="card"><div class="idx">06</div><h4>Platform-scale outcome</h4><p>A repeatable operating system where aggregation and network effects compound into a platform-sized company.</p></div>
+  </div>
+</section>
+
+<!-- 03 MOAT -->
+<section id="moat">
+  <div class="kicker">03 — The Moat</div>
+  <h2>Why XURA becomes a <span class="grad-text">platform company, not a project developer.</span></h2>
+  <p class="lead">Individual batteries, chargers, or software can be replicated. Assembling secured real estate access, utility relationships, capital-stack expertise, and an aggregation platform into utility-scale capacity takes years — and each new deployment makes the next one faster, more financeable, and more valuable to the whole network.</p>
+  <div class="cards g3">
+    <div class="card"><div class="idx">01</div><h4>Site origination</h4><p>Control and access to 350+ sites is valuable and hard to assemble — years of origination.</p></div>
+    <div class="card"><div class="idx">02</div><h4>Utility relationships</h4><p>Con Edison, NYSERDA, NYISO, and municipalities take years of engagement to build.</p></div>
+    <div class="card"><div class="idx">03</div><h4>Capital-stack expertise</h4><p>Combining federal tax credits, state incentives, utility programs, and infrastructure debt is harder than it looks.</p></div>
+    <div class="card"><div class="idx">04</div><h4>Aggregation platform</h4><p>Software that coordinates hundreds-to-thousands of sites becomes more valuable with scale.</p></div>
+    <div class="card"><div class="idx">05</div><h4>Network effects</h4><p>More sites create more utility value, more capital availability, and easier next-customer acquisition.</p></div>
+  </div>
+  <div class="callout">Each site and program raises the value of the network — compounding the moat and the platform's scale advantage.</div>
+</section>
+
+<!-- 04 OPERATING SYSTEM -->
+<section id="os">
+  <div class="kicker">04 — A Repeatable Operating System</div>
+  <h2>XURA scales like a <span class="grad-text">platform, not a developer.</span></h2>
+  <p class="lead">Where a developer builds projects one at a time, XURA runs a repeatable operating system where each deployment makes the next one faster, cheaper, more financeable, and more valuable — the mechanics of a platform-sized company.</p>
+  <div class="cards g2">
+    <div class="region">
+      <h4>Project developer <span class="rtag">one at a time</span></h4>
+      <ul>
+        <li>Each site negotiated from scratch</li>
+        <li>Capital raised project by project</li>
+        <li>Relationships rebuilt every deal</li>
+        <li>Value caps out at the project level</li>
+      </ul>
+    </div>
+    <div class="region" style="border-color:var(--border-strong)">
+      <h4>The XURA platform <span class="rtag">repeats &amp; compounds</span></h4>
+      <ul>
+        <li><b>Aggregation</b> of many sites into one resource</li>
+        <li><b>Repeatable</b> deployment template per cohort</li>
+        <li><b>Network effects</b> — each site lifts the whole</li>
+        <li><b>Institutional</b> operating system + capital formation</li>
+      </ul>
+    </div>
+  </div>
+  <p class="note">Repeatability, aggregation, network effects, and capital formation compound XURA into a platform-sized company — not a project developer.</p>
+</section>
+
+<!-- 05 / 06 FLYWHEEL -->
+<section id="flywheel">
+  <div class="kicker">05 — The Institutional Flywheel</div>
+  <h2>Each turn compounds value — <span class="grad-text">more capital, more scale, more returns.</span></h2>
+  <p class="lead">Strategic partnerships unlock secured site access. Sites enable asset deployment. Deployment creates grid and utility revenue. Revenue and proof attract capital. Capital funds platform expansion — and a larger platform absorbs more capital, deploys faster, and compounds returns with every turn. Every stage is built from concrete inputs, each feeding the next.</p>
+  <div class="flow">
+    <div class="step"><div class="sn">01</div><h5>Strategic Partnerships</h5><ul><li>Utilities</li><li>Real estate owners</li><li>Enterprise customers</li></ul></div>
+    <div class="step"><div class="sn">02</div><h5>Secured Site Access</h5><ul><li>350+ pipeline sites</li><li>Corporate footprints</li><li>Grid-constrained locations</li></ul></div>
+    <div class="step"><div class="sn">03</div><h5>Distributed Asset Deployment</h5><ul><li>Battery storage</li><li>EV charging</li><li>Energy management systems</li></ul></div>
+    <div class="step"><div class="sn">04</div><h5>Grid &amp; Utility Revenue</h5><ul><li>Demand response</li><li>Capacity payments</li><li>VPP participation</li></ul></div>
+    <div class="step"><div class="sn">05</div><h5>Capital Formation</h5><ul><li>Tax incentives</li><li>Infrastructure debt</li><li>Institutional equity</li></ul></div>
+    <div class="step"><div class="sn">06</div><h5>Platform Expansion</h5><ul><li>More sites</li><li>More MW</li><li>Greater utility value</li><li>Larger capital base</li></ul></div>
+  </div>
+</section>
+
+<!-- 07 WHAT XURA IS CREATING -->
+<section id="creating">
+  <div class="kicker">07 — What XURA is Creating</div>
+  <h2>Real estate + batteries + EV charging + software = <span class="grad-text">a distributed energy platform.</span></h2>
+  <p class="lead">Stores, lots, and commercial buildings become hosts for batteries, EV charging, and energy software — many sites coordinated to act like one flexible power plant.</p>
+  <div class="cards g2" style="align-items:stretch">
+    <div class="region">
+      <h4>The shift <span class="rtag">cost center → grid asset</span></h4>
+      <p>Properties move from passive cost centers to active grid assets that store, supply, and optimize energy. The assets already sit where people live and work — close to demand — so capacity is added quickly and the same model repeats across many sites.</p>
+    </div>
+    <div class="cards" style="gap:14px">
+      <div class="card"><h4>Corporate real estate</h4><p>Secured site access XURA controls under lease.</p></div>
+      <div class="card"><h4>Batteries + EV charging</h4><p>Hardware installed on the host real estate.</p></div>
+      <div class="card"><h4>Energy-management software</h4><p>Coordinates sites into a single resource.</p></div>
+      <div class="card"><h4>Capital + utility programs</h4><p>Financing and grid programs turn it into value.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 08 ARCHITECTURE -->
+<section id="architecture">
+  <div class="kicker">08 — Platform Architecture</div>
+  <h2>Four layers come together into <span class="grad-text">one repeatable system.</span></h2>
+  <p class="lead">Capital funds the build; sites and assets get installed; software coordinates them; and three customer groups pay for the result.</p>
+  <div class="tbl-scroll">
+    <table class="tbl">
+      <thead><tr><th class="co">Layer</th><th>Role</th><th>Detail</th><th>Flow</th></tr></thead>
+      <tbody>
+        <tr><td class="co">Capital layer</td><td>Funding to build</td><td>Family offices, accredited investors, strategic partners, and infrastructure debt.</td><td class="hi">Capital in</td></tr>
+        <tr><td class="co">Sites + assets</td><td>Hardware on real estate</td><td>Corporate properties host batteries, EV charging, and grid-relevant equipment.</td><td class="hi">Batteries + charging</td></tr>
+        <tr><td class="co">Energy management</td><td>Software that coordinates</td><td>One control layer runs the sites as a virtual power plant and earns grid revenue.</td><td class="hi">VPP + grid services</td></tr>
+        <tr><td class="co">Customers</td><td>Who it serves</td><td>Corporations, utilities, and investors each get a different outcome.</td><td class="hi">Value out</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note">One architecture, repeated across every site and program — the basis for absorbing institutional capital.</p>
+</section>
+
+<!-- 09 PLATFORM SIZE -->
+<section id="size">
+  <div class="kicker">09 — Platform Size &amp; Capital Absorption</div>
+  <h2>Ready to absorb capital today — <span class="grad-text">across cohorts, not one project at a time.</span></h2>
+  <p class="lead">350+ secured sites, four active programs, 146 East Coast Retail sites under lease, and a grid-scale Long Island proof point create a platform with the scale to absorb capital in repeatable tranches as cohorts move from secured to deployed.</p>
+  <div class="strip">
+    <div class="hstat" style="border-radius:8px"><div class="n">350+</div><div class="l">Secured sites ready for capital</div></div>
+    <div class="hstat" style="border-radius:8px"><div class="n">4</div><div class="l">Active programs deploying today</div></div>
+    <div class="hstat" style="border-radius:8px"><div class="n">146</div><div class="l">East Coast Retail sites under lease</div></div>
+    <div class="hstat" style="border-radius:8px"><div class="n">71.5 MW</div><div class="l">Long Island grid-scale proof point</div></div>
+  </div>
+  <div class="cards g2" style="margin-top:22px;align-items:stretch">
+    <div class="region">
+      <h4>Room to deploy</h4>
+      <ul>
+        <li><b>Long Island</b> — 71.5 MW · 286 MWh across 55 sites</li>
+        <li><b>East Coast Retail</b> — 146 sites under lease</li>
+        <li><b>Enterprise footprints</b> — Starbucks and Home Depot potential</li>
+        <li><b>Candidate channels</b> — additional retail under evaluation</li>
+      </ul>
+    </div>
+    <div class="region">
+      <h4>How capital absorbs</h4>
+      <p>Capital deploys programmatically across site cohorts and programs. Each cohort moves from secured to deployed on a repeatable template, so additional capital scales with the pipeline — the platform is ready to put institutional capital to work now, not waiting on any single project.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 10 VALUE STACK -->
+<section id="value">
+  <div class="kicker">10 — The Value Stack</div>
+  <h2>A layered revenue and incentive stack creates the potential for <span class="grad-text">significant returns.</span></h2>
+  <p class="lead">Returns are driven by multiple monetization channels — not a single subsidy or lease.</p>
+  <div class="stack">
+    <div class="layer"><span class="ln">01</span><span class="lt">Lease revenue</span><span class="ld">Guaranteed ground-lease payments to the host property.</span></div>
+    <div class="layer"><span class="ln">02</span><span class="lt">Energy savings</span><span class="ld">Lower utility bills from storage, optimization, and demand-charge mitigation.</span></div>
+    <div class="layer"><span class="ln">03</span><span class="lt">EV charging revenue</span><span class="ld">Recurring revenue from public, fleet, and retail charging utilization.</span></div>
+    <div class="layer"><span class="ln">04</span><span class="lt">Grid / utility revenue</span><span class="ld">Demand response, capacity, and VPP participation payments.</span></div>
+    <div class="layer"><span class="ln">05</span><span class="lt">Incentives</span><span class="ld">Federal tax credits, state programs, and utility incentives.</span></div>
+    <div class="layer"><span class="ln">06</span><span class="lt">Debt + equity</span><span class="ld">Infrastructure debt and institutional equity complete the stack.</span></div>
+  </div>
+  <div class="callout"><b>Illustrative store-level economics</b> — Potential Starbucks model: $25K lease per store, ~10% energy savings. Potential Home Depot model: $50K lease per store, ~20% energy savings, $0 upfront. Stacked across many sites, these layers create the potential for significant returns. <span style="color:var(--faint)">Figures illustrative and potential, not contracted.</span></div>
+</section>
+
+<!-- 11 INVESTOR RETURNS -->
+<section id="returns">
+  <div class="kicker">11 — Investor Returns</div>
+  <h2>Tax-advantaged energy infrastructure — <span class="grad-text">structured for stability, cash flow, and discipline.</span></h2>
+  <p class="lead">A layered, infrastructure-grade return profile — backed by federal tax advantages — designed for durable cash flow and disciplined capital deployment.</p>
+  <div class="returns">
+    <div class="ret"><div class="n">25–30%+</div><div class="l">Target IRR</div></div>
+    <div class="ret"><div class="n">15%+</div><div class="l">Target cash on cash</div></div>
+    <div class="ret"><div class="n">2.5–3.0x+</div><div class="l">Target equity multiple</div></div>
+  </div>
+  <div class="region" style="margin-top:22px">
+    <h4>Tax profile</h4>
+    <ul>
+      <li><b>30–50% Investment Tax Credit</b> — boosts after-tax returns</li>
+      <li><b>Accelerated depreciation</b> — lowers taxable income, enhances yields</li>
+      <li><b>0% federal capital gains via QSBS</b> — potential elimination of federal capital gains tax (5+ year hold)</li>
+    </ul>
+  </div>
+  <p class="note">Target returns are illustrative and not guaranteed.</p>
+</section>
+
+<!-- 12 PIPELINE VISIBILITY -->
+<section id="pipeline">
+  <div class="kicker">12 — Pipeline Visibility &amp; Discipline</div>
+  <h2>What is secured today is clearly separated from <span class="grad-text">what is aspirational.</span></h2>
+  <p class="lead">Current and secured forms the base case; potential enterprise programs and candidate channels are upside. Investors can see exactly what is contracted versus what is still aspirational.</p>
+  <div class="cards g3">
+    <div class="region">
+      <h4>Current / secured <span class="rtag">today</span></h4>
+      <ul>
+        <li>350+ secured XURA pipeline sites</li>
+        <li>4 active XURA programs deploying</li>
+        <li>146 East Coast Retail sites under lease</li>
+        <li>Long Island RFP — 71.5 MW grid-scale proof point</li>
+      </ul>
+    </div>
+    <div class="region">
+      <h4>Potential enterprise <span class="rtag">upside</span></h4>
+      <ul>
+        <li><b>Potential Starbucks program</b> — store-level energy + EV across 2,000+ Northeast stores</li>
+        <li><b>Potential Home Depot program</b> — funded EV + battery + energy-management across Northeast stores</li>
+      </ul>
+    </div>
+    <div class="region">
+      <h4>Candidate channels <span class="rtag">under review</span></h4>
+      <ul>
+        <li>Wegmans</li>
+        <li>Tops Markets</li>
+        <li>Aldi</li>
+        <li>Additional retail footprints that fit the same repeatable real estate model</li>
+      </ul>
+    </div>
+  </div>
+  <p class="note">Secured and live form the base case; potential and candidate channels are upside, presented with discipline.</p>
+</section>
+
+<!-- 13 CORPORATE STRATEGY -->
+<section id="corporate">
+  <div class="kicker">13 — Corporate Strategy</div>
+  <h2>Repeatable enterprise programs turn footprints into <span class="grad-text">capital-deployable scale.</span></h2>
+  <p class="lead">Starbucks and Home Depot illustrate a store-level template — $0 upfront cost, lower energy bills, a guaranteed lease, and fast deployment — that repeats across thousands of sites, converting corporate footprints into scale that absorbs capital.</p>
+  <div class="cards g2">
+    <div class="region">
+      <h4>Potential Starbucks program <span class="rtag">potential</span></h4>
+      <ul>
+        <li>Store-level energy and EV across <b>2,000+ Northeast stores</b></li>
+        <li><b>$25K</b> guaranteed lease per store each year</li>
+        <li><b>~10%</b> energy savings</li>
+        <li><b>$0</b> upfront cost</li>
+        <li><b>4–8 month</b> deployment — repeatable store by store</li>
+      </ul>
+    </div>
+    <div class="region">
+      <h4>Potential Home Depot program <span class="rtag">potential</span></h4>
+      <ul>
+        <li>Funded EV + battery + energy-management across Northeast stores</li>
+        <li><b>$50K</b> guaranteed lease per store each year</li>
+        <li><b>~20%</b> energy savings</li>
+        <li><b>$0</b> upfront cost</li>
+        <li>Deployment partners: <b>BELFOR</b> and <b>Viridi</b></li>
+      </ul>
+    </div>
+  </div>
+  <p class="note">Potential programs shown to illustrate the repeatable enterprise model. Figures are illustrative and subject to change.</p>
+</section>
+
+<!-- 14 UTILITY STRATEGY -->
+<section id="utility">
+  <div class="kicker">14 — Utility Strategy</div>
+  <h2>Aggregated sites produce <span class="grad-text">utility-scale value the grid can call on.</span></h2>
+  <p class="lead">Once many sites are linked together by software, XURA offers utilities and cities the services a power plant provides — demand response, capacity, VPP participation, and resilience.</p>
+  <div class="cards g3">
+    <div class="card"><h4>Demand response</h4><p>Dialing energy use up or down on call to relieve the grid — earning utility-program revenue.</p></div>
+    <div class="card"><h4>Capacity</h4><p>Committed, dispatchable capacity in constrained load zones, paid like a power plant.</p></div>
+    <div class="card"><h4>VPP participation</h4><p>Many small sites coordinated by software act as one resource the grid can rely on.</p></div>
+    <div class="card"><h4>Battery storage</h4><p>Stores cheap power and releases it when demand and prices peak — a reservoir for electricity.</p></div>
+    <div class="card"><h4>Municipal resilience</h4><p>Local backup power that keeps communities and critical facilities running during outages.</p></div>
+    <div class="card"><h4>No new central plant</h4><p>Capacity added exactly where it is needed, without waiting years for a new power station.</p></div>
+  </div>
+</section>
+
+<!-- 15 PIPELINE PROOF -->
+<section id="proof">
+  <div class="kicker">15 — Pipeline Proof</div>
+  <h2>The pipeline proves the platform is <span class="grad-text">ready to deploy capital at scale today.</span></h2>
+  <p class="lead">A live grid-scale RFP, a deep secured-site pipeline, and potential enterprise programs give the platform the scale to absorb capital in repeatable cohorts — proof it is already operating at scale.</p>
+  <div class="cards g4">
+    <div class="card"><div class="idx">Proof point</div><h4>Long Island RFP</h4><p><b style="color:var(--accent)">71.5 MW · 286 MWh</b> across 55 distributed sites, aggregated into a single grid-scale resource.</p></div>
+    <div class="card"><div class="idx">Secured depth</div><h4>XURA Pipeline</h4><p>350+ secured sites across four active programs, with a disciplined <b style="color:var(--accent)">1-in-20</b> site-selection standard.</p></div>
+    <div class="card"><div class="idx">Enterprise program</div><h4>Potential Starbucks</h4><p>A potential store-level energy and EV program across 2,000+ Northeast stores.</p></div>
+    <div class="card"><div class="idx">Enterprise program</div><h4>Potential Home Depot</h4><p>A potential funded EV + battery + energy-management program across Northeast stores.</p></div>
+  </div>
+  <p class="note">Pipeline depth beyond a single project. Enterprise programs are potential and not binding.</p>
+</section>
+
+<!-- 16 ACTIVE PROGRAMS -->
+<section id="programs">
+  <div class="kicker">16 — Active XURA Programs</div>
+  <h2>Four live programs are <span class="grad-text">already deploying capital and real assets today.</span></h2>
+  <p class="lead">Each program has its own demand driver and geography, and all feed the same platform — a base of deployed scale that capital can build on.</p>
+  <div class="cards g4">
+    <div class="card"><div class="idx">Retail</div><h4>East Coast Retail</h4><p>Retail EV charging with battery storage in high-traffic suburban corridors. <b style="color:var(--paper)">146 sites</b> under lease; predevelopment begun.</p></div>
+    <div class="card"><div class="idx">Fleet</div><h4>NYC Taxi Network</h4><p>Public charging for fleet electrification, in partnership with Con Edison and the NY State Federation of Taxi Drivers.</p></div>
+    <div class="card"><div class="idx">Highway</div><h4>PA NEVI Corridor</h4><p>Highway EV charging aligned with federal NEVI funding across strategic Pennsylvania travel corridors.</p></div>
+    <div class="card"><div class="idx">Urban storage</div><h4>NYC Zone J Battery</h4><p>Urban battery storage and demand response in Con Edison's most grid-constrained load zone.</p></div>
+  </div>
+  <div class="callout">Candidate channels — <b>Wegmans, Tops Markets, and Aldi</b> — fit the same repeatable real estate model.</div>
+</section>
+
+<!-- 17 INVESTMENT PLATFORM -->
+<section id="capital">
+  <div class="kicker">17 — The Investment Platform</div>
+  <h2>Capital forms a <span class="grad-text">repeatable deployment engine</span> — not a stack of one-off projects.</h2>
+  <p class="lead">XURA brings together family offices, accredited investors, strategic capital, and infrastructure debt into a single platform that funds cohort-by-cohort deployment.</p>
+  <div class="cards g4">
+    <div class="card"><h4>Family offices</h4><p>Long-horizon capital seeking real-asset infrastructure exposure tied to grid modernization.</p></div>
+    <div class="card"><h4>Accredited investors</h4><p>Access to a diversified distributed-energy platform rather than a single project.</p></div>
+    <div class="card"><h4>Strategic capital</h4><p>Utilities, partners, and corporates aligned with the platform's deployment footprint.</p></div>
+    <div class="card"><h4>Infrastructure debt</h4><p>Project-level debt that scales with secured cohorts and contracted revenue.</p></div>
+  </div>
+  <p class="note">Each tranche funds a cohort of secured sites on the same template, so investment scales with the pipeline rather than financing isolated projects.</p>
+</section>
+
+<!-- 18 MARKET ALIGNMENT -->
+<section id="alignment">
+  <div class="kicker">18 — Market Alignment</div>
+  <h2>Why XURA wins — six converging trends <span class="grad-text">each map to a structural advantage.</span></h2>
+  <div class="tbl-scroll">
+    <table class="tbl">
+      <thead><tr><th class="co">Market trend</th><th class="xcol">XURA advantage</th></tr></thead>
+      <tbody>
+        <tr><td class="co">AI power demand</td><td class="xcol">Behind-the-meter batteries near commercial loads</td></tr>
+        <tr><td class="co">Grid congestion</td><td class="xcol">Existing enterprise real estate footprint</td></tr>
+        <tr><td class="co">Interconnection delays</td><td class="xcol">Faster deployment through distributed infrastructure</td></tr>
+        <tr><td class="co">Utility modernization</td><td class="xcol">Virtual Power Plant (VPP) aggregation</td></tr>
+        <tr><td class="co">Corporate decarbonization</td><td class="xcol">Enterprise partnerships with repeatable deployment</td></tr>
+        <tr><td class="co">Institutional capital inflows</td><td class="xcol">Scalable distributed energy investment platform</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="callout"><b>Key takeaway</b> — The convergence of AI-driven electricity demand, utility capital investment, and institutional infrastructure capital is creating one of the largest energy investment opportunities in decades. XURA is positioned at the intersection of these trends through its enterprise site network, battery storage strategy, software-enabled aggregation, and institutional capital formation platform.</div>
+</section>
+
+<!-- 19 COMPETITIVE POSITIONING -->
+<section id="competitive">
+  <div class="kicker">19 — Competitive Positioning</div>
+  <h2>XURA is the only platform, <span class="grad-text">not a single-layer point solution.</span></h2>
+  <p class="lead">Each peer excels in one layer of the stack. Scored honestly — including where peers lead — against XURA's integrated model.</p>
+  <div class="tbl-scroll">
+    <table class="tbl">
+      <thead>
+        <tr>
+          <th class="co">Capability</th>
+          <th class="xcol">XURA<span class="sub">Investment platform</span></th>
+          <th>Ameresco<span class="sub">Operating ESCO</span></th>
+          <th>ADS-TEC Energy<span class="sub">Hardware manufacturer</span></th>
+          <th>EVgo<span class="sub">Operating charging network</span></th>
+          <th>Stem<span class="sub">Software &amp; services</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="co">Enterprise site origination <span class="sub">corporate real estate access</span></td><td class="xcol">Strong</td><td class="hi">Limited</td><td>No</td><td class="hi">Limited</td><td>No</td></tr>
+        <tr><td class="co">Battery storage deployment</td><td class="xcol">Yes</td><td>Yes</td><td class="hi">Limited</td><td class="hi">Limited</td><td>Software only</td></tr>
+        <tr><td class="co">DC fast charging</td><td class="xcol">Yes</td><td class="hi">Limited</td><td>Yes</td><td>Yes — network leader</td><td>No</td></tr>
+        <tr><td class="co">VPP software &amp; grid dispatch</td><td class="xcol">Yes</td><td class="hi">Limited</td><td>No</td><td class="hi">Limited</td><td>Yes — AUM leader*</td></tr>
+        <tr><td class="co">Institutional capital formation <span class="sub">structured for outside LP capital</span></td><td class="xcol">Yes — core model</td><td class="hi">Limited</td><td>No</td><td>N/A — self-funded operator</td><td class="hi">Limited</td></tr>
+        <tr><td class="co">Tax-credit / ITC structuring</td><td class="xcol">Yes</td><td>Yes</td><td>No</td><td class="hi">Limited</td><td class="hi">Limited</td></tr>
+        <tr><td class="co">Enterprise / corporate partnerships</td><td class="xcol">Strong (pipeline)</td><td>Established base</td><td>No</td><td class="hi">Limited</td><td>No</td></tr>
+        <tr><td class="co">Operating scale today <span class="sub">deployed assets, track record</span></td><td class="xcol">Emerging platform — 71.5 MW proof point</td><td>Established, 20+ yrs</td><td>Established hardware base</td><td>Established, 1,594+ stalls</td><td>Established, 2.5 GWh AUM</td></tr>
+        <tr><td class="co">Integrated model <span class="sub">real estate + energy + software + capital</span></td><td class="xcol">Full stack</td><td class="hi">Partial (ESCO)</td><td class="hi">Hardware-only</td><td class="hi">Charging-only</td><td class="hi">Software-only</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note">* Stem is recognized by Wood Mackenzie as the largest storage VPP operator in North America by contracted AUM. Assessment based on public filings, investor materials, and company websites as of mid-2026.</p>
+  <div class="callout"><b>Key differentiator</b> — XURA is the only platform structured to originate sites, deploy multi-asset hardware, run VPP software, and absorb institutional capital in one vehicle — peers each occupy a single layer of that stack.</div>
+</section>
+
+<!-- CLOSE -->
+<section id="close">
+  <div class="kicker">20 — The Outcome</div>
+  <div class="spotlight">
+    <h2 style="max-width:20ch">XURA is ready to scale, ready to absorb capital, and <span class="grad-text">positioned for significant returns.</span></h2>
+    <p class="lead" style="margin-bottom:0">Positioned to become the leading institutional platform for distributed energy infrastructure across commercial real estate. Secured site access, utility relationships, capital-stack expertise, and an aggregation platform combine into a compounding moat. That combination — repeatable, capital-absorbing, and network-driven — makes XURA a platform-sized company, positioned for significant returns as distributed assets aggregate into utility-scale capacity.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-in">
+    <b style="color:var(--text);font-family:'Archivo'">XURA Energy Partners · Distributed Energy Infrastructure Platform</b>
+    <div class="disc">
+      <b style="color:var(--muted)">Important disclosures.</b> This material is for discussion purposes only and does not constitute an offer to sell or a solicitation of an offer to buy any security. Any investment opportunity would be made solely through formal offering documents and only to qualified parties. Enterprise programs (including Starbucks and Home Depot) are potential and not binding; additional retail channels are candidates only. All investments involve risk, including possible loss of principal. Forward-looking statements, projected figures, capacities, partnerships, and project details are illustrative and subject to change.
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  document.body.classList.add('js-anim');
+  var slides = [].slice.call(document.querySelectorAll('body > .hero, body > section, body > footer'));
+  if(!slides.length) return;
+  var N = slides.length, idx = 0, animating = false, DUR = 900;
+  var mobile = window.matchMedia('(max-width:640px)').matches;
+
+  // wrap each non-hero slide's content so it can be zoom-fitted to one screen
+  slides.forEach(function(s){
+    if(s.classList.contains('hero')) return;
+    var inner = document.createElement('div'); inner.className = 'deck-inner';
+    while(s.firstChild){ inner.appendChild(s.firstChild); }
+    s.appendChild(inner);
+  });
+  function innerOf(s){ return s.classList.contains('hero') ? s.querySelector('section') : s.querySelector('.deck-inner'); }
+  function fit(s){
+    var inner = innerOf(s); if(!inner) return;
+    inner.style.zoom = '1';
+    var cs = getComputedStyle(s);
+    var avail = s.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
+    var h = inner.scrollHeight;
+    if(h > avail + 1){ inner.style.zoom = Math.max(0.6, avail / h); }
+  }
+  function fitAll(){ if(mobile) return; slides.forEach(fit); }
+
+  // tasteful count-up on stat numbers (skips ranges / text like "25–30%+" or "Ready")
+  function countUp(slide){
+    var els = slide.querySelectorAll('.n');
+    for(var i=0;i<els.length;i++){ (function(el){
+      if(el.dataset.counted) return;
+      var raw = el.textContent.trim();
+      if(/\d\s*[–—-]\s*\d/.test(raw)){ el.dataset.counted='1'; return; }
+      var m = raw.match(/^([^\d]*)(\d+(?:[.,]\d+)?)(.*)$/);
+      if(!m){ el.dataset.counted='1'; return; }
+      el.dataset.counted='1';
+      var prefix=m[1], numStr=m[2].replace(/,/g,''), suffix=m[3];
+      var target=parseFloat(numStr), dec=(numStr.split('.')[1]||'').length, dur=1100, t0=null;
+      function fmt(v){ return prefix + (dec ? v.toFixed(dec) : Math.round(v).toLocaleString()) + suffix; }
+      el.textContent = fmt(0);
+      function tick(now){ if(t0===null) t0=now; var p=Math.min((now-t0)/dur,1); var e=1-Math.pow(1-p,3); el.textContent=fmt(target*e); if(p<1) requestAnimationFrame(tick); else el.textContent=fmt(target); }
+      requestAnimationFrame(tick);
+    })(els[i]); }
+  }
+
+  function labelFor(s,i){
+    if(s.classList.contains('hero')) return 'Intro';
+    if(s.tagName==='FOOTER') return 'Disclosures';
+    var k = s.querySelector('.kicker'); if(k) return k.textContent.trim();
+    var h = s.querySelector('h2'); if(h) return h.textContent.trim().slice(0,32);
+    return 'Slide ' + (i+1);
+  }
+
+  // nav dots
+  var wrap = document.createElement('div'); wrap.className = 'deck-dots';
+  slides.forEach(function(s,i){
+    var b = document.createElement('button'); b.className = 'deck-dot'; b.type = 'button';
+    var lab = labelFor(s,i); b.title = lab; b.setAttribute('aria-label', lab);
+    b.addEventListener('click', function(){ go(i); });
+    wrap.appendChild(b);
+  });
+  document.body.appendChild(wrap);
+  var dots = wrap.children;
+
+  // progress bar + counter
+  var pb = document.createElement('div'); pb.className = 'deck-progress';
+  var pin = document.createElement('div'); pb.appendChild(pin); document.body.appendChild(pb);
+  var counter = document.createElement('div'); counter.className = 'deck-counter'; document.body.appendChild(counter);
+
+  function pad(n){ return ('0'+n).slice(-2); }
+  function layout(){ slides.forEach(function(s,i){ s.style.zIndex = 5+i; s.style.transform = (i<=idx ? 'translateY(0)' : 'translateY(100%)'); }); }
+  function chrome(){
+    for(var k=0;k<dots.length;k++) dots[k].classList.toggle('active', k===idx);
+    pin.style.width = (N>1 ? idx/(N-1)*100 : 100) + '%';
+    counter.innerHTML = '<b>'+pad(idx+1)+'</b> / '+pad(N);
+  }
+  function go(n){
+    if(n<0 || n>N-1 || animating) return;
+    idx = n; animating = true;
+    layout(); chrome();
+    var cur = slides[idx];
+    setTimeout(function(){ cur.classList.add('in'); cur.scrollTop = 0; countUp(cur); }, 260); // reveal after the slide has risen in
+    setTimeout(function(){ animating = false; }, DUR);
+  }
+
+  if(mobile){ slides.forEach(function(s){ s.classList.add('in'); }); return; }
+  document.body.classList.add('deck-on');
+  fitAll();
+  layout(); slides[0].classList.add('in'); chrome(); countUp(slides[0]);
+  if(document.fonts && document.fonts.ready){ document.fonts.ready.then(fitAll); }
+  var _rt; window.addEventListener('resize', function(){ clearTimeout(_rt); _rt = setTimeout(fitAll, 150); });
+
+  function canScroll(el,dir){
+    if(!el || el.scrollHeight <= el.clientHeight+1) return false;
+    return dir>0 ? (el.scrollTop + el.clientHeight < el.scrollHeight-1) : (el.scrollTop > 1);
+  }
+
+  function onWheel(e){
+    if(animating){ e.preventDefault(); return; }
+    var dir = e.deltaY>0 ? 1 : -1; var s = slides[idx];
+    if(canScroll(s,dir)){ e.preventDefault(); s.scrollTop += e.deltaY; return; } // scroll a tall slide before advancing
+    e.preventDefault();
+    if(dir>0){ if(idx<N-1) go(idx+1); } else { if(idx>0) go(idx-1); }
+  }
+  window.addEventListener('wheel', onWheel, {passive:false});
+
+  window.addEventListener('keydown', function(e){
+    if(e.key==='Home'){ e.preventDefault(); go(0); return; }
+    if(e.key==='End'){ e.preventDefault(); go(N-1); return; }
+    var down = (e.key==='ArrowDown' || e.key==='PageDown');
+    var up = (e.key==='ArrowUp' || e.key==='PageUp');
+    if(!down && !up) return;
+    var s = slides[idx];
+    if(canScroll(s, down?1:-1)){ e.preventDefault(); s.scrollTop += (down?90:-90); return; }
+    e.preventDefault();
+    if(down){ if(idx<N-1) go(idx+1); } else { if(idx>0) go(idx-1); }
+  });
+
+  var ty = null;
+  window.addEventListener('touchstart', function(e){ ty = e.touches[0].clientY; }, {passive:true});
+  window.addEventListener('touchend', function(e){
+    if(ty==null) return; var dy = ty - e.changedTouches[0].clientY; ty = null;
+    if(Math.abs(dy) < 40) return;
+    var dir = dy>0 ? 1 : -1; var s = slides[idx];
+    if(canScroll(s,dir)){ s.scrollTop += dy; return; }
+    if(dir>0){ if(idx<N-1) go(idx+1); } else { if(idx>0) go(idx-1); }
+  }, {passive:true});
+
+  // nav links jump to their slide
+  [].slice.call(document.querySelectorAll('nav a[href^="#"]')).forEach(function(a){
+    a.addEventListener('click', function(e){
+      var id = a.getAttribute('href').slice(1);
+      var i = slides.indexOf(document.getElementById(id));
+      if(i >= 0){ e.preventDefault(); go(i); }
+    });
+  });
+
+  // scroll hint on the hero
+  var heroInner = document.querySelector('.hero > section');
+  if(heroInner){ var hint = document.createElement('div'); hint.className = 'scroll-hint'; hint.textContent = 'Scroll ↓'; heroInner.appendChild(hint); }
+})();
+</script>
+</body>
+</html>

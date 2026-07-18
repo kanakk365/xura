@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>NJ EV Tourism Corridor Charging Program | Xura Program Brief</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Anton&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#050505; --ink-2:#0c0c0c; --ink-3:#151515;
+    --card:#101010; --card-2:#161616;
+    --accent:#8bfb03; --accent-dim:#6dc702; --accent-deep:#4f8f02;
+    --paper:#ffffff; --text:#e9e9ea; --muted:#9a9a9e; --faint:#6a6a6e;
+    --border:rgba(255,255,255,.10); --border-strong:rgba(255,255,255,.18);
+    --glow:rgba(139,251,3,.12);
+    --maxw:1120px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:'Inter',system-ui,sans-serif;background:var(--ink);color:var(--text);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+  /* nav */
+  nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);background:rgba(5,5,5,.78);border-bottom:1px solid var(--border)}
+  .nav-in{max-width:var(--maxw);margin:0 auto;display:flex;align-items:center;gap:14px;padding:14px 24px}
+  .brand{display:flex;align-items:center;gap:11px;font-family:'Archivo';font-weight:800;font-size:1.12rem;letter-spacing:.4px;text-transform:uppercase}
+  .brand .dot{width:30px;height:30px;border-radius:8px;background:var(--accent);display:grid;place-items:center}
+  .brand .dot::before{content:"";width:13px;height:13px;background:var(--ink);clip-path:polygon(50% 0,100% 100%,0 100%)}
+  .nav-links{margin-left:auto;display:flex;gap:4px;flex-wrap:wrap}
+  .nav-links a{color:var(--muted);text-decoration:none;font-size:.78rem;font-weight:500;padding:7px 12px;border-radius:999px;transition:.2s;white-space:nowrap}
+  .nav-links a:hover{color:var(--ink);background:var(--accent)}
+  @media(max-width:900px){.nav-links{display:none}}
+
+  section{max-width:var(--maxw);margin:0 auto;padding:80px 24px}
+  .kicker{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.32em;text-transform:uppercase;color:var(--accent);margin-bottom:16px;display:flex;align-items:center;gap:10px}
+  .kicker::before{content:"";width:30px;height:1px;background:var(--accent)}
+  h2{font-family:'Archivo';font-weight:800;font-size:clamp(1.8rem,4vw,2.7rem);line-height:1.08;letter-spacing:-.6px;margin-bottom:14px}
+  .lead{color:var(--muted);font-size:1.05rem;max-width:720px;margin-bottom:36px}
+  .grad-text{color:var(--accent)}
+
+  /* hero */
+  .hero{min-height:86vh;display:flex;flex-direction:column;justify-content:center;padding-top:40px;padding-bottom:40px;position:relative;overflow:hidden}
+  .badge{display:inline-flex;align-items:center;gap:9px;padding:6px 14px;border:1px solid var(--border);font-size:.72rem;color:var(--muted);width:fit-content;margin-bottom:26px;text-transform:uppercase;letter-spacing:.1em;font-weight:500}
+  .badge .pulse{width:7px;height:7px;border-radius:50%;background:var(--accent)}
+  .hero h1{font-family:'Archivo';font-weight:900;font-size:clamp(2.4rem,6vw,4.6rem);line-height:1.02;letter-spacing:-1.6px;margin-bottom:22px;max-width:17ch}
+  .hero p.sub{font-size:1.15rem;color:var(--muted);max-width:660px;margin-bottom:40px}
+  .hero-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:6px}
+  @media(max-width:820px){.hero-stats{grid-template-columns:repeat(2,1fr)}}
+  .hstat{padding:22px 20px;border:1px solid var(--border);border-radius:8px;background:var(--card);position:relative;overflow:hidden}
+  .hstat::after{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:var(--accent);opacity:.9}
+  .hstat .n{font-family:'Archivo';font-weight:800;font-size:1.9rem;line-height:1;color:var(--paper)}
+  .hstat .l{color:var(--muted);font-size:.8rem;margin-top:8px}
+
+  /* status banner */
+  .status-banner{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  .status-banner .in{border:1px solid var(--border-strong);border-left:3px solid #e0685a;border-radius:8px;padding:16px 20px;background:rgba(224,104,90,.06);display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  .status-banner .tag{font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#e0685a;border:1px solid rgba(224,104,90,.5);border-radius:6px;padding:4px 10px;white-space:nowrap}
+  .status-banner .txt{font-size:.92rem;color:var(--text)}
+
+  /* cards */
+  .cards{display:grid;gap:16px}
+  .g2{grid-template-columns:repeat(2,1fr)} .g3{grid-template-columns:repeat(3,1fr)} .g4{grid-template-columns:repeat(4,1fr)}
+  @media(max-width:860px){.g3,.g4{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:620px){.g2,.g3,.g4{grid-template-columns:1fr}}
+  .card{position:relative;border:1px solid var(--border);border-radius:10px;padding:24px;background:var(--card)}
+  .card .ico{width:44px;height:44px;border-radius:8px;background:var(--glow);border:1px solid var(--border-strong);display:grid;place-items:center;font-size:1.2rem;margin-bottom:14px}
+  .card h4{font-size:1.05rem;font-weight:600;color:var(--paper);margin-bottom:6px}
+  .card p{color:var(--muted);font-size:.9rem}
+  .card ul{list-style:none;margin-top:10px;display:flex;flex-direction:column;gap:8px}
+  .card li{font-size:.88rem;color:var(--muted);padding-left:18px;position:relative}
+  .card li::before{content:"";position:absolute;left:0;top:9px;width:6px;height:6px;border-radius:2px;background:var(--accent)}
+  .card li b{color:var(--paper);font-weight:600}
+
+  /* incentive figure cards */
+  .amt-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+  @media(max-width:760px){.amt-grid{grid-template-columns:1fr}}
+  .amt{border:1px solid var(--border);border-radius:10px;padding:26px;background:var(--card);position:relative;overflow:hidden}
+  .amt::before{content:"";position:absolute;inset:0;background:radial-gradient(70% 60% at 100% 0,var(--glow),transparent 60%);pointer-events:none}
+  .amt .head{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+  .amt .big{font-family:'Archivo';font-weight:900;font-size:2.6rem;line-height:1;color:var(--paper)}
+  .amt .big small{font-size:1rem;color:var(--muted);font-weight:600}
+  .amt .sub{color:var(--muted);font-size:.9rem;margin-top:8px}
+  .amt .rows{margin-top:18px;border-top:1px solid var(--border);padding-top:14px;display:flex;flex-direction:column;gap:10px}
+  .amt .row{display:flex;justify-content:space-between;gap:14px;font-size:.88rem}
+  .amt .row span{color:var(--muted)} .amt .row b{color:var(--paper);font-weight:700;font-family:'JetBrains Mono',monospace;white-space:nowrap}
+  .amt .row b.g{color:var(--accent)}
+
+  /* tables */
+  .tbl-scroll{overflow-x:auto;border:1px solid var(--border);border-radius:8px}
+  .tbl{width:100%;border-collapse:collapse;font-size:.9rem}
+  .tbl th{text-align:left;font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);padding:12px 16px;border-bottom:1px solid var(--border-strong)}
+  .tbl td{padding:13px 16px;border-bottom:1px solid var(--border);color:var(--muted)}
+  .tbl tr:hover td{background:rgba(139,251,3,.04);color:var(--text)}
+  .tbl td.co{color:var(--paper);font-weight:600}
+  .tbl td .num{font-family:'JetBrains Mono',monospace;color:var(--accent);font-weight:700}
+
+  /* timeline */
+  .timeline{display:flex;flex-direction:column;gap:0;border-left:1px solid var(--border-strong);margin-left:8px}
+  .tl{position:relative;padding:0 0 26px 28px}
+  .tl:last-child{padding-bottom:0}
+  .tl::before{content:"";position:absolute;left:-6px;top:3px;width:11px;height:11px;border-radius:50%;background:var(--ink);border:2px solid var(--accent)}
+  .tl.done::before{background:var(--faint);border-color:var(--faint)}
+  .tl .d{font-family:'JetBrains Mono',monospace;font-size:.74rem;color:var(--accent);letter-spacing:.06em}
+  .tl.done .d{color:var(--faint)}
+  .tl .t{font-weight:600;color:var(--paper);margin-top:3px}
+  .tl .x{color:var(--muted);font-size:.88rem;margin-top:2px}
+
+  .callout{border:1px solid var(--border-strong);border-left:3px solid var(--accent);border-radius:8px;padding:20px 22px;background:rgba(139,251,3,.05);margin-top:24px}
+  .callout b{color:var(--accent)}
+
+  .pills{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+  .pill{padding:9px 15px;border:1px solid var(--border);border-radius:11px;font-size:.85rem;background:rgba(255,255,255,.03);display:flex;align-items:center;gap:9px;color:var(--text)}
+  .pill .dotp{width:7px;height:7px;border-radius:50%;background:var(--accent)}
+
+  /* contact */
+  .contact{border:1px solid var(--border);border-radius:10px;background:var(--card);padding:30px;display:flex;gap:30px;flex-wrap:wrap;align-items:center;justify-content:space-between}
+  .contact a{color:var(--accent);text-decoration:none;font-weight:600}
+  .contact a:hover{text-decoration:underline}
+  .contact .lbl{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin-bottom:4px}
+
+  footer{border-top:1px solid var(--border);margin-top:30px}
+  .foot-in{max-width:var(--maxw);margin:0 auto;padding:44px 24px;color:var(--faint);font-size:.8rem}
+  .foot-in a{color:var(--muted);text-decoration:none}
+  .foot-in a:hover{color:var(--accent)}
+  .src{margin-top:14px;font-size:.74rem;line-height:1.9}
+  .note{font-size:.74rem;color:var(--faint);font-family:'JetBrains Mono',monospace;margin-top:8px}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-in">
+    <div class="brand"><span class="dot"></span> XURA <span style="color:var(--faint);font-weight:500;font-size:.74rem;letter-spacing:.05em">· Program Brief</span></div>
+    <div class="nav-links">
+      <a href="#overview">Overview</a>
+      <a href="#eligibility">Eligibility</a>
+      <a href="#incentives">Incentives</a>
+      <a href="#corridors">Corridors</a>
+      <a href="#equipment">Equipment</a>
+      <a href="#timeline">Timeline</a>
+      <a href="#apply">How to Apply</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <section style="padding-top:0;padding-bottom:0">
+    <div class="badge"><span class="pulse"></span> New Jersey's Clean Energy Program · NJBPU</div>
+    <h1>EV Tourism Corridor <span class="grad-text">Charging Program.</span></h1>
+    <p class="sub">Grant incentives for businesses, hotels, and attractions to install Level 2 and DC fast chargers at tourism destinations along New Jersey's key travel corridors — so EV drivers can charge where they travel.</p>
+    <div class="hero-stats">
+      <div class="hstat"><div class="n">$27.6M</div><div class="l">Total program funding</div></div>
+      <div class="hstat"><div class="n">$270K</div><div class="l">Max per DC fast charger (200+ kW, in OB municipality)</div></div>
+      <div class="hstat"><div class="n">$7,500</div><div class="l">Max per Level 2 charger (in OB municipality)</div></div>
+      <div class="hstat"><div class="n">Closed</div><div class="l">Applications closed Feb 23, 2026</div></div>
+    </div>
+  </section>
+</header>
+
+<div class="status-banner">
+  <div class="in">
+    <span class="tag">Program Closed</span>
+    <span class="txt">Applications closed as of <b style="color:var(--paper)">February 23, 2026</b>. This brief documents the program's terms; check NJ's Clean Energy Program for any future rounds.</span>
+  </div>
+</div>
+
+<!-- OVERVIEW -->
+<section id="overview">
+  <div class="kicker">01 — Overview</div>
+  <h2>Charging where people <span class="grad-text">travel and stay.</span></h2>
+  <p class="lead">The EV Tourism Corridor Charging Program offered substantial incentives to destinations along key travel routes — toll roads, interstates, and highways — that install publicly available EV chargers. Administered through New Jersey's Clean Energy Program (NJCEP) and delivered via Charge Up New Jersey, it targets the gap between where EV drivers go and where they can charge.</p>
+  <div class="cards g3">
+    <div class="card">
+      <div class="ico">🎯</div>
+      <h4>The goal</h4>
+      <p>Enable confident EV travel and tourism across New Jersey by seeding fast, reliable charging at hotels, attractions, and destinations along designated corridors.</p>
+    </div>
+    <div class="card">
+      <div class="ico">🏛️</div>
+      <h4>Who runs it</h4>
+      <p>New Jersey Board of Public Utilities (NJBPU) through New Jersey's Clean Energy Program; administered by the Center for Sustainable Energy under Charge Up New Jersey.</p>
+    </div>
+    <div class="card">
+      <div class="ico">💰</div>
+      <h4>How much</h4>
+      <p>A <b style="color:var(--paper)">$27,595,000</b> funding pool, paying up to 90% of charger costs — with 50% bonus incentives for sites in Overburdened Municipalities.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ELIGIBILITY -->
+<section id="eligibility">
+  <div class="kicker">02 — Eligibility</div>
+  <h2>Who could <span class="grad-text">apply.</span></h2>
+  <p class="lead">Open to destinations along key travel routes — with distance-to-corridor rules that differ by charger type.</p>
+  <div class="cards g3">
+    <div class="card"><h4>Eligible applicants</h4>
+      <ul>
+        <li><b>Businesses</b> — retail, attractions, destinations</li>
+        <li><b>Hotels</b> — with dedicated Level 2 and DCFC allowances</li>
+        <li><b>Government &amp; nonprofit</b> entities</li>
+      </ul>
+    </div>
+    <div class="card"><h4>Distance to corridor</h4>
+      <ul>
+        <li><b>Level 2</b> — within <b>3 miles</b> of an eligible corridor</li>
+        <li><b>DC fast</b> — within <b>1 mile</b> of an eligible corridor</li>
+        <li>Chargers must be <b>publicly available</b></li>
+      </ul>
+    </div>
+    <div class="card"><h4>Per-site limits</h4>
+      <ul>
+        <li><b>Hotels</b> — up to <b>4</b> incentivized chargers</li>
+        <li>Up to <b>2</b> of those may be DC fast chargers</li>
+        <li><b>DC fast</b> — up to <b>2</b> per site</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3 style="font-family:'Archivo';font-weight:700;font-size:1.15rem;color:var(--paper);margin:34px 0 14px">Eligible sites</h3>
+  <div class="cards g3">
+    <div class="card"><h4>Hotels</h4><p>Overnight lodging establishments with <b style="color:var(--paper)">10 or more units</b>, located <b style="color:var(--paper)">within 3 miles</b> of an eligible corridor.</p></div>
+    <div class="card"><h4>Tourism locations</h4><p>Sites <b style="color:var(--paper)">within 1 mile</b> of the nearest highway exit or intersection, with publicly available restrooms and one of: amusement, arts, culture, attractions, entertainment, history, or recreation.</p></div>
+    <div class="card"><h4>Other commercial sites</h4><p>Within <b style="color:var(--paper)">1 mile</b> of a highway exit/intersection, with public restrooms and at least one amenity — convenience store, restaurant, or other retail store.</p></div>
+  </div>
+  <div class="callout"><b>Site rules.</b> Applicants could not receive incentives for more than one charging site within a <b style="color:var(--paper)">0.5-mile driving radius</b> of another site they were applying for. Amenities and public restrooms had to be fully operational before incentive payments were released.</div>
+</section>
+
+<!-- INCENTIVES -->
+<section id="incentives">
+  <div class="kicker">03 — The Incentives</div>
+  <h2>What the program <span class="grad-text">paid.</span></h2>
+  <p class="lead">Incentives covered up to 90% of charger cost. Amounts depend on charger type and power; sites in Overburdened Municipalities qualified for a 50% bonus on top.</p>
+
+  <div class="amt-grid">
+    <div class="amt">
+      <div class="head">Level 2 Chargers</div>
+      <div class="big">$5,000 <small>/ charger</small></div>
+      <div class="sub">For hotels within 3 miles of a corridor · up to 90% of the charger cost.</div>
+      <div class="rows">
+        <div class="row"><span>Overburdened Municipality (+50%)</span><b class="g">up to $7,500</b></div>
+        <div class="row"><span>Max chargers (hotels)</span><b>4</b></div>
+        <div class="row"><span>Cost coverage</span><b>up to 90%</b></div>
+      </div>
+    </div>
+    <div class="amt">
+      <div class="head">DC Fast Chargers</div>
+      <div class="big">$100K–$180K <small>/ charger</small></div>
+      <div class="sub">$100,000 for 100–200 kW · $180,000 for 200+ kW units.</div>
+      <div class="rows">
+        <div class="row"><span>ENERGY STAR certified unit</span><b class="g">+$5,000</b></div>
+        <div class="row"><span>Overburdened Municipality (+50%)</span><b class="g">up to $150K / $270K</b></div>
+        <div class="row"><span>Max chargers</span><b>2 per site</b></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tbl-scroll" style="margin-top:20px">
+    <table class="tbl">
+      <thead><tr><th>Charger type</th><th>Base incentive</th><th>Bonuses</th><th>With OB Municipality bonus</th><th>Max / site</th></tr></thead>
+      <tbody>
+        <tr><td class="co">Level 2 (dual-port)</td><td><span class="num">$5,000</span> / charger<br><span style="font-size:.8rem">up to 90% of cost</span></td><td>—</td><td><span class="num">up to $7,500</span></td><td>4 (hotels)</td></tr>
+        <tr><td class="co">DC fast — 100–200 kW</td><td><span class="num">$100,000</span> / charger</td><td>+$5,000 ENERGY STAR</td><td><span class="num">up to $150,000</span></td><td>2</td></tr>
+        <tr><td class="co">DC fast — 200+ kW</td><td><span class="num">$180,000</span> / charger</td><td>+$5,000 ENERGY STAR</td><td><span class="num">up to $270,000</span></td><td>2</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="callout"><b>Overburdened Municipalities.</b> Charging sites located in a New Jersey-designated Overburdened Municipality qualified for a 50% bonus incentive on both Level 2 and DC fast awards — the mechanism that lifts a $180,000 DCFC award to as much as $270,000.</div>
+</section>
+
+<!-- CORRIDORS -->
+<section id="corridors">
+  <div class="kicker">04 — Eligible Corridors</div>
+  <h2>Along the routes people <span class="grad-text">actually drive.</span></h2>
+  <p class="lead">Eligibility was anchored to New Jersey's key travel corridors. A site's charger type determined how close it had to be.</p>
+  <div class="cards g2">
+    <div class="card"><h4>Corridor types</h4>
+      <div class="pills">
+        <span class="pill"><span class="dotp"></span> Toll routes</span>
+        <span class="pill"><span class="dotp"></span> Interstate routes</span>
+        <span class="pill"><span class="dotp"></span> U.S. highways</span>
+        <span class="pill"><span class="dotp"></span> State highways</span>
+      </div>
+    </div>
+    <div class="card"><h4>Proximity rules</h4>
+      <ul>
+        <li><b>Level 2</b> — site within <b>3 miles</b> of an eligible corridor</li>
+        <li><b>DC fast</b> — site within <b>1 mile</b> of an eligible corridor</li>
+        <li>Hotels had additional distance &amp; public-access requirements to unlock DCFC awards</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- EQUIPMENT -->
+<section id="equipment">
+  <div class="kicker">05 — Equipment Requirements</div>
+  <h2>What qualified as <span class="grad-text">eligible hardware.</span></h2>
+  <p class="lead">Chargers had to be dual-port, networked with a state-compliant provider, and certified to current standards.</p>
+  <div class="cards g2">
+    <div class="card"><h4>Level 2 chargers</h4>
+      <ul>
+        <li><b>Dual port</b> configuration</li>
+        <li><b>Networked</b> with a state-compliant provider</li>
+        <li><b>ENERGY STAR</b> certified</li>
+        <li><b>OCPP 1.6+</b> certified</li>
+        <li><b>UL 2594</b> certified</li>
+      </ul>
+    </div>
+    <div class="card"><h4>DC fast chargers</h4>
+      <ul>
+        <li><b>Dual port</b> configuration · <b>publicly available</b></li>
+        <li><b>Networked</b> with a state-compliant provider</li>
+        <li><b>OCPP 1.6+</b> certified</li>
+        <li><b>UL 2202</b> certified</li>
+        <li><b>ENERGY STAR</b> units earn an extra <b>$5,000</b></li>
+      </ul>
+    </div>
+  </div>
+  <div class="callout"><b>Public access.</b> All DC fast chargers funded by the program must be available to the public. Level 2 chargers may serve hotel guests only — or guests and the public — <b style="color:var(--paper)">unless DC fast chargers are also incentivized at the site, in which case all chargers must be made publicly available.</b></div>
+</section>
+
+<!-- TIMELINE -->
+<section id="timeline">
+  <div class="kicker">06 — Timeline &amp; Status</div>
+  <h2>How the program <span class="grad-text">ran.</span></h2>
+  <p class="lead">Launched in mid-2025 and expanded by the Murphy Administration, the application window ran through early 2026 before closing.</p>
+  <div class="timeline">
+    <div class="tl done"><div class="d">July 1, 2025</div><div class="t">Program opened</div><div class="x">Expanded EV Tourism Corridor Program made available under NJ's Clean Energy Program.</div></div>
+    <div class="tl done"><div class="d">January 9, 2026</div><div class="t">Applications opened</div><div class="x">Charge Up New Jersey began accepting incentive applications from eligible sites.</div></div>
+    <div class="tl"><div class="d">February 23, 2026</div><div class="t">Program closed</div><div class="x">Applications closed. Status: <b style="color:#e0685a">Program Closed</b> — total funding of $27,595,000.</div></div>
+  </div>
+</section>
+
+<!-- HOW TO APPLY -->
+<section id="apply">
+  <div class="kicker">07 — How It Worked</div>
+  <h2>A two-step <span class="grad-text">application.</span></h2>
+  <p class="lead">The program used a reserve-then-reimburse structure: applicants locked in funding for an approved project, then claimed the incentive after buying and installing the chargers.</p>
+  <div class="cards g2">
+    <div class="card"><div class="ico">1</div><h4>Reserve funding</h4><p>Provide details of the intended purchase and the project site. If approved, incentive funding is reserved for the project.</p></div>
+    <div class="card"><div class="ico">2</div><h4>Claim the incentive</h4><p>Provide proof of purchase and installation. If approved, claim the reserved incentive payment.</p></div>
+  </div>
+  <h3 style="font-family:'Archivo';font-weight:700;font-size:1.15rem;color:var(--paper);margin:34px 0 14px">Program documents</h3>
+  <div class="pills">
+    <span class="pill"><span class="dotp"></span> <a href="https://chargeup.njcleanenergy.com/sites/default/files/docs/EV_Tourism_Corridor_Charging_Program_Terms_and_Conditions.pdf" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none">EV Tourism Terms &amp; Conditions ↗</a></span>
+    <span class="pill"><span class="dotp"></span> <a href="https://chargeup.njcleanenergy.com/sites/default/files/docs/New_Jersey_Compliant_Network_Service_Providers.pdf" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none">NJ Compliant Network Service Providers ↗</a></span>
+    <span class="pill"><span class="dotp"></span> <a href="https://chargeup.njcleanenergy.com/sites/default/files/docs/Charge_Up_New_Jersey_Terms_and_Conditions.pdf" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none">Charge Up NJ Terms &amp; Conditions ↗</a></span>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="kicker">08 — Contact</div>
+  <h2>Program <span class="grad-text">contacts.</span></h2>
+  <p class="lead">For questions on the EV Tourism Corridor Charging Program or future rounds, reach the program administrator.</p>
+  <div class="contact">
+    <div>
+      <div class="lbl">Email</div>
+      <a href="mailto:njevtourism@energycenter.org">njevtourism@energycenter.org</a>
+    </div>
+    <div>
+      <div class="lbl">Phone</div>
+      <a href="tel:8774262474">877-426-2474</a>
+    </div>
+    <div>
+      <div class="lbl">Program page</div>
+      <a href="https://cleanenergy.nj.gov/programs/electric-vehicles/ev-tourism-corridor-program" target="_blank" rel="noopener">cleanenergy.nj.gov ↗</a>
+    </div>
+    <div>
+      <div class="lbl">Apply / details</div>
+      <a href="https://chargeup.njcleanenergy.com/ev-tourism-corridor" target="_blank" rel="noopener">Charge Up New Jersey ↗</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-in">
+    <b style="color:var(--text);font-family:'Archivo'">XURA · Program Brief — NJ EV Tourism Corridor Charging Program</b><br>
+    Program details compiled July 2026 from official sources. All figures — incentive amounts, distances, deadlines, and the $27,595,000 total funding — are drawn from New Jersey's Clean Energy Program and Charge Up New Jersey; verify against the source before relying on any figure. This brief is informational and not an offer of funding.
+    <div class="src">
+      Sources: <a href="https://cleanenergy.nj.gov/programs/electric-vehicles/ev-tourism-corridor-program" target="_blank" rel="noopener">NJ Clean Energy Program — EV Tourism Corridor Program</a> · <a href="https://chargeup.njcleanenergy.com/ev-tourism-corridor" target="_blank" rel="noopener">Charge Up New Jersey — EV Tourism Corridor</a> · <a href="https://nj.gov/bpu/newsroom/2025/approved/20250507ev.html" target="_blank" rel="noopener">NJBPU — Program Expansion (May 2025)</a>.
+    </div>
+    <div class="note">Status as of July 2026: Applications closed (Feb 23, 2026).</div>
+  </div>
+</footer>
+
+</body>
+</html>

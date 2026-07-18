@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>XURA Energy Partners — Strategic Overview | Ferrandino &amp; Son</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Anton&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#050505; --ink-2:#0c0c0c; --ink-3:#151515;
+    --card:#101010; --card-2:#161616;
+    --accent:#8bfb03; --accent-dim:#6dc702; --accent-deep:#4f8f02;
+    --paper:#ffffff; --text:#e9e9ea; --muted:#9a9a9e; --faint:#7d7d81; /* faint bumped to clear 4.5:1 on ink */
+    --border:rgba(255,255,255,.10); --border-strong:rgba(255,255,255,.18);
+    --glow:rgba(139,251,3,.12);
+    --maxw:1120px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Inter',system-ui,sans-serif;background:var(--ink);color:var(--text);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+  /* nav */
+  nav{position:fixed;top:0;left:0;right:0;z-index:50;backdrop-filter:blur(14px);background:rgba(5,5,5,.78);border-bottom:1px solid var(--border)}
+  .nav-in{max-width:var(--maxw);margin:0 auto;display:flex;align-items:center;gap:14px;padding:13px 24px}
+  .brand{display:flex;align-items:center;gap:11px;font-family:'Archivo';font-weight:800;font-size:1.1rem;letter-spacing:.4px;text-transform:uppercase;white-space:nowrap;flex:none}
+  .brand .dot{width:28px;height:28px;border-radius:8px;background:var(--accent);display:grid;place-items:center}
+  .brand .dot::before{content:"";width:12px;height:12px;background:var(--ink);clip-path:polygon(50% 0,100% 100%,0 100%)}
+  .nav-links{margin-left:auto;display:flex;gap:1px;flex-wrap:nowrap;min-width:0}
+  .nav-links a{color:var(--muted);text-decoration:none;font-size:.72rem;font-weight:500;padding:6px 8px;border-radius:999px;transition:color .18s ease,background-color .18s ease;white-space:nowrap}
+  .nav-links a:hover{color:var(--ink);background:var(--accent)}
+  .nav-links a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;color:var(--paper)}
+  @media(max-width:1240px){.nav-links{display:none}}
+
+  /* Section header. A deck IS an ordered sequence, so the numeral carries real information
+     (where am I) rather than being decorative scaffolding. Rendered as a large outlined
+     compositional numeral + a plain-case label — not a tracked all-caps eyebrow. */
+  .shead{display:flex;align-items:baseline;gap:14px;margin-bottom:18px}
+  .snum{font-family:'Anton',sans-serif;font-size:clamp(2.2rem,4vw,3.1rem);line-height:.78;color:transparent;-webkit-text-stroke:1px rgba(139,251,3,.5);letter-spacing:.01em;flex:none;font-variant-numeric:tabular-nums}
+  .slabel{font-family:'Archivo';font-weight:600;font-size:1rem;color:var(--accent);letter-spacing:0}
+  h2{font-family:'Archivo';font-weight:800;font-size:clamp(1.85rem,3.9vw,2.8rem);line-height:1.1;letter-spacing:-.028em;margin-bottom:14px;text-wrap:balance;max-width:24ch}
+  .lead{color:var(--muted);font-size:1.02rem;line-height:1.68;max-width:64ch;margin-bottom:30px;text-wrap:pretty}
+  .grad-text{color:var(--accent)} /* solid — gradient text is a ban */
+
+  /* hero */
+  .hero{display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden}
+  .badge{display:inline-flex;align-items:center;gap:9px;padding:6px 14px;border:1px solid var(--border);font-size:.7rem;color:var(--muted);width:fit-content;margin-bottom:26px;text-transform:uppercase;letter-spacing:.12em;font-weight:500}
+  .badge .pulse{width:7px;height:7px;border-radius:50%;background:var(--accent)}
+  .hero .mark{font-family:'Anton';font-size:clamp(2rem,4vw,2.6rem);letter-spacing:.12em;color:var(--paper);line-height:1}
+  .hero .mark span{display:block;font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.42em;color:var(--accent);margin-top:8px;font-weight:700}
+  .hero h1{font-family:'Archivo';font-weight:900;font-size:clamp(2.1rem,5.2vw,4rem);line-height:1.03;letter-spacing:-1.4px;margin:26px 0 20px;max-width:18ch}
+  .hero p.sub{font-size:1.05rem;color:var(--muted);max-width:620px;margin-bottom:26px}
+  .hero .prep{display:inline-flex;align-items:center;gap:10px;border:1px solid var(--border-strong);border-radius:999px;padding:8px 16px;font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--text);letter-spacing:.06em}
+  .hero .prep b{color:var(--accent);font-weight:700}
+
+  /* cards */
+  .cards{display:grid;gap:14px}
+  .g2{grid-template-columns:repeat(2,1fr)} .g3{grid-template-columns:repeat(3,1fr)} .g4{grid-template-columns:repeat(4,1fr)}
+  @media(max-width:900px){.g3,.g4{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:640px){.g2,.g3,.g4{grid-template-columns:1fr}}
+  .card{position:relative;border:1px solid var(--border);border-radius:10px;padding:20px;background:var(--card)}
+  .card h4{font-size:1rem;font-weight:600;color:var(--paper);margin-bottom:6px}
+  .card p{color:var(--muted);font-size:.88rem}
+  .card .num{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--accent);font-weight:700;margin-bottom:8px;display:block}
+
+  /* simple bullet list card */
+  .region{border:1px solid var(--border);border-radius:10px;padding:22px;background:var(--card)}
+  .region h4{font-family:'Archivo';font-weight:700;font-size:1.05rem;margin-bottom:12px;display:flex;align-items:center;gap:9px;color:var(--paper)}
+  .region .rtag{font-family:'JetBrains Mono',monospace;font-size:.62rem;padding:3px 8px;border-radius:6px;background:var(--glow);color:var(--accent);letter-spacing:.08em}
+  .region ul{list-style:none;display:flex;flex-direction:column;gap:9px}
+  .region li{font-size:.9rem;color:var(--muted);padding-left:18px;position:relative}
+  .region li::before{content:"";position:absolute;left:0;top:9px;width:6px;height:6px;border-radius:2px;background:var(--accent)}
+  .region li b{color:var(--paper);font-weight:600}
+  .region.neg li::before{background:var(--faint)}
+  .region.neg .rtag{background:rgba(255,255,255,.06);color:var(--muted)}
+
+  /* Ruled index — where items are bare labels, a card is packaging around nothing.
+     Typography + a hairline carries them instead. */
+  .index{list-style:none;counter-reset:ix;display:grid;grid-template-columns:repeat(2,1fr);gap:0 48px}
+  @media(max-width:760px){.index{grid-template-columns:1fr}}
+  .index li{counter-increment:ix;display:flex;align-items:baseline;gap:16px;padding:17px 2px;border-top:1px solid var(--border);font-family:'Archivo';font-weight:600;font-size:1.06rem;color:var(--paper);letter-spacing:-.012em}
+  .index li::before{content:counter(ix,decimal-leading-zero);font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:700;color:var(--accent);flex:none;letter-spacing:.04em}
+
+  /* Large typographic list — the categories themselves are the visual */
+  .tlist{list-style:none;display:grid;grid-template-columns:repeat(2,1fr);gap:0 48px}
+  @media(max-width:760px){.tlist{grid-template-columns:1fr}}
+  .tlist li{display:flex;align-items:center;gap:14px;padding:15px 2px;border-top:1px solid var(--border);font-family:'Archivo';font-weight:700;font-size:clamp(1.05rem,1.7vw,1.35rem);color:var(--paper);letter-spacing:-.02em}
+  .tlist li::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--accent);flex:none}
+
+  /* pills */
+  .pills{display:flex;flex-wrap:wrap;gap:10px}
+  .pill{padding:10px 16px;border:1px solid var(--border);border-radius:11px;font-size:.9rem;background:rgba(255,255,255,.03);display:flex;align-items:center;gap:9px;color:var(--text)}
+  .pill .dotp{width:7px;height:7px;border-radius:50%;background:var(--accent)}
+
+  /* flow chain */
+  .flow{display:flex;flex-direction:column;gap:0;align-items:center}
+  .flow .node{width:100%;max-width:520px;border:1px solid var(--border-strong);border-radius:10px;background:var(--card);padding:16px 20px;text-align:center;font-family:'Archivo';font-weight:700;font-size:1.05rem;color:var(--paper);position:relative}
+  .flow .node.hi{border-color:var(--accent);background:linear-gradient(180deg,rgba(139,251,3,.10),var(--card))}
+  .flow .arw{width:1px;height:22px;background:linear-gradient(180deg,var(--accent),rgba(139,251,3,.15))}
+  .flow .arw::after{content:"";display:block;margin:0 auto;transform:translateY(18px);width:0;height:0;border-left:5px solid transparent;border-right:5px solid transparent;border-top:6px solid var(--accent)}
+
+  /* stack (platform) */
+  .stack{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  @media(max-width:820px){.stack{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:560px){.stack{grid-template-columns:1fr}}
+  .st-item{border:1px solid var(--border);border-radius:10px;background:var(--card);padding:24px 22px;display:flex;flex-direction:column;justify-content:flex-end;min-height:104px}
+  .st-item h4{font-size:1.05rem;font-weight:600;color:var(--paper);letter-spacing:-.01em}
+  .st-item.full{grid-column:1/-1;border-color:var(--accent);background:linear-gradient(180deg,rgba(139,251,3,.09),var(--card));align-items:center;text-align:center}
+
+  /* combination */
+  .combo{display:grid;grid-template-columns:1fr auto 1fr;gap:16px;align-items:stretch}
+  @media(max-width:860px){.combo{grid-template-columns:1fr;}.combo .plus{justify-self:center}}
+  .plus{display:grid;place-items:center;font-family:'Archivo';font-weight:900;font-size:1.8rem;color:var(--accent)}
+  .together{margin-top:16px;border:1px solid var(--accent);border-radius:10px;background:linear-gradient(180deg,rgba(139,251,3,.10),var(--card));padding:22px}
+  .together .lbl{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
+
+  /* full border + tint (no side-stripe accent) */
+  .callout{border:1px solid rgba(139,251,3,.26);border-radius:10px;padding:20px 22px;background:rgba(139,251,3,.055);margin-top:20px;font-size:.95rem;line-height:1.6;color:var(--text);max-width:78ch}
+  .callout b{color:var(--accent);font-weight:700}
+  .disc{font-size:.76rem;line-height:1.8;color:var(--faint);margin-top:18px;border-top:1px solid var(--border);padding-top:16px}
+
+  /* confidential marker */
+  .conf{position:fixed;right:18px;bottom:16px;z-index:70;font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);pointer-events:none}
+  @media(max-width:900px){.conf{display:none}}
+
+  /* ============ DECK — fullpage (pages rise from the bottom) ============ */
+  html{scroll-behavior:auto}
+  body.deck-on{overflow:hidden;height:100vh}
+  .hero,body>section{
+    position:fixed;inset:0;height:100vh;width:100%;max-width:none;margin:0;
+    background:var(--ink);z-index:5;
+    transform:translateY(100%);
+    /* on-screen movement easing (Emil): cubic-bezier(.77,0,.175,1) — 560ms, within the 200–500ms drawer band for a full-viewport move */
+    transition:transform 560ms cubic-bezier(.77,0,.175,1);will-change:transform;
+    overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;
+    padding:84px max(40px,calc((100% - var(--maxw))/2)) 54px;
+    display:flex;flex-direction:column;justify-content:safe center;
+    scrollbar-width:none;-ms-overflow-style:none;
+  }
+  .hero{transform:translateY(0)}
+  body>section>*{width:100%;max-width:100%;margin-left:0;margin-right:0;flex:0 0 auto}
+  .hero::-webkit-scrollbar,body>section::-webkit-scrollbar{width:0;height:0;display:none}
+  .deck-inner{width:100%;transform-origin:top center}
+  @media(max-width:640px){
+    .hero,body>section{position:relative;inset:auto;transform:none!important;transition:none;height:auto;min-height:100vh;overflow:visible;z-index:auto;display:block;padding:76px 18px 40px}
+    body.deck-on{overflow:auto;height:auto}
+  }
+
+  /* entrance choreography — ease-out cubic-bezier(.23,1,.32,1) @ 240ms (Emil: entering elements 150–250ms) */
+  .js-anim>section .deck-inner>*:not(.cards):not(.stack):not(.pills):not(.index):not(.tlist),
+  .js-anim>.hero>section>*{opacity:0;transform:translateY(12px);filter:blur(4px);transition:opacity 240ms cubic-bezier(.23,1,.32,1),transform 240ms cubic-bezier(.23,1,.32,1),filter 240ms cubic-bezier(.23,1,.32,1)}
+  .js-anim>section.in .deck-inner>*:not(.cards):not(.stack):not(.pills):not(.index):not(.tlist),
+  .js-anim>.hero.in>section>*{opacity:1;transform:none;filter:blur(0)}
+  /* stagger: 60ms steps (Emil: 30–80ms) */
+  .js-anim>section.in .deck-inner>*:nth-child(1),.js-anim>.hero.in>section>*:nth-child(1){transition-delay:0ms}
+  .js-anim>section.in .deck-inner>*:nth-child(2),.js-anim>.hero.in>section>*:nth-child(2){transition-delay:60ms}
+  .js-anim>section.in .deck-inner>*:nth-child(3),.js-anim>.hero.in>section>*:nth-child(3){transition-delay:120ms}
+  .js-anim>section.in .deck-inner>*:nth-child(4),.js-anim>.hero.in>section>*:nth-child(4){transition-delay:180ms}
+  .js-anim>section.in .deck-inner>*:nth-child(5),.js-anim>.hero.in>section>*:nth-child(5){transition-delay:240ms}
+  .js-anim>section.in .deck-inner>*:nth-child(6){transition-delay:300ms}
+
+  /* cascades — scale(.95) start (never scale(0)), 220ms ease-out, 60ms stagger */
+  .js-anim .cards>*,.js-anim .stack>*,.js-anim .pills>*,.js-anim .flow>*,.js-anim .index>*,.js-anim .tlist>*{opacity:0;transform:translateY(10px) scale(.95);filter:blur(3px);transition:opacity 220ms cubic-bezier(.23,1,.32,1),transform 220ms cubic-bezier(.23,1,.32,1),filter 220ms cubic-bezier(.23,1,.32,1)}
+  .js-anim .in .cards>*,.js-anim .in .stack>*,.js-anim .in .pills>*,.js-anim .in .flow>*,.js-anim .in .index>*,.js-anim .in .tlist>*{opacity:1;transform:none;filter:blur(0)}
+  .in .index>*:nth-child(1),.in .tlist>*:nth-child(1),.in .cards>*:nth-child(1),.in .stack>*:nth-child(1),.in .pills>*:nth-child(1),.in .flow>*:nth-child(1){transition-delay:80ms}
+  .in .index>*:nth-child(2),.in .tlist>*:nth-child(2),.in .cards>*:nth-child(2),.in .stack>*:nth-child(2),.in .pills>*:nth-child(2),.in .flow>*:nth-child(2){transition-delay:140ms}
+  .in .index>*:nth-child(3),.in .tlist>*:nth-child(3),.in .cards>*:nth-child(3),.in .stack>*:nth-child(3),.in .pills>*:nth-child(3),.in .flow>*:nth-child(3){transition-delay:200ms}
+  .in .index>*:nth-child(4),.in .tlist>*:nth-child(4),.in .cards>*:nth-child(4),.in .stack>*:nth-child(4),.in .pills>*:nth-child(4),.in .flow>*:nth-child(4){transition-delay:260ms}
+  .in .index>*:nth-child(5),.in .tlist>*:nth-child(5),.in .cards>*:nth-child(5),.in .stack>*:nth-child(5),.in .pills>*:nth-child(5),.in .flow>*:nth-child(5){transition-delay:320ms}
+  .in .index>*:nth-child(6),.in .tlist>*:nth-child(6),.in .cards>*:nth-child(6),.in .stack>*:nth-child(6),.in .pills>*:nth-child(6),.in .flow>*:nth-child(6){transition-delay:380ms}
+  .in .index>*:nth-child(7),.in .tlist>*:nth-child(7),.in .cards>*:nth-child(7),.in .pills>*:nth-child(7),.in .flow>*:nth-child(7){transition-delay:440ms}
+  .in .index>*:nth-child(8),.in .tlist>*:nth-child(8),.in .cards>*:nth-child(8),.in .pills>*:nth-child(8),.in .flow>*:nth-child(8){transition-delay:500ms}
+  .in .flow>*:nth-child(9){transition-delay:560ms}
+
+  /* section numeral draws its stroke in as the slide lands */
+  .js-anim .shead>.snum{opacity:0;transform:translateY(8px);transition:opacity 300ms cubic-bezier(.23,1,.32,1),transform 300ms cubic-bezier(.23,1,.32,1)}
+  .js-anim .in .shead>.snum{opacity:1;transform:none}
+
+  /* (accent emphasis is carried by the solid --accent color + weight, not gradient text) */
+
+  /* hover — 180ms ease-out, gated to real pointers only */
+  .card,.region,.st-item,.pill{transition:transform 180ms cubic-bezier(.23,1,.32,1),border-color 180ms ease,box-shadow 180ms ease}
+  @media (hover:hover) and (pointer:fine){
+    .card:hover,.region:hover,.st-item:hover,.pill:hover{transform:translateY(-4px);border-color:var(--border-strong);box-shadow:0 16px 40px -18px rgba(0,0,0,.8),0 0 0 1px var(--glow)}
+  }
+
+  /* hero glow */
+  .hero::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:0;background:radial-gradient(58% 46% at 50% 34%,var(--glow),transparent 70%);opacity:.4;animation:heroGlow 9s ease-in-out infinite}
+  .hero>section{position:relative;z-index:1;max-width:var(--maxw);margin:0 auto;width:100%}
+  @keyframes heroGlow{0%,100%{opacity:.26;transform:scale(1) translateY(0)}50%{opacity:.5;transform:scale(1.08) translateY(-1.5%)}}
+
+  /* deck chrome */
+  .deck-dots{position:fixed;right:16px;top:50%;transform:translateY(-50%);z-index:70;display:flex;flex-direction:column;gap:9px}
+  @media(max-width:900px){.deck-dots{display:none}}
+  .deck-dot{width:8px;height:8px;border-radius:50%;border:1px solid var(--border-strong);background:transparent;cursor:pointer;padding:0;transition:.22s}
+  .deck-dot:hover{border-color:var(--accent);transform:scale(1.3)}
+  .deck-dot.active{background:var(--accent);border-color:var(--accent);box-shadow:0 0 0 3px var(--glow)}
+  .deck-progress{position:fixed;top:0;left:0;right:0;height:3px;background:rgba(255,255,255,.05);z-index:70}
+  .deck-progress>div{height:100%;width:100%;transform:scaleX(0);transform-origin:left center;background:var(--accent);box-shadow:0 0 10px var(--accent);transition:transform 300ms cubic-bezier(.23,1,.32,1)}
+  .deck-counter{position:fixed;left:18px;bottom:16px;z-index:70;font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.14em;color:var(--muted)}
+  .deck-counter b{color:var(--accent);font-weight:700}
+  .scroll-hint{position:absolute;left:0;right:0;margin:0 auto;bottom:24px;width:fit-content;font-family:'JetBrains Mono',monospace;font-size:.64rem;letter-spacing:.28em;text-transform:uppercase;color:var(--faint);animation:bob 1.9s ease-in-out infinite}
+  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(7px)}}
+
+  /* ============ PRESENTATION CHOREOGRAPHY ============
+     Deck slides are "rare / explanation" moments — builds are allowed to be expressive.
+     Still transform/opacity/clip-path only (no layout-triggering props). */
+
+  /* Cover: wordmark + headline wipe open left→right (clip-path reveal) */
+  .js-anim>.hero>section>.mark,
+  .js-anim>.hero>section>h1{opacity:1;transform:none;filter:none;clip-path:inset(0 100% 0 0);transition:clip-path 640ms cubic-bezier(.77,0,.175,1)}
+  .js-anim>.hero>section>h1{transition-delay:160ms}
+  .js-anim>.hero.in>section>.mark,
+  .js-anim>.hero.in>section>h1{clip-path:inset(0 0 0 0)}
+
+  /* 04 Our Approach: the chain builds — connectors draw downward between nodes */
+  .js-anim .flow>.arw{opacity:1;filter:none;transform:scaleY(0);transform-origin:top center;transition:transform 240ms cubic-bezier(.23,1,.32,1)}
+  .js-anim .in .flow>.arw{transform:scaleY(1)}
+
+  /* 07 Strategic Combination: the two companies converge — Ferrandino from the left, XURA from the right, then "+" lands */
+  .js-anim .combo>.region{opacity:0;filter:blur(3px);transition:opacity 280ms cubic-bezier(.23,1,.32,1),transform 280ms cubic-bezier(.23,1,.32,1),filter 280ms cubic-bezier(.23,1,.32,1)}
+  .js-anim .combo>.region:first-child{transform:translateX(-26px)}
+  .js-anim .combo>.region:last-child{transform:translateX(26px)}
+  .js-anim .combo>.plus{opacity:0;transform:scale(.6);transition:opacity 220ms cubic-bezier(.23,1,.32,1) 200ms,transform 220ms cubic-bezier(.23,1,.32,1) 200ms}
+  .js-anim .in .combo>.region,
+  .js-anim .in .combo>.plus{opacity:1;transform:none;filter:blur(0)}
+  .js-anim .in .combo>.region:first-child{transition-delay:60ms}
+  .js-anim .in .combo>.region:last-child{transition-delay:120ms}
+
+  /* Two-column comparisons (02 Today, 08 Value): columns enter from opposite sides */
+  .js-anim .cards.g2>.region:first-child{transform:translateX(-18px) scale(.97)}
+  .js-anim .cards.g2>.region:last-child{transform:translateX(18px) scale(.97)}
+  .js-anim .in .cards.g2>.region{transform:none}
+
+  /* Callouts: the tinted panel settles in as the point lands (no side-stripe accent) */
+  .js-anim .deck-inner>.callout{transform:translateY(10px) scale(.99)}
+  .js-anim .in .deck-inner>.callout{transform:none}
+
+  /* reduced motion — strip movement & blur, keep the opacity fade (Emil: keep opacity/color transitions) */
+  @media(prefers-reduced-motion:reduce){
+    .js-anim>section .deck-inner>*,.js-anim>.hero>section>*,.js-anim .cards>*,.js-anim .stack>*,.js-anim .pills>*,.js-anim .flow>*,.js-anim .index>*,.js-anim .tlist>*,.js-anim .combo>*{transform:none!important;filter:none!important;transition:opacity 200ms ease!important}
+    .hero,body>section{transition:none!important}
+    .js-anim>.hero>section>.mark,.js-anim>.hero>section>h1{clip-path:none!important}
+    .js-anim .shead>.snum{transform:none!important}
+    .deck-progress>div{transition:none!important}
+    .hero::after,.scroll-hint,.grad-text{animation:none}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-in">
+    <div class="brand"><span class="dot"></span> XURA <span style="color:var(--faint);font-weight:500;font-size:.72rem;letter-spacing:.05em">· Strategic Overview</span></div>
+    <div class="nav-links">
+      <a href="#who">Who We Are</a>
+      <a href="#today">Today</a>
+      <a href="#market">Market</a>
+      <a href="#approach">Approach</a>
+      <a href="#platform">Platform</a>
+      <a href="#ferrandino">Why Ferrandino</a>
+      <a href="#combination">Combination</a>
+      <a href="#value">Value</a>
+      <a href="#growth">Growth</a>
+      <a href="#whynow">Why Now</a>
+      <a href="#next">Next</a>
+    </div>
+  </div>
+</nav>
+
+<!-- 01 COVER -->
+<header class="hero" id="top">
+  <section>
+    <div class="badge"><span class="pulse"></span> Confidential Strategic Overview</div>
+    <div class="mark">XURA<span>Energy Partners</span></div>
+    <h1>Building the Leading <span class="grad-text">Distributed Energy Infrastructure Platform.</span></h1>
+    <p class="sub">A confidential strategic overview of XURA Energy Partners — our platform, the market forces behind it, and the case for a combination.</p>
+    <div class="prep">Prepared for <b>Ferrandino &amp; Son</b></div>
+  </section>
+</header>
+
+<!-- 01 WHO WE ARE -->
+<section id="who">
+  <header class="shead"><span class="snum">01</span><span class="slabel">Who We Are</span></header>
+  <h2>A distributed energy <span class="grad-text">infrastructure company.</span></h2>
+  <p class="lead">XURA partners with commercial property owners to turn real estate into active energy infrastructure.</p>
+  <ol class="index">
+    <li>Commercial real estate partnerships</li>
+    <li>Battery Energy Storage Systems (BESS)</li>
+    <li>EV charging infrastructure</li>
+    <li>Distributed generation</li>
+    <li>Energy software integration</li>
+    <li>Long-term infrastructure ownership</li>
+  </ol>
+  <div class="callout"><b>Mission.</b> Help commercial property owners reduce energy costs while increasing resiliency and property value.</div>
+</section>
+
+<!-- 02 XURA TODAY -->
+<section id="today">
+  <header class="shead"><span class="snum">02</span><span class="slabel">XURA Today</span></header>
+  <h2>XURA <span class="grad-text">today.</span></h2>
+  <p class="lead">A national platform already operating, with the relationships and capabilities to scale.</p>
+  <div class="cards g2">
+    <div class="region">
+      <h4>Platform &amp; capability <span class="rtag">Operating</span></h4>
+      <ul>
+        <li>National distributed energy infrastructure platform</li>
+        <li>Battery storage, EV charging, and distributed generation capabilities</li>
+        <li>Experienced leadership team</li>
+      </ul>
+    </div>
+    <div class="region">
+      <h4>Relationships &amp; focus <span class="rtag">In place</span></h4>
+      <ul>
+        <li>Active commercial real estate relationships</li>
+        <li>Institutional capital relationships</li>
+        <li>Focused exclusively on commercial and institutional customers</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 03 MARKET CONTEXT -->
+<section id="market">
+  <header class="shead"><span class="snum">03</span><span class="slabel">Market Context</span></header>
+  <h2>Why the market is <span class="grad-text">changing.</span></h2>
+  <p class="lead">Structural shifts in electricity demand and grid capacity are creating durable tailwinds.</p>
+  <div class="cards g3">
+    <div class="card"><h4>AI driving electricity demand</h4><p>Data centers and compute growth are accelerating load faster than the grid can respond.</p></div>
+    <div class="card"><h4>Grid congestion</h4><p>Interconnection queues and constrained transmission are slowing new capacity.</p></div>
+    <div class="card"><h4>Utility constraints</h4><p>Utilities increasingly rely on distributed and flexible resources to meet demand.</p></div>
+    <div class="card"><h4>Corporate sustainability</h4><p>Commercial owners and tenants want lower-carbon, resilient energy solutions.</p></div>
+    <div class="card"><h4>Energy resilience</h4><p>Businesses want backup power and protection from outages.</p></div>
+    <div class="card"><h4>Aging electric infrastructure</h4><p>Much of the grid was built decades ago and needs modernization.</p></div>
+  </div>
+</section>
+
+<!-- 04 OUR APPROACH -->
+<section id="approach">
+  <header class="shead"><span class="snum">04</span><span class="slabel">Our Approach</span></header>
+  <h2>What makes XURA <span class="grad-text">different.</span></h2>
+  <p class="lead">One integrated model — from the real estate itself to long-term ownership.</p>
+  <div class="flow">
+    <div class="node hi">Commercial Real Estate</div>
+    <div class="arw"></div>
+    <div class="node">Energy Infrastructure</div>
+    <div class="arw"></div>
+    <div class="node">Technology</div>
+    <div class="arw"></div>
+    <div class="node">Long-Term Ownership</div>
+    <div class="arw"></div>
+    <div class="node hi">Institutional Capital</div>
+  </div>
+</section>
+
+<!-- 05 OUR PLATFORM -->
+<section id="platform">
+  <header class="shead"><span class="snum">05</span><span class="slabel">Our Platform</span></header>
+  <h2>An enterprise platform built <span class="grad-text">end to end.</span></h2>
+  <p class="lead">XURA operates across the full energy infrastructure stack, on the customer's property.</p>
+  <div class="stack">
+    <div class="st-item"><h4>Battery Storage</h4></div>
+    <div class="st-item"><h4>EV Charging</h4></div>
+    <div class="st-item"><h4>Distributed Generation</h4></div>
+    <div class="st-item"><h4>Software</h4></div>
+    <div class="st-item"><h4>Operations</h4></div>
+    <div class="st-item full"><h4>Long-Term Infrastructure Ownership</h4></div>
+  </div>
+</section>
+
+<!-- 06 WHY FERRANDINO -->
+<section id="ferrandino">
+  <header class="shead"><span class="snum">06</span><span class="slabel">Why Ferrandino</span></header>
+  <h2>Why <span class="grad-text">Ferrandino.</span></h2>
+  <p class="lead">Ferrandino brings the national relationships and field capability XURA needs to scale distributed energy fastest.</p>
+  <div class="pills">
+    <span class="pill"><span class="dotp"></span> Existing customer relationships</span>
+    <span class="pill"><span class="dotp"></span> National footprint</span>
+    <span class="pill"><span class="dotp"></span> Service organization</span>
+    <span class="pill"><span class="dotp"></span> Facility management expertise</span>
+    <span class="pill"><span class="dotp"></span> Recurring customer interaction</span>
+    <span class="pill"><span class="dotp"></span> Trusted Fortune 1000 relationships</span>
+    <span class="pill"><span class="dotp"></span> Ability to deploy distributed energy nationally</span>
+  </div>
+  <div class="callout">Ferrandino provides the trusted customer relationships and nationwide operating capabilities that can <b>dramatically accelerate XURA's growth.</b></div>
+</section>
+
+<!-- 07 STRATEGIC COMBINATION -->
+<section id="combination">
+  <header class="shead"><span class="snum">07</span><span class="slabel">Strategic Combination</span></header>
+  <h2>Two complementary <span class="grad-text">platforms.</span></h2>
+  <div class="combo">
+    <div class="region">
+      <h4>Ferrandino <span class="rtag">Field &amp; customers</span></h4>
+      <ul>
+        <li>National facilities platform</li>
+        <li>Customer relationships</li>
+        <li>Operations</li>
+        <li>Maintenance</li>
+        <li>Field personnel</li>
+      </ul>
+    </div>
+    <div class="plus">+</div>
+    <div class="region">
+      <h4>XURA <span class="rtag">Energy &amp; capital</span></h4>
+      <ul>
+        <li>Energy infrastructure</li>
+        <li>Capital</li>
+        <li>Technology</li>
+        <li>Development</li>
+        <li>Energy expertise</li>
+      </ul>
+    </div>
+  </div>
+  <div class="together">
+    <div class="lbl">= Together we create</div>
+    <div class="cards g3">
+      <div class="card"><h4>National distributed energy platform</h4></div>
+      <div class="card"><h4>Fortune 1000 customer access</h4></div>
+      <div class="card"><h4>Complete energy infrastructure lifecycle</h4></div>
+    </div>
+    <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:10px">
+      <span class="pill"><span class="dotp"></span> Nationwide deployment capability</span>
+      <span class="pill"><span class="dotp"></span> Long-term recurring service revenue</span>
+      <span class="pill"><span class="dotp"></span> National energy infrastructure platform built for long-term growth</span>
+    </div>
+  </div>
+</section>
+
+<!-- 08 THE VALUE OF COMBINATION -->
+<section id="value">
+  <header class="shead"><span class="snum">08</span><span class="slabel">The Value of Combination</span></header>
+  <h2>Why this combination creates <span class="grad-text">more value.</span></h2>
+  <div class="cards g2">
+    <div class="region neg">
+      <h4>Without Ferrandino <span class="rtag">Slower path</span></h4>
+      <ul>
+        <li>Build customers individually</li>
+        <li>Build national service organization</li>
+        <li>Slower rollout</li>
+        <li>Limited field presence</li>
+      </ul>
+    </div>
+    <div class="region">
+      <h4>With Ferrandino <span class="rtag">Accelerated</span></h4>
+      <ul>
+        <li><b>Immediate Fortune 1000 access</b></li>
+        <li>National operating platform</li>
+        <li>Thousands of service interactions</li>
+        <li>Existing customer trust</li>
+        <li>Faster deployment</li>
+        <li>Stronger competitive position</li>
+      </ul>
+    </div>
+  </div>
+  <div class="callout"><b>Bottom line:</b> Together we can build one of the nation's leading distributed energy infrastructure platforms significantly faster than either company could independently.</div>
+</section>
+
+<!-- 09 GROWTH OPPORTUNITIES -->
+<section id="growth">
+  <header class="shead"><span class="snum">09</span><span class="slabel">Growth Opportunities</span></header>
+  <h2>Potential growth <span class="grad-text">opportunities.</span></h2>
+  <p class="lead">A combined platform opens distributed energy deployment across many property types.</p>
+  <ul class="tlist">
+    <li>Commercial Real Estate</li>
+    <li>Retail</li>
+    <li>Industrial</li>
+    <li>Healthcare</li>
+    <li>Hospitality</li>
+    <li>Education</li>
+    <li>Municipal</li>
+  </ul>
+</section>
+
+<!-- 10 WHY NOW -->
+<section id="whynow">
+  <header class="shead"><span class="snum">10</span><span class="slabel">Why Now</span></header>
+  <h2>Why <span class="grad-text">now.</span></h2>
+  <p class="lead">Several forces are converging at once, creating a limited window to establish national scale.</p>
+  <div class="cards g3">
+    <div class="card"><h4>AI power demand</h4><p>Data center and compute growth is driving electricity demand faster than new capacity can be built.</p></div>
+    <div class="card"><h4>Grid modernization</h4><p>Utilities are investing heavily in distributed and flexible resources to modernize aging infrastructure.</p></div>
+    <div class="card"><h4>Corporate electrification</h4><p>Commercial owners and tenants are accelerating investment in on-site energy and EV infrastructure.</p></div>
+    <div class="card"><h4>Energy resiliency</h4><p>Businesses increasingly need reliable backup power and protection from grid outages.</p></div>
+    <div class="card"><h4>Institutional investment into infrastructure</h4><p>Capital is flowing into distributed energy at a pace that rewards platforms that can scale quickly.</p></div>
+  </div>
+</section>
+
+<!-- 11 NEXT STEPS -->
+<section id="next">
+  <header class="shead"><span class="slabel">Next</span></header>
+  <h2>Next <span class="grad-text">steps.</span></h2>
+  <p class="lead">Where this conversation goes from here.</p>
+  <div class="pills">
+    <span class="pill"><span class="dotp"></span> Strategic partnership</span>
+    <span class="pill"><span class="dotp"></span> Potential acquisition</span>
+    <span class="pill"><span class="dotp"></span> Joint growth</span>
+    <span class="pill"><span class="dotp"></span> Confidential discussions</span>
+    <span class="pill"><span class="dotp"></span> Due diligence</span>
+  </div>
+  <div class="disc">
+    This document is confidential and prepared solely for discussion purposes between XURA Energy Partners and Ferrandino &amp; Son. It does not constitute an offer, and does not include XURA's investment, capital formation, or valuation materials. Any transaction would be subject to definitive agreements and mutual due diligence.
+  </div>
+</section>
+
+<div class="conf">Confidential — Prepared for Ferrandino &amp; Son</div>
+
+<script>
+(function(){
+  document.body.classList.add('js-anim');
+  var slides = [].slice.call(document.querySelectorAll('body > .hero, body > section'));
+  if(!slides.length) return;
+  var N = slides.length, idx = 0, animating = false, DUR = 560;
+  var mobile = window.matchMedia('(max-width:640px)').matches;
+
+  // wrap each non-hero slide's content so it can be zoom-fitted to one screen
+  slides.forEach(function(s){
+    if(s.classList.contains('hero')) return;
+    var inner = document.createElement('div'); inner.className = 'deck-inner';
+    while(s.firstChild){ inner.appendChild(s.firstChild); }
+    s.appendChild(inner);
+  });
+  function innerOf(s){ return s.classList.contains('hero') ? s.querySelector('section') : s.querySelector('.deck-inner'); }
+  function fit(s){
+    var inner = innerOf(s); if(!inner) return;
+    inner.style.zoom = '1';
+    var cs = getComputedStyle(s);
+    var avail = s.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
+    var h = inner.scrollHeight;
+    if(h > avail + 1){ inner.style.zoom = Math.max(0.6, avail / h); }
+  }
+  function fitAll(){ if(mobile) return; slides.forEach(fit); }
+
+  function labelFor(s,i){
+    if(s.classList.contains('hero')) return 'Cover';
+    var k = s.querySelector('.slabel'); if(k) return k.textContent.trim();
+    return 'Slide ' + (i+1);
+  }
+
+  var wrap = document.createElement('div'); wrap.className = 'deck-dots';
+  slides.forEach(function(s,i){
+    var b = document.createElement('button'); b.className = 'deck-dot'; b.type = 'button';
+    var lab = labelFor(s,i); b.title = lab; b.setAttribute('aria-label', lab);
+    b.addEventListener('click', function(){ go(i); });
+    wrap.appendChild(b);
+  });
+  document.body.appendChild(wrap);
+  var dots = wrap.children;
+
+  var pb = document.createElement('div'); pb.className = 'deck-progress';
+  var pin = document.createElement('div'); pb.appendChild(pin); document.body.appendChild(pb);
+  var counter = document.createElement('div'); counter.className = 'deck-counter'; document.body.appendChild(counter);
+
+  function pad(n){ return ('0'+n).slice(-2); }
+  function layout(){ slides.forEach(function(s,i){ s.style.zIndex = 5+i; s.style.transform = (i<=idx ? 'translateY(0)' : 'translateY(100%)'); }); }
+  function chrome(){
+    for(var k=0;k<dots.length;k++) dots[k].classList.toggle('active', k===idx);
+    pin.style.transform = 'scaleX(' + (N>1 ? idx/(N-1) : 1) + ')';
+    counter.innerHTML = '<b>'+pad(idx+1)+'</b> / '+pad(N);
+  }
+  function go(n){
+    if(n<0 || n>N-1 || animating) return;
+    idx = n; animating = true;
+    layout(); chrome();
+    var cur = slides[idx];
+    setTimeout(function(){ cur.classList.add('in'); cur.scrollTop = 0; }, 170); // reveal once the page has largely arrived
+    setTimeout(function(){ animating = false; }, DUR);
+  }
+
+  if(mobile){ slides.forEach(function(s){ s.classList.add('in'); }); return; }
+  document.body.classList.add('deck-on');
+  fitAll();
+  layout(); slides[0].classList.add('in'); chrome();
+  if(document.fonts && document.fonts.ready){ document.fonts.ready.then(fitAll); }
+  var _rt; window.addEventListener('resize', function(){ clearTimeout(_rt); _rt = setTimeout(fitAll, 150); });
+
+  function canScroll(el,dir){
+    if(!el || el.scrollHeight <= el.clientHeight+1) return false;
+    return dir>0 ? (el.scrollTop + el.clientHeight < el.scrollHeight-1) : (el.scrollTop > 1);
+  }
+  function onWheel(e){
+    if(animating){ e.preventDefault(); return; }
+    var dir = e.deltaY>0 ? 1 : -1; var s = slides[idx];
+    if(canScroll(s,dir)){ e.preventDefault(); s.scrollTop += e.deltaY; return; }
+    e.preventDefault();
+    if(dir>0){ if(idx<N-1) go(idx+1); } else { if(idx>0) go(idx-1); }
+  }
+  window.addEventListener('wheel', onWheel, {passive:false});
+
+  window.addEventListener('keydown', function(e){
+    if(e.key==='Home'){ e.preventDefault(); go(0); return; }
+    if(e.key==='End'){ e.preventDefault(); go(N-1); return; }
+    var down = (e.key==='ArrowDown' || e.key==='PageDown');
+    var up = (e.key==='ArrowUp' || e.key==='PageUp');
+    if(!down && !up) return;
+    var s = slides[idx];
+    if(canScroll(s, down?1:-1)){ e.preventDefault(); s.scrollTop += (down?90:-90); return; }
+    e.preventDefault();
+    if(down){ if(idx<N-1) go(idx+1); } else { if(idx>0) go(idx-1); }
+  });
+
+  var ty = null;
+  window.addEventListener('touchstart', function(e){ ty = e.touches[0].clientY; }, {passive:true});
+  window.addEventListener('touchend', function(e){
+    if(ty==null) return; var dy = ty - e.changedTouches[0].clientY; ty = null;
+    if(Math.abs(dy) < 40) return;
+    var dir = dy>0 ? 1 : -1; var s = slides[idx];
+    if(canScroll(s,dir)){ s.scrollTop += dy; return; }
+    if(dir>0){ if(idx<N-1) go(idx+1); } else { if(idx>0) go(idx-1); }
+  }, {passive:true});
+
+  [].slice.call(document.querySelectorAll('nav a[href^="#"]')).forEach(function(a){
+    a.addEventListener('click', function(e){
+      var id = a.getAttribute('href').slice(1);
+      var i = slides.indexOf(document.getElementById(id));
+      if(i >= 0){ e.preventDefault(); go(i); }
+    });
+  });
+
+  var heroInner = document.querySelector('.hero > section');
+  if(heroInner){ var hint = document.createElement('div'); hint.className = 'scroll-hint'; hint.textContent = 'Scroll ↓'; heroInner.appendChild(hint); }
+})();
+</script>
+</body>
+</html>
