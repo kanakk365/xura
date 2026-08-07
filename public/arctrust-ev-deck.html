@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>EV Charging Proposal — 56 NJ-36, Eatontown | Prepared for ArcTrust · XURA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Anton&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#050505; --ink-2:#0c0c0c; --ink-3:#151515;
+    --card:#101010; --card-2:#161616;
+    --accent:#8bfb03; --accent-dim:#6dc702; --accent-deep:#4f8f02;
+    --paper:#ffffff; --text:#e9e9ea; --muted:#9a9a9e; --faint:#6f6f73;
+    --border:rgba(255,255,255,.10); --border-strong:rgba(255,255,255,.18);
+    --glow:rgba(139,251,3,.12);
+    --maxw:1180px;
+    --ease:cubic-bezier(.23,1,.32,1);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:auto}
+  body{font-family:'Inter',system-ui,sans-serif;background:var(--ink);color:var(--text);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  img{max-width:100%;display:block}
+
+  /* nav */
+  nav{position:fixed;top:0;left:0;right:0;z-index:50;backdrop-filter:blur(14px);background:rgba(5,5,5,.8);border-bottom:1px solid var(--border)}
+  .nav-in{max-width:var(--maxw);margin:0 auto;display:flex;align-items:center;gap:14px;padding:13px 24px}
+  .brand{display:flex;align-items:center;gap:11px;font-family:'Archivo';font-weight:800;font-size:1.1rem;letter-spacing:.4px;text-transform:uppercase;white-space:nowrap}
+  .brand .dot{width:29px;height:29px;border-radius:8px;background:var(--accent);display:grid;place-items:center}
+  .brand .dot::before{content:"";width:12px;height:12px;background:var(--ink);clip-path:polygon(50% 0,100% 100%,0 100%)}
+  .nav-links{margin-left:auto;display:flex;gap:2px;flex-wrap:wrap}
+  .nav-links a{color:var(--muted);text-decoration:none;font-size:.76rem;font-weight:500;padding:7px 11px;border-radius:999px;transition:color .2s,background .2s;white-space:nowrap}
+  .nav-links a:hover{color:var(--ink);background:var(--accent)}
+  @media(max-width:1080px){.nav-links{display:none}}
+
+  /* layout */
+  section{max-width:var(--maxw);margin:0 auto;padding:80px 24px}
+  .kicker{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;color:var(--accent);margin-bottom:16px;display:flex;align-items:center;gap:10px}
+  .kicker::before{content:"";width:30px;height:1px;background:var(--accent)}
+  h2{font-family:'Archivo';font-weight:800;font-size:clamp(1.85rem,4vw,2.85rem);line-height:1.07;letter-spacing:-.6px;margin-bottom:14px;text-wrap:balance;max-width:24ch}
+  .lead{color:var(--muted);font-size:1.05rem;max-width:720px;margin-bottom:34px;text-wrap:pretty}
+  .grad-text{color:var(--accent)}
+  .note{font-size:.78rem;color:var(--faint);font-family:'JetBrains Mono',monospace;margin-top:20px;line-height:1.7}
+  .note b{color:var(--accent)}
+
+  /* hero */
+  .badge{display:inline-flex;align-items:center;gap:9px;padding:6px 14px;border:1px solid var(--border-strong);font-size:.72rem;color:var(--muted);width:fit-content;margin-bottom:24px;text-transform:uppercase;letter-spacing:.12em;font-weight:500;border-radius:999px}
+  .badge .pulse{width:7px;height:7px;border-radius:50%;background:var(--accent)}
+  .hero h1{font-family:'Archivo';font-weight:900;font-size:clamp(2.4rem,6vw,4.6rem);line-height:1.02;letter-spacing:-1.6px;margin-bottom:22px;max-width:17ch}
+  .hero p.sub{font-size:1.15rem;color:var(--muted);max-width:640px;margin-bottom:40px}
+  .hero-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+  @media(max-width:820px){.hero-stats{grid-template-columns:repeat(2,1fr)}}
+  .hstat{padding:22px 20px;border:1px solid var(--border);border-radius:10px;background:var(--card);position:relative;overflow:hidden}
+  .hstat::after{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:var(--accent);opacity:.9}
+  .hstat .n{font-family:'Archivo';font-weight:800;font-size:2.05rem;line-height:1;color:var(--paper)}
+  .hstat .l{color:var(--muted);font-size:.8rem;margin-top:8px;line-height:1.4}
+
+  /* figure */
+  .figure{border:1px solid var(--border);border-radius:12px;overflow:hidden;background:#0a0a0a}
+  .figure img{width:100%;height:auto}
+  .figure figcaption{padding:11px 18px;font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--faint);border-top:1px solid var(--border);display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;line-height:1.6}
+  .figure figcaption b{color:var(--accent);font-weight:700}
+
+  /* cards / grids */
+  .cards{display:grid;gap:16px}
+  .g2{grid-template-columns:repeat(2,1fr)} .g3{grid-template-columns:repeat(3,1fr)} .g4{grid-template-columns:repeat(4,1fr)}
+  @media(max-width:900px){.g3,.g4{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:620px){.g2,.g3,.g4{grid-template-columns:1fr}}
+  .card{position:relative;border:1px solid var(--border);border-radius:10px;padding:22px;background:var(--card)}
+
+  .feat{display:flex;flex-direction:column;gap:7px}
+  .feat .ico{width:44px;height:44px;border-radius:10px;background:var(--glow);border:1px solid var(--border-strong);display:grid;place-items:center;margin-bottom:5px}
+  .feat .ico svg{width:22px;height:22px;stroke:var(--accent);fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+  .feat h4{font-size:1.04rem;font-weight:600;color:var(--paper)}
+  .feat p{color:var(--muted);font-size:.87rem}
+
+  /* regions (bullet lists) */
+  .region{border:1px solid var(--border);border-radius:10px;padding:22px;background:var(--card)}
+  .region h4{font-family:'Archivo';font-weight:700;font-size:1.16rem;margin-bottom:4px;display:flex;align-items:center;gap:10px;color:var(--paper);flex-wrap:wrap}
+  .region .rtag{font-family:'JetBrains Mono',monospace;font-size:.62rem;padding:3px 8px;border-radius:6px;background:var(--glow);color:var(--accent);letter-spacing:.06em}
+  .region ul{list-style:none;margin-top:14px;display:flex;flex-direction:column;gap:10px}
+  .region li{font-size:.9rem;color:var(--muted);padding-left:20px;position:relative;line-height:1.5}
+  .region li::before{content:"";position:absolute;left:0;top:9px;width:7px;height:7px;border-radius:2px;background:var(--accent)}
+  .region li b{color:var(--paper);font-weight:600}
+  .region.alt li::before{background:var(--accent-deep)}
+
+  /* pills */
+  .pills{display:flex;flex-wrap:wrap;gap:11px}
+  .pill{padding:10px 16px;border:1px solid var(--border);border-radius:11px;font-size:.9rem;background:rgba(255,255,255,.03);display:flex;align-items:center;gap:10px;color:var(--text)}
+  .pill .dotp{width:7px;height:7px;border-radius:50%;background:var(--accent);flex:none}
+
+  /* callout / banner */
+  .callout{border:1px solid rgba(139,251,3,.26);border-radius:10px;padding:18px 22px;background:rgba(139,251,3,.055);margin-top:20px;font-size:.98rem;line-height:1.6;color:var(--text);max-width:82ch}
+  .callout b{color:var(--accent);font-weight:700}
+  .banner{border:1px solid var(--accent);border-radius:11px;background:linear-gradient(180deg,rgba(139,251,3,.12),var(--card));padding:20px 26px;margin-top:20px;text-align:center;font-family:'Archivo';font-weight:700;font-size:clamp(1.05rem,2.4vw,1.3rem);color:var(--paper);letter-spacing:-.01em}
+
+  /* proposal block */
+  .proposal{display:grid;grid-template-columns:1.05fr .95fr;gap:0;align-items:stretch;border:1px solid var(--border-strong);border-radius:14px;background:linear-gradient(180deg,rgba(139,251,3,.05),var(--card));overflow:hidden}
+  @media(max-width:860px){.proposal{grid-template-columns:1fr}}
+  .proposal .pinfo{padding:32px}
+  .bignum{display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap}
+  .bignum .amt{font-family:'Archivo';font-weight:900;font-size:clamp(2.6rem,6vw,3.9rem);line-height:.92;color:var(--paper);letter-spacing:-2px}
+  .bignum .amt small{font-size:1.1rem;color:var(--accent);font-weight:700;letter-spacing:0}
+  .bignum .cap{font-size:.9rem;color:var(--muted);padding-bottom:8px}
+  .pdiv{height:1px;background:var(--border);margin:22px 0}
+  .pmeta{margin-top:22px;display:flex;flex-wrap:wrap;gap:9px}
+  .ptag{font-family:'JetBrains Mono',monospace;font-size:.68rem;padding:6px 11px;border-radius:7px;background:rgba(255,255,255,.05);color:var(--text);border:1px solid var(--border)}
+  .ptag b{color:var(--accent);font-weight:700}
+  .proposal .pfig{position:relative;min-height:320px;background:#0a0a0a}
+  .proposal .pfig img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .proposal .pfig::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--card),transparent 24%)}
+  @media(max-width:860px){.proposal .pfig{min-height:240px}.proposal .pfig::after{background:linear-gradient(180deg,var(--card),transparent 30%)}}
+
+  /* timeline */
+  .timeline{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}
+  @media(max-width:900px){.timeline{grid-template-columns:repeat(3,1fr);gap:22px 12px}}
+  @media(max-width:560px){.timeline{grid-template-columns:repeat(2,1fr)}}
+  .tstep{display:flex;flex-direction:column;gap:12px}
+  .tnode{display:flex;align-items:center}
+  .tnum{width:38px;height:38px;flex:none;border-radius:10px;background:linear-gradient(180deg,rgba(139,251,3,.18),var(--card));border:1px solid var(--accent);color:var(--accent);font-family:'Anton',sans-serif;display:grid;place-items:center;font-size:1.05rem}
+  .tline{flex:1;height:2px;margin-left:8px;background:linear-gradient(90deg,var(--accent),rgba(139,251,3,.14))}
+  .tstep:last-child .tline{display:none}
+  @media(max-width:900px){.tline{display:none}}
+  .tph{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--faint)}
+  .tt{font-family:'Archivo';font-weight:700;font-size:.96rem;color:var(--paper);line-height:1.25;margin-top:-4px}
+
+  /* contact */
+  .contact{display:grid;grid-template-columns:1.25fr .9fr;gap:26px;align-items:center;border:1px solid var(--border-strong);border-radius:14px;background:linear-gradient(180deg,rgba(139,251,3,.06),var(--card));padding:36px}
+  @media(max-width:760px){.contact{grid-template-columns:1fr;gap:26px}}
+  .contact h3{font-family:'Archivo';font-weight:800;font-size:clamp(1.6rem,3.5vw,2.3rem);line-height:1.08;letter-spacing:-.5px;color:var(--paper);margin-bottom:16px}
+  .qpoints{display:flex;flex-direction:column;gap:10px;margin-bottom:24px}
+  .qpoints div{display:flex;align-items:center;gap:11px;color:var(--muted);font-size:.98rem}
+  .qpoints svg{width:19px;height:19px;stroke:var(--accent);fill:none;stroke-width:2;flex:none}
+  .cta-btn{display:inline-flex;align-items:center;gap:11px;background:var(--accent);color:var(--ink);font-family:'Archivo';font-weight:800;font-size:1rem;padding:15px 26px;border-radius:11px;text-decoration:none;transition:transform .18s var(--ease),box-shadow .18s;letter-spacing:.01em}
+  .cta-btn:hover{transform:translateY(-2px);box-shadow:0 16px 38px -12px rgba(139,251,3,.55)}
+  .cta-btn svg{width:18px;height:18px;stroke:var(--ink);fill:none;stroke-width:2.4}
+  .vcard{border:1px solid var(--border);border-radius:12px;background:rgba(5,5,5,.5);padding:24px}
+  .vcard .role{font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+  .vcard .nm{font-family:'Archivo';font-weight:800;font-size:1.5rem;color:var(--paper);margin-bottom:14px}
+  .vcard .row{display:flex;align-items:center;gap:11px;margin-top:11px;font-family:'JetBrains Mono',monospace;font-size:.9rem}
+  .vcard .row svg{width:17px;height:17px;stroke:var(--accent);fill:none;stroke-width:2;flex:none}
+  .vcard .row a{color:var(--text);text-decoration:none}
+  .vcard .row a:hover{color:var(--accent)}
+
+  /* footer */
+  .foot-in{color:var(--faint);font-size:.86rem;line-height:1.8;max-width:var(--maxw)}
+  .foot-in .fbrand{font-family:'Archivo';font-weight:800;letter-spacing:.4px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;font-size:1.05rem}
+  .foot-in a{color:var(--muted);text-decoration:none}
+  .foot-in a:hover{color:var(--accent)}
+  .foot-in .disc{font-size:.78rem;color:var(--faint);margin-top:18px;border-top:1px solid var(--border);padding-top:16px}
+
+  /* ============ DECK — fullpage (pages rise from the bottom) ============ */
+  body.deck-on{overflow:hidden;height:100vh}
+  .hero,body>section,body>footer{
+    position:fixed;inset:0;height:100vh;width:100%;max-width:none;margin:0;
+    background:var(--ink);z-index:5;
+    transform:translateY(100%);
+    transition:transform .9s cubic-bezier(.76,0,.24,1);will-change:transform;
+    overflow:hidden;overscroll-behavior:contain;
+    padding:80px 40px 52px;
+    display:flex;flex-direction:column;justify-content:safe center;
+    scrollbar-width:none;-ms-overflow-style:none;
+  }
+  .hero{transform:translateY(0)}
+  body>section,body>footer{padding-left:max(40px,calc((100% - var(--maxw))/2));padding-right:max(40px,calc((100% - var(--maxw))/2))}
+  body>section>*,body>footer>*{width:100%;max-width:100%;margin-left:0;margin-right:0;flex:0 0 auto}
+  .hero::-webkit-scrollbar,body>section::-webkit-scrollbar,body>footer::-webkit-scrollbar{width:0;height:0;display:none}
+
+  /* keep figure images within one slide */
+  body>section .figure img{max-height:54vh;object-fit:contain;background:#0a0a0a}
+
+  @media(max-width:640px){
+    .hero,body>section,body>footer{position:relative;inset:auto;transform:none!important;transition:none;height:auto;min-height:100vh;overflow:visible;z-index:auto;display:block;padding:78px 18px 40px}
+    body.deck-on{overflow:auto;height:auto}
+    body>section .figure img{max-height:none}
+  }
+
+  .deck-inner{width:100%;transform-origin:top center}
+
+  /* entrance choreography — soft focus-in (rise + de-blur + fade); grids cascade */
+  .js-anim>section .deck-inner>*:not(.cards):not(.hero-stats),
+  .js-anim>footer .deck-inner>*,
+  .js-anim>.hero>section>*:not(.hero-stats){opacity:0;transform:translateY(32px);filter:blur(8px);transition:opacity .8s cubic-bezier(.22,.61,.36,1),transform .8s cubic-bezier(.22,.61,.36,1),filter .8s ease}
+  .js-anim>section.in .deck-inner>*:not(.cards):not(.hero-stats),
+  .js-anim>footer.in .deck-inner>*,
+  .js-anim>.hero.in>section>*:not(.hero-stats){opacity:1;transform:none;filter:blur(0)}
+  .js-anim>section.in .deck-inner>*:nth-child(1),.js-anim>.hero.in>section>*:nth-child(1),.js-anim>footer.in .deck-inner>*:nth-child(1){transition-delay:.04s}
+  .js-anim>section.in .deck-inner>*:nth-child(2),.js-anim>.hero.in>section>*:nth-child(2){transition-delay:.14s}
+  .js-anim>section.in .deck-inner>*:nth-child(3),.js-anim>.hero.in>section>*:nth-child(3){transition-delay:.24s}
+  .js-anim>section.in .deck-inner>*:nth-child(4),.js-anim>.hero.in>section>*:nth-child(4){transition-delay:.34s}
+  .js-anim>section.in .deck-inner>*:nth-child(5){transition-delay:.44s}
+  .js-anim>section.in .deck-inner>*:nth-child(6){transition-delay:.54s}
+
+  .js-anim .cards>*,.js-anim .hero-stats>*{opacity:0;transform:translateY(30px) scale(.93);filter:blur(6px);transition:opacity .7s cubic-bezier(.22,.61,.36,1),transform .7s cubic-bezier(.22,.61,.36,1),filter .7s ease}
+  .js-anim .in .cards>*,.js-anim .hero.in .hero-stats>*{opacity:1;transform:none;filter:blur(0)}
+  .in .cards>*:nth-child(1),.in .hero-stats>*:nth-child(1){transition-delay:.16s}
+  .in .cards>*:nth-child(2),.in .hero-stats>*:nth-child(2){transition-delay:.27s}
+  .in .cards>*:nth-child(3),.in .hero-stats>*:nth-child(3){transition-delay:.38s}
+  .in .cards>*:nth-child(4),.in .hero-stats>*:nth-child(4){transition-delay:.49s}
+  .in .cards>*:nth-child(5){transition-delay:.60s}
+
+  .js-anim>section .deck-inner>.kicker::before{width:0;transition:width .8s cubic-bezier(.22,.61,.36,1) .18s}
+  .js-anim>section.in .deck-inner>.kicker::before{width:30px}
+
+  .grad-text{background:linear-gradient(100deg,var(--accent) 0%,var(--accent-dim) 34%,#e8ffd2 50%,var(--accent-dim) 66%,var(--accent) 100%);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;animation:sheen 8s linear infinite}
+  @keyframes sheen{to{background-position:-250% 0}}
+
+  .card,.region,.feat,.pill,.hstat,.tstep{transition:transform .4s cubic-bezier(.2,.7,.1,1),border-color .3s ease,box-shadow .3s ease}
+  .card:hover,.region:hover,.hstat:hover{transform:translateY(-5px);border-color:var(--border-strong);box-shadow:0 16px 40px -18px rgba(0,0,0,.8),0 0 0 1px var(--glow)}
+
+  .hero::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:0;background:radial-gradient(58% 46% at 50% 34%,var(--glow),transparent 70%);opacity:.4;animation:heroGlow 9s ease-in-out infinite}
+  .hero>section{position:relative;z-index:1;max-width:var(--maxw);margin:0 auto;width:100%}
+  @keyframes heroGlow{0%,100%{opacity:.26;transform:scale(1) translateY(0)}50%{opacity:.5;transform:scale(1.08) translateY(-1.5%)}}
+
+  @media(prefers-reduced-motion:reduce){
+    .js-anim>section>*,.js-anim>footer>*,.js-anim>.hero>section>*,.js-anim .cards>*,.js-anim .hero-stats>*{opacity:1!important;transform:none!important;filter:none!important;transition:none!important}
+    .js-anim>section .deck-inner>.kicker::before{width:30px}
+    .hero::after,.scroll-hint,.grad-text{animation:none}
+  }
+
+  /* deck chrome */
+  .deck-dots{position:fixed;right:16px;top:50%;transform:translateY(-50%);z-index:70;display:flex;flex-direction:column;gap:8px;max-height:82vh}
+  @media(max-width:900px){.deck-dots{display:none}}
+  .deck-dot{width:8px;height:8px;border-radius:50%;border:1px solid var(--border-strong);background:transparent;cursor:pointer;padding:0;transition:.22s}
+  .deck-dot:hover{border-color:var(--accent);transform:scale(1.3)}
+  .deck-dot.active{background:var(--accent);border-color:var(--accent);box-shadow:0 0 0 3px var(--glow)}
+  .deck-progress{position:fixed;top:0;left:0;right:0;height:3px;background:rgba(255,255,255,.05);z-index:70}
+  .deck-progress>div{height:100%;width:0;background:var(--accent);box-shadow:0 0 10px var(--accent);transition:width .35s cubic-bezier(.76,0,.24,1)}
+  .deck-counter{position:fixed;left:18px;bottom:16px;z-index:70;font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.14em;color:var(--muted)}
+  .deck-counter b{color:var(--accent);font-weight:700}
+  .scroll-hint{position:absolute;left:0;right:0;margin:0 auto;bottom:24px;width:fit-content;font-family:'JetBrains Mono',monospace;font-size:.64rem;letter-spacing:.28em;text-transform:uppercase;color:var(--faint);animation:bob 1.9s ease-in-out infinite}
+  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(7px)}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-in">
+    <div class="brand"><span class="dot"></span> XURA <span style="color:var(--faint);font-weight:500;font-size:.74rem;letter-spacing:.05em">· ArcTrust Proposal</span></div>
+    <div class="nav-links">
+      <a href="#opportunity">Opportunity</a>
+      <a href="#earn">How You Earn</a>
+      <a href="#proposal">Proposal</a>
+      <a href="#siteplan">Site Plan</a>
+      <a href="#managed">Managed</a>
+      <a href="#timeline">Timeline</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<!-- COVER -->
+<header class="hero" id="top">
+  <section style="padding-top:0;padding-bottom:0">
+    <div class="badge"><span class="pulse"></span> Confidential Proposal · Prepared for ArcTrust — Marc Perel</div>
+    <h1>Turn underused property space into <span class="grad-text">long-term passive income.</span></h1>
+    <p class="sub">EV charging infrastructure — installed, operated, and maintained by Xura. A zero-cost ground-lease proposal for <b style="color:var(--paper)">56 NJ-36, Eatontown, NJ 07724</b>.</p>
+    <div class="hero-stats">
+      <div class="hstat"><div class="n">$40,000</div><div class="l">Guaranteed lease income, per year</div></div>
+      <div class="hstat"><div class="n">6</div><div class="l">DC fast chargers per site</div></div>
+      <div class="hstat"><div class="n">30+ yrs</div><div class="l">Ground-lease term</div></div>
+      <div class="hstat"><div class="n">$0</div><div class="l">Owner capital required</div></div>
+    </div>
+  </section>
+</header>
+
+<!-- 01 OPPORTUNITY -->
+<section id="opportunity">
+  <div class="kicker">01 — The Opportunity</div>
+  <h2>Your property can earn more at <span class="grad-text">zero cost.</span></h2>
+  <p class="lead">Most commercial sites carry space that will never be rented — rear lots, service edges, low-value corners. Xura turns that space into a durable income stream, with no capital and almost no involvement from you.</p>
+  <div class="cards g3">
+    <div class="card feat">
+      <div class="ico"><svg viewBox="0 0 24 24"><path d="M3 6h18v12H3z"/><circle cx="12" cy="12" r="2.6"/><path d="M6 9v6M18 9v6"/></svg></div>
+      <h4>Underused land</h4>
+      <p>Many commercial properties carry unused or underutilized land that generates nothing today.</p>
+    </div>
+    <div class="card feat">
+      <div class="ico"><svg viewBox="0 0 24 24"><path d="M12 3v18M8 7h6.5a3 3 0 0 1 0 6H9.5a3 3 0 0 0 0 6H16"/></svg></div>
+      <h4>Little owner effort</h4>
+      <p>Unrentable space can be monetized with little effort from the owner — Xura handles design, build, and operation.</p>
+    </div>
+    <div class="card feat">
+      <div class="ico"><svg viewBox="0 0 24 24"><path d="M4 19V9m5 10V5m5 14v-7m5 7V4"/></svg></div>
+      <h4>Predictable income</h4>
+      <p>Earn predictable, long-term income without capital investment or operating risk.</p>
+    </div>
+  </div>
+  <div class="callout"><b>Bottom line.</b> Xura helps landlords monetize space they already own — quietly and safely — while the site keeps running exactly as it does today.</div>
+</section>
+
+<!-- 02 DESIGNED TO FIT -->
+<section id="fit">
+  <div class="kicker">02 — Where It Goes</div>
+  <h2>Designed to fit <span class="grad-text">existing properties.</span></h2>
+  <p class="lead">Systems are sited on space you aren't using, placed to avoid disruption to tenants or customers and keep day-to-day traffic flowing.</p>
+  <div class="pills" style="margin-bottom:18px">
+    <span class="pill"><span class="dotp"></span> Rear parking areas</span>
+    <span class="pill"><span class="dotp"></span> Side lots &amp; service areas</span>
+    <span class="pill"><span class="dotp"></span> Low-value / underutilized space</span>
+    <span class="pill"><span class="dotp"></span> Non-customer-facing locations</span>
+  </div>
+  <figure class="figure">
+    <img src="https://xura-two.vercel.app/img/arctrust/aerial.jpg" alt="Aerial rendering of EV fast chargers sited in a rear-lot corner of a shopping center" />
+    <figcaption><span>Chargers sited in a low-traffic rear-lot corner — no disruption to storefronts or customer parking.</span><b>Rendering</b></figcaption>
+  </figure>
+</section>
+
+<!-- 03 HOW YOU EARN -->
+<section id="earn">
+  <div class="kicker">03 — How You Earn</div>
+  <h2>Two ways the site <span class="grad-text">pays you.</span></h2>
+  <p class="lead">Income starts with a guaranteed lease and can be layered with a share of charging revenue where the economics support it.</p>
+  <div class="cards g2">
+    <div class="region">
+      <h4>Guaranteed Lease Income <span class="rtag">Base</span></h4>
+      <ul>
+        <li><b>Fixed monthly or annual payments</b> — paid regardless of usage</li>
+        <li>Long-term ground lease (<b>30+ years</b>)</li>
+        <li>Optional escalators that grow the payment over time</li>
+      </ul>
+    </div>
+    <div class="region alt">
+      <h4>Optional Revenue Participation <span class="rtag">Upside</span></h4>
+      <ul>
+        <li>Share in <b>EV charging revenue</b> where applicable</li>
+        <li>Paid monthly or quarterly</li>
+        <li>Site-specific economics based on real usage</li>
+      </ul>
+    </div>
+  </div>
+  <p class="note">Revenue outcomes vary by market and site conditions. Xura provides customized projections after a preliminary engineering review.</p>
+</section>
+
+<!-- 04 PROPOSAL -->
+<section id="proposal">
+  <div class="kicker">04 — The Proposal</div>
+  <h2>The ArcTrust <span class="grad-text">proposal.</span></h2>
+  <p class="lead">A six-charger fast-charging hub on the rear lot of 56 NJ-36 in Eatontown — with a guaranteed lease and no cost to ArcTrust.</p>
+  <div class="proposal">
+    <div class="pinfo">
+      <div class="bignum"><div class="amt">$40,000<small> / year</small></div><div class="cap">Guaranteed lease income</div></div>
+      <div class="pdiv"></div>
+      <div class="bignum"><div class="amt">6<small> chargers</small></div><div class="cap">DC fast chargers per site</div></div>
+      <div class="pmeta">
+        <span class="ptag"><b>30+ yr</b> ground lease</span>
+        <span class="ptag"><b>$0</b> owner capital</span>
+        <span class="ptag"><b>Jule</b> 1,100 kW hub</span>
+        <span class="ptag">Adjacent to <b>Best Buy</b></span>
+      </div>
+    </div>
+    <div class="pfig"><img src="https://xura-two.vercel.app/img/arctrust/charger.jpg" alt="Xura-branded DC fast chargers installed in a landscaped parking lot" /></div>
+  </div>
+</section>
+
+<!-- 05 SITE PLAN -->
+<section id="siteplan">
+  <div class="kicker">05 — Proposed Layout</div>
+  <h2>Proposed site plan — <span class="grad-text">56 NJ-36, Eatontown.</span></h2>
+  <p class="lead">Six Jule EV fast chargers along the rear lot line, fed by a 1,100 kW Jule hub — laid out to keep storefront parking, drive aisles, and fire lanes fully clear.</p>
+  <div class="pills" style="margin-bottom:18px">
+    <span class="pill"><span class="dotp"></span> 6× Jule EV chargers</span>
+    <span class="pill"><span class="dotp"></span> Jule Hub — 1,100 kW</span>
+    <span class="pill"><span class="dotp"></span> EV charge signage</span>
+    <span class="pill"><span class="dotp"></span> EV-only striping &amp; stencils</span>
+    <span class="pill"><span class="dotp"></span> Bollard &amp; H-frame protection</span>
+  </div>
+  <figure class="figure">
+    <img src="https://xura-two.vercel.app/img/arctrust/site-plan.jpg" alt="Proposed EV charging site plan for 56 NJ-36, Eatontown, prepared by GridForm Engineering" />
+    <figcaption><span>Six chargers &amp; a Jule 1,100 kW hub on the rear lot, beside Best Buy.</span><b>GridForm Engineering · Sheet E30 · Project 347 NJ · Rev 1.0, 07.30.2026 · Drawn by KS · initial design, not for construction</b></figcaption>
+  </figure>
+</section>
+
+<!-- 06 FULLY MANAGED -->
+<section id="managed">
+  <div class="kicker">06 — Fully Managed</div>
+  <h2>Zero-cost, fully <span class="grad-text">managed implementation.</span></h2>
+  <p class="lead">Xura owns the entire lifecycle — capital, engineering, construction, interconnection, and every ongoing responsibility after go-live.</p>
+  <div class="cards g4">
+    <div class="card feat">
+      <div class="ico"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="1.5"/><circle cx="12" cy="12" r="2.4"/></svg></div>
+      <h4>No capital expenditure</h4>
+      <p>Xura covers 100% of equipment, installation, engineering, construction, and interconnection. Owners pay nothing upfront.</p>
+    </div>
+    <div class="card feat">
+      <div class="ico"><svg viewBox="0 0 24 24"><path d="M14.5 6.5a3.8 3.8 0 0 1-5 5L4 17l3 3 5.5-5.5a3.8 3.8 0 0 1 5-5l-2.5-2.5z"/></svg></div>
+      <h4>No maintenance costs</h4>
+      <p>All ongoing maintenance — monitoring, servicing, component replacement, and software updates — is handled by Xura.</p>
+    </div>
+    <div class="card feat">
+      <div class="ico"><svg viewBox="0 0 24 24"><path d="M3 16 16 3l5 5L8 21z"/><path d="M7 12l2 2M10 9l2 2M13 6l2 2"/></svg></div>
+      <h4>Minimal space required</h4>
+      <p>A compact footprint uses unused parking, rear-lot corners, or mechanical areas, and does not interfere with daily operations.</p>
+    </div>
+    <div class="card feat">
+      <div class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+      <h4>Rapid timeline</h4>
+      <p>Xura manages permitting, interconnection, utility coordination, and incentives — a single point of contact throughout.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 07 SAFETY -->
+<section id="safety">
+  <div class="kicker">07 — Safety &amp; Compliance</div>
+  <h2>Built safe, insured, and <span class="grad-text">code-compliant.</span></h2>
+  <div class="cards g3">
+    <div class="card feat">
+      <div class="ico"><svg viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg></div>
+      <h4>Code-compliant electrical design</h4>
+      <p>Installed by licensed contractors and built to meet local electrical code requirements.</p>
+    </div>
+    <div class="card feat">
+      <div class="ico"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="1.5"/><path d="M9 8h6M9 12h6M9 16h4"/></svg></div>
+      <h4>Permits &amp; inspections managed</h4>
+      <p>Xura coordinates permits, inspections, and approvals with local authorities.</p>
+    </div>
+    <div class="card feat">
+      <div class="ico"><svg viewBox="0 0 24 24"><path d="M10 3h4l3 18H7z"/><path d="M8.5 10h7M8 14h8"/></svg></div>
+      <h4>Site safety &amp; minimal disruption</h4>
+      <p>Equipment is sited to avoid tenant disruption and maintain safe traffic flow.</p>
+    </div>
+    <div class="card feat">
+      <div class="ico"><svg viewBox="0 0 24 24"><path d="M12 3 5 6v6c0 4 3 6.5 7 9 4-2.5 7-5 7-9V6z"/><path d="M9.5 12l1.8 1.8L15 10"/></svg></div>
+      <h4>Full insurance coverage</h4>
+      <p>Liability, property, and construction coverage included throughout installation and operation.</p>
+    </div>
+    <div class="card feat">
+      <div class="ico"><svg viewBox="0 0 24 24"><path d="M3 12h4l2 5 4-12 2 7h6"/></svg></div>
+      <h4>Ongoing monitoring &amp; maintenance</h4>
+      <p>Remote monitoring, service, and maintenance handled by Xura for the life of the system.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 08 WHY -->
+<section id="why">
+  <div class="kicker">08 — The Case</div>
+  <h2>Why owners are <span class="grad-text">partnering now.</span></h2>
+  <p class="lead">A partnership adds income and property value today, while a limited incentive window rewards sites that move early.</p>
+  <div class="cards g2">
+    <div class="region">
+      <h4>Why partner with Xura <span class="rtag">Value</span></h4>
+      <ul>
+        <li><b>Long-term, predictable income</b></li>
+        <li>Increased foot traffic</li>
+        <li>Improved utility &amp; resilience of the property</li>
+        <li>No capital investment · no operating responsibility</li>
+        <li>More desirable to tenants &amp; buyers (ESG, amenity upgrade, modern appeal)</li>
+      </ul>
+    </div>
+    <div class="region alt">
+      <h4>Why act now <span class="rtag">Timing</span></h4>
+      <ul>
+        <li>Certain markets have <b>incentive deadlines &amp; capacity caps</b></li>
+        <li>Early sites receive preferred economics</li>
+        <li>Utilities are actively supporting EV-related infrastructure</li>
+        <li>EV adoption is accelerating demand</li>
+      </ul>
+    </div>
+  </div>
+  <p class="note">Site economics and qualification are based on grid needs and incentive availability, and vary from location to location.</p>
+</section>
+
+<!-- 09 TIMELINE -->
+<section id="timeline">
+  <div class="kicker">09 — The Path</div>
+  <h2>From site review to <span class="grad-text">revenue.</span></h2>
+  <p class="lead">Xura manages the process from start to finish — one team, one point of contact, all the way to your first payment.</p>
+  <div class="timeline">
+    <div class="tstep"><div class="tnode"><span class="tnum">1</span><span class="tline"></span></div><div><div class="tph">Phase 1</div><div class="tt">Site review &amp; feasibility</div></div></div>
+    <div class="tstep"><div class="tnode"><span class="tnum">2</span><span class="tline"></span></div><div><div class="tph">Phase 2</div><div class="tt">Utility and permitting</div></div></div>
+    <div class="tstep"><div class="tnode"><span class="tnum">3</span><span class="tline"></span></div><div><div class="tph">Phase 3</div><div class="tt">Permitting + equipment procurement</div></div></div>
+    <div class="tstep"><div class="tnode"><span class="tnum">4</span><span class="tline"></span></div><div><div class="tph">Phase 4</div><div class="tt">Installation</div></div></div>
+    <div class="tstep"><div class="tnode"><span class="tnum">5</span><span class="tline"></span></div><div><div class="tph">Phase 5</div><div class="tt">System goes live</div></div></div>
+    <div class="tstep"><div class="tnode"><span class="tnum">6</span><span class="tline"></span></div><div><div class="tph">Phase 6</div><div class="tt">Monthly revenue begins</div></div></div>
+  </div>
+</section>
+
+<!-- 10 REQUIREMENTS -->
+<section id="requirements">
+  <div class="kicker">10 — What We Need</div>
+  <h2>Simple requirements <span class="grad-text">to begin.</span></h2>
+  <p class="lead">Getting started asks very little of you — a small piece of ground and basic access. Xura handles the rest.</p>
+  <div class="cards g4">
+    <div class="card feat">
+      <div class="ico"><svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M4 9h5M4 15h5M15 9h5M15 15h5"/></svg></div>
+      <h4>Small ground-lease area</h4>
+      <p>Typically 800–3,000 sq. ft. for equipment installation.</p>
+    </div>
+    <div class="card feat">
+      <div class="ico"><svg viewBox="0 0 24 24"><path d="M8 12l3 3 5-6"/><circle cx="12" cy="12" r="9"/></svg></div>
+      <h4>Cooperation during coordination</h4>
+      <p>Minimal involvement during utility coordination and permitting — we handle all paperwork.</p>
+    </div>
+    <div class="card feat">
+      <div class="ico"><svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg></div>
+      <h4>Basic site access</h4>
+      <p>Access during permitting, construction, and periodic maintenance.</p>
+    </div>
+    <div class="card feat">
+      <div class="ico"><svg viewBox="0 0 24 24"><path d="M12 3l7 4v5c0 4-3 7-7 8-4-1-7-4-7-8V7z"/><path d="M12 8v6M9 11h6"/></svg></div>
+      <h4>Permission to install</h4>
+      <p>Permission to install conduit and equipment pads.</p>
+    </div>
+  </div>
+  <div class="banner">No capital, no management burden, no ongoing responsibilities.</div>
+</section>
+
+<!-- 11 CONTACT -->
+<section id="contact">
+  <div class="kicker">11 — Next Step</div>
+  <div class="contact">
+    <div>
+      <h3>Explore whether your property qualifies.</h3>
+      <div class="qpoints">
+        <div><svg viewBox="0 0 24 24"><path d="M5 12l5 5L20 6"/></svg> No-cost site review</div>
+        <div><svg viewBox="0 0 24 24"><path d="M5 12l5 5L20 6"/></svg> No obligation</div>
+        <div><svg viewBox="0 0 24 24"><path d="M5 12l5 5L20 6"/></svg> Simple evaluation process</div>
+      </div>
+      <a class="cta-btn" href="mailto:td@xura.co?subject=Schedule%20a%2020-minute%20qualifying%20call%20%E2%80%94%2056%20NJ-36%2C%20Eatontown">
+        <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg> Schedule a 20-minute qualifying call
+      </a>
+    </div>
+    <div class="vcard">
+      <div class="role">Contact</div>
+      <div class="nm">Tom Dwyer</div>
+      <div class="row"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg> <a href="mailto:td@xura.co">td@xura.co</a></div>
+      <div class="row"><svg viewBox="0 0 24 24"><path d="M5 4h4l2 5-3 2a12 12 0 0 0 5 5l2-3 5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg> <a href="tel:+19176645625">917-664-5625</a></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-in">
+    <div class="fbrand">XURA · EV Charging Infrastructure</div>
+    EV charging proposal for <b style="color:var(--muted)">56 NJ-36, Eatontown, NJ 07724</b> — prepared for ArcTrust (Marc Perel). Installed, operated, and maintained by Xura. Contact <a href="mailto:td@xura.co">td@xura.co</a> · <a href="tel:+19176645625">917-664-5625</a>.
+    <div class="disc">Confidential — prepared for discussion purposes only. Figures shown ($40,000/year, six chargers, 30+ year term) are indicative and subject to a preliminary engineering review; revenue outcomes and qualification vary by market, grid conditions, and incentive availability. The proposed site plan is an initial design by GridForm Engineering and is not for construction. This document does not constitute an offer; any transaction is subject to definitive agreements.</div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  document.body.classList.add('js-anim');
+  var slides = [].slice.call(document.querySelectorAll('body > .hero, body > section, body > footer'));
+  if(!slides.length) return;
+  var N = slides.length, idx = 0, animating = false, DUR = 900;
+  var mobile = window.matchMedia('(max-width:640px)').matches;
+
+  slides.forEach(function(s){
+    if(s.classList.contains('hero')) return;
+    var inner = document.createElement('div'); inner.className = 'deck-inner';
+    while(s.firstChild){ inner.appendChild(s.firstChild); }
+    s.appendChild(inner);
+  });
+  function innerOf(s){ return s.classList.contains('hero') ? s.querySelector('section') : s.querySelector('.deck-inner'); }
+  function fit(s){
+    var inner = innerOf(s); if(!inner) return;
+    inner.style.zoom = '1';
+    var cs = getComputedStyle(s);
+    var avail = s.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
+    var h = inner.scrollHeight;
+    // always shrink to fit one screen (never enlarge) so a slide never needs scrolling
+    inner.style.zoom = Math.min(1, (avail - 2) / h);
+  }
+  function fitAll(){ if(mobile) return; slides.forEach(fit); }
+
+  function countUp(slide){
+    var els = slide.querySelectorAll('.n');
+    for(var i=0;i<els.length;i++){ (function(el){
+      if(el.dataset.counted) return;
+      var raw = el.textContent.trim();
+      if(/\d\s*[–—-]\s*\d/.test(raw)){ el.dataset.counted='1'; return; }
+      var m = raw.match(/^([^\d]*)(\d+(?:[.,]\d+)?)(.*)$/);
+      if(!m){ el.dataset.counted='1'; return; }
+      el.dataset.counted='1';
+      var prefix=m[1], numStr=m[2].replace(/,/g,''), suffix=m[3];
+      var target=parseFloat(numStr), dec=(numStr.split('.')[1]||'').length, dur=1100, t0=null;
+      function fmt(v){ return prefix + (dec ? v.toFixed(dec) : Math.round(v).toLocaleString()) + suffix; }
+      el.textContent = fmt(0);
+      function tick(now){ if(t0===null) t0=now; var p=Math.min((now-t0)/dur,1); var e=1-Math.pow(1-p,3); el.textContent=fmt(target*e); if(p<1) requestAnimationFrame(tick); else el.textContent=fmt(target); }
+      requestAnimationFrame(tick);
+    })(els[i]); }
+  }
+
+  function labelFor(s,i){
+    if(s.classList.contains('hero')) return 'Cover';
+    if(s.tagName==='FOOTER') return 'Disclosures';
+    var k = s.querySelector('.kicker'); if(k) return k.textContent.trim();
+    var h = s.querySelector('h2'); if(h) return h.textContent.trim().slice(0,32);
+    return 'Slide ' + (i+1);
+  }
+
+  var wrap = document.createElement('div'); wrap.className = 'deck-dots';
+  slides.forEach(function(s,i){
+    var b = document.createElement('button'); b.className = 'deck-dot'; b.type = 'button';
+    var lab = labelFor(s,i); b.title = lab; b.setAttribute('aria-label', lab);
+    b.addEventListener('click', function(){ go(i); });
+    wrap.appendChild(b);
+  });
+  document.body.appendChild(wrap);
+  var dots = wrap.children;
+
+  var pb = document.createElement('div'); pb.className = 'deck-progress';
+  var pin = document.createElement('div'); pb.appendChild(pin); document.body.appendChild(pb);
+  var counter = document.createElement('div'); counter.className = 'deck-counter'; document.body.appendChild(counter);
+
+  function pad(n){ return ('0'+n).slice(-2); }
+  function layout(){ slides.forEach(function(s,i){ s.style.zIndex = 5+i; s.style.transform = (i<=idx ? 'translateY(0)' : 'translateY(100%)'); }); }
+  function chrome(){
+    for(var k=0;k<dots.length;k++) dots[k].classList.toggle('active', k===idx);
+    pin.style.width = (N>1 ? idx/(N-1)*100 : 100) + '%';
+    counter.innerHTML = '<b>'+pad(idx+1)+'</b> / '+pad(N);
+  }
+  function go(n){
+    if(n<0 || n>N-1 || animating) return;
+    idx = n; animating = true;
+    layout(); chrome();
+    var cur = slides[idx];
+    setTimeout(function(){ cur.classList.add('in'); cur.scrollTop = 0; countUp(cur); }, 260);
+    setTimeout(function(){ animating = false; }, DUR);
+  }
+
+  if(mobile){ slides.forEach(function(s){ s.classList.add('in'); }); return; }
+  document.body.classList.add('deck-on');
+  fitAll();
+  layout(); slides[0].classList.add('in'); chrome(); countUp(slides[0]);
+  if(document.fonts && document.fonts.ready){ document.fonts.ready.then(fitAll); }
+  var _rt; window.addEventListener('resize', function(){ clearTimeout(_rt); _rt = setTimeout(fitAll, 150); });
+
+  function onWheel(e){
+    e.preventDefault();
+    if(animating) return;
+    if(Math.abs(e.deltaY) < 4) return;
+    if(e.deltaY>0){ if(idx<N-1) go(idx+1); } else { if(idx>0) go(idx-1); }
+  }
+  window.addEventListener('wheel', onWheel, {passive:false});
+
+  window.addEventListener('keydown', function(e){
+    if(e.key==='Home'){ e.preventDefault(); go(0); return; }
+    if(e.key==='End'){ e.preventDefault(); go(N-1); return; }
+    var down = (e.key==='ArrowDown' || e.key==='PageDown' || e.key===' ');
+    var up = (e.key==='ArrowUp' || e.key==='PageUp');
+    if(!down && !up) return;
+    e.preventDefault();
+    if(down){ if(idx<N-1) go(idx+1); } else { if(idx>0) go(idx-1); }
+  });
+
+  var ty = null;
+  window.addEventListener('touchstart', function(e){ ty = e.touches[0].clientY; }, {passive:true});
+  window.addEventListener('touchend', function(e){
+    if(ty==null) return; var dy = ty - e.changedTouches[0].clientY; ty = null;
+    if(Math.abs(dy) < 40) return;
+    if(dy>0){ if(idx<N-1) go(idx+1); } else { if(idx>0) go(idx-1); }
+  }, {passive:true});
+
+  [].slice.call(document.querySelectorAll('nav a[href^="#"]')).forEach(function(a){
+    a.addEventListener('click', function(e){
+      var id = a.getAttribute('href').slice(1);
+      var i = slides.indexOf(document.getElementById(id));
+      if(i >= 0){ e.preventDefault(); go(i); }
+    });
+  });
+
+  var heroInner = document.querySelector('.hero > section');
+  if(heroInner){ var hint = document.createElement('div'); hint.className = 'scroll-hint'; hint.textContent = 'Scroll ↓'; heroInner.appendChild(hint); }
+})();
+</script>
+</body>
+</html>
