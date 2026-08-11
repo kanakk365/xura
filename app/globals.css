@@ -1,6 +1,9 @@
 @import "tailwindcss";
 
 :root {
+  /* Original Xura palette — unchanged. The arctrust deck already uses this
+     exact ground and accent, so the report/deck layout sits on top of it
+     without touching a single colour value. */
   --ink: #050505;
   --ink-2: #0e0e0e;
   --ink-3: #181818;
@@ -9,6 +12,15 @@
   --mute-2: #5d5d5d;
   --accent: #8bfb03;
   --accent-dim: #6dc702;
+
+  /* Structural values only — borders are white-alpha, the way the site and
+     the deck both already expressed them. No new hues. */
+  --line: rgba(255, 255, 255, 0.1);
+  --line-strong: rgba(255, 255, 255, 0.18);
+  --accent-wash: rgba(139, 251, 3, 0.07);
+  --plate: #080808;
+
+  --doc-max: 1180px;
 }
 
 @theme inline {
@@ -18,12 +30,15 @@
   --color-paper: var(--paper);
   --color-mute: var(--mute);
   --color-mute-2: var(--mute-2);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
   --color-accent: var(--accent);
   --color-accent-dim: var(--accent-dim);
 
   /* Fonts are fed by next/font in layout.tsx via these source vars. */
   --font-display: var(--font-display-src), "Archivo", "Helvetica Neue", Arial, sans-serif;
   --font-body: var(--font-body-src), "Inter", system-ui, sans-serif;
+  --font-mono: var(--font-mono-src), "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
   --font-mark: var(--font-anton), "Anton", "Oswald", "Impact", sans-serif;
 }
 
@@ -50,6 +65,10 @@ body {
   font-family: var(--font-body);
   font-weight: 400;
   letter-spacing: 0;
+  /* The reports run at 15.5px/1.62. Copy on the site was 13–15px at 65%
+     opacity; this is the single biggest readability change. */
+  font-size: 15.5px;
+  line-height: 1.62;
 }
 
 ::selection {
@@ -110,6 +129,317 @@ body {
     linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
   background-size: 80px 80px;
+}
+
+/* ===========================================================================
+   Document primitives — ported from the Xura reports and decks so the site
+   speaks the same language the client already signed off on. Kept in the
+   components layer so Tailwind utilities still override them per-instance.
+   Reference: public/arctrust-ev.html, public/arctrust-ev-deck.html
+   =========================================================================== */
+@layer components {
+  /* Section shell. Reports are a single centred column with generous
+     vertical rhythm and a hairline rule between topics. */
+  .doc-section {
+    position: relative;
+    border-top: 1px solid var(--line);
+    padding-block: 64px;
+  }
+
+  @media (min-width: 640px) {
+    .doc-section {
+      padding-block: 88px;
+    }
+  }
+
+  .doc-shell {
+    margin-inline: auto;
+    width: 100%;
+    max-width: var(--doc-max);
+    padding-inline: 24px;
+  }
+
+  /* Kicker — mono, letterspaced, green, led by a short rule.
+     Replaces the pulsing dot eyebrow. */
+  .kicker {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .kicker::before {
+    content: "";
+    width: 30px;
+    height: 1px;
+    flex: none;
+    background: var(--accent);
+  }
+
+  /* Headings — Archivo at 800, tight. The old site ran Archivo at 400 with
+     italic accents; the decks run it heavy and definite. */
+  .doc-h1 {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(2.4rem, 6vw, 4.4rem);
+    line-height: 1.02;
+    letter-spacing: -1.6px;
+    color: var(--paper);
+    text-wrap: balance;
+  }
+
+  .doc-h2 {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(1.85rem, 4vw, 2.85rem);
+    line-height: 1.07;
+    letter-spacing: -0.6px;
+    color: var(--paper);
+    text-wrap: balance;
+  }
+
+  .doc-h3 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.16rem;
+    line-height: 1.25;
+    color: var(--paper);
+  }
+
+  .doc-lead {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 1.05rem;
+    max-width: 720px;
+    text-wrap: pretty;
+  }
+
+  /* Card — 10px radius, visible border, card ground. Not 28–40px pills. */
+  .doc-card {
+    position: relative;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--ink-2);
+    padding: 22px;
+  }
+
+  /* Stat tile — number first, green rule across the top. */
+  .stat-tile {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--ink-2);
+    padding: 22px 20px;
+  }
+
+  .stat-tile::after {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 2px;
+    background: var(--accent);
+  }
+
+  .stat-tile .n {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 2.05rem;
+    line-height: 1;
+    color: var(--paper);
+  }
+
+  .stat-tile .l {
+    display: block;
+    margin-top: 8px;
+    color: var(--mute);
+    font-size: 0.8rem;
+    line-height: 1.4;
+  }
+
+  /* Square green bullets — the reports' signature list mark. */
+  .doc-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .doc-list > li {
+    position: relative;
+    padding-left: 20px;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.65);
+  }
+
+  .doc-list > li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 9px;
+    width: 7px;
+    height: 7px;
+    border-radius: 2px;
+    background: var(--accent);
+  }
+
+  .doc-list > li b,
+  .doc-list > li strong {
+    color: var(--paper);
+    font-weight: 600;
+  }
+
+  /* Mono tag pill — used for section indices and category labels. */
+  .doc-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 6px;
+    background: var(--accent-wash);
+    color: var(--accent);
+  }
+
+  /* Figure — bordered plate with a mono caption bar, exactly how the
+     reports present site plans and renderings. */
+  .doc-figure {
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--plate);
+  }
+
+  .doc-figcaption {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 11px 18px;
+    border-top: 1px solid var(--line);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    line-height: 1.6;
+    color: var(--mute);
+  }
+
+  .doc-figcaption b {
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  /* Green-washed callout and centred banner statement. */
+  .doc-callout {
+    border: 1px solid rgba(139, 251, 3, 0.26);
+    border-radius: 10px;
+    background: rgba(139, 251, 3, 0.055);
+    padding: 18px 22px;
+    font-size: 0.98rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  .doc-callout b {
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  .doc-banner {
+    border: 1px solid var(--accent);
+    border-radius: 11px;
+    background: linear-gradient(180deg, rgba(139, 251, 3, 0.12), var(--ink-2));
+    padding: 20px 26px;
+    text-align: center;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(1.05rem, 2.4vw, 1.3rem);
+    letter-spacing: -0.01em;
+    color: var(--paper);
+  }
+
+  /* Buttons — solid green primary, hairline secondary. Square-ish, not pills. */
+  .doc-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 11px;
+    border-radius: 11px;
+    background: var(--accent);
+    color: var(--ink);
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1rem;
+    padding: 15px 26px;
+    transition: transform 0.18s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.18s;
+  }
+
+  .doc-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 38px -12px rgba(139, 251, 3, 0.55);
+  }
+
+  .doc-btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 11px;
+    border: 1px solid var(--line-strong);
+    border-radius: 11px;
+    background: rgba(255, 255, 255, 0.03);
+    color: var(--paper);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1rem;
+    padding: 15px 26px;
+    transition: border-color 0.2s, background 0.2s;
+  }
+
+  .doc-btn-ghost:hover {
+    border-color: var(--accent);
+    background: var(--accent-wash);
+  }
+
+  /* Form controls — bigger targets and real contrast. The old fields ran
+     10px mono labels on 2%-white grounds. */
+  .doc-label {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--mute);
+  }
+
+  .doc-input {
+    width: 100%;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.02);
+    padding: 12px 14px;
+    font-size: 16px;
+    color: var(--paper);
+  }
+
+  .doc-input::placeholder {
+    color: var(--mute);
+  }
+
+  .doc-input:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 1px var(--accent-wash);
+  }
 }
 
 .grain::after {

@@ -55,8 +55,8 @@ export function Navbar() {
   }, []);
 
   return (
-    <header className="relative z-30">
-      <nav className="mx-auto flex w-full max-w-[1400px] items-center justify-between px-5 pt-5 sm:px-10 sm:pt-6 lg:px-16">
+    <header className="relative z-30 border-b border-line bg-ink/80 backdrop-blur-[14px]">
+      <nav className="mx-auto flex w-full max-w-[var(--doc-max)] items-center gap-4 px-6 py-3.5">
         <Link href="/" className="flex items-center" aria-label="Xura home">
           <Image
             src="/xura_logo.png"
@@ -64,20 +64,19 @@ export function Navbar() {
             width={875}
             height={200}
             priority
-            className="h-8 w-auto"
+            className="h-7 w-auto"
           />
         </Link>
 
-        <ul className="hidden items-center gap-9 text-[12px] font-medium uppercase tracking-[0.08em] text-paper/70 md:flex">
+        <ul className="ml-auto hidden items-center gap-0.5 lg:flex">
           {NAV_LINKS.map((item) => (
             <li key={item.label}>
               <Link
                 href={item.href}
                 onClick={handleNavClick(item.href)}
-                className="group relative transition-colors hover:text-paper"
+                className="block rounded-full px-3 py-1.5 text-[0.76rem] font-medium text-mute transition-colors hover:bg-accent hover:text-ink"
               >
-                <span>{item.label}</span>
-                <span className="absolute -bottom-1 left-0 h-px w-0 bg-accent transition-all duration-300 group-hover:w-full" />
+                {item.label}
               </Link>
             </li>
           ))}
@@ -85,7 +84,7 @@ export function Navbar() {
 
         <Link
           href={loginHref}
-          className="hidden h-10 items-center gap-2 rounded-full border border-accent/40 bg-accent/10 px-4 text-[11px] font-normal tracking-[0.08em] text-accent transition-colors hover:bg-accent hover:text-ink md:inline-flex"
+          className="ml-auto hidden items-center gap-2 rounded-full border border-line-strong px-4 py-1.5 text-[0.76rem] font-medium text-paper/80 transition-colors hover:border-accent hover:text-accent lg:ml-2 lg:inline-flex"
         >
           <span className="h-1.5 w-1.5 rounded-full bg-accent" />
           Login
@@ -97,7 +96,7 @@ export function Navbar() {
           aria-expanded={open}
           aria-controls="mobile-nav"
           onClick={() => setOpen((v) => !v)}
-          className="relative z-50 inline-grid h-10 w-10 place-items-center rounded-full border border-paper/15 bg-paper/[0.04] text-paper/80 backdrop-blur-md transition-colors hover:border-paper/30 hover:text-paper md:hidden"
+          className="relative z-50 ml-auto inline-grid h-10 w-10 place-items-center rounded-lg border border-line bg-ink-2 text-paper/80 transition-colors hover:border-accent hover:text-accent lg:hidden"
         >
           <span className="sr-only">Menu</span>
           <span className="relative block h-3.5 w-4">
@@ -130,7 +129,7 @@ export function Navbar() {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.25 }}
               onClick={() => setOpen(false)}
-              className="fixed inset-0 z-40 bg-ink/70 backdrop-blur-sm md:hidden"
+              className="fixed inset-0 z-40 bg-ink/80 backdrop-blur-sm lg:hidden"
               aria-hidden="true"
             />
             <motion.div
@@ -142,9 +141,9 @@ export function Navbar() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.3, ease: [0.2, 0.7, 0.1, 1] }}
-              className="fixed inset-x-3 top-20 z-40 origin-top rounded-3xl border border-paper/10 bg-ink-2/95 p-6 shadow-[0_30px_60px_-20px_rgba(0,0,0,0.6)] backdrop-blur-xl md:hidden"
+              className="fixed inset-x-3 top-20 z-40 origin-top rounded-xl border border-line bg-ink-2 p-4 shadow-[0_30px_60px_-20px_rgba(0,0,0,0.7)] lg:hidden"
             >
-              <ul className="flex flex-col gap-1">
+              <ul className="flex flex-col gap-0.5">
                 {NAV_LINKS.map((item) => (
                   <li key={item.label}>
                     <Link
@@ -153,10 +152,10 @@ export function Navbar() {
                         handleNavClick(item.href)(e);
                         setOpen(false);
                       }}
-                      className="group flex items-center justify-between rounded-2xl border border-transparent px-4 py-3.5 text-[13px] font-medium uppercase tracking-[0.1em] text-paper/80 transition-colors hover:border-paper/10 hover:bg-paper/[0.04] hover:text-paper"
+                      className="group flex items-center justify-between rounded-lg px-4 py-3 text-[0.95rem] font-medium text-paper/80 transition-colors hover:bg-accent hover:text-ink"
                     >
                       <span>{item.label}</span>
-                      <span className="h-1.5 w-1.5 rounded-full bg-accent/0 transition-colors group-hover:bg-accent" />
+                      <span className="h-1.5 w-1.5 rounded-[2px] bg-accent transition-colors group-hover:bg-ink" />
                     </Link>
                   </li>
                 ))}
@@ -164,9 +163,8 @@ export function Navbar() {
               <Link
                 href={loginHref}
                 onClick={() => setOpen(false)}
-                className="mt-4 flex h-12 items-center justify-center gap-2 rounded-full bg-accent text-[12px] font-medium uppercase tracking-[0.12em] text-ink transition-transform active:scale-[0.98]"
+                className="doc-btn mt-3 w-full"
               >
-                <span className="h-1.5 w-1.5 rounded-full bg-ink" />
                 Login
               </Link>
             </motion.div>

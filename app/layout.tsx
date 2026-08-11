@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Anton, Archivo, Inter } from "next/font/google";
+import { Anton, Archivo, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
 // Display type — headings, hero, stat figures (font-display).
@@ -14,6 +14,15 @@ const displayFont = Archivo({
 const bodyFont = Inter({
   variable: "--font-body-src",
   subsets: ["latin"],
+  display: "swap",
+});
+
+// Mono — kickers, tags, figure captions. The reports and decks use
+// JetBrains Mono for every label that isn't prose.
+const monoFont = JetBrains_Mono({
+  variable: "--font-mono-src",
+  subsets: ["latin"],
+  weight: ["500", "700"],
   display: "swap",
 });
 
@@ -46,7 +55,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${displayFont.variable} ${bodyFont.variable} ${anton.variable} h-full antialiased`}
+      className={`${displayFont.variable} ${bodyFont.variable} ${monoFont.variable} ${anton.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-ink text-paper font-body">
         {children}

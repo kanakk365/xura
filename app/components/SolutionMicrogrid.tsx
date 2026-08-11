@@ -106,13 +106,13 @@ export function SolutionMicrogrid() {
   const pulseSpeed = 5;
 
   return (
-    <div className="group relative h-full min-h-[300px] overflow-hidden bg-[#080808] sm:min-h-[340px]">
-      {/* Circuit canvas — flex-centered above the text */}
-      <div className="absolute inset-0 flex items-start justify-center px-4 pt-5 pb-[150px] sm:pb-[170px]">
+    <div className="group relative h-full min-h-[340px] overflow-hidden bg-[#080808] sm:min-h-[420px]">
+      {/* Circuit canvas — centred in the figure plate */}
+      <div className="absolute inset-0 flex items-center justify-center p-6">
         <div
           className="relative w-full"
           style={{
-            maxWidth: VIEW_W,
+            maxWidth: 560,
             aspectRatio: `${VIEW_W} / ${VIEW_H}`,
           }}
         >
@@ -276,21 +276,11 @@ export function SolutionMicrogrid() {
         </div>
       </div>
 
-      {/* Bottom gradient fade behind text */}
+      {/* Title and specs now live in the card body below the figure. */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 bottom-0 z-[5] h-36 bg-gradient-to-t from-[#080808] via-[#080808]/85 to-transparent sm:h-44"
+        className="pointer-events-none absolute inset-x-0 bottom-0 z-[5] h-24 bg-gradient-to-t from-[#080808] to-transparent"
       />
-
-      <div className="absolute inset-x-0 bottom-0 z-10 p-5 sm:p-7">
-        <h3 className="font-display tracking-normal text-lg font-normal leading-tight text-paper sm:text-xl lg:text-[1.65rem]">
-          One controller, three roles.
-        </h3>
-        <p className="mt-2 max-w-md text-[12.5px] leading-relaxed text-paper/60 sm:text-sm">
-          Storage, charging, and grid interaction coordinated under your
-          service ceiling — automatically.
-        </p>
-      </div>
     </div>
   );
 }

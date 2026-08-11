@@ -33,8 +33,30 @@ const buildPath = (points: { x: number; y: number }[]) =>
 
 const DEMAND_PATH = buildPath(DEMAND_POINTS);
 const GRID_PATH = buildPath(GRID_POINTS);
-
 const DEMAND_AREA = `${DEMAND_PATH} L 480 220 L 60 220 Z`;
+
+const CONSTRAINTS = [
+  {
+    code: "01",
+    title: "Limited capacity at the meter",
+    body: "Available service is fixed. New load has to fit inside what the existing connection already delivers.",
+  },
+  {
+    code: "02",
+    title: "Costly utility upgrades",
+    body: "Increasing service size means transformer, feeder, and sometimes substation work — paid for by the site.",
+  },
+  {
+    code: "03",
+    title: "Unpredictable interconnect timelines",
+    body: "Queue positions and study cycles move. A schedule built on an assumed energization date is not a schedule.",
+  },
+  {
+    code: "04",
+    title: "Constraints vary site to site",
+    body: "Two properties on the same road can have entirely different answers. Feasibility is established per site.",
+  },
+];
 
 export function Problem() {
   const ref = useRef<HTMLDivElement>(null);
@@ -42,345 +64,175 @@ export function Problem() {
   const reduce = useReducedMotion();
 
   return (
-    <section
-      id="problem"
-      ref={ref}
-      className="relative bg-ink py-20 sm:py-28 lg:py-36"
-    >
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-paper/15 to-transparent"
-      />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 grid-lines opacity-[0.07]"
-      />
+    <section id="problem" ref={ref} className="doc-section">
+      <div className="doc-shell">
+        <p className="kicker">The Constraint</p>
 
-      <div className="relative mx-auto w-full max-w-[1400px] px-5 sm:px-10 lg:px-16">
-        <div className="grid grid-cols-1 gap-10 sm:gap-14 lg:grid-cols-[1.05fr_1fr] lg:gap-20">
-          <div className="flex flex-col">
-            <motion.p
-              initial={{ opacity: 0, y: 12 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.7, ease: [0.2, 0.7, 0.1, 1] }}
-              className="mb-4 inline-flex items-center gap-3 self-start text-[11px] font-medium uppercase tracking-[0.2em] text-mute"
-            >
-              <span className="relative inline-flex h-2 w-2">
-                <span className="absolute inset-0 rounded-full bg-accent pulse-dot" />
-                <span className="absolute -inset-1 rounded-full bg-accent/30 blur-[3px]" />
+        <h2 className="doc-h2 mt-4 max-w-[24ch]">
+          Demand is <span className="text-accent">accelerating</span>. Grid
+          expansion is not.
+        </h2>
+
+        <p className="doc-lead mt-3.5">
+          Utilities can&rsquo;t expand fast enough to meet near-term
+          electrification load. We design around what the meter delivers today,
+          not around an upgrade that may or may not arrive.
+        </p>
+
+        {/* Chart sits beside the constraints rather than spanning the column,
+            which keeps it at a readable figure size instead of a banner. */}
+        {/* Both columns stretch to the same height; the chart centres itself
+            in whatever height the constraint ledger sets. */}
+        <div className="mt-9 grid grid-cols-1 gap-4 lg:grid-cols-2">
+        <figure className="doc-figure flex flex-col">
+          <div className="flex flex-1 flex-col justify-center p-5">
+            <div className="mb-5 flex flex-wrap items-center gap-x-5 gap-y-2 font-mono text-[0.66rem] uppercase tracking-[0.14em]">
+              <span className="flex items-center gap-2 text-accent">
+                <span className="h-2 w-2 rounded-[2px] bg-accent" />
+                Site load demand
               </span>
-              The Constraint
-            </motion.p>
-
-            <motion.h2
-              initial={{ opacity: 0, y: 16 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.9, delay: 0.1, ease: [0.2, 0.7, 0.1, 1] }}
-              className="font-display tracking-normal text-[clamp(1.75rem,3.6vw,3rem)] font-normal leading-[1.05]  text-paper"
-            >
-              Demand is{" "}
-              <span className="italic text-accent">accelerating</span>
-              . Grid expansion is not.
-            </motion.h2>
-
-            <motion.p
-              initial={{ opacity: 0, y: 16 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.9, delay: 0.25, ease: [0.2, 0.7, 0.1, 1] }}
-              className="mt-5 max-w-md text-sm leading-relaxed text-paper/65"
-            >
-              Utilities can&rsquo;t expand fast enough for electrification
-              load. We design around what the meter delivers today.
-            </motion.p>
-
-            <div className="mt-7 grid grid-cols-2 gap-x-4 gap-y-4 border-t border-paper/10 pt-5 sm:max-w-md sm:gap-x-6">
-              <Constraint
-                code="01"
-                label="Limited available capacity at the meter"
-                delay={0.45}
-                isInView={isInView}
-              />
-              <Constraint
-                code="02"
-                label="Costly utility upgrades"
-                delay={0.55}
-                isInView={isInView}
-              />
-              <Constraint
-                code="03"
-                label="Unpredictable interconnect timelines"
-                delay={0.65}
-                isInView={isInView}
-              />
-              <Constraint
-                code="04"
-                label="Constraints vary site to site"
-                delay={0.75}
-                accent
-                isInView={isInView}
-              />
+              <span className="flex items-center gap-2 text-mute">
+                <span className="h-2 w-2 rounded-[2px] bg-mute" />
+                Utility capacity
+              </span>
             </div>
-          </div>
 
-          <div className="relative">
-            <div className="relative overflow-hidden rounded-2xl border border-paper/10 bg-ink-2/60 p-4 sm:rounded-[28px] sm:p-8">
-              <div className="mb-5 flex items-center justify-between gap-3 text-[10px] font-normal tracking-[0.3em] sm:mb-6">
-                <span className="flex items-center gap-2 text-paper/70">
-                  <span className="h-1.5 w-1.5 rounded-full bg-accent" />
-                  Load vs. capacity
-                </span>
-                <span className="font-mono tracking-[0.2em] text-mute">
-                  Trend
-                </span>
-              </div>
+            <svg
+              viewBox="0 0 540 240"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              preserveAspectRatio="xMidYMid meet"
+              role="img"
+              aria-label="Site load demand rising steeply while utility capacity rises slowly, opening a widening gap."
+              className="block w-full"
+            >
+              <defs>
+                <linearGradient id="problem-demand-fill" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#8bfb03" stopOpacity="0.3" />
+                  <stop offset="100%" stopColor="#8bfb03" stopOpacity="0" />
+                </linearGradient>
+              </defs>
 
-              <svg
-                viewBox="0 0 540 260"
+              <g stroke="rgba(255,255,255,0.08)" strokeWidth="1">
+                {[40, 80, 120, 160, 200].map((y) => (
+                  <line key={y} x1="40" x2="500" y1={y} y2={y} />
+                ))}
+              </g>
+
+              <motion.path
+                d={GRID_PATH}
+                stroke="rgba(255,255,255,0.45)"
+                strokeWidth="1.6"
+                strokeDasharray="4 4"
                 fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                preserveAspectRatio="xMidYMid meet"
-                className="block w-full"
-              >
-                <defs>
-                  <linearGradient
-                    id="problem-demand-fill"
-                    x1="0"
-                    y1="0"
-                    x2="0"
-                    y2="1"
-                  >
-                    <stop offset="0%" stopColor="#8bfb03" stopOpacity="0.32" />
-                    <stop offset="100%" stopColor="#8bfb03" stopOpacity="0" />
-                  </linearGradient>
-                  <linearGradient
-                    id="problem-demand-line"
-                    x1="0"
-                    y1="0"
-                    x2="1"
-                    y2="0"
-                  >
-                    <stop offset="0%" stopColor="#8bfb03" stopOpacity="0.3" />
-                    <stop offset="100%" stopColor="#8bfb03" stopOpacity="1" />
-                  </linearGradient>
-                </defs>
-
-                <g stroke="rgba(255,255,255,0.06)" strokeWidth="1">
-                  {[40, 80, 120, 160, 200].map((y) => (
-                    <line key={y} x1="40" x2="500" y1={y} y2={y} />
-                  ))}
-                </g>
-
-                <motion.path
-                  d={GRID_PATH}
-                  stroke="rgba(255,255,255,0.45)"
-                  strokeWidth="1.5"
-                  strokeDasharray="3 4"
-                  fill="none"
-                  initial={{ pathLength: reduce ? 1 : 0 }}
-                  animate={isInView ? { pathLength: 1 } : {}}
-                  transition={{ duration: 1.6, ease: [0.2, 0.7, 0.1, 1] }}
-                />
-
-                <motion.path
-                  d={DEMAND_AREA}
-                  fill="url(#problem-demand-fill)"
-                  initial={{ opacity: 0 }}
-                  animate={isInView ? { opacity: 1 } : {}}
-                  transition={{ duration: 1.4, delay: 0.6, ease: "easeOut" }}
-                />
-
-                <motion.path
-                  d={DEMAND_PATH}
-                  stroke="url(#problem-demand-line)"
-                  strokeWidth="2.4"
-                  strokeLinecap="round"
-                  fill="none"
-                  initial={{ pathLength: reduce ? 1 : 0 }}
-                  animate={isInView ? { pathLength: 1 } : {}}
-                  transition={{
-                    duration: 1.8,
-                    delay: 0.3,
-                    ease: [0.2, 0.7, 0.1, 1],
-                  }}
-                  style={{ filter: "drop-shadow(0 0 6px rgba(139,251,3,0.6))" }}
-                />
-
-                <motion.g
-                  initial={{ opacity: 0 }}
-                  animate={isInView ? { opacity: 1 } : {}}
-                  transition={{ duration: 0.5, delay: 1.6 }}
-                >
-                  {DEMAND_POINTS.map((p, i) => (
-                    <g key={`d-${i}`}>
-                      <circle cx={p.x} cy={p.y} r="3" fill="#8bfb03" />
-                      <circle
-                        cx={p.x}
-                        cy={p.y}
-                        r="6"
-                        fill="none"
-                        stroke="#8bfb03"
-                        strokeOpacity="0.3"
-                        strokeWidth="1"
-                      />
-                    </g>
-                  ))}
-                  {GRID_POINTS.map((p, i) => (
-                    <circle
-                      key={`g-${i}`}
-                      cx={p.x}
-                      cy={p.y}
-                      r="2.2"
-                      fill="rgba(255,255,255,0.55)"
-                    />
-                  ))}
-                </motion.g>
-
-                <motion.g
-                  initial={{ opacity: 0, y: 6 }}
-                  animate={isInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.6, delay: 1.8 }}
-                >
-                  <line
-                    x1="480"
-                    x2="480"
-                    y1="36"
-                    y2="138"
-                    stroke="#8bfb03"
-                    strokeOpacity="0.5"
-                    strokeWidth="1"
-                    strokeDasharray="2 3"
-                  />
-                  <rect
-                    x="488"
-                    y="74"
-                    width="44"
-                    height="26"
-                    rx="4"
-                    fill="#080808"
-                    stroke="#8bfb03"
-                    strokeWidth="1"
-                  />
-                  <text
-                    x="510"
-                    y="91"
-                    textAnchor="middle"
-                    fontFamily="ui-monospace, SFMono-Regular, monospace"
-                    fontSize="8"
-                    fill="#8bfb03"
-                    letterSpacing="1"
-                    fontWeight="700"
-                  >
-                    GAP
-                  </text>
-                </motion.g>
-
-                <g
-                  fontFamily="ui-monospace, SFMono-Regular, monospace"
-                  fontSize="8"
-                  letterSpacing="1.5"
-                >
-                  <motion.g
-                    initial={{ opacity: 0 }}
-                    animate={isInView ? { opacity: 1 } : {}}
-                    transition={{ duration: 0.5, delay: 1.4 }}
-                  >
-                    <rect
-                      x="48"
-                      y="22"
-                      width="120"
-                      height="18"
-                      rx="9"
-                      fill="rgba(139,251,3,0.08)"
-                      stroke="rgba(139,251,3,0.35)"
-                    />
-                    <circle cx="58" cy="31" r="2" fill="#8bfb03" />
-                    <text x="68" y="34" fill="#8bfb03" fontWeight="600">
-                      SITE LOAD DEMAND
-                    </text>
-                  </motion.g>
-                  <motion.g
-                    initial={{ opacity: 0 }}
-                    animate={isInView ? { opacity: 1 } : {}}
-                    transition={{ duration: 0.5, delay: 1.55 }}
-                  >
-                    <rect
-                      x="180"
-                      y="22"
-                      width="138"
-                      height="18"
-                      rx="9"
-                      fill="rgba(255,255,255,0.04)"
-                      stroke="rgba(255,255,255,0.18)"
-                    />
-                    <circle
-                      cx="190"
-                      cy="31"
-                      r="2"
-                      fill="rgba(255,255,255,0.7)"
-                    />
-                    <text
-                      x="200"
-                      y="34"
-                      fill="rgba(255,255,255,0.7)"
-                      fontWeight="600"
-                    >
-                      UTILITY CAPACITY
-                    </text>
-                  </motion.g>
-                </g>
-              </svg>
-
-              <div
-                aria-hidden="true"
-                className="pointer-events-none absolute inset-0 rounded-[28px] "
+                initial={{ pathLength: reduce ? 1 : 0 }}
+                animate={isInView ? { pathLength: 1 } : {}}
+                transition={{ duration: 1.4, ease: [0.2, 0.7, 0.1, 1] }}
               />
-            </div>
 
-            <div
-              aria-hidden="true"
-              className="pointer-events-none absolute -inset-4 -z-10 rounded-[36px] "
-            />
+              <motion.path
+                d={DEMAND_AREA}
+                fill="url(#problem-demand-fill)"
+                initial={{ opacity: 0 }}
+                animate={isInView ? { opacity: 1 } : {}}
+                transition={{ duration: 1.2, delay: 0.5, ease: "easeOut" }}
+              />
+
+              <motion.path
+                d={DEMAND_PATH}
+                stroke="#8bfb03"
+                strokeWidth="2.4"
+                strokeLinecap="round"
+                fill="none"
+                initial={{ pathLength: reduce ? 1 : 0 }}
+                animate={isInView ? { pathLength: 1 } : {}}
+                transition={{ duration: 1.6, delay: 0.2, ease: [0.2, 0.7, 0.1, 1] }}
+              />
+
+              <motion.g
+                initial={{ opacity: 0 }}
+                animate={isInView ? { opacity: 1 } : {}}
+                transition={{ duration: 0.5, delay: 1.4 }}
+              >
+                {DEMAND_POINTS.map((p, i) => (
+                  <circle key={`d-${i}`} cx={p.x} cy={p.y} r="3.2" fill="#8bfb03" />
+                ))}
+                {GRID_POINTS.map((p, i) => (
+                  <circle
+                    key={`g-${i}`}
+                    cx={p.x}
+                    cy={p.y}
+                    r="2.4"
+                    fill="rgba(255,255,255,0.55)"
+                  />
+                ))}
+
+                {/* The gap is the whole argument — label it plainly. */}
+                <line
+                  x1="480"
+                  x2="480"
+                  y1="36"
+                  y2="138"
+                  stroke="#8bfb03"
+                  strokeOpacity="0.6"
+                  strokeWidth="1"
+                  strokeDasharray="3 3"
+                />
+                <rect
+                  x="488"
+                  y="74"
+                  width="44"
+                  height="26"
+                  rx="4"
+                  fill="#080808"
+                  stroke="#8bfb03"
+                  strokeWidth="1"
+                />
+                <text
+                  x="510"
+                  y="91"
+                  textAnchor="middle"
+                  fontFamily="ui-monospace, SFMono-Regular, monospace"
+                  fontSize="9"
+                  fill="#8bfb03"
+                  letterSpacing="1"
+                  fontWeight="700"
+                >
+                  GAP
+                </text>
+              </motion.g>
+            </svg>
           </div>
+
+          <figcaption className="doc-figcaption">
+            <span>
+              <b>Fig. 01</b> &mdash; Site load demand vs. available utility
+              capacity.
+            </span>
+            <span>Indicative</span>
+          </figcaption>
+        </figure>
+
+          {/* Constraints as a numbered ledger, not four standalone cards. */}
+          <ol className="divide-y divide-line overflow-hidden rounded-[10px] border border-line bg-ink-2">
+            {CONSTRAINTS.map((c) => (
+              <li key={c.code} className="flex gap-4 p-5">
+                <span className="font-mono text-[0.72rem] font-bold leading-[1.6] text-accent">
+                  {c.code}
+                </span>
+                <div>
+                  <h3 className="font-display text-[1rem] font-bold leading-[1.3] text-paper">
+                    {c.title}
+                  </h3>
+                  <p className="mt-1.5 text-[0.88rem] leading-[1.55] text-mute">
+                    {c.body}
+                  </p>
+                </div>
+              </li>
+            ))}
+          </ol>
         </div>
       </div>
     </section>
-  );
-}
-
-function Constraint({
-  code,
-  label,
-  delay,
-  accent,
-  isInView,
-}: {
-  code: string;
-  label: string;
-  delay: number;
-  accent?: boolean;
-  isInView: boolean;
-}) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 12 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.7, delay, ease: [0.2, 0.7, 0.1, 1] }}
-      className="flex flex-col gap-2"
-    >
-      <span
-        className={`font-mono text-[10px] font-medium uppercase tracking-[0.2em] ${
-          accent ? "text-accent" : "text-paper/55"
-        }`}
-      >
-        {code}
-      </span>
-      <span
-        className={`font-display tracking-normal text-[clamp(0.95rem,1.15vw,1.05rem)] font-normal leading-[1.25] ${
-          accent ? "text-accent" : "text-paper"
-        }`}
-      >
-        {label}
-      </span>
-    </motion.div>
   );
 }

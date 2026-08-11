@@ -12,6 +12,8 @@ const nextConfig: NextConfig = {
       { source: "/nj-ev-tourism-corridor-short", destination: "/nj-ev-tourism-corridor-short.html" },
       { source: "/ferrandino-deck", destination: "/ferrandino-deck.html" },
       { source: "/xura-acquisition-deck", destination: "/xura-acquisition-deck.html" },
+      { source: "/flag-football-report", destination: "/flag-football-report.html" },
+      { source: "/li-youth-sports-directory", destination: "/li-youth-sports-directory.html" },
     ];
   },
 };

@@ -1,56 +1,127 @@
-import { BentoShell } from "./BentoShell";
+import type { ReactNode } from "react";
+
 import { SolutionCharging } from "./SolutionCharging";
 import { SolutionMicrogrid } from "./SolutionMicrogrid";
 import { SolutionStorage } from "./SolutionStorage";
 
 export function Solutions() {
   return (
-    <section
-      id="solutions"
-      className="relative bg-ink py-20 sm:py-28 lg:py-32"
-    >
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-paper/15 to-transparent"
-      />
+    <section id="solutions" className="doc-section">
+      <div className="doc-shell">
+        <p className="kicker">Solutions</p>
 
-      <div className="mx-auto w-full max-w-[1400px] px-5 sm:px-10 lg:px-16">
-        <header className="mb-10 flex flex-col gap-6 sm:mb-12 sm:gap-7 lg:mb-16 lg:flex-row lg:items-end lg:justify-between">
-          <div className="max-w-2xl">
-            <p className="mb-4 inline-flex items-center gap-3 text-[10px] font-medium uppercase tracking-[0.2em] text-mute sm:mb-5 sm:text-[11px]">
-              <span className="relative inline-flex h-2 w-2">
-                <span className="absolute inset-0 rounded-full bg-accent pulse-dot" />
-                <span className="absolute -inset-1 rounded-full bg-accent/30 blur-[3px]" />
-              </span>
-              Solutions
-            </p>
-            <h2 className="font-display tracking-normal text-[clamp(1.85rem,6vw,3.75rem)] font-normal leading-[1.05]  text-paper">
-              Three systems for sites the{" "}
-              <span className="italic text-accent">grid</span>{" "}
-              hasn&rsquo;t caught up to.
-            </h2>
-          </div>
-          <p className="max-w-sm text-[15px] leading-relaxed text-paper/60 sm:text-base">
-            Every Xura deployment starts with the same constraint — you have
-            a site, the utility doesn&rsquo;t have time. We engineer around
-            it.
-          </p>
-        </header>
+        <h2 className="doc-h2 mt-4 max-w-[24ch]">
+          Three systems for sites the{" "}
+          <span className="text-accent">grid</span>{" "}
+          hasn&rsquo;t caught up to.
+        </h2>
 
-        <div className="grid grid-cols-1 gap-4 lg:grid-cols-[1.15fr_1fr] lg:gap-5">
-          <div className="lg:row-span-2">
-            <BentoShell>
-              <SolutionStorage />
-            </BentoShell>
-          </div>
-          <BentoShell>
-            <SolutionCharging />
-          </BentoShell>
-          <BentoShell>
-            <SolutionMicrogrid />
-          </BentoShell>
+        <p className="doc-lead mt-3.5">
+          Every Xura deployment starts from the same constraint &mdash; you have
+          a site, the utility doesn&rsquo;t have time. We engineer around it.
+        </p>
+
+        {/* Uniform full-width rows, matching the Approach section: figure on
+            one side, specification on the other. No ragged column heights. */}
+        <div className="mt-9 flex flex-col gap-4">
+          <SolutionRow
+            index="01"
+            tag="Storage"
+            title="Storage that survives audit."
+            body="UL 9540A-tested systems with onboard BMS, NFPA 855 siting, and 24/7 telemetry. Sized against your load profile, not a catalogue configuration."
+            specs={[
+              "UL 9540A-tested cells and enclosures",
+              "NFPA 855 siting and separation",
+              "Onboard battery management system",
+              "24/7 remote monitoring and telemetry",
+            ]}
+            figure={<SolutionStorage />}
+          />
+
+          <SolutionRow
+            index="02"
+            tag="Charging"
+            title="Level 3 charging inside your service."
+            body="DC fast charging deployed within the capacity the meter already delivers — buffered by storage so peak draw never triggers a utility upgrade."
+            specs={[
+              "DC fast charging, storage-buffered",
+              "Deployed within existing service size",
+              "Load management across dispensers",
+              "No increase to utility service size",
+            ]}
+            figure={<SolutionCharging />}
+            reverse
+          />
+
+          <SolutionRow
+            index="03"
+            tag="Microgrid"
+            title="Load control that holds under stress."
+            body="Storage, charging, and site load coordinated as one system, so the site keeps operating when the grid connection is the binding constraint."
+            specs={[
+              "Coordinated storage, charging, and load",
+              "Peak shaving against demand charges",
+              "Continuity through constrained periods",
+              "One controller across all three roles",
+            ]}
+            figure={<SolutionMicrogrid />}
+          />
         </div>
       </div>
     </section>
+  );
+}
+
+function SolutionRow({
+  index,
+  tag,
+  title,
+  body,
+  specs,
+  figure,
+  reverse,
+}: {
+  index: string;
+  tag: string;
+  title: string;
+  body: string;
+  specs: string[];
+  figure: ReactNode;
+  reverse?: boolean;
+}) {
+  return (
+    <article className="doc-figure grid grid-cols-1 lg:grid-cols-[1fr_1.15fr]">
+      <div
+        className={`flex flex-col p-6 sm:p-8 ${
+          reverse ? "lg:order-2" : "lg:order-1"
+        }`}
+      >
+        <span className="doc-tag w-fit">
+          {tag} &middot; {index} / 03
+        </span>
+
+        <h3 className="doc-h3 mt-4 text-[1.35rem]">{title}</h3>
+
+        <p className="mt-3 max-w-[46ch] text-[0.92rem] leading-[1.6] text-mute">
+          {body}
+        </p>
+
+        <ul className="doc-list mt-auto border-t border-line pt-5 sm:mt-6">
+          {specs.map((spec) => (
+            <li key={spec}>{spec}</li>
+          ))}
+        </ul>
+      </div>
+
+      <div
+        className={`relative border-b border-line bg-[#080808] lg:border-b-0 ${
+          reverse
+            ? "lg:order-1 lg:border-r"
+            : "lg:order-2 lg:border-l"
+        }`}
+      >
+        {figure}
+      </div>
+    </article>
   );
 }
