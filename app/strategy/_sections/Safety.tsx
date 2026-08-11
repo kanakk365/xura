@@ -1,8 +1,3 @@
-"use client";
-
-import { motion, useInView } from "motion/react";
-import { useRef } from "react";
-
 type Credential = {
   id: string;
   title: string;
@@ -38,133 +33,52 @@ const CREDENTIALS: Credential[] = [
 ];
 
 export function StrategySafety() {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-15%" });
-
   return (
-    <section
-      id="safety"
-      ref={ref}
-      className="relative bg-ink py-20 sm:py-28 lg:py-36"
-    >
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-paper/15 to-transparent"
-      />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 grid-lines opacity-[0.05]"
-      />
+    <section id="safety" className="doc-section">
+      <div className="doc-shell">
+        <p className="kicker">Safety</p>
 
-      <div className="relative mx-auto w-full max-w-[1400px] px-5 sm:px-10 lg:px-16">
-        <header className="mb-10 flex flex-col gap-6 sm:mb-14 lg:mb-16 lg:flex-row lg:items-end lg:justify-between">
-          <div className="max-w-2xl">
-            <motion.p
-              initial={{ opacity: 0, y: 12 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.7, ease: [0.2, 0.7, 0.1, 1] }}
-              className="mb-5 inline-flex items-center gap-3 text-[11px] font-medium uppercase tracking-[0.2em] text-mute"
-            >
-              <span className="relative inline-flex h-2 w-2">
-                <span className="absolute inset-0 rounded-full bg-accent pulse-dot" />
-                <span className="absolute -inset-1 rounded-full bg-accent/30 blur-[3px]" />
-              </span>
-              Safety
-            </motion.p>
-            <motion.h2
-              initial={{ opacity: 0, y: 16 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.9, delay: 0.1, ease: [0.2, 0.7, 0.1, 1] }}
-              className="font-display tracking-normal text-[clamp(1.85rem,5vw,3.5rem)] font-normal leading-[1.05] text-paper"
-            >
-              We don&rsquo;t just meet safety standards&mdash;{" "}
-              <span className="italic text-accent">we set them</span>.
-            </motion.h2>
-          </div>
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.9, delay: 0.2, ease: [0.2, 0.7, 0.1, 1] }}
-            className="max-w-sm text-[15px] leading-relaxed text-paper/60 sm:text-base"
-          >
-            Energy storage on a live site only earns trust one way: a record you
-            can verify, backed by certification and layered protection.
-          </motion.p>
-        </header>
+        <h2 className="doc-h2 mt-4 max-w-[26ch]">
+          We don&rsquo;t just meet safety standards &mdash;{" "}
+          <span className="text-accent">we set them</span>.
+        </h2>
 
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.9, delay: 0.25, ease: [0.2, 0.7, 0.1, 1] }}
-          className="relative mb-4 flex flex-col items-start gap-5 overflow-hidden rounded-2xl border border-accent/25 bg-accent/[0.05] p-6 sm:flex-row sm:items-center sm:gap-8 sm:rounded-[28px] sm:p-9"
-        >
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0 grid-lines opacity-[0.05]"
-          />
-          <div className="relative flex items-baseline gap-2">
-            <span className="font-display tracking-normal text-[clamp(3rem,9vw,5rem)] font-normal leading-none text-accent">
-              Zero
-            </span>
-          </div>
-          <p className="relative max-w-xl text-[15px] leading-relaxed text-paper/80 sm:text-[17px]">
+        <p className="doc-lead mt-3.5">
+          Energy storage on a live site only earns trust one way: a record you
+          can verify, backed by certification and layered protection.
+        </p>
+
+        <div className="doc-callout mt-9 flex flex-col items-start gap-5 p-6 sm:flex-row sm:items-center sm:gap-8 sm:p-8">
+          <span className="font-display text-[clamp(3rem,8vw,4.5rem)] font-extrabold leading-none text-accent">
+            Zero
+          </span>
+          <p className="text-[1rem] leading-[1.6] text-paper/80">
             Fire or explosion incidents across{" "}
-            <span className="text-paper">hundreds of deployments</span>. Safety
-            isn&rsquo;t a feature we add at the end&mdash;it&rsquo;s the
-            baseline every Xura system is engineered to.
+            <span className="font-semibold text-paper">
+              hundreds of deployments
+            </span>
+            . Safety isn&rsquo;t a feature we add at the end &mdash; it&rsquo;s
+            the baseline every Xura system is engineered to.
           </p>
-        </motion.div>
+        </div>
 
-        <ol className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {CREDENTIALS.map((c, i) => (
-            <CredentialCard
-              key={c.id}
-              credential={c}
-              index={i}
-              isInView={isInView}
-            />
+        <ol className="mt-4 grid grid-cols-1 gap-px overflow-hidden rounded-[10px] border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
+          {CREDENTIALS.map((c) => (
+            <li key={c.id} className="flex flex-col bg-ink-2 p-6">
+              <span className="grid h-11 w-11 place-items-center rounded-lg border border-line bg-[rgba(139,251,3,0.08)] text-accent">
+                <CredentialIcon icon={c.icon} />
+              </span>
+              <h3 className="mt-4 font-display text-[1.08rem] font-bold leading-[1.3] text-paper">
+                {c.title}
+              </h3>
+              <p className="mt-2 text-[0.88rem] leading-[1.55] text-mute">
+                {c.body}
+              </p>
+            </li>
           ))}
         </ol>
       </div>
     </section>
-  );
-}
-
-function CredentialCard({
-  credential,
-  index,
-  isInView,
-}: {
-  credential: Credential;
-  index: number;
-  isInView: boolean;
-}) {
-  const delay = 0.35 + index * 0.1;
-
-  return (
-    <motion.li
-      initial={{ opacity: 0, y: 24 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.85, delay, ease: [0.2, 0.7, 0.1, 1] }}
-      className="group relative flex h-full flex-col gap-5 overflow-hidden rounded-2xl border border-paper/[0.08] bg-ink-2/60 p-6 transition-colors duration-500 hover:bg-ink-2 sm:rounded-[28px] sm:p-7"
-    >
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 grid-lines opacity-[0.04]"
-      />
-
-      <span className="relative grid h-11 w-11 place-items-center rounded-xl border border-accent/25 bg-accent/[0.08] text-accent">
-        <CredentialIcon icon={credential.icon} />
-      </span>
-
-      <h3 className="relative font-display tracking-normal text-[1.3rem] font-normal leading-tight text-paper">
-        {credential.title}
-      </h3>
-
-      <p className="relative text-[13px] leading-[1.6] text-paper/65">
-        {credential.body}
-      </p>
-    </motion.li>
   );
 }
 

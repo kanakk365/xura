@@ -1,8 +1,3 @@
-"use client";
-
-import { motion, useInView } from "motion/react";
-import { useRef } from "react";
-
 type Cell = string | boolean;
 
 type Row = {
@@ -62,14 +57,23 @@ const GROUPS: Group[] = [
         label: "Refresh cadence",
         values: ["Monthly", "Bi-weekly", "Anytime", "Anytime"],
       },
-      { label: "Creative QA review", values: ["Standard", "Priority", "Priority", "Concierge"] },
-      { label: "Sponsored case study", values: [false, false, "1 / quarter", "Custom"] },
+      {
+        label: "Creative QA review",
+        values: ["Standard", "Priority", "Priority", "Concierge"],
+      },
+      {
+        label: "Sponsored case study",
+        values: [false, false, "1 / quarter", "Custom"],
+      },
     ],
   },
   {
     title: "Analytics & support",
     rows: [
-      { label: "Performance brief", values: ["Monthly", "Weekly", "Real-time", "Real-time"] },
+      {
+        label: "Performance brief",
+        values: ["Monthly", "Weekly", "Real-time", "Real-time"],
+      },
       { label: "Custom dashboard", values: [false, true, true, true] },
       { label: "Attribution exports", values: [false, false, true, true] },
       { label: "Dedicated media planner", values: [false, false, true, true] },
@@ -78,285 +82,119 @@ const GROUPS: Group[] = [
 ];
 
 export function AdvertiseComparison() {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-10%" });
-
   return (
-    <section
-      id="comparison"
-      ref={ref}
-      className="relative bg-ink py-20 sm:py-28 lg:py-32"
-    >
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-paper/15 to-transparent"
-      />
+    <section id="comparison" className="doc-section">
+      <div className="doc-shell">
+        <p className="kicker">Comparison</p>
 
-      <div className="relative mx-auto w-full max-w-[1400px] px-5 sm:px-10 lg:px-16">
-        <header className="mb-10 flex flex-col gap-6 sm:mb-14 lg:flex-row lg:items-end lg:justify-between">
-          <div className="max-w-2xl">
-            <motion.p
-              initial={{ opacity: 0, y: 12 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.7, ease: [0.2, 0.7, 0.1, 1] }}
-              className="mb-5 inline-flex items-center gap-3 text-[11px] font-medium uppercase tracking-[0.2em] text-mute"
-            >
-              <span className="relative inline-flex h-2 w-2">
-                <span className="absolute inset-0 rounded-full bg-accent pulse-dot" />
-                <span className="absolute -inset-1 rounded-full bg-accent/30 blur-[3px]" />
-              </span>
-              Compare
-            </motion.p>
-            <motion.h2
-              initial={{ opacity: 0, y: 16 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.9, delay: 0.1, ease: [0.2, 0.7, 0.1, 1] }}
-              className="font-display tracking-normal text-[clamp(1.85rem,6vw,3.5rem)] font-normal leading-[1.05] text-paper"
-            >
-              The full{" "}
-              <span className="italic text-accent">spec sheet</span>.
-            </motion.h2>
-          </div>
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.9, delay: 0.2, ease: [0.2, 0.7, 0.1, 1] }}
-            className="max-w-sm text-[15px] leading-relaxed text-paper/60 sm:text-base"
-          >
-            Every line item across every tier. No fine print or off-deck
-            add-ons.
-          </motion.p>
-        </header>
+        <h2 className="doc-h2 mt-4 max-w-[24ch]">
+          The full <span className="text-accent">spec sheet</span>.
+        </h2>
 
-        <div className="hidden lg:block">
-          <DesktopTable isInView={isInView} />
-        </div>
-        <div className="lg:hidden">
-          <MobileTable />
+        <p className="doc-lead mt-3.5">
+          Every line item across every tier. No fine print or off-deck add-ons.
+        </p>
+
+        <div className="mt-9 overflow-x-auto rounded-[10px] border border-line bg-ink-2">
+          <table className="w-full min-w-[46rem] border-collapse text-left">
+            <caption className="sr-only">
+              Feature comparison across Pulse, Surge, Voltage and Bespoke tiers
+            </caption>
+            <thead>
+              <tr className="border-b border-line">
+                <th
+                  scope="col"
+                  className="w-[34%] px-6 py-4 font-mono text-[0.6rem] uppercase tracking-[0.18em] text-mute"
+                >
+                  Feature
+                </th>
+                {COLUMNS.map((col, i) => (
+                  <th
+                    key={col}
+                    scope="col"
+                    className={`px-4 py-4 text-center font-display text-[0.95rem] font-bold ${
+                      i === HIGHLIGHT_COL ? "text-accent" : "text-paper"
+                    }`}
+                  >
+                    {col}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+
+            {GROUPS.map((group) => (
+              <tbody key={group.title}>
+                <tr className="border-b border-line bg-ink/60">
+                  <th
+                    scope="colgroup"
+                    colSpan={5}
+                    className="px-6 py-2.5 text-left font-mono text-[0.6rem] uppercase tracking-[0.2em] text-accent"
+                  >
+                    {group.title}
+                  </th>
+                </tr>
+                {group.rows.map((row) => (
+                  <tr key={row.label} className="border-b border-line">
+                    <th
+                      scope="row"
+                      className="px-6 py-3.5 text-left text-[0.9rem] font-normal text-paper/80"
+                    >
+                      {row.label}
+                    </th>
+                    {row.values.map((v, i) => (
+                      <td
+                        key={i}
+                        className={`px-4 py-3.5 text-center text-[0.85rem] ${
+                          i === HIGHLIGHT_COL
+                            ? "bg-[rgba(139,251,3,0.04)]"
+                            : ""
+                        }`}
+                      >
+                        <CellValue value={v} />
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            ))}
+          </table>
         </div>
       </div>
     </section>
   );
 }
 
-function DesktopTable({ isInView }: { isInView: boolean }) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 24 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.9, delay: 0.3, ease: [0.2, 0.7, 0.1, 1] }}
-      className="relative overflow-hidden rounded-[28px] border border-paper/[0.08] bg-ink-2/60"
-    >
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 grid-lines opacity-[0.04]"
-      />
-
-      <div className="relative grid grid-cols-[1.4fr_repeat(4,1fr)] items-end gap-px bg-paper/[0.05] px-px pt-px">
-        <div className="flex items-end bg-ink-2 px-7 pb-5 pt-7">
-          <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-mute">
-            Feature
-          </span>
-        </div>
-        {COLUMNS.map((c, idx) => (
-          <div
-            key={c}
-            className={`flex flex-col gap-1.5 px-6 pb-5 pt-7 ${
-              idx === HIGHLIGHT_COL ? "bg-accent/[0.05]" : "bg-ink-2"
-            }`}
-          >
-            <span
-              className={`font-mono text-[9.5px] uppercase tracking-[0.2em] ${
-                idx === HIGHLIGHT_COL ? "text-accent" : "text-mute"
-              }`}
-            >
-              Tier &middot; 0{idx + 1}
-            </span>
-            <span className="font-display tracking-normal text-[1.35rem] font-normal leading-none text-paper">
-              {c}
-            </span>
-          </div>
-        ))}
-      </div>
-
-      {GROUPS.map((g) => (
-        <div key={g.title} className="relative">
-          <div className="grid grid-cols-[1.4fr_repeat(4,1fr)] items-center gap-px bg-paper/[0.05] px-px">
-            <div className="bg-ink-2/90 px-7 py-3">
-              <span className="font-mono text-[9.5px] uppercase tracking-[0.22em] text-accent">
-                {g.title}
-              </span>
-            </div>
-            {COLUMNS.map((_, idx) => (
-              <div
-                key={idx}
-                className={`py-3 ${
-                  idx === HIGHLIGHT_COL ? "bg-accent/[0.04]" : "bg-ink-2/90"
-                }`}
-              />
-            ))}
-          </div>
-          {g.rows.map((row) => (
-            <div
-              key={row.label}
-              className="grid grid-cols-[1.4fr_repeat(4,1fr)] items-center gap-px bg-paper/[0.05] px-px"
-            >
-              <div className="flex items-center bg-ink-2 px-7 py-4 text-[13.5px] text-paper/80">
-                {row.label}
-              </div>
-              {row.values.map((v, idx) => (
-                <div
-                  key={idx}
-                  className={`flex h-full items-center px-6 py-4 ${
-                    idx === HIGHLIGHT_COL ? "bg-accent/[0.04]" : "bg-ink-2"
-                  }`}
-                >
-                  <CellRender value={v} highlight={idx === HIGHLIGHT_COL} />
-                </div>
-              ))}
-            </div>
-          ))}
-        </div>
-      ))}
-
-      <div className="grid grid-cols-[1.4fr_repeat(4,1fr)] items-center gap-px bg-paper/[0.05] px-px pb-px">
-        <div className="bg-ink-2 px-7 py-5 text-[12px] text-paper/55">
-          Every tier includes IAB-compliant tracking and SSL-only creative.
-        </div>
-        {COLUMNS.map((c, idx) => (
-          <div
-            key={c}
-            className={`px-6 py-5 ${
-              idx === HIGHLIGHT_COL ? "bg-accent/[0.04]" : "bg-ink-2"
-            }`}
-          >
-            <a
-              href="#advertise-contact"
-              className={`inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.16em] transition-colors ${
-                idx === HIGHLIGHT_COL
-                  ? "text-accent hover:text-paper"
-                  : "text-paper/70 hover:text-accent"
-              }`}
-            >
-              Choose {c}
-              <span aria-hidden="true">&rarr;</span>
-            </a>
-          </div>
-        ))}
-      </div>
-    </motion.div>
-  );
-}
-
-function MobileTable() {
-  return (
-    <div className="flex flex-col gap-4">
-      {COLUMNS.map((c, idx) => (
-        <div
-          key={c}
-          className={`relative overflow-hidden rounded-2xl border ${
-            idx === HIGHLIGHT_COL
-              ? "border-accent/30 bg-accent/[0.04]"
-              : "border-paper/[0.08] bg-ink-2/60"
-          }`}
-        >
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0 grid-lines opacity-[0.04]"
-          />
-          <div className="relative flex items-center justify-between gap-3 px-5 py-4">
-            <div className="flex flex-col gap-1">
-              <span
-                className={`font-mono text-[9.5px] uppercase tracking-[0.2em] ${
-                  idx === HIGHLIGHT_COL ? "text-accent" : "text-mute"
-                }`}
-              >
-                Tier &middot; 0{idx + 1}
-              </span>
-              <span className="font-display tracking-normal text-[1.3rem] font-normal leading-none text-paper">
-                {c}
-              </span>
-            </div>
-            <a
-              href="#advertise-contact"
-              className="font-mono text-[10px] uppercase tracking-[0.16em] text-accent"
-            >
-              Pick &rarr;
-            </a>
-          </div>
-          <div className="relative border-t border-paper/[0.06] px-5 py-4">
-            {GROUPS.map((g) => (
-              <div key={g.title} className="mb-4 last:mb-0">
-                <p className="mb-2 font-mono text-[9.5px] uppercase tracking-[0.22em] text-accent">
-                  {g.title}
-                </p>
-                <dl className="flex flex-col gap-2">
-                  {g.rows.map((row) => (
-                    <div
-                      key={row.label}
-                      className="flex items-center justify-between gap-4 text-[12.5px]"
-                    >
-                      <dt className="text-paper/65">{row.label}</dt>
-                      <dd>
-                        <CellRender
-                          value={row.values[idx]}
-                          highlight={idx === HIGHLIGHT_COL}
-                        />
-                      </dd>
-                    </div>
-                  ))}
-                </dl>
-              </div>
-            ))}
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-}
-
-function CellRender({
-  value,
-  highlight,
-}: {
-  value: Cell;
-  highlight?: boolean;
-}) {
+function CellValue({ value }: { value: Cell }) {
   if (value === true) {
     return (
-      <span
-        aria-label="Included"
-        className={`grid h-5 w-5 place-items-center rounded-full ${
-          highlight ? "bg-accent/20" : "bg-paper/[0.06]"
-        }`}
-      >
-        <svg viewBox="0 0 12 12" className="h-3 w-3" fill="none">
+      <>
+        <span className="sr-only">Included</span>
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 12 12"
+          className="mx-auto h-4 w-4"
+          fill="none"
+        >
           <path
             d="M2 6.2 4.6 8.8 10 3.6"
-            stroke={highlight ? "#8bfb03" : "rgba(255,255,255,0.9)"}
+            stroke="#8bfb03"
             strokeWidth="1.8"
             strokeLinecap="round"
             strokeLinejoin="round"
           />
         </svg>
-      </span>
+      </>
     );
   }
+
   if (value === false) {
     return (
-      <span
-        aria-label="Not included"
-        className="inline-block h-px w-3 bg-paper/25"
-      />
+      <>
+        <span className="sr-only">Not included</span>
+        <span aria-hidden="true" className="mx-auto block h-px w-3.5 bg-mute" />
+      </>
     );
   }
-  return (
-    <span
-      className={`font-display tracking-normal text-[14px] font-normal ${
-        highlight ? "text-paper" : "text-paper/85"
-      }`}
-    >
-      {value}
-    </span>
-  );
+
+  return <span className="font-mono text-mute">{value}</span>;
 }

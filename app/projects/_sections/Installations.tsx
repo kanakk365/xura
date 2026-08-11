@@ -1,54 +1,25 @@
-"use client";
-
-import { motion, useInView } from "motion/react";
 import Image from "next/image";
-import { useRef } from "react";
 
 export function ProjectsInstallations() {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-15%" });
-
   return (
-    <section
-      id="installations"
-      ref={ref}
-      className="relative bg-ink-2/40 py-20 sm:py-28 lg:py-36"
-    >
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-paper/15 to-transparent"
-      />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 grid-lines opacity-[0.05]"
-      />
+    <section id="installations" className="doc-section">
+      <div className="doc-shell">
+        <p className="kicker">Track record</p>
 
-      <div className="relative mx-auto w-full max-w-[1400px] px-5 sm:px-10 lg:px-16">
-        <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-16">
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.9, ease: [0.2, 0.7, 0.1, 1] }}
-            className="order-2 border-l border-paper/15 pl-6 sm:pl-8 lg:order-1"
-          >
-            <p className="mb-4 inline-flex items-center gap-3 text-[11px] font-medium uppercase tracking-[0.2em] text-mute">
-              <span className="relative inline-flex h-2 w-2">
-                <span className="absolute inset-0 rounded-full bg-accent pulse-dot" />
-                <span className="absolute -inset-1 rounded-full bg-accent/30 blur-[3px]" />
-              </span>
-              Track record
-            </p>
-            <h2 className="font-display tracking-normal text-[clamp(1.85rem,5vw,3.5rem)] font-normal leading-[1.05] text-paper">
-              Past Installations
-            </h2>
-            <p className="mt-6 max-w-xl text-[15px] leading-relaxed text-paper/70 sm:text-base">
-              Proven execution partner with a strong track record of completing
-              hundreds of installations for Fortune 500 clients, supported by an
-              active footprint across the Northeast.
-            </p>
+        <h2 className="doc-h2 mt-4 max-w-[24ch]">Past installations.</h2>
 
-            <div className="mt-8 inline-flex items-center gap-3 rounded-2xl border border-paper/[0.08] bg-paper/[0.02] px-4 py-3">
-              <span className="grid h-9 w-9 place-items-center rounded-full border border-accent/30 bg-accent/[0.08]">
+        <p className="doc-lead mt-3.5">
+          Proven execution partner with a strong track record of completing
+          hundreds of installations for Fortune 500 clients, supported by an
+          active footprint across the Northeast.
+        </p>
+
+        <div className="mt-9 grid grid-cols-1 items-start gap-4 lg:grid-cols-[1fr_1.3fr]">
+          <div className="doc-card flex h-full flex-col p-6 sm:p-8">
+            <span className="doc-tag w-fit">Delivery partner</span>
+
+            <div className="mt-6 flex items-center gap-3">
+              <span className="grid h-11 w-11 flex-none place-items-center rounded-lg border border-line bg-[rgba(139,251,3,0.08)]">
                 <svg
                   viewBox="0 0 24 24"
                   className="h-5 w-5 text-accent"
@@ -65,35 +36,39 @@ export function ProjectsInstallations() {
                 </svg>
               </span>
               <span className="flex flex-col">
-                <span className="font-display tracking-normal text-[1.05rem] font-normal leading-none text-paper">
+                <span className="font-display text-[1.15rem] font-bold leading-none text-paper">
                   Woodhollow
                 </span>
-                <span className="mt-1 font-mono text-[9px] uppercase tracking-[0.24em] text-mute">
+                <span className="mt-1.5 font-mono text-[0.58rem] uppercase tracking-[0.22em] text-mute">
                   Energy Group
                 </span>
               </span>
             </div>
-          </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 28 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 1, delay: 0.15, ease: [0.2, 0.7, 0.1, 1] }}
-            className="relative order-1 overflow-hidden rounded-2xl border border-paper/[0.08] bg-[#070707] sm:rounded-[28px] lg:order-2"
-          >
+            <ul className="doc-list mt-auto border-t border-line pt-6 sm:mt-8">
+              <li>Hundreds of completed installations</li>
+              <li>Fortune 500 client base</li>
+              <li>Active footprint across the Northeast</li>
+            </ul>
+          </div>
+
+          <figure className="doc-figure">
             <Image
               src="/installations-map.png"
               alt="Completed installations across New York and Connecticut"
               width={965}
               height={398}
-              sizes="(min-width: 1024px) 48vw, 100vw"
+              sizes="(min-width: 1024px) 660px, 100vw"
               className="block h-auto w-full"
             />
-            <div
-              aria-hidden="true"
-              className="pointer-events-none absolute inset-0 rounded-2xl ring-1 ring-inset ring-paper/[0.06] sm:rounded-[28px]"
-            />
-          </motion.div>
+            <figcaption className="doc-figcaption">
+              <span>
+                <b>Fig. 02</b> &mdash; Completed installations, New York and
+                Connecticut.
+              </span>
+              <span>Woodhollow Energy Group</span>
+            </figcaption>
+          </figure>
         </div>
       </div>
     </section>

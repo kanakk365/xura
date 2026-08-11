@@ -66,7 +66,7 @@ export default function VerifyOtpPage() {
 
         <Link
           href="/login"
-          className="group inline-flex h-10 items-center gap-2 rounded-full border border-paper/15 bg-paper/[0.04] px-4 text-[10px] font-medium uppercase tracking-[0.18em] text-paper/75 backdrop-blur-md transition-colors hover:border-paper/30 hover:text-paper"
+          className="group inline-flex h-10 items-center gap-2 rounded-full border border-line-strong bg-paper/[0.04] px-4 text-[10px] font-medium uppercase tracking-[0.18em] text-paper/75 backdrop-blur-md transition-colors hover:border-accent hover:text-paper"
         >
           <span
             aria-hidden="true"
@@ -258,7 +258,7 @@ function OtpCard() {
         className="rise w-full"
         style={{ ["--rise-delay" as string]: "200ms" }}
       >
-        <div className="relative overflow-hidden rounded-3xl border border-paper/[0.08] bg-ink-2/60 backdrop-blur-md sm:rounded-[32px]">
+        <div className="relative overflow-hidden rounded-[10px] border border-line bg-ink-2/60 backdrop-blur-md ">
           <div className="relative p-5 sm:p-7">
 
             {/* Top status bar */}
@@ -338,8 +338,8 @@ function OtpCard() {
                       aria-label={`OTP digit ${i + 1}`}
                       className={`h-12 w-full rounded-xl border text-center text-lg font-semibold text-paper transition-colors focus:outline-none focus:ring-1 ${
                         digit
-                          ? "border-accent/50 bg-accent/[0.06] focus:border-accent/60 focus:ring-accent/30"
-                          : "border-paper/[0.08] bg-paper/[0.02] focus:border-accent/40 focus:ring-accent/30"
+                          ? "border-accent/50 bg-accent/[0.06] focus:border-accent/60 focus:ring-accent"
+                          : "border-line bg-paper/[0.02] focus:border-accent focus:ring-accent"
                       }`}
                     />
                   ))}
@@ -361,7 +361,7 @@ function OtpCard() {
             </form>
 
             {/* Footer */}
-            <div className="mt-5 border-t border-paper/[0.06] pt-4 space-y-2 text-center">
+            <div className="mt-5 border-t border-line pt-4 space-y-2 text-center">
               <p className="text-[12.5px] text-paper/65">
                 Didn&apos;t receive a code?{" "}
                 {canResend ? (
@@ -404,7 +404,7 @@ function OtpCardSkeleton() {
   return (
     <section className="relative z-10 mx-auto flex w-full max-w-[540px] flex-1 items-center justify-center px-5 py-4 sm:px-8 sm:py-6">
       <div className="w-full">
-        <div className="relative h-[460px] overflow-hidden rounded-3xl border border-paper/[0.08] bg-ink-2/40 backdrop-blur-md sm:rounded-[32px]">
+        <div className="relative h-[460px] overflow-hidden rounded-[10px] border border-line bg-ink-2/40 backdrop-blur-md ">
           <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-paper/15 to-transparent" />
         </div>
       </div>
@@ -417,7 +417,7 @@ function SubmitButton({ label, disabled }: { label: string; disabled?: boolean }
     <button
       type="submit"
       disabled={disabled}
-      className="group relative mt-1 inline-flex h-12 items-center justify-center gap-3 overflow-hidden rounded-full bg-accent px-6 text-sm font-normal tracking-[0.1em] text-ink transition-transform hover:-translate-y-0.5 disabled:opacity-60 disabled:cursor-not-allowed"
+      className="group relative mt-1 inline-flex h-12 items-center justify-center gap-3 overflow-hidden rounded-[11px] bg-accent px-6 font-display text-[0.95rem] font-extrabold text-ink transition-transform hover:-translate-y-0.5 disabled:opacity-60 disabled:cursor-not-allowed"
     >
       <span className="relative z-10">{label}</span>
       <span

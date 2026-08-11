@@ -1,7 +1,7 @@
 "use client";
 
-import { AnimatePresence, motion, useInView } from "motion/react";
-import { useRef, useState } from "react";
+import { AnimatePresence, motion } from "motion/react";
+import { useState } from "react";
 
 type FAQItem = {
   tag: string;
@@ -61,149 +61,93 @@ const FAQ_DATA: FAQItem[] = [
 ];
 
 export function AdvertiseFAQ() {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-15%" });
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section
-      id="advertise-faq"
-      ref={ref}
-      className="relative bg-ink py-20 sm:py-28 lg:py-36"
-    >
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-paper/15 to-transparent"
-      />
+    <section id="advertise-faq" className="doc-section">
+      <div className="doc-shell">
+        <p className="kicker">FAQ</p>
 
-      <div className="relative mx-auto w-full max-w-[1400px] px-5 sm:px-10 lg:px-16">
-        <div className="grid grid-cols-1 gap-10 sm:gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-20">
-          <div className="lg:sticky lg:top-24 lg:self-start">
-            <motion.p
-              initial={{ opacity: 0, y: 12 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.7, ease: [0.2, 0.7, 0.1, 1] }}
-              className="mb-5 inline-flex items-center gap-3 text-[11px] font-medium uppercase tracking-[0.2em] text-mute"
-            >
-              <span className="relative inline-flex h-2 w-2">
-                <span className="absolute inset-0 rounded-full bg-accent pulse-dot" />
-                <span className="absolute -inset-1 rounded-full bg-accent/30 blur-[3px]" />
-              </span>
-              FAQ
-            </motion.p>
-            <motion.h2
-              initial={{ opacity: 0, y: 16 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.9, delay: 0.1, ease: [0.2, 0.7, 0.1, 1] }}
-              className="font-display tracking-normal text-[clamp(1.85rem,6vw,3.5rem)] font-normal leading-[1.05] text-paper"
-            >
-              Questions media{" "}
-              <span className="italic text-accent">buyers</span> ask first.
-            </motion.h2>
-            <motion.p
-              initial={{ opacity: 0, y: 16 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.9, delay: 0.2, ease: [0.2, 0.7, 0.1, 1] }}
-              className="mt-7 max-w-md text-base leading-relaxed text-paper/65"
-            >
-              The most common things brand marketers, programmatic teams, and
-              agency planners want answered before booking.
-            </motion.p>
-          </div>
+        <h2 className="doc-h2 mt-4 max-w-[24ch]">
+          Questions media <span className="text-accent">buyers</span> ask first.
+        </h2>
 
-          <ul className="flex flex-col gap-2">
-            {FAQ_DATA.map((item, i) => {
-              const isOpen = openIndex === i;
-              return (
-                <motion.li
-                  key={item.question}
-                  initial={{ opacity: 0, y: 16 }}
-                  animate={isInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{
-                    duration: 0.7,
-                    delay: 0.25 + i * 0.06,
-                    ease: [0.2, 0.7, 0.1, 1],
-                  }}
-                  className={`group relative overflow-hidden rounded-2xl border transition-colors duration-500 ${
-                    isOpen
-                      ? "border-accent/35 bg-ink-2/80"
-                      : "border-paper/[0.08] bg-ink-2/40 hover:border-paper/20"
-                  }`}
-                >
+        <p className="doc-lead mt-3.5">
+          The most common things brand marketers, programmatic teams, and agency
+          planners want answered before booking.
+        </p>
+
+        <ul className="mt-9 divide-y divide-line overflow-hidden rounded-[10px] border border-line bg-ink-2">
+          {FAQ_DATA.map((item, i) => {
+            const isOpen = openIndex === i;
+            const panelId = `adv-faq-panel-${i}`;
+            const buttonId = `adv-faq-button-${i}`;
+
+            return (
+              <li key={item.question}>
+                <h3>
                   <button
                     type="button"
+                    id={buttonId}
                     onClick={() => setOpenIndex(isOpen ? null : i)}
                     aria-expanded={isOpen}
-                    className="flex w-full items-center gap-3 px-5 py-4 text-left sm:gap-4 sm:px-7 sm:py-6"
+                    aria-controls={panelId}
+                    className="flex w-full items-center gap-5 px-5 py-4 text-left transition-colors hover:bg-white/[0.02] sm:px-7"
                   >
-                    <span className="hidden shrink-0 rounded-full border border-paper/[0.08] bg-paper/[0.02] px-2.5 py-1 text-[10px] font-medium tracking-[0.08em] text-paper/65 md:inline-flex md:items-center md:gap-1.5">
-                      <span className="h-1 w-1 rounded-full bg-accent" />
-                      {item.tag}
-                    </span>
-                    <span className="flex-1 font-display tracking-normal text-[16px] font-normal text-paper sm:text-xl">
+                    <span
+                      className={`flex-1 font-display text-[1rem] font-bold leading-[1.35] transition-colors sm:text-[1.05rem] ${
+                        isOpen ? "text-accent" : "text-paper"
+                      }`}
+                    >
                       {item.question}
                     </span>
-                    <motion.span
-                      animate={{ rotate: isOpen ? 45 : 0 }}
-                      transition={{ duration: 0.3, ease: [0.2, 0.7, 0.1, 1] }}
-                      className={`grid h-8 w-8 shrink-0 place-items-center rounded-full border transition-colors duration-300 sm:h-9 sm:w-9 ${
-                        isOpen
-                          ? "border-accent/50 bg-accent/10 text-accent"
-                          : "border-paper/15 bg-paper/[0.03] text-paper/70"
-                      }`}
+
+                    <span className="hidden font-mono text-[0.62rem] uppercase tracking-[0.16em] text-mute md:block">
+                      {item.tag}
+                    </span>
+
+                    <span
                       aria-hidden="true"
+                      className={`grid h-6 w-6 flex-none place-items-center transition-transform duration-300 ${
+                        isOpen ? "rotate-180 text-accent" : "text-mute"
+                      }`}
                     >
                       <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                         <path
-                          d="M7 1V13M1 7H13"
+                          d="M2 5L7 10L12 5"
                           stroke="currentColor"
-                          strokeWidth="1.4"
+                          strokeWidth="1.7"
                           strokeLinecap="round"
+                          strokeLinejoin="round"
                         />
                       </svg>
-                    </motion.span>
+                    </span>
                   </button>
+                </h3>
 
-                  <AnimatePresence initial={false}>
-                    {isOpen && (
-                      <motion.div
-                        key="content"
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: "auto", opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.4, ease: [0.2, 0.7, 0.1, 1] }}
-                        className="overflow-hidden"
-                      >
-                        <div className="px-5 pb-5 sm:px-7 sm:pb-7 sm:pl-[5.5rem]">
-                          <div className="mb-4 flex items-center gap-3 sm:mb-5">
-                            <div className="h-px flex-1 bg-paper/10" />
-                            <span className="font-mono text-[10px] font-medium uppercase tracking-[0.2em] text-mute">
-                              Answer
-                            </span>
-                            <div className="h-px flex-1 bg-paper/10" />
-                          </div>
-                          <p className="max-w-2xl text-[14.5px] leading-relaxed text-paper/75 sm:text-base">
-                            {item.answer}
-                          </p>
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-
+                <AnimatePresence initial={false}>
                   {isOpen && (
                     <motion.div
-                      aria-hidden="true"
-                      initial={{ scaleX: 0 }}
-                      animate={{ scaleX: 1 }}
-                      transition={{ duration: 0.6, ease: [0.2, 0.7, 0.1, 1] }}
-                      className="absolute inset-x-6 bottom-0 h-px origin-left bg-gradient-to-r from-accent/0 via-accent/40 to-accent/0"
-                    />
+                      key="content"
+                      id={panelId}
+                      role="region"
+                      aria-labelledby={buttonId}
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.32, ease: [0.22, 0.61, 0.36, 1] }}
+                      className="overflow-hidden"
+                    >
+                      <p className="max-w-[80ch] px-5 pb-6 text-[0.95rem] leading-[1.7] text-paper/70 sm:px-7">
+                        {item.answer}
+                      </p>
+                    </motion.div>
                   )}
-                </motion.li>
-              );
-            })}
-          </ul>
-        </div>
+                </AnimatePresence>
+              </li>
+            );
+          })}
+        </ul>
       </div>
     </section>
   );

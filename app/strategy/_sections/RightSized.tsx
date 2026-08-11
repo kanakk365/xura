@@ -1,8 +1,3 @@
-"use client";
-
-import { motion, useInView } from "motion/react";
-import { useRef } from "react";
-
 const OVERSIZED = [
   "Capital tied up in capacity that never gets used",
   "Higher operational overhead and maintenance surface",
@@ -16,82 +11,35 @@ const RIGHTSIZED = [
 ];
 
 export function StrategyRightSized() {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-15%" });
-
   return (
-    <section
-      id="right-sized"
-      ref={ref}
-      className="relative bg-ink-2/40 py-20 sm:py-28 lg:py-36"
-    >
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-paper/15 to-transparent"
-      />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 grid-lines opacity-[0.05]"
-      />
+    <section id="right-sized" className="doc-section">
+      <div className="doc-shell">
+        <p className="kicker">Right-sized infrastructure</p>
 
-      <div className="relative mx-auto w-full max-w-[1400px] px-5 sm:px-10 lg:px-16">
-        <div className="grid grid-cols-1 gap-10 sm:gap-14 lg:grid-cols-[1fr_1.1fr] lg:gap-20">
-          <div className="flex flex-col lg:sticky lg:top-24 lg:self-start">
-            <motion.p
-              initial={{ opacity: 0, y: 12 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.7, ease: [0.2, 0.7, 0.1, 1] }}
-              className="mb-4 inline-flex items-center gap-3 self-start text-[11px] font-medium uppercase tracking-[0.2em] text-mute"
-            >
-              <span className="relative inline-flex h-2 w-2">
-                <span className="absolute inset-0 rounded-full bg-accent pulse-dot" />
-                <span className="absolute -inset-1 rounded-full bg-accent/30 blur-[3px]" />
-              </span>
-              Right-sized infrastructure
-            </motion.p>
+        <h2 className="doc-h2 mt-4 max-w-[24ch]">
+          Sized for the site,{" "}
+          <span className="text-accent">not the spec sheet</span>.
+        </h2>
 
-            <motion.h2
-              initial={{ opacity: 0, y: 16 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.9, delay: 0.1, ease: [0.2, 0.7, 0.1, 1] }}
-              className="font-display tracking-normal text-[clamp(1.85rem,5vw,3.5rem)] font-normal leading-[1.05] text-paper"
-            >
-              Sized for the site,{" "}
-              <span className="italic text-accent">not the spec sheet</span>.
-            </motion.h2>
+        <p className="doc-lead mt-3.5">
+          We prioritize systems that match actual site demand over speculative
+          oversizing. That discipline is why the strategy matters: it reduces
+          capital and operational risk while supporting efficiency &mdash;
+          without unnecessary utility upgrades.
+        </p>
 
-            <motion.p
-              initial={{ opacity: 0, y: 16 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.9, delay: 0.25, ease: [0.2, 0.7, 0.1, 1] }}
-              className="mt-6 max-w-md text-[15px] leading-relaxed text-paper/65 sm:text-base"
-            >
-              We prioritize systems that match actual site demand over
-              speculative oversizing. That discipline is why the strategy
-              matters: it reduces capital and operational risk while supporting
-              efficiency&mdash;without unnecessary utility upgrades.
-            </motion.p>
-          </div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 28 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 1, delay: 0.3, ease: [0.2, 0.7, 0.1, 1] }}
-            className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5"
-          >
-            <Ledger
-              variant="muted"
-              tag="Oversized"
-              caption="The speculative default"
-              items={OVERSIZED}
-            />
-            <Ledger
-              variant="accent"
-              tag="Right-sized"
-              caption="The Xura approach"
-              items={RIGHTSIZED}
-            />
-          </motion.div>
+        <div className="mt-9 grid grid-cols-1 gap-4 md:grid-cols-2">
+          <Ledger
+            tag="Oversized"
+            caption="The speculative default"
+            items={OVERSIZED}
+          />
+          <Ledger
+            accent
+            tag="Right-sized"
+            caption="The Xura approach"
+            items={RIGHTSIZED}
+          />
         </div>
       </div>
     </section>
@@ -99,77 +47,71 @@ export function StrategyRightSized() {
 }
 
 function Ledger({
-  variant,
+  accent,
   tag,
   caption,
   items,
 }: {
-  variant: "muted" | "accent";
+  accent?: boolean;
   tag: string;
   caption: string;
   items: string[];
 }) {
-  const accent = variant === "accent";
-
   return (
     <div
-      className={`relative flex flex-col overflow-hidden rounded-2xl border p-6 sm:rounded-[28px] sm:p-8 ${
+      className={`flex flex-col rounded-[10px] border p-6 sm:p-8 ${
         accent
-          ? "border-accent/30 bg-accent/[0.05]"
-          : "border-paper/[0.08] bg-ink/50"
+          ? "border-accent bg-[rgba(139,251,3,0.05)]"
+          : "border-line bg-ink-2"
       }`}
     >
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 grid-lines opacity-[0.04]"
-      />
-
-      <div className="relative flex items-center justify-between gap-3">
+      <div className="flex items-center justify-between gap-3">
         <span
-          className={`font-mono text-[10px] uppercase tracking-[0.22em] ${
+          className={`font-mono text-[0.62rem] uppercase tracking-[0.2em] ${
             accent ? "text-accent" : "text-mute"
           }`}
         >
           {tag}
         </span>
         <span
-          className={`inline-flex h-1.5 w-1.5 rounded-full ${
-            accent ? "bg-accent" : "bg-paper/25"
+          aria-hidden="true"
+          className={`h-1.5 w-1.5 rounded-[2px] ${
+            accent ? "bg-accent" : "bg-mute"
           }`}
         />
       </div>
 
-      <p className="relative mt-2 font-display tracking-normal text-[1.25rem] font-normal leading-tight text-paper">
+      <p className="mt-3 font-display text-[1.2rem] font-bold leading-tight text-paper">
         {caption}
       </p>
 
-      <ul className="relative mt-6 flex flex-col gap-4">
+      <ul className="mt-6 flex flex-col gap-3.5">
         {items.map((item) => (
           <li key={item} className="flex items-start gap-3">
             {accent ? (
-              <span
+              <svg
                 aria-hidden="true"
-                className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-accent/20"
+                viewBox="0 0 12 12"
+                className="mt-1 h-3.5 w-3.5 flex-none"
+                fill="none"
               >
-                <svg viewBox="0 0 12 12" className="h-3 w-3" fill="none">
-                  <path
-                    d="M2 6.2 4.6 8.8 10 3.6"
-                    stroke="#8bfb03"
-                    strokeWidth="1.8"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </span>
+                <path
+                  d="M2 6.2 4.6 8.8 10 3.6"
+                  stroke="#8bfb03"
+                  strokeWidth="1.8"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
             ) : (
               <span
                 aria-hidden="true"
-                className="mt-2 inline-block h-px w-3 shrink-0 bg-paper/30"
+                className="mt-2.5 h-px w-3.5 flex-none bg-mute"
               />
             )}
             <span
-              className={`text-[13.5px] leading-[1.55] ${
-                accent ? "text-paper/85" : "text-paper/55"
+              className={`text-[0.9rem] leading-[1.55] ${
+                accent ? "text-paper/85" : "text-mute"
               }`}
             >
               {item}

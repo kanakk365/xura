@@ -1,8 +1,3 @@
-"use client";
-
-import { motion, useInView } from "motion/react";
-import { useRef } from "react";
-
 type Step = {
   id: string;
   number: string;
@@ -48,142 +43,47 @@ const STEPS: Step[] = [
 ];
 
 export function AdvertiseProcess() {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-15%" });
-
   return (
-    <section
-      id="process"
-      ref={ref}
-      className="relative bg-ink py-20 sm:py-28 lg:py-36"
-    >
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-paper/15 to-transparent"
-      />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 grid-lines opacity-[0.05]"
-      />
+    <section id="process" className="doc-section">
+      <div className="doc-shell">
+        <p className="kicker">Process</p>
 
-      <div className="relative mx-auto w-full max-w-[1400px] px-5 sm:px-10 lg:px-16">
-        <header className="mb-10 flex flex-col gap-6 sm:mb-14 lg:mb-20 lg:flex-row lg:items-end lg:justify-between">
-          <div className="max-w-2xl">
-            <motion.p
-              initial={{ opacity: 0, y: 12 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.7, ease: [0.2, 0.7, 0.1, 1] }}
-              className="mb-5 inline-flex items-center gap-3 text-[11px] font-medium uppercase tracking-[0.2em] text-mute"
-            >
-              <span className="relative inline-flex h-2 w-2">
-                <span className="absolute inset-0 rounded-full bg-accent pulse-dot" />
-                <span className="absolute -inset-1 rounded-full bg-accent/30 blur-[3px]" />
+        <h2 className="doc-h2 mt-4 max-w-[24ch]">
+          From brief to <span className="text-accent">live</span> in five days.
+        </h2>
+
+        <p className="doc-lead mt-3.5">
+          No RFPs, no waterfalls. Four predictable steps with a media planner
+          staying close from kickoff to launch.
+        </p>
+
+        <ol className="mt-9 grid grid-cols-1 gap-px overflow-hidden rounded-[10px] border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
+          {STEPS.map((step) => (
+            <li key={step.id} className="flex flex-col bg-ink-2 p-6">
+              <div className="flex items-center justify-between gap-3">
+                <span className="font-mark text-[1.9rem] leading-none text-accent">
+                  {step.number}
+                </span>
+                <span className="font-mono text-[0.58rem] uppercase tracking-[0.18em] text-mute">
+                  {step.tagline}
+                </span>
+              </div>
+
+              <h3 className="mt-4 font-display text-[1.05rem] font-bold leading-[1.25] text-paper">
+                {step.title}
+              </h3>
+
+              <p className="mt-2 text-[0.88rem] leading-[1.55] text-mute">
+                {step.body}
+              </p>
+
+              <span className="mt-auto flex items-center gap-2 border-t border-line pt-4 font-mono text-[0.62rem] uppercase tracking-[0.16em] text-accent sm:mt-6">
+                {step.duration}
               </span>
-              Process
-            </motion.p>
-            <motion.h2
-              initial={{ opacity: 0, y: 16 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.9, delay: 0.1, ease: [0.2, 0.7, 0.1, 1] }}
-              className="font-display tracking-normal text-[clamp(1.85rem,6vw,3.5rem)] font-normal leading-[1.05] text-paper"
-            >
-              From brief to{" "}
-              <span className="italic text-accent">live</span> in five days.
-            </motion.h2>
-          </div>
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.9, delay: 0.2, ease: [0.2, 0.7, 0.1, 1] }}
-            className="max-w-sm text-[15px] leading-relaxed text-paper/60 sm:text-base"
-          >
-            No RFPs, no waterfalls. Four predictable steps with a media planner
-            staying close from kickoff to launch.
-          </motion.p>
-        </header>
-
-        <ol className="relative grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-5 lg:grid-cols-4">
-          <span
-            aria-hidden="true"
-            className="pointer-events-none absolute left-6 top-0 hidden h-full w-px bg-gradient-to-b from-accent/0 via-paper/10 to-accent/0 md:hidden"
-          />
-          {STEPS.map((s, i) => (
-            <StepCard
-              key={s.id}
-              step={s}
-              index={i}
-              total={STEPS.length}
-              isInView={isInView}
-            />
+            </li>
           ))}
         </ol>
       </div>
     </section>
-  );
-}
-
-function StepCard({
-  step,
-  index,
-  total,
-  isInView,
-}: {
-  step: Step;
-  index: number;
-  total: number;
-  isInView: boolean;
-}) {
-  const delay = 0.3 + index * 0.1;
-  return (
-    <motion.li
-      initial={{ opacity: 0, y: 24 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.85, delay, ease: [0.2, 0.7, 0.1, 1] }}
-      className="group relative flex h-full flex-col gap-5 overflow-hidden rounded-2xl border border-paper/[0.08] bg-ink-2/60 p-6 transition-colors duration-500 hover:bg-ink-2 sm:rounded-[28px] sm:p-7"
-    >
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 grid-lines opacity-[0.04]"
-      />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute right-5 top-4 select-none font-display text-[clamp(3rem,5vw,4.5rem)] italic leading-[0.82] text-paper/[0.05]"
-      >
-        {step.number}
-      </div>
-
-      <div className="relative flex items-center gap-2.5 text-[10px] font-medium uppercase tracking-[0.3em] text-accent">
-        <span className="relative inline-flex h-1.5 w-1.5">
-          <span className="absolute inset-0 rounded-full bg-accent pulse-dot" />
-        </span>
-        Step
-        <span className="font-mono tracking-[0.2em] text-mute">
-          &middot; {step.number} / {String(total).padStart(2, "0")}
-        </span>
-      </div>
-
-      <div className="relative flex flex-col gap-2.5">
-        <p className="flex items-center gap-2.5 font-display text-[13px] italic leading-none text-accent/85">
-          <span className="block h-px w-5 bg-accent/55" />
-          {step.tagline}
-        </p>
-        <h3 className="font-display tracking-normal text-[clamp(1.25rem,1.75vw,1.55rem)] font-normal leading-[1.1] text-paper">
-          {step.title}
-        </h3>
-      </div>
-
-      <p className="relative text-[13px] leading-[1.55] text-paper/65">
-        {step.body}
-      </p>
-
-      <div className="relative mt-auto flex items-center justify-between gap-3 border-t border-paper/10 pt-4">
-        <span className="font-mono text-[9.5px] uppercase tracking-[0.18em] text-mute">
-          Duration
-        </span>
-        <span className="font-display tracking-normal text-[14px] font-normal text-paper">
-          {step.duration}
-        </span>
-      </div>
-    </motion.li>
   );
 }

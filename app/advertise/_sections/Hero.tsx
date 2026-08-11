@@ -1,134 +1,26 @@
-import { Navbar } from "../../components/Navbar";
-import { ArrowUpRight } from "../../components/icons";
+import { PageHero, type PageHeroStat } from "../../components/PageHero";
 
-type HeroStat = {
-  figure: string;
-  label: string;
-  suffix?: string;
-};
-
-const HERO_STATS: HeroStat[] = [
-  { figure: "84K", label: "Monthly readers", suffix: "/MO" },
+const HERO_STATS: PageHeroStat[] = [
+  { figure: "84K", suffix: "/MO", label: "Monthly readers" },
   { figure: "6:42", label: "Avg session" },
   { figure: "71%", label: "Decision-makers" },
-  { figure: "12", label: "US metros", suffix: "+" },
+  { figure: "12+", label: "US metros" },
 ];
 
 export function AdvertiseHero() {
   return (
-    <section className="relative isolate flex min-h-[88svh] w-full flex-col overflow-hidden bg-ink grain">
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 -z-30 grid-lines opacity-[0.08]"
-      />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-0 -z-20 h-[65vh] bg-[radial-gradient(120%_70%_at_50%_0%,rgba(139,251,3,0.12)_0%,rgba(5,5,5,0)_60%)]"
-      />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 bottom-0 -z-20 h-[55vh] bg-[radial-gradient(120%_60%_at_50%_100%,rgba(139,251,3,0.05)_0%,rgba(5,5,5,0)_60%)]"
-      />
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 -z-10 bg-[radial-gradient(130%_90%_at_50%_45%,rgba(5,5,5,0.2)_0%,rgba(5,5,5,0.55)_55%,rgba(5,5,5,0.92)_100%)]"
-      />
-      <div
-        aria-hidden="true"
-        className="absolute inset-x-0 top-0 -z-10 h-32 bg-gradient-to-b from-ink/90 to-transparent"
-      />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-72 bg-gradient-to-t from-ink via-ink/80 to-transparent"
-      />
-
-      <Navbar />
-
-      <div className="relative z-10 mx-auto flex w-full max-w-[1400px] flex-1 flex-col items-center justify-center mt-26 px-5 py-10  text-center sm:px-10 sm:py-14 lg:px-16">
-        <h1
-          className="rise font-display tracking-normal text-paper"
-          style={{ ["--rise-delay" as string]: "240ms" }}
-        >
-          <span className="mx-auto block text-balance text-[clamp(2.75rem,10vw,5rem)] font-normal leading-[1.05] sm:max-w-[18ch]">
-            Reach the people{" "}
-            <span className="italic text-accent">scoping</span> the grid.
-          </span>
-        </h1>
-
-        <p
-          className="rise mx-auto mt-7 max-w-[22rem] text-balance text-[13px] leading-relaxed text-paper/70 sm:mt-7 sm:max-w-2xl sm:text-base"
-          style={{ ["--rise-delay" as string]: "420ms" }}
-        >
-          <span className="hidden sm:inline">
-            Operators, CRE owners, and capital partners actively scoping
-            site-level energy &mdash; not just impressions, but buyers.
-          </span>
-          <span className="sm:hidden">
-            Operators and owners scoping site-level energy projects.
-          </span>
-        </p>
-
-        <div
-          className="rise mt-10 flex flex-col items-center gap-3 sm:mt-9 sm:flex-row sm:flex-wrap sm:justify-center"
-          style={{ ["--rise-delay" as string]: "560ms" }}
-        >
-          <a
-            href="#packages"
-            className="group relative inline-flex h-12 w-56 items-center justify-center gap-3 overflow-hidden rounded-full bg-accent px-6 text-sm font-normal tracking-[0.1em] text-ink transition-transform hover:-translate-y-0.5 sm:w-auto"
-          >
-            <span className="relative z-10">View Packages</span>
-            <span
-              aria-hidden="true"
-              className="relative z-10 grid h-7 w-7 place-items-center rounded-full bg-ink text-accent transition-transform group-hover:translate-x-0.5"
-            >
-              <ArrowUpRight />
-            </span>
-            <span
-              aria-hidden="true"
-              className="absolute inset-0 -translate-x-full bg-paper transition-transform duration-500 group-hover:translate-x-0"
-            />
-          </a>
-          <a
-            href="#advertise-contact"
-            className="inline-flex h-12 w-56 items-center justify-center gap-3 rounded-full border border-paper/20 bg-paper/[0.03] px-6 text-sm font-normal tracking-[0.1em] text-paper backdrop-blur-md transition-colors hover:border-paper/40 hover:bg-paper/[0.08] sm:w-auto"
-          >
-            Talk to Media
-            <span
-              aria-hidden="true"
-              className="h-1.5 w-1.5 rounded-full bg-accent"
-            />
-          </a>
-        </div>
-
-        <div
-          className="rise mt-16 grid w-full max-w-3xl grid-cols-2 gap-x-2 gap-y-6 border-t border-paper/10 pt-7 text-center sm:mt-16 sm:grid-cols-4 sm:gap-x-6 sm:gap-y-6 sm:pt-7"
-          style={{ ["--rise-delay" as string]: "720ms" }}
-        >
-          {HERO_STATS.map((stat) => (
-            <HeroStatTile key={stat.label} {...stat} />
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function HeroStatTile({ figure, label, suffix }: HeroStat) {
-  return (
-    <div className="flex flex-col items-center gap-1 ">
-      <div className="flex items-baseline justify-center gap-1.5">
-        <span className="font-display tracking-normal text-3xl font-normal leading-none text-paper sm:text-4xl lg:text-5xl">
-          {figure}
-        </span>
-        {suffix && (
-          <span className="text-[10px] font-medium uppercase tracking-[0.16em] text-accent sm:text-[11px]">
-            {suffix}
-          </span>
-        )}
-      </div>
-      <span className="text-[10px] font-medium uppercase tracking-[0.1em] text-mute sm:text-[11px]">
-        {label}
-      </span>
-    </div>
+    <PageHero
+      kicker="Advertise with Xura"
+      title={
+        <>
+          Reach the people <span className="text-accent">scoping</span> the
+          grid.
+        </>
+      }
+      lead="Operators, CRE owners, and capital partners actively scoping site-level energy — not just impressions, but buyers."
+      stats={HERO_STATS}
+      primary={{ label: "Request the media kit", href: "#contact" }}
+      secondary={{ label: "View packages", href: "#packages" }}
+    />
   );
 }
