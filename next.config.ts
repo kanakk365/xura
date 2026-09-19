@@ -14,6 +14,7 @@ const nextConfig: NextConfig = {
       { source: "/xura-acquisition-deck", destination: "/xura-acquisition-deck.html" },
       { source: "/flag-football-report", destination: "/flag-football-report.html" },
       { source: "/li-youth-sports-directory", destination: "/li-youth-sports-directory.html" },
+      { source: "/dkp-stadium-report", destination: "/dkp-stadium-report.html" },
     ];
   },
 };

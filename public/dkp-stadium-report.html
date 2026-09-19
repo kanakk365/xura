@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Destination KP — Overview &amp; Stadium Estimate | DKP Briefing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Poppins:wght@300;400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0b0b14; --bg-2:#0e0e1c;
+    --card:#16162a; --card-2:#1b1b30;
+    --primary:#b49dff; --primary-deep:#9333ea; --blue:#2563eb;
+    --cyan:#22d3ee; --pink:#f472b6; --teal:#4db8a8; --green:#4ade80; --amber:#fbbf24;
+    --text:#edecfb; --muted:#c6c8e4; --faint:#a2a4c8; --hi:#c9b8ff;
+    --border:rgba(150,140,230,.20); --border-strong:rgba(165,155,238,.34);
+    --grad-soft:rgba(147,51,234,.14);
+    --maxw:1180px;
+    --space-2:8px; --space-3:12px; --space-4:16px; --space-5:20px;
+    --space-6:24px; --space-7:32px; --space-8:48px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:'Poppins',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.65;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+  img{display:block;max-width:100%}
+
+  /* nav */
+  nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);background:rgba(11,11,20,.82);border-bottom:1px solid var(--border)}
+  .nav-in{max-width:var(--maxw);margin:0 auto;display:flex;align-items:center;gap:14px;padding:13px 24px}
+  .brand{display:flex;align-items:center;gap:10px;font-family:'Baloo 2';font-weight:800;font-size:1.12rem;letter-spacing:.3px;white-space:nowrap;flex:none}
+  .brand .dot{width:29px;height:29px;border-radius:9px;background:var(--primary-deep);display:grid;place-items:center;font-size:.8rem}
+  .nav-links{margin-left:auto;display:flex;gap:2px;flex-wrap:nowrap}
+  .nav-links a{color:var(--muted);text-decoration:none;font-size:.78rem;font-weight:500;padding:6px 10px;border-radius:999px;transition:.2s;white-space:nowrap}
+  .nav-links a:hover{color:var(--text);background:var(--grad-soft)}
+  .nav-links a:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
+  @media(max-width:1080px){.nav-links{display:none}}
+
+  section{max-width:var(--maxw);margin:0 auto;padding:76px 24px}
+  .kicker{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;color:var(--primary);margin-bottom:14px;display:flex;align-items:center;gap:10px}
+  .kicker::before{content:"";width:30px;height:1px;background:var(--primary)}
+  h2{font-family:'Baloo 2';font-weight:800;font-size:clamp(1.85rem,4vw,2.8rem);line-height:1.1;letter-spacing:-.5px;margin-bottom:14px;text-wrap:balance;max-width:24ch}
+  h3.sub-h{font-family:'Baloo 2';font-weight:700;font-size:1.25rem;margin:var(--space-8) 0 var(--space-4)}
+  .lead{color:var(--muted);font-size:1.04rem;max-width:68ch;margin-bottom:var(--space-7);text-wrap:pretty}
+  .grad-text{color:var(--hi)}
+
+  /* part divider */
+  .part{max-width:var(--maxw);margin:0 auto;padding:64px 24px 0}
+  .part-in{border-top:1px solid var(--border-strong);padding-top:var(--space-7);display:flex;align-items:baseline;gap:var(--space-5);flex-wrap:wrap}
+  .part-n{font-family:'Baloo 2';font-weight:800;font-size:clamp(2.4rem,5vw,3.4rem);line-height:.9;color:transparent;-webkit-text-stroke:1.4px rgba(180,157,255,.55)}
+  .part-t{font-family:'Baloo 2';font-weight:800;font-size:clamp(1.5rem,3vw,2.1rem);line-height:1.1}
+  .part-d{color:var(--muted);font-size:.95rem;margin-top:var(--space-2);flex-basis:100%}
+
+  /* hero — text sits above the picture, never on it */
+  .hero{padding-top:64px;padding-bottom:20px}
+  .badge{display:inline-flex;align-items:center;gap:9px;padding:7px 16px;border:1px solid var(--border-strong);border-radius:999px;font-size:.76rem;color:var(--muted);background:rgba(180,157,255,.06);width:fit-content;margin-bottom:26px}
+  .badge .pulse{width:8px;height:8px;border-radius:50%;background:var(--green)}
+  .hero h1{font-family:'Baloo 2';font-weight:800;font-size:clamp(2.5rem,6.4vw,4.6rem);line-height:1.03;letter-spacing:-1.4px;margin-bottom:22px;max-width:17ch}
+  .hero p.sub{font-size:1.12rem;color:var(--muted);max-width:64ch;margin-bottom:36px}
+  .hero-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--space-4);margin:10px 0 var(--space-7)}
+  .glance{display:grid;grid-template-columns:repeat(5,1fr);gap:var(--space-4);margin-top:var(--space-6);flex-basis:100%}
+  @media(max-width:980px){.glance{grid-template-columns:repeat(3,1fr)}}
+  @media(max-width:860px){.hero-stats{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:620px){.glance{grid-template-columns:repeat(2,1fr)}}
+  .hstat{padding:22px 20px;border:1px solid var(--border);border-radius:18px;background:var(--card);position:relative;overflow:hidden}
+  .hstat::after{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--primary-deep),var(--blue));opacity:.9}
+  .hstat .n{font-family:'Baloo 2';font-weight:800;font-size:2.1rem;line-height:1;color:var(--hi)}
+  .hstat .l{color:var(--muted);font-size:.8rem;margin-top:var(--space-2);line-height:1.45}
+  .glance .hstat .n{font-size:1.75rem}
+
+  /* figures */
+  .figure{border:1px solid var(--border);border-radius:18px;overflow:hidden;background:var(--card)}
+  .figure img{width:100%;height:auto}
+  .figure figcaption{padding:12px 18px;font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--faint);border-top:1px solid var(--border);display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;line-height:1.6}
+  .figure figcaption b{color:var(--text);font-weight:700}
+  .figure.paper img{background:#fff}
+  .zoom img{cursor:zoom-in}
+  .zoom img:focus-visible{outline:2px solid var(--primary);outline-offset:-2px}
+
+  .life-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:var(--space-4)}
+  .life-grid .figure img{height:430px;object-fit:cover}
+  @media(max-width:900px){.life-grid{grid-template-columns:1fr 1fr}.life-grid .figure:first-child{grid-column:1/-1}.life-grid .figure img{height:320px}}
+  @media(max-width:560px){.life-grid{grid-template-columns:1fr}.life-grid .figure img{height:260px}}
+
+  .render-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4);margin-top:var(--space-4)}
+  .render-grid .figure img{aspect-ratio:16/9;object-fit:cover}
+  @media(max-width:620px){.render-grid{grid-template-columns:1fr}}
+
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-7);align-items:start}
+  .split.wide-l{grid-template-columns:1.25fr 1fr}
+  .split.wide-r{grid-template-columns:1fr 1.25fr}
+  @media(max-width:900px){.split,.split.wide-l,.split.wide-r{grid-template-columns:1fr}}
+
+  /* cards */
+  .cards{display:grid;gap:var(--space-4)}
+  .g2{grid-template-columns:repeat(2,1fr);gap:var(--space-6)} .g3{grid-template-columns:repeat(3,1fr)} .g4{grid-template-columns:repeat(4,1fr)}
+  @media(max-width:900px){.g3,.g4{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:620px){.g2,.g3,.g4{grid-template-columns:1fr}}
+  .card{position:relative;border:1px solid var(--border);border-radius:18px;padding:var(--space-6);background:var(--card)}
+  .card h4{font-family:'Baloo 2';font-weight:700;font-size:1.08rem;margin-bottom:6px}
+  .card p{color:var(--muted);font-size:.92rem}
+  .card .big{font-family:'Baloo 2';font-weight:800;font-size:1.9rem;line-height:1.05;color:var(--hi);margin-bottom:4px}
+  .card .cap{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--faint);margin-top:10px;letter-spacing:.04em}
+
+  /* spec list */
+  .spec{border:1px solid var(--border);border-radius:18px;background:var(--card);overflow:hidden}
+  .spec-row{display:grid;grid-template-columns:128px 1fr;gap:18px;padding:15px 22px;border-bottom:1px solid var(--border);align-items:baseline}
+  .spec-row:last-child{border-bottom:0}
+  .spec-k{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
+  .spec-v{font-size:.95rem;color:var(--text)}
+  .spec-v span{color:var(--muted)}
+  .spec.big .spec-row{grid-template-columns:92px 1fr}
+  .spec.big .spec-k{font-family:'Baloo 2';font-weight:800;font-size:1.7rem;letter-spacing:0;text-transform:none;color:var(--hi);line-height:1}
+
+  /* lists */
+  .region{border:1px solid var(--border);border-radius:18px;padding:var(--space-6);background:var(--card)}
+  .region h4{font-family:'Baloo 2';font-weight:700;font-size:1.15rem;margin-bottom:4px;display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+  .region .rtag{font-family:'JetBrains Mono',monospace;font-size:.64rem;padding:3px 8px;border-radius:6px;background:var(--grad-soft);color:var(--primary)}
+  .region ul{list-style:none;margin-top:var(--space-3);display:flex;flex-direction:column;gap:10px}
+  .region li{font-size:.92rem;color:var(--muted);padding-left:18px;position:relative}
+  .region li::before{content:"";position:absolute;left:0;top:10px;width:6px;height:6px;border-radius:2px;background:var(--primary)}
+  .region li b{color:var(--text);font-weight:600}
+
+  .legend{display:flex;flex-wrap:wrap;gap:10px;margin-top:var(--space-4)}
+  .legend span{display:flex;align-items:center;gap:8px;font-size:.84rem;color:var(--muted);padding:7px 12px;border:1px solid var(--border);border-radius:10px;background:rgba(255,255,255,.025)}
+  .legend i{width:14px;height:14px;border-radius:4px;display:block}
+
+  /* tables */
+  .tbl-scroll{overflow-x:auto;border:1px solid var(--border);border-radius:18px;background:var(--card)}
+  .tbl{width:100%;border-collapse:collapse;font-size:.9rem;table-layout:fixed;min-width:560px}
+  .tbl th{text-align:left;font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.09em;text-transform:uppercase;color:var(--faint);padding:13px 16px;border-bottom:1px solid var(--border-strong)}
+  .tbl td{padding:12px 16px;border-bottom:1px solid var(--border);color:var(--muted);vertical-align:top;overflow-wrap:anywhere}
+  .tbl tr:last-child td{border-bottom:0}
+  .tbl.fit{min-width:0}
+  @media(max-width:560px){.tbl.fit td,.tbl.fit th{padding:11px 10px;font-size:.84rem}}
+  .tbl td.co{color:var(--text);font-weight:600}
+  .tbl th.r,.tbl td.r{text-align:right;font-variant-numeric:tabular-nums}
+  .tbl .num{font-family:'JetBrains Mono',monospace;color:var(--primary);font-weight:700;font-size:.86rem}
+  .tbl .dim{display:block;font-size:.76rem;color:var(--faint);font-weight:400;margin-top:2px}
+  .tbl tr.subtot td{color:var(--text);font-weight:600;background:rgba(255,255,255,.02)}
+  .tbl tr.tot td{color:#fff;font-weight:700;font-family:'Baloo 2';font-size:1.05rem;background:rgba(147,51,234,.14);border-bottom:1px solid var(--border-strong)}
+  .tbl tr.tot td.num{font-family:'JetBrains Mono',monospace;font-size:.95rem;color:#fff}
+
+  /* bars */
+  .chart-wrap{border:1px solid var(--border);border-radius:20px;padding:28px;background:var(--card)}
+  .chart-title{font-family:'Baloo 2';font-weight:700;font-size:1.05rem;margin-bottom:4px}
+  .chart-sub{color:var(--faint);font-size:.74rem;margin-bottom:22px;font-family:'JetBrains Mono',monospace}
+  .barrow{display:flex;align-items:center;gap:14px;margin-bottom:12px}
+  .barrow .lab{flex:0 0 150px;font-size:.84rem;color:var(--muted);text-align:right;line-height:1.3}
+  .chart-wrap.wide .barrow .lab{flex-basis:250px}
+  @media(max-width:560px){.barrow .lab,.chart-wrap.wide .barrow .lab{flex:0 0 96px;font-size:.74rem}}
+  .bartrack{flex:1;height:24px;background:rgba(255,255,255,.04);border-radius:8px;overflow:hidden}
+  .barfill{height:100%;border-radius:8px;background:linear-gradient(90deg,var(--primary-deep),#8b5cf6)}
+  .barfill.neg{background:#4b4b6e}
+  .barrow .val{flex:0 0 74px;font-family:'JetBrains Mono',monospace;font-size:.8rem;color:#fff;font-weight:700}
+
+  /* scenarios */
+  .scen-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-4)}
+  @media(max-width:820px){.scen-grid{grid-template-columns:1fr}}
+  .scen{border:1px solid var(--border);border-radius:18px;padding:var(--space-6);background:var(--card)}
+  .scen.hi{border-color:var(--border-strong);background:linear-gradient(180deg,rgba(147,51,234,.18),rgba(37,99,235,.06))}
+  .scen-n{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--primary)}
+  .scen-v{font-family:'Baloo 2';font-weight:800;font-size:2.5rem;line-height:1.05;color:var(--hi);margin-top:10px}
+  .scen-l{color:var(--faint);font-size:.8rem}
+  .scen ul{list-style:none;margin-top:var(--space-4);padding-top:var(--space-4);border-top:1px solid var(--border);display:flex;flex-direction:column;gap:6px}
+  .scen li{font-size:.88rem;color:var(--muted)}
+  .scen li b{color:var(--text)}
+
+  /* callout */
+  .callout{border:1px solid var(--border-strong);border-radius:16px;padding:var(--space-5) var(--space-6);background:rgba(180,157,255,.055);margin-top:var(--space-5);font-size:.94rem;color:var(--text);max-width:82ch}
+  .callout b{color:var(--hi)}
+  .callout.warn{border-color:rgba(251,191,36,.4);background:rgba(251,191,36,.06)}
+  .callout.warn b{color:var(--amber)}
+
+  footer{border-top:1px solid var(--border);margin-top:40px}
+  .foot-in{max-width:var(--maxw);margin:0 auto;padding:46px 24px;color:var(--faint);font-size:.8rem;line-height:1.75}
+  .foot-in a{color:var(--muted)}
+  .src{columns:2;column-gap:30px;margin-top:16px;font-size:.74rem;line-height:1.85}
+  @media(max-width:620px){.src{columns:1}}
+  .note{font-size:.74rem;color:var(--faint);font-family:'JetBrains Mono',monospace;margin-top:var(--space-5)}
+  .mt{margin-top:var(--space-6)}
+
+  /* lightbox for drawings & photos */
+  .lb{position:fixed;inset:0;z-index:100;background:rgba(6,6,12,.94);display:flex;align-items:center;justify-content:center;padding:28px;cursor:zoom-out}
+  .lb[hidden]{display:none}
+  .lb img{max-width:100%;max-height:100%;border-radius:8px;background:#fff}
+  .lb button{position:absolute;top:16px;right:20px;width:42px;height:42px;border-radius:50%;border:1px solid var(--border-strong);background:var(--card);color:var(--text);font-size:1.3rem;cursor:pointer}
+
+  @media print{
+    :root{--bg:#fff;--card:#fff;--card-2:#fff;--text:#16162a;--muted:#33344d;--faint:#5b5d7a;--hi:#6d28d9;--primary:#6d28d9;--border:#d8d6ea;--border-strong:#b9b4de}
+    nav,.lb{display:none!important}
+    section{padding:34px 0}
+    .part{padding:24px 0 0}
+    .hero{padding-top:0}
+    .figure,.card,.scen,.hstat,.region,.spec,.chart-wrap,.callout{break-inside:avoid}
+    .kicker,h2,h3,.lead{break-after:avoid}
+    .tbl tr.tot td,.tbl tr.tot td.num{color:#16162a}
+    .barrow .val{color:#16162a}
+    .part-n{-webkit-text-stroke:1.4px #6d28d9}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-in">
+    <div class="brand"><span class="dot">▲</span> DKP <span style="color:var(--faint);font-weight:500;font-size:.76rem">· Overview &amp; Stadium Estimate</span></div>
+    <div class="nav-links">
+      <a href="#life">Life at DKP</a>
+      <a href="#facility">Facility</a>
+      <a href="#location">Location</a>
+      <a href="#market">Market</a>
+      <a href="#stadium">Stadium</a>
+      <a href="#plans">Plans</a>
+      <a href="#capacity">Capacity</a>
+      <a href="#revenue">Revenue</a>
+      <a href="#budget">Budget</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <section style="padding-top:0;padding-bottom:0">
+    <div class="badge"><span class="pulse"></span> Overview &amp; Stadium Estimate · September 2026</div>
+    <h1>Premier Sports Complex <span class="grad-text">in Kings Park, Long Island.</span></h1>
+    <p class="sub">Our mission is to provide facilities that inspire athletic excellence and promote healthy lifestyles. This report covers Destination KP at 350 Old Northport Road and estimates the capacity, revenue and budget of the proposed 3,000-person DKP Stadium.</p>
+    <div class="hero-stats">
+      <div class="hstat"><div class="n">44.5</div><div class="l">Acre parcel in western Suffolk County</div></div>
+      <div class="hstat"><div class="n">7</div><div class="l">Outdoor sports fields</div></div>
+      <div class="hstat"><div class="n">64,800</div><div class="l">Sq ft of indoor sports &amp; recreation space</div></div>
+      <div class="hstat"><div class="n">8</div><div class="l">Basketball / volleyball courts</div></div>
+    </div>
+    <figure class="figure zoom">
+      <img src="img/dkp/hero.jpg" alt="Rendering of Destination KP: lined turf fields in the foreground, the Destination KP indoor sports building and the café and office building behind, with parking on the right" />
+      <figcaption><span><b>Destination KP</b> — outdoor fields, indoor sports building, café &amp; office building</span><span>Rendering</span></figcaption>
+    </figure>
+  </section>
+</header>
+
+<!-- ============ PART ONE ============ -->
+<div class="part">
+  <div class="part-in">
+    <span class="part-n">01</span>
+    <span class="part-t">The Complex</span>
+    <p class="part-d">What a day at DKP looks like, the facility itself, where it sits, and the market it draws from.</p>
+  </div>
+</div>
+
+<!-- LIFE AT DKP -->
+<section id="life">
+  <div class="kicker">01 — Life at DKP</div>
+  <h2>Game days that bring <span class="grad-text">the whole family.</span></h2>
+  <p class="lead">On event days the complex fills with players, parents and siblings. A rotating lineup of local food trucks pulls up beside the fields, so families can stay for the whole day: between games, after games, and while the younger kids play.</p>
+
+  <div class="life-grid">
+    <figure class="figure zoom">
+      <img src="img/dkp/event-packed.jpg" alt="An indoor event at a packed gym: kids playing basketball on the court while families fill the bleachers" />
+      <figcaption><span><b>Event day</b> — full stands, kids on the court</span></figcaption>
+    </figure>
+    <figure class="figure zoom">
+      <img src="img/dkp/foodtrucks-1.jpg" alt="Families and young players in jerseys eating at picnic tables beside food trucks under string lights at dusk" />
+      <figcaption><span><b>Food trucks</b> — dinner by the fields</span></figcaption>
+    </figure>
+    <figure class="figure zoom">
+      <img src="img/dkp/foodtrucks-2.jpg" alt="Kids in soccer jerseys lining up with parents at a lit food truck at the complex in the evening" />
+      <figcaption><span><b>Between games</b></span></figcaption>
+    </figure>
+  </div>
+
+  <div class="cards g3 mt">
+    <div class="card"><h4>Food trucks on site</h4><p>A rotating lineup of local trucks rolls right up to the complex for game days, tournaments and events.</p></div>
+    <div class="card"><h4>Tournaments &amp; event days</h4><p>Practice, league play, tournaments and sports events across indoor and outdoor spaces, often on the same day.</p></div>
+    <div class="card"><h4>Community events</h4><p>Beyond sport, the complex hosts community events, concerts and educational programs.</p></div>
+  </div>
+</section>
+
+<!-- THE FACILITY -->
+<section id="facility">
+  <div class="kicker">02 — The Facility</div>
+  <h2>One of the largest indoor and outdoor complexes <span class="grad-text">in the Northeast.</span></h2>
+  <p class="lead">DKP sits on a 44.5-acre parcel with 7 outdoor sports fields and approximately 64,800 sq ft of indoor sports and recreational space, configurable as 8 basketball / volleyball courts, together with a concession space, administrative offices, a commercial kitchen and dedicated parking.</p>
+
+  <figure class="figure zoom">
+    <img src="img/dkp/aerial.jpg" alt="Aerial rendering of the outdoor fields laid out beside the indoor sports building, with the parking lot on the right" />
+    <figcaption><span><b>Aerial view</b> — outdoor fields, indoor sports building and parking</span><span>Rendering</span></figcaption>
+  </figure>
+
+  <div class="render-grid">
+    <figure class="figure zoom">
+      <img src="img/dkp/render-west.jpg" alt="Rendering of the complex from the west: parking lot in the foreground, indoor sports building and office building behind" />
+      <figcaption><span><b>Complex view from the west</b></span></figcaption>
+    </figure>
+    <figure class="figure zoom">
+      <img src="img/dkp/render-east.jpg" alt="Rendering of the complex from the east: lined outdoor fields surrounded by trees, buildings in the distance" />
+      <figcaption><span><b>Complex view from the east</b></span></figcaption>
+    </figure>
+    <figure class="figure zoom">
+      <img src="img/dkp/render-entrance.jpg" alt="Rendering from the entrance road: the indoor sports complex and the medical tenant building beyond the parking lot" />
+      <figcaption><span><b>Indoor sports complex &amp; medical tenant building</b></span></figcaption>
+    </figure>
+    <figure class="figure zoom">
+      <img src="img/dkp/render-fields.jpg" alt="Rendering of turf fields in front of the indoor sports building, with the café and office building to the right" />
+      <figcaption><span><b>Café &amp; office building</b></span></figcaption>
+    </figure>
+  </div>
+
+  <div class="split mt">
+    <div class="spec">
+      <div class="spec-row"><div class="spec-k">Parcel</div><div class="spec-v">44.5 acres</div></div>
+      <div class="spec-row"><div class="spec-k">Outdoor</div><div class="spec-v">7 sports fields</div></div>
+      <div class="spec-row"><div class="spec-k">Indoor</div><div class="spec-v">≈ 64,800 sq ft of sports &amp; recreational space</div></div>
+      <div class="spec-row"><div class="spec-k">Courts</div><div class="spec-v">8 basketball / volleyball courts</div></div>
+      <div class="spec-row"><div class="spec-k">Amenities</div><div class="spec-v">Concession space, administrative offices, commercial kitchen</div></div>
+      <div class="spec-row"><div class="spec-k">Parking</div><div class="spec-v">Dedicated on-site parking</div></div>
+    </div>
+    <div>
+      <div class="region">
+        <h4>Hosts</h4>
+        <ul>
+          <li><b>Sports teams and leagues</b> for practice and league play</li>
+          <li><b>Tournament play</b> and other sports events</li>
+          <li><b>Community events, concerts</b> and educational programs</li>
+        </ul>
+      </div>
+      <div class="callout"><b>Next on the campus.</b> The sports complex will be complemented by the future development of two commercial health-related facilities — the Destination KP Health Facilities.</div>
+    </div>
+  </div>
+</section>
+
+<!-- LOCATION & CONFIGURATION -->
+<section id="location">
+  <div class="kicker">03 — Location &amp; Configuration</div>
+  <h2>35 miles from Midtown, <span class="grad-text">on the parkways Long Island already drives.</span></h2>
+  <p class="lead">A state-of-the-art, mixed-use sports complex at 350 Old Northport Road in Kings Park, NY, with indoor and outdoor playing spaces alongside other sport complex amenities and dedicated parking.</p>
+
+  <div class="split wide-r">
+    <div class="region">
+      <h4>Location <span class="rtag">Kings Park, NY 11754</span></h4>
+      <ul>
+        <li>In <b>Kings Park, western Suffolk County</b>, Long Island.</li>
+        <li>Easy access from the <b>Sunken Meadow Parkway, Long Island Expressway, Northern State Parkway</b> and <b>Southern State Parkway</b>.</li>
+        <li>Within reach of the five boroughs: <b>35 miles</b> from the Midtown Tunnel and <b>40 miles</b> from JFK International and LaGuardia airports, and the greater Tri-State region.</li>
+      </ul>
+    </div>
+    <figure class="figure zoom">
+      <img src="img/dkp/map-location.jpg" alt="Map of Long Island and New York City with a pin at 350 Old Northport Rd, Kings Park" />
+      <figcaption><span><b>350 Old Northport Rd</b>, Kings Park, NY 11754</span><span>Map: Google Maps</span></figcaption>
+    </figure>
+  </div>
+
+  <h3 class="sub-h">Configuration</h3>
+  <p class="lead" style="margin-bottom:var(--space-6)">Outdoor and indoor spaces convert quickly to suit each user group. That flexibility, and the number of spaces at a single location, is a significant competitive advantage over other venues.</p>
+  <div class="cards g3">
+    <div class="card"><div class="big">6 of 7</div><h4>Outdoor fields convertible</h4><p>Multi-purpose outdoor fields reconfigure for regulation soccer or lacrosse play.</p></div>
+    <div class="card"><div class="big">8</div><h4>Indoor courts</h4><p>Hardwood courts that set up as basketball or volleyball courts, for both practice and competition.</p></div>
+    <div class="card"><div class="big">Multi-sport</div><h4>Flexible hardwood</h4><p>Court areas configure for basketball, volleyball, mat sports, futsal and other activities.</p></div>
+  </div>
+</section>
+
+<!-- MARKET AREA -->
+<section id="market">
+  <div class="kicker">04 — Market Area Analysis</div>
+  <h2>A market that spends <span class="grad-text">above the national average</span> on sport.</h2>
+  <p class="lead">The market for an amateur sports and recreation facility is the region where its regular users live. HVS defined it as a 1-hour drive from the venue. Tournaments draw from further: 3 hours for smaller events and up to 5 hours for larger, regional ones.</p>
+
+  <div class="split">
+    <div>
+      <figure class="figure zoom">
+        <img src="img/dkp/map-market.jpg" alt="Drive-time map of the Northeast centred on western Long Island, showing 1-hour, 3-hour and 5-hour drive-time areas" />
+        <figcaption><span><b>Map of sports market area</b></span><span>Source: HVS</span></figcaption>
+      </figure>
+      <div class="legend">
+        <span><i style="background:#b8765a"></i>1-hour drive · regular users</span>
+        <span><i style="background:#dca47f"></i>3-hour · smaller tournaments</span>
+        <span><i style="background:#f1c9a5"></i>5-hour · regional events</span>
+      </div>
+    </div>
+    <div class="region">
+      <h4>What the drive-time market shows</h4>
+      <ul>
+        <li>High household formation, high household income and a strong propensity to spend on sport give the <b>strongest possible support</b> for youth and adult participation sports.</li>
+        <li>Demand is <b>strongest within a 60-minute drive</b>; the longer drive-time markets strongly support regional tournaments.</li>
+        <li><b>Excellent airport access</b> will support national tournaments.</li>
+        <li>The area around the development spends <b>above the national average on fees for participant sports</b>.</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3 class="sub-h">Market Area Analysis, continued</h3>
+  <div class="cards g2">
+    <div class="region">
+      <h4>Wealth &amp; growth</h4>
+      <ul>
+        <li>On the W&amp;P Wealth Index (national average = 100), <b>Nassau and Suffolk Counties are wealthier</b> than the New York metro area, the tri-state area and New York State.</li>
+        <li>HVS's review of economic and demographic forecasts supports <b>modest growth in every Nassau and Suffolk metric</b>: a stable, growing local market.</li>
+        <li>More residents in the one-hour drive time hold <b>white-collar jobs</b> than the national average, and the markets are diversified across industries.</li>
+        <li>Seven of Suffolk County's top ten employers are in <b>health care</b> (Northwell Health, Catholic Health Service and others), social assistance, or state and local government.</li>
+      </ul>
+    </div>
+    <div class="region">
+      <h4>Spending &amp; participation</h4>
+      <ul>
+        <li>Every drive-time market <b>spends more per household on sports and recreation</b> than the national average.</li>
+        <li>Residents within the one-hour drive spend <b>significantly more per household on recreational sports fees and lessons</b> than the broader drive-time markets.</li>
+        <li>In all drive times, household participation in <b>baseball, basketball, soccer, softball and volleyball</b> is higher than the national average.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PART TWO ============ -->
+<div class="part">
+  <div class="part-in">
+    <span class="part-n">02</span>
+    <span class="part-t">The Stadium &amp; the Estimate</span>
+    <p class="part-d">A proposed 3,000-person stadium on Field 1, drawn with Dreamseat, and an estimate of what it holds, what it could earn and what it could cost.</p>
+    <div class="glance">
+      <div class="hstat"><div class="n">3,000</div><div class="l">Stadium capacity, incl. 46 player seats</div></div>
+      <div class="hstat"><div class="n">12</div><div class="l">Field-level luxury suites</div></div>
+      <div class="hstat"><div class="n">$59K</div><div class="l">Revenue per sold-out event</div></div>
+      <div class="hstat"><div class="n">$1.14M</div><div class="l">Base-case gross per year</div></div>
+      <div class="hstat"><div class="n">$2.0M&ndash;$3.4M</div><div class="l">Indicative stadium budget</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- THE DKP STADIUM -->
+<section id="stadium">
+  <div class="kicker">05 — The DKP Stadium</div>
+  <h2>A 3,000-person stadium with luxury boxes <span class="grad-text">at ground level and up top.</span></h2>
+  <p class="lead">One main grandstand along the west touchline of Field 1, private suites at field level on the north end, and premium box seating across the top of the stand.</p>
+
+  <figure class="figure zoom">
+    <img src="img/dkp/stadium-ai.jpg" alt="AI concept image of a compact 3,000-person soccer stadium: a single main grandstand of red seats topped by two levels of glass-walled luxury boxes" />
+    <figcaption><span><b>Concept</b> — 3,000-person main stand, glass luxury boxes along the top level</span><span>AI-generated image · illustrative only</span></figcaption>
+  </figure>
+
+  <div class="split wide-l mt">
+    <div class="spec big">
+      <div class="spec-row"><div class="spec-k">3K</div><div class="spec-v">Potential 3,000-person stadium with <b>luxury boxes on the ground level and the top level</b></div></div>
+      <div class="spec-row"><div class="spec-k">6</div><div class="spec-v">Access to 6 additional on-property, <b>high school regulation</b>, state-of-the-art turf fields</div></div>
+      <div class="spec-row"><div class="spec-k">30K</div><div class="spec-v">Year-round indoor <b>air dome</b> with a turf field</div></div>
+      <div class="spec-row"><div class="spec-k">50K</div><div class="spec-v">Square-foot, <b>zero-span indoor sports building</b> with 62′ high ceilings</div></div>
+      <div class="spec-row"><div class="spec-k">15K</div><div class="spec-v">Square-foot <b>indoor gym</b> with a technology lab: DARI system, TrackMan, physical therapy, sport-specific equipment and a wellness center</div></div>
+    </div>
+    <figure class="figure zoom">
+      <img src="img/dkp/stadium-plan.jpg" alt="Top-down rendering of Field 1 with the west grandstand of red and grey seats, suites along the north end and seating on the east side" />
+      <figcaption><span><b>Field 1</b> — the stadium from above; suites along the north end</span><span>Rendering</span></figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- STADIUM PLANS -->
+<section id="plans">
+  <div class="kicker">06 — Stadium Plans</div>
+  <h2>Drawn seat by seat <span class="grad-text">with Dreamseat.</span></h2>
+  <p class="lead">Dreamseat, the East Northport stadium-seating and suites manufacturer, has drawn the stadium on Field 1. Sheet A2 carries the seat count this estimate is built on. Select any drawing to enlarge it.</p>
+
+  <figure class="figure paper zoom">
+    <img src="img/dkp/dwg-a1.jpg" alt="Dreamseat sheet A1, overall plan: Field 1 with the stadium seating, Fields 2 and 3, Building H fitness center and parking" />
+    <figcaption><span><b>Sheet A1</b> — Plan: overall · Fields 1–3, Building H fitness center</span><span>Dreamseat · Destination KP · 04-13-26</span></figcaption>
+  </figure>
+
+  <div class="split mt">
+    <figure class="figure paper zoom">
+      <img src="img/dkp/dwg-a2.jpg" alt="Dreamseat sheet A2, plan of Field 1: west stand, north suites, east-side tandems and players' benches, with the seat-count table" />
+      <figcaption><span><b>Sheet A2</b> — Plan: Field 1, with seat count</span><span>04-13-26</span></figcaption>
+    </figure>
+    <figure class="figure paper zoom">
+      <img src="img/dkp/dwg-a4.jpg" alt="Dreamseat sheet A4, sections: the West stand rising row by row to a top-level box, and the North suites at ground level with a safe-standing deck above" />
+      <figcaption><span><b>Sheet A4</b> — Sections: Field 1 west &amp; north</span><span>04-13-26</span></figcaption>
+    </figure>
+  </div>
+
+  <div class="cards g3 mt">
+    <div class="card"><h4>West stand</h4><p>The main grandstand: 12″ rise and 30″ tread depth per row, rising to box seating along the top level.</p></div>
+    <div class="card"><h4>North suites</h4><p>12 private suites at field level, each with 16 Vera seats and 7 bar stools, plus 16 pub tables and a safe-standing deck above.</p></div>
+    <div class="card"><h4>East side</h4><p>40 Vera tandems (80 seats) along the touchline, beside 46 player seats at the benches.</p></div>
+  </div>
+</section>
+
+<!-- CAPACITY -->
+<section id="capacity">
+  <div class="kicker">07 — Capacity Estimate</div>
+  <h2>2,954 spectators. <span class="grad-text">3,000 with the players.</span></h2>
+  <p class="lead">Every count below is taken from Dreamseat sheet A2. It is the one part of this estimate that is not an assumption.</p>
+
+  <div class="split wide-l">
+    <div class="tbl-scroll">
+      <table class="tbl fit">
+        <colgroup><col style="width:28%"><col style="width:52%"><col style="width:20%"></colgroup>
+        <thead><tr><th>Zone</th><th>Seating</th><th class="r">Count</th></tr></thead>
+        <tbody>
+<tr><td class="co" rowspan="5">West stand</td><td>AZE stadium seats, 20&Prime; spacing</td><td class="r">1,731</td></tr>
+<tr><td>ADA spaces</td><td class="r">20</td></tr>
+<tr><td>Vera seats, 22&Prime; spacing</td><td class="r">176</td></tr>
+<tr><td>Bar stools</td><td class="r">77</td></tr>
+<tr><td>Vera tandems &mdash; 65 units</td><td class="r">130</td></tr>
+<tr class="subtot"><td></td><td>West stand total</td><td class="r">2,134</td></tr>
+<tr><td class="co" rowspan="3">North suites (12)</td><td>Vera seats &mdash; 16 per suite</td><td class="r">192</td></tr>
+<tr><td>Bar stools &mdash; 7 per suite</td><td class="r">84</td></tr>
+<tr><td>Pub tables &mdash; 16 tables &times; 4 stools</td><td class="r">64</td></tr>
+<tr class="subtot"><td></td><td>North suites (12) total</td><td class="r">340</td></tr>
+<tr><td class="co" rowspan="1">Safe standing</td><td>Safe-standing spectators</td><td class="r">400</td></tr>
+<tr><td class="co" rowspan="1">East side</td><td>Vera tandems &mdash; 40 units</td><td class="r">80</td></tr>
+<tr class="tot"><td colspan="2">Total spectators</td><td class="r">2,954</td></tr>
+<tr class="subtot"><td colspan="2">Player seats (East side)</td><td class="r">46</td></tr>
+<tr class="tot"><td colspan="2">Stadium capacity</td><td class="r">3,000</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="chart-wrap">
+      <div class="chart-title">Spectators by zone</div>
+      <div class="chart-sub">Dreamseat sheet A2 · 04-13-26</div>
+<div class="barrow"><div class="lab">West stand</div><div class="bartrack"><div class="barfill" style="width:100.0%"></div></div><div class="val">2,134</div></div>
+<div class="barrow"><div class="lab">North suites (12)</div><div class="bartrack"><div class="barfill" style="width:15.9%"></div></div><div class="val">340</div></div>
+<div class="barrow"><div class="lab">Safe standing</div><div class="bartrack"><div class="barfill" style="width:18.7%"></div></div><div class="val">400</div></div>
+<div class="barrow"><div class="lab">East side</div><div class="bartrack"><div class="barfill" style="width:3.7%"></div></div><div class="val">80</div></div>
+      <div class="callout" style="margin-top:var(--space-6)"><b>Where the premium sits.</b> Alongside its 1,731 standard seats, the West stand carries 176 Vera seats, 77 bar stools and 130 tandem seats, with box seating on the top level. The North end adds 12 field-level suites and 64 pub-table seats.</div>
+    </div>
+  </div>
+</section>
+
+<!-- REVENUE -->
+<section id="revenue">
+  <div class="kicker">08 — Revenue Estimate</div>
+  <h2>What a sold-out event <span class="grad-text">brings in.</span></h2>
+  <p class="lead">The prices below are working assumptions, set under Long Island's professional benchmark: Long Island Ducks box seats sell for about $17 at the box office in 2026. Replace them with DKP's own pricing and every figure in this section updates.</p>
+
+  <div class="tbl-scroll">
+    <table class="tbl">
+      <colgroup><col style="width:42%"><col style="width:18%"><col style="width:20%"><col style="width:20%"></colgroup>
+      <thead><tr><th>Tier</th><th class="r">Capacity</th><th class="r">Assumed price</th><th class="r">At a sell-out</th></tr></thead>
+      <tbody>
+<tr><td class="co">Standard seats<span class="dim">West stand AZE seats + ADA spaces</span></td><td class="r">1,751 seats</td><td class="r">$12<span class="dim">per ticket</span></td><td class="r num">$21,012</td></tr>
+<tr><td class="co">Premium seats<span class="dim">Vera seats, bar stools, tandems (West &amp; East), suite-level pub tables</span></td><td class="r">527 seats</td><td class="r">$25<span class="dim">per ticket</span></td><td class="r num">$13,175</td></tr>
+<tr><td class="co">Luxury suites<span class="dim">12 field-level suites, 23 guests each</span></td><td class="r">12 suites</td><td class="r">$1,000<span class="dim">per suite, per event</span></td><td class="r num">$12,000</td></tr>
+<tr><td class="co">Safe standing<span class="dim">Standing deck above the North suites</span></td><td class="r">400 places</td><td class="r">$10<span class="dim">per ticket</span></td><td class="r num">$4,000</td></tr>
+<tr class="subtot"><td colspan="3">Ticket &amp; suite revenue, sold-out event</td><td class="r num">$50,187</td></tr>
+<tr><td class="co">Food trucks &amp; concessions<span class="dim">net to DKP, per attendee</span></td><td class="r">2,954 guests</td><td class="r">$3<span class="dim">per head</span></td><td class="r num">$8,862</td></tr>
+<tr class="tot"><td colspan="3">Revenue per sold-out event</td><td class="r num">$59,049</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="sub-h">Across a year</h3>
+  <p class="lead" style="margin-bottom:var(--space-6)">Three scenarios for ticketed stadium events: high school and club championships, showcase and tournament finals, amateur and semi-pro soccer, lacrosse and flag football, and concerts or community events.</p>
+  <div class="scen-grid">
+<div class="scen">
+      <div class="scen-n">Conservative</div>
+      <div class="scen-v">$472K</div>
+      <div class="scen-l">estimated gross per year</div>
+      <ul><li><b>20</b> ticketed stadium events</li><li><b>40%</b> of capacity sold on average</li><li>&asymp; <b>1,182</b> guests per event</li></ul>
+    </div>
+<div class="scen hi">
+      <div class="scen-n">Base case</div>
+      <div class="scen-v">$1.14M</div>
+      <div class="scen-l">estimated gross per year</div>
+      <ul><li><b>35</b> ticketed stadium events</li><li><b>55%</b> of capacity sold on average</li><li>&asymp; <b>1,625</b> guests per event</li></ul>
+    </div>
+<div class="scen">
+      <div class="scen-n">Strong</div>
+      <div class="scen-v">$2.07M</div>
+      <div class="scen-l">estimated gross per year</div>
+      <ul><li><b>50</b> ticketed stadium events</li><li><b>70%</b> of capacity sold on average</li><li>&asymp; <b>2,068</b> guests per event</li></ul>
+    </div>
+  </div>
+  <div class="callout"><b>Gross figures, before operating costs.</b> Staffing, security, cleaning and utilities are not deducted. Naming rights, sponsorship and advertising, season suite leases, field rental and parking are not counted either; each is upside to these numbers.</div>
+</section>
+
+<!-- BUDGET -->
+<section id="budget">
+  <div class="kicker">09 — Budget Estimate</div>
+  <h2>An indicative stadium budget of <span class="grad-text">$2.0M&ndash;$3.4M.</span></h2>
+  <p class="lead">A benchmark range for the seating, suites and standing deck, plus a 30% allowance for foundations, site work, design and permits. Dreamseat's quote replaces this table line by line once it is issued.</p>
+
+  <div class="tbl-scroll">
+    <table class="tbl">
+      <colgroup><col style="width:42%"><col style="width:14%"><col style="width:22%"><col style="width:22%"></colgroup>
+      <thead><tr><th>Package</th><th class="r">Positions</th><th class="r">Per position</th><th class="r">Range</th></tr></thead>
+      <tbody>
+<tr><td class="co">Standard seats &amp; grandstand structure<span class="dim">AZE + ADA</span></td><td class="r">1,751</td><td class="r">$300&ndash;$500</td><td class="r num">$525K&ndash;$876K</td></tr>
+<tr><td class="co">Premium seating<span class="dim">Vera, bar stools, tandems, pub tables</span></td><td class="r">527</td><td class="r">$1,000&ndash;$1,500</td><td class="r num">$527K&ndash;$790K</td></tr>
+<tr><td class="co">Luxury suites<span class="dim">12 suites &middot; 276 guest positions</span></td><td class="r">276</td><td class="r">$1,500&ndash;$3,000</td><td class="r num">$414K&ndash;$828K</td></tr>
+<tr><td class="co">Safe-standing deck<span class="dim">400 places</span></td><td class="r">400</td><td class="r">$150&ndash;$300</td><td class="r num">$60K&ndash;$120K</td></tr>
+<tr class="subtot"><td colspan="3">Seating &amp; suites package</td><td class="r num">$1.53M&ndash;$2.61M</td></tr>
+<tr><td class="co">Allowance<span class="dim">foundations, site work, design, permits, contingency</span></td><td></td><td class="r">+30%</td><td class="r num">$458K&ndash;$784K</td></tr>
+<tr class="tot"><td colspan="3">Indicative stadium budget</td><td class="r num">$2.0M&ndash;$3.4M</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="chart-wrap wide mt">
+    <div class="chart-title">Cost per seat vs. purpose-built soccer stadiums</div>
+    <div class="chart-sub">Construction cost ÷ capacity · DKP shown at the top of its range</div>
+<div class="barrow"><div class="lab">CPKC Stadium, Kansas City (2024)</div><div class="bartrack"><div class="barfill neg" style="width:71.2%"></div></div><div class="val">$10,174</div></div>
+<div class="barrow"><div class="lab">GE Vernova Park, Mauldin SC (2026)</div><div class="bartrack"><div class="barfill neg" style="width:100.0%"></div></div><div class="val">$14,286</div></div>
+<div class="barrow"><div class="lab">DKP Stadium (top of estimate)</div><div class="bartrack"><div class="barfill" style="width:8.1%"></div></div><div class="val">$1,150</div></div>
+  </div>
+
+  <div class="split mt">
+    <div class="region">
+      <h4>How the ranges were set</h4>
+      <ul>
+        <li>Aluminum grandstands run <b>$100–$500 per seat</b>; larger grandstands with VIP seating run <b>$1,000+ per seat</b> (GT Grandstands). This estimate carries standard seats at $300–$500 and premium seating at $1,000–$1,500.</li>
+        <li>Suites are carried at <b>$1,500–$3,000 per guest position</b> and the safe-standing deck at $150–$300 per place, extending the same benchmark.</li>
+        <li>That works out to <b>$672&ndash;$1,150 per spectator</b>, against $10,000+ per seat for a purpose-built soccer stadium.</li>
+      </ul>
+    </div>
+    <div class="callout warn" style="margin-top:0"><b>Not in the budget:</b> field lighting, restroom and concession buildings, utilities, scoreboard or video board, and parking. The stadium wraps Field 1, one of the complex's turf fields, so no new playing surface is priced.</div>
+  </div>
+</section>
+
+<!-- NEXT STEPS -->
+<section id="next">
+  <div class="kicker">10 — Firming Up the Estimate</div>
+  <h2>What's fixed, what's assumed, <span class="grad-text">and what comes next.</span></h2>
+  <div class="cards g3">
+    <div class="card"><h4>Fixed</h4><p>Seat counts from Dreamseat sheets A1–A4. Facility facts from the DKP overview. Market findings from the HVS study.</p></div>
+    <div class="card"><h4>Assumed</h4><p>Ticket and suite prices, $3 net food &amp; beverage per guest, event counts, share of capacity sold, and the per-seat cost ranges.</p></div>
+    <div class="card"><h4>Next</h4><p>Dreamseat's priced quote, a draft stadium event calendar, suite pricing tested with local businesses, and a sponsorship and naming-rights valuation.</p></div>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-in">
+    <b style="color:var(--text);font-family:'Baloo 2'">DKP · Destination KP Overview &amp; Stadium Estimate</b><br>
+    Prepared September 2026. Facility, location and stadium descriptions follow the DKP Overview and Stadium Deck. Market findings are HVS's, as presented in that deck. Seat counts come from Dreamseat drawings A1, A2 and A4 (Destination KP, 04-13-26). Revenue and budget figures are estimates built on the stated assumptions; they are indicative, for discussion only, and not an offer, quote or forecast.
+    <div class="src">
+      DKP Overview and Stadium Deck · HVS market area analysis (via the DKP deck) · Dreamseat, Destination KP sheets A1 Plan: Overall, A2 Plan: Field 1, A4 Sections: Field 1 West &amp; North, drawn 04-13-26 · Destination KP renderings · Google Maps · Long Island Ducks, 2026 season ticket pricing (liducks.com) · GT Grandstands, bleacher cost guide (gtgrandstands.com) · CPKC Stadium: 11,500 seats, $117M, opened 2024 · GE Vernova Park: 6,300 seats, $80–100M, opened 2026 (midpoint used) · DKP site photography.
+    </div>
+    <div class="note">Image note: the stadium concept at the top of section 05 is AI-generated and illustrative only. It is not the Dreamseat design; the drawings in section 06 are the design of record. The Long Island Ducks box-office price is derived from the club's 2026 season price ($13 per seat, stated as 24% off box office).</div>
+  </div>
+</footer>
+
+<div class="lb" id="lb" hidden><img alt="" /><button type="button" aria-label="Close enlarged image">×</button></div>
+
+<script>
+  // bars grow on first view
+  var bars = document.querySelectorAll('.barfill');
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        var w = e.target.style.width; e.target.style.width = '0';
+        requestAnimationFrame(function(){
+          e.target.style.transition = 'width .9s cubic-bezier(.22,1,.36,1)';
+          e.target.style.width = w;
+        });
+        io.unobserve(e.target);
+      }
+    });
+  }, {threshold:.35});
+  bars.forEach(function(b){ io.observe(b); });
+
+  // click / Enter to enlarge a picture or drawing
+  var lb = document.getElementById('lb'), lbImg = lb.querySelector('img'), last = null;
+  function openLb(img){ last = img; lbImg.src = img.src; lbImg.alt = img.alt; lb.hidden = false; lb.querySelector('button').focus(); }
+  function closeLb(){ lb.hidden = true; lbImg.removeAttribute('src'); if(last) last.focus(); }
+  document.querySelectorAll('.zoom img').forEach(function(img){
+    img.tabIndex = 0; img.setAttribute('role','button');
+    img.addEventListener('click', function(){ openLb(img); });
+    img.addEventListener('keydown', function(e){ if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); openLb(img); } });
+  });
+  lb.addEventListener('click', closeLb);
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && !lb.hidden) closeLb(); });
+</script>
+</body>
+</html>
