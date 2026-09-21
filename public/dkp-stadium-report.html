@@ -56,6 +56,14 @@
   .badge{display:inline-flex;align-items:center;gap:9px;padding:7px 16px;border:1px solid var(--border-strong);border-radius:999px;font-size:.76rem;color:var(--muted);background:rgba(180,157,255,.06);width:fit-content;margin-bottom:26px}
   .badge .pulse{width:8px;height:8px;border-radius:50%;background:var(--green)}
   .hero h1{font-family:'Baloo 2';font-weight:800;font-size:clamp(2.5rem,6.4vw,4.6rem);line-height:1.03;letter-spacing:-1.4px;margin-bottom:22px;max-width:17ch}
+  .hero-top{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:var(--space-7);align-items:center;margin-bottom:22px}
+  .hero-top h1{margin-bottom:0}
+  @media(max-width:900px){.hero-top{grid-template-columns:1fr;gap:var(--space-5)}}
+  .fact{position:relative;overflow:hidden;border:1px solid var(--border-strong);border-radius:18px;padding:var(--space-6);background:linear-gradient(180deg,rgba(147,51,234,.18),rgba(37,99,235,.07))}
+  .fact::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--primary-deep),var(--blue))}
+  .fact p{font-family:'Baloo 2';font-weight:700;font-size:1.32rem;line-height:1.3;color:var(--text)}
+  .fact p b{color:var(--hi);font-weight:800}
+  .fact .cap{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--faint);margin-top:var(--space-4);line-height:1.6}
   .hero p.sub{font-size:1.12rem;color:var(--muted);max-width:64ch;margin-bottom:36px}
   .hero-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--space-4);margin:10px 0 var(--space-7)}
   .glance{display:grid;grid-template-columns:repeat(5,1fr);gap:var(--space-4);margin-top:var(--space-6);flex-basis:100%}
@@ -223,7 +231,13 @@
 <header class="hero">
   <section style="padding-top:0;padding-bottom:0">
     <div class="badge"><span class="pulse"></span> Overview &amp; Stadium Estimate · September 2026</div>
-    <h1>Premier Sports Complex <span class="grad-text">in Kings Park, Long Island.</span></h1>
+    <div class="hero-top">
+      <h1>Premier Sports Complex <span class="grad-text">in Kings Park, Long Island.</span></h1>
+      <aside class="fact">
+        <p>If Long Island became one city, it would rank as the <b>second-largest in the United States.</b></p>
+        <div class="cap">≈ 8.0M residents across Brooklyn, Queens, Nassau &amp; Suffolk — behind only New York City · U.S. Census Bureau, 2024 estimates</div>
+      </aside>
+    </div>
     <p class="sub">Our mission is to provide facilities that inspire athletic excellence and promote healthy lifestyles. This report covers Destination KP at 350 Old Northport Road and estimates the capacity, revenue and budget of the proposed 3,000-person DKP Stadium.</p>
     <div class="hero-stats">
       <div class="hstat"><div class="n">44.5</div><div class="l">Acre parcel in western Suffolk County</div></div>
@@ -255,8 +269,8 @@
 
   <div class="life-grid">
     <figure class="figure zoom">
-      <img src="https://xura-two.vercel.app/img/dkp/event-packed.jpg" alt="An indoor event at a packed gym: kids playing basketball on the court while families fill the bleachers" />
-      <figcaption><span><b>Event day</b> — full stands, kids on the court</span></figcaption>
+      <img src="https://xura-two.vercel.app/img/dkp/event-courts.jpg" alt="Kids playing volleyball and basketball side by side on a multi-purpose sport floor while families fill the bleachers" />
+      <figcaption><span><b>Event day</b> — volleyball &amp; basketball on the multi-purpose floor</span><span>AI image</span></figcaption>
     </figure>
     <figure class="figure zoom">
       <img src="https://xura-two.vercel.app/img/dkp/foodtrucks-1.jpg" alt="Families and young players in jerseys eating at picnic tables beside food trucks under string lights at dusk" />
@@ -353,8 +367,8 @@
   <p class="lead" style="margin-bottom:var(--space-6)">Outdoor and indoor spaces convert quickly to suit each user group. That flexibility, and the number of spaces at a single location, is a significant competitive advantage over other venues.</p>
   <div class="cards g3">
     <div class="card"><div class="big">6 of 7</div><h4>Outdoor fields convertible</h4><p>Multi-purpose outdoor fields reconfigure for regulation soccer or lacrosse play.</p></div>
-    <div class="card"><div class="big">8</div><h4>Indoor courts</h4><p>Hardwood courts that set up as basketball or volleyball courts, for both practice and competition.</p></div>
-    <div class="card"><div class="big">Multi-sport</div><h4>Flexible hardwood</h4><p>Court areas configure for basketball, volleyball, mat sports, futsal and other activities.</p></div>
+    <div class="card"><div class="big">8</div><h4>Indoor courts</h4><p>Multi-purpose courts that set up as basketball or volleyball courts, for both practice and competition.</p></div>
+    <div class="card"><div class="big">Multi-sport</div><h4>Multi-purpose courts</h4><p>Court areas configure for basketball, volleyball, mat sports, futsal and other activities.</p></div>
   </div>
 </section>
 
@@ -414,7 +428,7 @@
   <div class="part-in">
     <span class="part-n">02</span>
     <span class="part-t">The Stadium &amp; the Estimate</span>
-    <p class="part-d">A proposed 3,000-person stadium on Field 1, drawn with Dreamseat, and an estimate of what it holds, what it could earn and what it could cost.</p>
+    <p class="part-d">A proposed 3,000-person stadium on Field 1, drawn with Dreamseat, and a conservative estimate of what it holds, what it could earn and what it could cost.</p>
     <div class="glance">
       <div class="hstat"><div class="n">3,000</div><div class="l">Stadium capacity, incl. 46 player seats</div></div>
       <div class="hstat"><div class="n">12</div><div class="l">Field-level luxury suites</div></div>
@@ -432,8 +446,8 @@
   <p class="lead">One main grandstand along the west touchline of Field 1, private suites at field level on the north end, and premium box seating across the top of the stand.</p>
 
   <figure class="figure zoom">
-    <img src="https://xura-two.vercel.app/img/dkp/stadium-ai.jpg" alt="AI concept image of a compact 3,000-person soccer stadium: a single main grandstand of red seats topped by two levels of glass-walled luxury boxes" />
-    <figcaption><span><b>Concept</b> — 3,000-person main stand, glass luxury boxes along the top level</span><span>AI-generated image · illustrative only</span></figcaption>
+    <img src="https://xura-two.vercel.app/img/dkp/stadium-ai.jpg" alt="AI concept image of a 3,000-person stadium: a main grandstand of red seats with glass-fronted luxury suites at field level along the bottom and a row of glass luxury boxes along the top under the roof" />
+    <figcaption><span><b>Concept</b> — 3,000-person stadium, luxury suites at field level and glass boxes at the top</span><span>AI-generated image · illustrative only</span></figcaption>
   </figure>
 
   <div class="split wide-l mt">
