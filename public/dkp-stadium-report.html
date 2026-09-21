@@ -85,10 +85,15 @@
   .zoom img{cursor:zoom-in}
   .zoom img:focus-visible{outline:2px solid var(--primary);outline-offset:-2px}
 
-  .life-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:var(--space-4)}
-  .life-grid .figure img{height:430px;object-fit:cover}
-  @media(max-width:900px){.life-grid{grid-template-columns:1fr 1fr}.life-grid .figure:first-child{grid-column:1/-1}.life-grid .figure img{height:320px}}
-  @media(max-width:560px){.life-grid{grid-template-columns:1fr}.life-grid .figure img{height:260px}}
+  .life-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4)}
+  .life-grid .figure img{aspect-ratio:3/2;object-fit:cover}
+  .life-grid .figure.main{grid-column:1/-1}
+  .life-grid .figure.main img{aspect-ratio:2/1;object-position:50% 72%}
+  @media(max-width:620px){.life-grid{grid-template-columns:1fr}.life-grid .figure.main img{aspect-ratio:3/2}}
+  .event-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-4)}
+  .event-grid .figure img{aspect-ratio:3/2;object-fit:cover}
+  @media(max-width:900px){.event-grid{grid-template-columns:1fr 1fr}}
+  @media(max-width:560px){.event-grid{grid-template-columns:1fr}}
 
   .render-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4);margin-top:var(--space-4)}
   .render-grid .figure img{aspect-ratio:16/9;object-fit:cover}
@@ -268,17 +273,17 @@
   <p class="lead">On event days the complex fills with players, parents and siblings. A rotating lineup of local food trucks pulls up beside the fields, so families can stay for the whole day: between games, after games, and while the younger kids play.</p>
 
   <div class="life-grid">
-    <figure class="figure zoom">
-      <img src="https://xura-two.vercel.app/img/dkp/event-courts.jpg" alt="Kids playing volleyball and basketball side by side on a multi-purpose sport floor while families fill the bleachers" />
-      <figcaption><span><b>Event day</b> — volleyball &amp; basketball on the multi-purpose floor</span><span>AI image</span></figcaption>
+    <figure class="figure main zoom">
+      <img src="https://xura-two.vercel.app/img/dkp/courts-multipurpose.jpg" alt="Kids playing volleyball and basketball side by side on a blue multi-purpose sport floor while families fill the bleachers" />
+      <figcaption><span><b>Event day</b> — volleyball &amp; basketball on the multi-purpose floor</span></figcaption>
     </figure>
     <figure class="figure zoom">
-      <img src="https://xura-two.vercel.app/img/dkp/foodtrucks-1.jpg" alt="Families and young players in jerseys eating at picnic tables beside food trucks under string lights at dusk" />
+      <img src="https://xura-two.vercel.app/img/dkp/foodtrucks-dusk.jpg" alt="Families and young players in jerseys eating and lining up at food trucks under string lights at dusk, with the lit fields behind" />
       <figcaption><span><b>Food trucks</b> — dinner by the fields</span></figcaption>
     </figure>
     <figure class="figure zoom">
-      <img src="https://xura-two.vercel.app/img/dkp/foodtrucks-2.jpg" alt="Kids in soccer jerseys lining up with parents at a lit food truck at the complex in the evening" />
-      <figcaption><span><b>Between games</b></span></figcaption>
+      <img src="https://xura-two.vercel.app/img/dkp/event-concert.jpg" alt="A packed concert in the DKP indoor building: a band on a lit stage under a Destination KP screen, with a large crowd and a VIP area in front" />
+      <figcaption><span><b>Concert night</b> — music brings people together</span></figcaption>
     </figure>
   </div>
 
@@ -286,6 +291,23 @@
     <div class="card"><h4>Food trucks on site</h4><p>A rotating lineup of local trucks rolls right up to the complex for game days, tournaments and events.</p></div>
     <div class="card"><h4>Tournaments &amp; event days</h4><p>Practice, league play, tournaments and sports events across indoor and outdoor spaces, often on the same day.</p></div>
     <div class="card"><h4>Community events</h4><p>Beyond sport, the complex hosts community events, concerts and educational programs.</p></div>
+  </div>
+
+  <h3 class="sub-h">Beyond game day</h3>
+  <p class="lead" style="margin-bottom:var(--space-6)">The same space hosts concerts, fundraisers and corporate events.</p>
+  <div class="event-grid">
+    <figure class="figure zoom">
+      <img src="https://xura-two.vercel.app/img/dkp/event-vip-concert.jpg" alt="Concert set-up in the DKP indoor building: seating facing a lit stage, a VIP lounge and bars in the foreground" />
+      <figcaption><span><b>VIP concert seating</b> — lounge &amp; bars</span></figcaption>
+    </figure>
+    <figure class="figure zoom">
+      <img src="https://xura-two.vercel.app/img/dkp/event-fundraiser.jpg" alt="Fundraiser dinner at DKP: round tables with candles and guests under a Destination KP screen" />
+      <figcaption><span><b>Fundraiser dinner</b></span></figcaption>
+    </figure>
+    <figure class="figure zoom">
+      <img src="https://xura-two.vercel.app/img/dkp/event-networking.jpg" alt="Corporate networking event at DKP: guests mingling among lounge seating, sponsor booths and a Destination KP screen" />
+      <figcaption><span><b>Corporate &amp; networking events</b></span></figcaption>
+    </figure>
   </div>
 </section>
 
@@ -446,7 +468,7 @@
   <p class="lead">One main grandstand along the west touchline of Field 1, private suites at field level on the north end, and premium box seating across the top of the stand.</p>
 
   <figure class="figure zoom">
-    <img src="https://xura-two.vercel.app/img/dkp/stadium-ai.jpg" alt="AI concept image of a 3,000-person stadium: a main grandstand of red seats with glass-fronted luxury suites at field level along the bottom and a row of glass luxury boxes along the top under the roof" />
+    <img src="https://xura-two.vercel.app/img/dkp/stadium-concept.jpg" alt="AI concept image of a 3,000-person stadium during a match: a main grandstand of red and charcoal seats with glass-fronted luxury suites at field level along the bottom and a row of glass luxury boxes along the top under the roof" />
     <figcaption><span><b>Concept</b> — 3,000-person stadium, luxury suites at field level and glass boxes at the top</span><span>AI-generated image · illustrative only</span></figcaption>
   </figure>
 
@@ -644,7 +666,7 @@
     <div class="src">
       DKP Overview and Stadium Deck · HVS market area analysis (via the DKP deck) · Dreamseat, Destination KP sheets A1 Plan: Overall, A2 Plan: Field 1, A4 Sections: Field 1 West &amp; North, drawn 04-13-26 · Destination KP renderings · Google Maps · Long Island Ducks, 2026 season ticket pricing (liducks.com) · GT Grandstands, bleacher cost guide (gtgrandstands.com) · CPKC Stadium: 11,500 seats, $117M, opened 2024 · GE Vernova Park: 6,300 seats, $80–100M, opened 2026 (midpoint used) · DKP site photography.
     </div>
-    <div class="note">Image note: the stadium concept at the top of section 05 is AI-generated and illustrative only. It is not the Dreamseat design; the drawings in section 06 are the design of record. The Long Island Ducks box-office price is derived from the club's 2026 season price ($13 per seat, stated as 24% off box office).</div>
+    <div class="note">Image note: pictures in section 01 are illustrative, and the stadium concept at the top of section 05 is AI-generated and illustrative only. It is not the Dreamseat design; the drawings in section 06 are the design of record. The Long Island Ducks box-office price is derived from the club's 2026 season price ($13 per seat, stated as 24% off box office).</div>
   </div>
 </footer>
 
