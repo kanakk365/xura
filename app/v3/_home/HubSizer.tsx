@@ -3,7 +3,7 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
 
-import { Count, EASE, Em, PrimaryButton, SectionHead } from "../_components/primitives";
+import { EASE, Odometer, Em, PrimaryButton, SectionHead } from "../_components/primitives";
 
 const MIN = 3;
 const MAX = 20;
@@ -48,7 +48,7 @@ export function HubSizer() {
             <div className="px-6 pt-7 sm:px-8">
               <div className="flex flex-wrap items-end justify-between gap-4">
                 <p className="font-display text-[clamp(2.6rem,5vw,3.6rem)] leading-none text-paper">
-                  <Count value={chargers} duration={0.35} />
+                  <Odometer value={chargers} />
                   <span className="ml-3 text-[11px] font-medium uppercase tracking-[0.16em] text-accent">chargers</span>
                 </p>
                 <p className="op-label pb-1">
@@ -89,11 +89,11 @@ export function HubSizer() {
           <div className="flex flex-col gap-5">
             <dl className="op-cells flex-1 grid-cols-2 grid-rows-2">
               <Output label="Power Hub footprint" note="Compact pad, placed off the stalls">
-                <Count value={sqft} duration={0.45} />
+                <Odometer value={sqft} />
                 <Unit>sq ft</Unit>
               </Output>
               <Output label="2.5C BESS peak boost" note="UL 9540A + Napkin tested LFP">
-                <Count value={mw} decimals={2} duration={0.45} />
+                <Odometer value={mw} decimals={2} />
                 <Unit>MW</Unit>
               </Output>
               <Output label="Turnaround" note="From signed LOI to operating hub">

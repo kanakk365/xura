@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 
 import { Nav } from "../_components/Nav";
 import { SiteFooter } from "../_components/SiteFooter";
+import { SpecBand } from "../_components/SpecBand";
 import { Advertising } from "../_ev/Advertising";
 import { PartnerDashboard } from "../_ev/PartnerDashboard";
 import { Contact } from "../_stage/Contact";
@@ -23,6 +24,11 @@ export default function EvChargingPage() {
     <main className="flex flex-1 flex-col">
       <Nav cta={{ label: "Host a charging hub", href: "#contact" }} />
       <Hero />
+      <SpecBand
+        label="Level 3 charging at a glance"
+        top={["Level 3 DC fast charging", "NACS + CCS1 dual port", "2.5C battery buffer", "$0 landlord capex"]}
+        bottom={["3–20 chargers per site", "10 + 10 year lease", "Revenue share", "~6 months to energization"]}
+      />
       <Problem />
       <Solutions />
       <PartnerDashboard />

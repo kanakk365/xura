@@ -1,5 +1,6 @@
 "use client";
 
+import ElectricBorder from "../_bits/ElectricBorder";
 import { motion, useInView, useReducedMotion } from "motion/react";
 import { useRef, useState } from "react";
 
@@ -79,7 +80,8 @@ export function Advertising() {
         </div>
 
         <div className="mt-5 grid grid-cols-1 gap-5 md:grid-cols-3">
-          {PACKAGES.map((p, i) => (
+          {PACKAGES.map((p, i) => {
+            const card = (
             <motion.article
               key={p.name}
               initial={{ opacity: 0, y: 24 }}
@@ -127,7 +129,26 @@ export function Advertising() {
                 </span>
               </a>
             </motion.article>
-          ))}
+            );
+            return p.featured ? (
+              <ElectricBorder
+                key={p.name}
+                color="#8bfb03"
+                borderRadius={28}
+                speed={0.7}
+                chaos={0.35}
+                thickness={1.2}
+                strands={2}
+                glow={0.5}
+                intensity={0.7}
+                className="flex [&>article]:flex-1"
+              >
+                {card}
+              </ElectricBorder>
+            ) : (
+              card
+            );
+          })}
         </div>
 
         <div className="mt-5 flex flex-col items-start justify-between gap-4 rounded-[24px] border border-paper/10 px-7 py-5 sm:flex-row sm:items-center">

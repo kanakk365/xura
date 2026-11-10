@@ -3,7 +3,7 @@
 import { AnimatePresence, motion, useInView, useReducedMotion } from "motion/react";
 import { useEffect, useMemo, useRef, useState } from "react";
 
-import { Count, EASE, Em, SectionHead, Segmented } from "../_components/primitives";
+import { Count, EASE, Em, Odometer, SectionHead, Segmented } from "../_components/primitives";
 
 /* ---------- sample data ---------------------------------------------------- */
 
@@ -110,16 +110,16 @@ export function PartnerDashboard() {
               {/* KPIs */}
               <dl className="grid grid-cols-2 border-b border-paper/[0.08] lg:grid-cols-4 [&>*:nth-child(even)]:border-l [&>*:nth-child(n+3)]:border-t lg:[&>*:not(:first-child)]:border-l lg:[&>*:nth-child(n+3)]:border-t-0 [&>*]:border-paper/[0.08]">
                 <Kpi label="Sessions · 30 days" delta="+12.4%">
-                  <Count value={show ? data.sessions : 0} />
+                  <Odometer value={show ? data.sessions : 0} />
                 </Kpi>
                 <Kpi label="Energy delivered" delta="+9.1%" unit="MWh">
-                  <Count value={show ? data.mwh : 0} decimals={1} />
+                  <Odometer value={show ? data.mwh : 0} decimals={1} />
                 </Kpi>
                 <Kpi label="Your revenue share" delta="+14.8%">
-                  <Count value={show ? data.revenue : 0} prefix="$" />
+                  <Odometer value={show ? data.revenue : 0} prefix="$" />
                 </Kpi>
                 <Kpi label="Charger uptime" delta="SLA 99%" unit="%">
-                  <Count value={show ? data.uptime : 0} decimals={2} />
+                  <Odometer value={show ? data.uptime : 0} decimals={2} />
                 </Kpi>
               </dl>
 

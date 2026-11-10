@@ -5,8 +5,9 @@ import { useEffect, useRef, useState } from "react";
 
 import Image from "next/image";
 
+import LightRays from "../_bits/LightRays";
 import { HeroFog } from "../_stage/HeroFog";
-import { Check, Count, EASE, Em, GhostButton, Kicker, PrimaryButton } from "../_components/primitives";
+import { Check, Count, EASE, Em, GhostButton, Headline, Kicker, PrimaryButton } from "../_components/primitives";
 
 const PILLARS = [
   { code: "01", title: "Interconnection", detail: "Feeder & transformer capacity", result: "Viable feeder verified" },
@@ -33,8 +34,26 @@ export function HomeHero() {
         aria-hidden="true"
         className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(5,5,5,0.9)_0%,rgba(5,5,5,0.66)_40%,rgba(5,5,5,0.3)_100%)]"
       />
+      <div aria-hidden="true" className="absolute inset-0 -z-10 bg-ink/45 lg:hidden" />
       <div aria-hidden="true" className="absolute inset-x-0 bottom-0 -z-10 h-72 bg-gradient-to-t from-ink via-ink/85 to-transparent" />
       <div aria-hidden="true" className="absolute inset-x-0 top-0 -z-10 h-32 bg-gradient-to-b from-ink/90 to-transparent" />
+      <div aria-hidden="true" className="absolute inset-0 -z-10 opacity-70 mix-blend-screen">
+        <LightRays
+          raysOrigin="top-right"
+          raysColor="#8bfb03"
+          raysSpeed={0.6}
+          lightSpread={0.9}
+          rayLength={1.6}
+          intensity={0.55}
+          glow={0.35}
+          haze={0.15}
+          followMouse
+          mouseInfluence={0.06}
+          cursorShadow={false}
+          clickPulse={false}
+          saturation={0.9}
+        />
+      </div>
       <div aria-hidden="true" className="h-[72px] shrink-0" />
 
       <div className="op-shell grid flex-1 grid-cols-1 items-center gap-12 pb-16 pt-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.04fr)] lg:gap-16 lg:pb-20 lg:pt-12">
@@ -42,14 +61,9 @@ export function HomeHero() {
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: EASE }}>
             <Kicker>Distributed energy infrastructure</Kicker>
           </motion.div>
-          <motion.h1
-            className="op-h1 mt-7 max-w-[14ch]"
-            initial={{ opacity: 0, y: 22 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.08, ease: EASE }}
-          >
+          <Headline as="h1" onLoad delay={0.12} className="op-h1 mt-7 max-w-[14ch]">
             Deploying <Em>realistic</Em> energy infrastructure.
-          </motion.h1>
+          </Headline>
           <motion.p
             className="op-lead mt-7 max-w-[52ch] !text-paper/70"
             initial={{ opacity: 0, y: 16 }}
@@ -140,6 +154,22 @@ function UnderwritingPlate() {
             </pattern>
           </defs>
           <rect width="560" height="230" fill="url(#hh-grid)" />
+          <linearGradient id="hh-scan" x1="0" x2="1" y1="0" y2="0">
+            <stop offset="0%" stopColor="#8bfb03" stopOpacity="0" />
+            <stop offset="85%" stopColor="#8bfb03" stopOpacity="0.16" />
+            <stop offset="100%" stopColor="#8bfb03" stopOpacity="0.7" />
+          </linearGradient>
+          {!reduce && inView && step < 4 && (
+            <motion.g
+              key={step}
+              initial={{ x: -120, opacity: 0 }}
+              animate={{ x: 560, opacity: [0, 1, 1, 0] }}
+              transition={{ duration: 1.1, ease: "linear" }}
+            >
+              <rect x="0" y="0" width="120" height="196" fill="url(#hh-scan)" />
+              <line x1="120" y1="0" x2="120" y2="196" stroke="#8bfb03" strokeOpacity="0.9" strokeWidth="1" />
+            </motion.g>
+          )}
 
           {/* street */}
           <line x1="0" y1="206" x2="560" y2="206" stroke="rgba(255,255,255,0.14)" strokeWidth="14" />
@@ -170,6 +200,12 @@ function UnderwritingPlate() {
           <rect x="458" y="8" width="24" height="22" rx="3" fill="#0e0e0e" stroke={lit(0) ? "#8bfb03" : "rgba(255,255,255,0.3)"} />
           <text x="470" y="23" textAnchor="middle" fontSize="9" className={`font-mono ${lit(0) ? "fill-[#8bfb03]" : "fill-[#808080]"}`}>T</text>
           <path d="M470 30 V96 H404" fill="none" stroke={lit(0) ? "#8bfb03" : "rgba(255,255,255,0.18)"} strokeWidth="2" className={lit(0) ? "op-flow" : ""} />
+          {!reduce && inView && lit(0) &&
+            [0, 1].map((i) => (
+              <circle key={i} r="2.6" fill="#eaffd0">
+                <animateMotion dur="2.4s" begin={`${-1.2 * i}s`} repeatCount="indefinite" path="M0 18 H470 V96 H404" />
+              </circle>
+            ))}
           <text x="18" y="12" fontSize="8.5" letterSpacing="1.5" className="fill-[#808080] font-mono">FEEDER 13.2 kV</text>
 
           {/* 03 fiber */}

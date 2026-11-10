@@ -3,7 +3,8 @@
 import { motion, useReducedMotion } from "motion/react";
 import { useState } from "react";
 
-import { Count, EASE, Em, GhostButton, Kicker, PrimaryButton, Segmented } from "../_components/primitives";
+import Threads from "../_bits/Threads";
+import { Count, EASE, Em, GhostButton, Headline, Kicker, PrimaryButton, Segmented } from "../_components/primitives";
 import { HeroFog } from "../_stage/HeroFog";
 
 type Env = "4.9" | "12.5" | "25";
@@ -19,7 +20,11 @@ export function NeoHero() {
   return (
     <section className="grain relative isolate flex min-h-[100svh] flex-col overflow-hidden">
       <div aria-hidden="true" className="grid-lines absolute inset-0 -z-30 opacity-60 [mask-image:radial-gradient(ellipse_70%_60%_at_70%_45%,#000_20%,transparent_75%)]" />
+      <div aria-hidden="true" className="absolute inset-0 -z-20 opacity-55 [mask-image:linear-gradient(to_bottom,transparent_0%,#000_25%,#000_70%,transparent_100%)]">
+        <Threads color="#8bfb03" accentColor="#ffffff" amplitude={1.2} distance={0.25} lineCount={46} thickness={0.5} speed={0.35} angle={-8} brightness={0.9} fade={0.35} enableMouseInteraction parting={0.35} />
+      </div>
       <HeroFog className="pointer-events-none absolute inset-0 -z-20 h-full w-full opacity-60 mix-blend-screen" />
+      <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(5,5,5,0.88)_0%,rgba(5,5,5,0.55)_45%,rgba(5,5,5,0.15)_100%)]" />
       <div aria-hidden="true" className="absolute inset-x-0 bottom-0 -z-10 h-64 bg-gradient-to-t from-ink to-transparent" />
       <div aria-hidden="true" className="h-[72px] shrink-0" />
 
@@ -28,14 +33,9 @@ export function NeoHero() {
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: EASE }}>
             <Kicker>NeoCloud · Modular data centers</Kicker>
           </motion.div>
-          <motion.h1
-            className="op-h1 mt-7 max-w-[15ch]"
-            initial={{ opacity: 0, y: 22 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.08, ease: EASE }}
-          >
+          <Headline as="h1" onLoad delay={0.12} className="op-h1 mt-7 max-w-[15ch]">
             While others wish for 100MW, we build the <Em>25MW reality</Em>.
-          </motion.h1>
+          </Headline>
           <motion.p
             className="op-lead mt-7 max-w-[54ch]"
             initial={{ opacity: 0, y: 16 }}

@@ -101,7 +101,7 @@ export function Pillars() {
               Four pillars, <Em>verified</Em> before a shovel moves.
             </>
           }
-          lead="Most energy and EV projects fail because developers pick parcels blindly, then get trapped in utility queues or zoning battles. Xura's platform pre-validates four mandatory pillars before deployment."
+          lead="Xura's proprietary platform pre-validates four mandatory pillars before deployment, so a site is bankable before the first shovel."
         />
 
         <div ref={ref} className="op-cells mt-14 grid-cols-1 md:grid-cols-2">

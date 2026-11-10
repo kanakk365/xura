@@ -4,10 +4,13 @@ import { Nav } from "./_components/Nav";
 import { Assess } from "./_components/Assess";
 import { Em } from "./_components/primitives";
 import { SiteFooter } from "./_components/SiteFooter";
+import { SpecBand } from "./_components/SpecBand";
+import { Statement } from "./_components/Statement";
 import { HomeHero } from "./_home/HomeHero";
 import { HubSizer } from "./_home/HubSizer";
 import { NapkinTest } from "./_home/NapkinTest";
 import { Pillars } from "./_home/Pillars";
+import { PowerHub } from "./_home/PowerHub";
 import { SolutionsExplorer } from "./_home/SolutionsExplorer";
 
 export const metadata: Metadata = {
@@ -21,7 +24,18 @@ export default function HomePage() {
     <main className="flex flex-1 flex-col">
       <Nav />
       <HomeHero />
+      <SpecBand
+        label="Xura at a glance"
+        top={["UL 9540A + Napkin tested", "2.5C discharge", "$0 landlord capex", "~6 months to energization"]}
+        bottom={["350–2,500 sq ft power hubs", "NACS + CCS1", "Lit & dark fiber", "As-of-right zoning"]}
+      />
+      <Statement
+        kicker="Why projects fail"
+        text="Most energy and EV infrastructure projects fail because developers pick parcels blindly, then get trapped in utility queues or zoning battles."
+        foot="Xura works the other way round: every site is screened for power, zoning, fiber and storage before anything is built."
+      />
       <Pillars />
+      <PowerHub />
       <NapkinTest />
       <SolutionsExplorer />
       <HubSizer />

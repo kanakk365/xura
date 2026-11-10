@@ -4,6 +4,8 @@ import { Nav } from "../_components/Nav";
 import { Assess } from "../_components/Assess";
 import { Em } from "../_components/primitives";
 import { SiteFooter } from "../_components/SiteFooter";
+import { SpecBand } from "../_components/SpecBand";
+import { Statement } from "../_components/Statement";
 import { Certainty } from "../_neo/Certainty";
 import { Layers } from "../_neo/Layers";
 import { NeoHero } from "../_neo/NeoHero";
@@ -22,6 +24,16 @@ export default function NeoCloudPage() {
     <main className="flex flex-1 flex-col">
       <Nav cta={{ label: "Reserve capacity", href: "#contact" }} />
       <NeoHero />
+      <SpecBand
+        label="NeoCloud at a glance"
+        top={["4.9 MW", "12.5 MW", "18 MW", "25 MW", "Behind-the-meter microgrid"]}
+        bottom={["New York", "New Jersey", "Connecticut", "Massachusetts", "UL9540A storage"]}
+      />
+      <Statement
+        kicker="The bottleneck"
+        text="Most 100 MW plans wait on power and water that do not exist yet. NeoCloud is sized to what a site already has."
+        foot="Existing utility power, a microgrid of fuel cells, linear generators and UL9540A batteries, and closed-loop cooling that uses less water than a typical commercial building."
+      />
       <Thesis />
       <Layers />
       <Water />

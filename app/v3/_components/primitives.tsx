@@ -7,7 +7,19 @@ import {
   useReducedMotion,
   type HTMLMotionProps,
 } from "motion/react";
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import {
+  Children,
+  Fragment,
+  isValidElement,
+  useEffect,
+  useRef,
+  useState,
+  type ReactElement,
+  type ReactNode,
+} from "react";
+
+import Counter from "../_bits/Counter";
+import Magnet from "../_bits/Magnet";
 
 export const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -39,18 +51,92 @@ export function SectionHead({
 }) {
   return (
     <header className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between lg:gap-16">
-      <Reveal className="min-w-0 max-w-[46rem]">
-        <Kicker>{kicker}</Kicker>
-        <h2 id={id} className="op-h2 mt-5">
+      <div className="min-w-0 max-w-[46rem]">
+        <Reveal y={10}>
+          <Kicker>{kicker}</Kicker>
+        </Reveal>
+        <Headline as="h2" id={id} className="op-h2 mt-5" delay={0.06}>
           {title}
-        </h2>
-      </Reveal>
+        </Headline>
+      </div>
       {lead && (
         <Reveal delay={0.08} className="lg:max-w-[26rem] lg:shrink-0">
           <p className="op-lead">{lead}</p>
         </Reveal>
       )}
     </header>
+  );
+}
+
+type Piece = { text: string; accent: boolean; gap: boolean };
+
+/** Flattens a heading (strings, fragments and <Em>) into words, remembering
+ *  which words carry the italic accent and whether a space precedes each one,
+ *  so "<Em>Test</Em>." keeps its full stop attached. */
+function flatten(node: ReactNode, accent: boolean, out: Piece[], state = { space: false }) {
+  Children.forEach(node, (child) => {
+    if (typeof child === "string" || typeof child === "number") {
+      for (const m of String(child).matchAll(/(\s*)(\S+)/g)) {
+        out.push({ text: m[2], accent, gap: out.length > 0 && (m[1].length > 0 || state.space) });
+        state.space = false;
+      }
+      if (/\s$/.test(String(child))) state.space = true;
+      return;
+    }
+    if (isValidElement(child)) {
+      const el = child as ReactElement<{ children?: ReactNode }>;
+      flatten(el.props.children, accent || el.type === Em, out, state);
+    }
+  });
+  return out;
+}
+
+/** Heading whose words rise out of a mask one after another, the stage site's
+ *  type with a single authored entrance. Words stay real text for readers and
+ *  search, and reduced motion renders the heading as-is. */
+export function Headline({
+  as = "h2",
+  children,
+  className = "",
+  id,
+  delay = 0,
+  onLoad = false,
+}: {
+  as?: "h1" | "h2" | "h3";
+  children: ReactNode;
+  className?: string;
+  id?: string;
+  delay?: number;
+  /** Play immediately (heroes) instead of when scrolled into view. */
+  onLoad?: boolean;
+}) {
+  const reduce = useReducedMotion();
+  const words = flatten(children, false, []);
+  const Tag = motion[as];
+  const step = Math.min(0.06, 0.5 / Math.max(words.length, 1));
+  return (
+    <Tag
+      id={id}
+      className={className}
+      initial={reduce ? false : "hidden"}
+      {...(onLoad ? { animate: "shown" } : { whileInView: "shown", viewport: { once: true, margin: "-8% 0px" } })}
+      transition={{ staggerChildren: step, delayChildren: delay }}
+    >
+      {words.map((w, i) => (
+        <Fragment key={i}>
+          {w.gap ? " " : null}
+          <span className="-mb-[0.16em] -mr-[0.08em] inline-block overflow-hidden pb-[0.16em] pr-[0.08em] align-top">
+            <motion.span
+              className={`inline-block ${w.accent ? "italic text-accent" : ""}`}
+              variants={{ hidden: { y: "108%" }, shown: { y: "0%" } }}
+              transition={{ duration: 0.9, ease: EASE }}
+            >
+              {w.text}
+            </motion.span>
+          </span>
+        </Fragment>
+      ))}
+    </Tag>
   );
 }
 
@@ -127,6 +213,35 @@ export function Count({
       {text}
       {suffix}
     </span>
+  );
+}
+
+/** Odometer digits for numbers that change while you watch (sliders, site
+ *  switchers): each digit rolls to its new value, so the change is legible. */
+export function Odometer({
+  value,
+  decimals = 0,
+  prefix,
+  suffix,
+}: {
+  value: number;
+  decimals?: number;
+  prefix?: string;
+  suffix?: string;
+}) {
+  return (
+    <Counter
+      value={value}
+      decimals={decimals}
+      prefix={prefix}
+      suffix={suffix}
+      fontSize="1em"
+      fontWeight="inherit"
+      duration={0.6}
+      bounce={0.15}
+      stagger={0.03}
+      intro={false}
+    />
   );
 }
 
@@ -207,15 +322,17 @@ export function Check({ className = "" }: { className?: string }) {
 
 export function PrimaryButton({ href, children }: { href: string; children: ReactNode }) {
   return (
-    <a href={href} className="op-btn group">
+    <Magnet magnetStrength={4} maxOffset={10} padding={40} innerClassName="grid">
+      <a href={href} className="op-btn group">
       <span>{children}</span>
       <span
         aria-hidden="true"
         className="grid h-8 w-8 place-items-center rounded-full bg-ink text-accent transition-transform duration-200 group-hover:translate-x-0.5"
       >
-        <Arrow />
-      </span>
-    </a>
+          <Arrow />
+        </span>
+      </a>
+    </Magnet>
   );
 }
 
