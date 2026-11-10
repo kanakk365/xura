@@ -1,0 +1,81 @@
+/* Stage-site look (commit 362b33c) applied to /v2 by re-skinning the shared
+   doc-* primitives inside .v2-site only. */
+.v2-site {
+  --doc-max: 1400px;
+  --line: rgba(255, 255, 255, 0.1);
+  --line-strong: rgba(255, 255, 255, 0.2);
+  font-size: 15px;
+  line-height: 1.6;
+  background: var(--ink);
+}
+.v2-site .doc-shell { max-width: 1400px; padding-inline: 20px; }
+@media (min-width: 640px) { .v2-site .doc-shell { padding-inline: 40px; } }
+@media (min-width: 1024px) { .v2-site .doc-shell { padding-inline: 64px; } }
+
+.v2-site .doc-section { padding-block: 80px; border-top: 0; }
+@media (min-width: 640px) { .v2-site .doc-section { padding-block: 112px; } }
+@media (min-width: 1024px) { .v2-site .doc-section { padding-block: 128px; } }
+.v2-site .doc-section::before {
+  content: ""; position: absolute; inset: 0 0 auto 0; height: 1px; pointer-events: none;
+  background: linear-gradient(to right, transparent, rgba(255,255,255,0.15), transparent);
+}
+
+/* Eyebrow: pulsing dot, sans, uppercase, muted */
+.v2-site .kicker {
+  font-family: var(--font-body); font-size: 11px; font-weight: 500;
+  letter-spacing: 0.2em; color: var(--mute); gap: 12px;
+}
+.v2-site .kicker::before {
+  width: 8px; height: 8px; border-radius: 999px; background: var(--accent);
+  box-shadow: 0 0 0 4px rgba(139,251,3,0.18);
+  animation: pulse-dot 1.8s ease-in-out infinite;
+}
+
+/* Headings: Archivo regular, italic green accent */
+.v2-site .doc-h1, .v2-site .doc-h2, .v2-site .doc-h3 {
+  font-family: var(--font-display); font-weight: 400; letter-spacing: 0;
+}
+.v2-site .doc-h1 { font-size: clamp(2.75rem, 10vw, 5rem); line-height: 1.05; }
+.v2-site .doc-h2 { font-size: clamp(1.85rem, 6vw, 3.75rem); line-height: 1.05; }
+.v2-site .doc-h3 { font-size: 1.25rem; line-height: 1.2; }
+.v2-site .text-accent { font-style: italic; }
+.v2-site .doc-h1 .text-accent, .v2-site .doc-h2 .text-accent { font-style: italic; }
+.v2-site .doc-lead { color: rgba(255,255,255,0.7); font-size: 1rem; }
+
+/* Cards: big rounded, hairline border */
+.v2-site .doc-card, .v2-site .stat-tile {
+  border-radius: 28px; border-color: rgba(255,255,255,0.1); background: var(--ink-2);
+}
+@media (min-width: 640px) { .v2-site .doc-card, .v2-site .stat-tile { border-radius: 32px; } }
+.v2-site .doc-card { padding: 28px; }
+.v2-site .stat-tile::after { display: none; }
+.v2-site .stat-tile .n { font-weight: 400; }
+.v2-site .doc-figure { border-radius: 28px; }
+.v2-site .doc-callout, .v2-site .doc-banner { border-radius: 24px; }
+.v2-site .doc-banner { font-weight: 400; }
+
+/* Lists + tags */
+.v2-site .doc-list > li::before { border-radius: 999px; width: 6px; height: 6px; top: 10px; }
+.v2-site .doc-tag {
+  font-family: var(--font-body); font-size: 10px; font-weight: 500; letter-spacing: 0.16em;
+  border-radius: 999px; padding: 4px 10px; border: 1px solid rgba(139,251,3,0.3);
+  background: rgba(139,251,3,0.1);
+}
+
+/* Pill buttons */
+.v2-site .doc-btn, .v2-site .doc-btn-ghost {
+  border-radius: 999px; height: 48px; padding: 0 24px; font-family: var(--font-body);
+  font-size: 14px; font-weight: 400; letter-spacing: 0.1em;
+}
+.v2-site .doc-btn-ghost { border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.03); }
+.v2-site .doc-btn:hover { box-shadow: none; transform: translateY(-2px); }
+
+/* Forms */
+.v2-site .doc-label {
+  font-family: var(--font-body); font-size: 10px; letter-spacing: 0.2em; font-weight: 500;
+}
+.v2-site .doc-input { border-radius: 999px; padding: 12px 20px; }
+.v2-site textarea.doc-input { border-radius: 24px; }
+
+/* Mono labels fall back to body sans-uppercase feel of the stage site */
+.v2-site .font-mono { font-family: var(--font-body); letter-spacing: 0.12em; }
