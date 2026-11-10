@@ -182,6 +182,7 @@ function UnderwritingPlate() {
             fill={lit(1) ? "rgba(139,251,3,0.05)" : "transparent"}
             stroke={lit(1) ? "#8bfb03" : "rgba(255,255,255,0.22)"}
             strokeDasharray="6 5"
+            initial={false}
             animate={{ strokeOpacity: lit(1) ? 0.9 : 0.6 }}
             transition={{ duration: 0.5 }}
           />
